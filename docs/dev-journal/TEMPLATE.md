@@ -1,10 +1,20 @@
-# YYYY-MM-DD
+# Día de la semana, DD-MM-YYYY
 
 ## Qué he hecho hoy
 
--
+### Global
 
-## Decisiones tomadas (y por qué)
+### Frontend
+
+#### Móvil
+
+#### Web
+
+### Backend
+
+#### BD
+
+#### API
 
 -
 

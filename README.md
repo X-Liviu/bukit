@@ -1,4 +1,4 @@
-# BUKIT
+# BUKIT (FASE DE DESARROLLO: IGNORAR!!!!!!!!!!!!!!!!)
 
 La red social para cumplir tus objetivos. Monorepo del TFG (Grado en Ing. Informática, UPV/EHU).
 
@@ -44,13 +44,13 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 
 ## Scripts (raíz)
 
-| Comando | Qué hace |
-|---|---|
-| `pnpm lint` / `pnpm format` | ESLint / Prettier en todo el repo |
-| `pnpm typecheck` | `tsc --noEmit` en cada paquete |
-| `pnpm db:up` / `pnpm db:down` | arranca / para Postgres (Docker) |
-| `pnpm db:reset` | para Postgres y **borra** el volumen de datos |
-| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api` |
+| Comando                                               | Qué hace                                      |
+| ----------------------------------------------------- | --------------------------------------------- |
+| `pnpm lint` / `pnpm format`                           | ESLint / Prettier en todo el repo             |
+| `pnpm typecheck`                                      | `tsc --noEmit` en cada paquete                |
+| `pnpm db:up` / `pnpm db:down`                         | arranca / para Postgres (Docker)              |
+| `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos |
+| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                          |
 
 ## Decisiones de arquitectura tomadas
 

@@ -9,8 +9,8 @@ Registro de seguimiento del TFG. Sirve para dos cosas:
 
 ## Convención
 
-- **Un archivo por sesión de trabajo**, con el nombre `YYYY-MM-DD.md` (así el explorador los ordena cronológicamente solo).
-- Copiar [`TEMPLATE.md`](TEMPLATE.md) y rellenarlo **antes de cerrar la sesión**, con la cabeza aún caliente.
-- Si un día hay dos sesiones muy distintas, vale `YYYY-MM-DD-b.md`.
+- **Un archivo por sesión de trabajo**, con el nombre `DD-MM-YYYY.md` (así el explorador los ordena cronológicamente solo).
+- Copiar [`TEMPLATE.md`](TEMPLATE.md) y rellenarlo **antes de cerrar la sesión**, con la cabeza aún caliente, cuando lo indique el comando "/journal".
+- Si un día hay dos sesiones muy distintas, vale `DD-MM-YYYY-b.md`.
 - Ser concreto: "configurado ESLint autofix al guardar" sí; "tocado config" no.
 - Las **decisiones** son la parte más valiosa: anotar siempre la alternativa descartada y el porqué.
