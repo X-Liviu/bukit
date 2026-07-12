@@ -1,0 +1,44 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Builds / salidas
+dist/
+build/
+*.tsbuildinfo
+
+# Entorno
+.env
+.env.*
+!.env.example
+
+# Prisma (cliente generado si se emite fuera de node_modules)
+apps/api/prisma/generated/
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+.playwright/
+
+# Expo / React Native
+.expo/
+*.orig.*
+web-build/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editores / SO
+.DS_Store
+Thumbs.db
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Turborepo (si se añade más adelante)
+.turbo/

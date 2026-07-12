@@ -1,0 +1,19 @@
+# Artefactos de compilación de LaTeX.
+# latexmk deja todo en build/ (ver .latexmkrc); el resto de patrones son
+# una red de seguridad por si algo compila fuera de build/.
+build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.toc
+main.pdf

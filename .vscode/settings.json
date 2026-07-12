@@ -1,0 +1,82 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  // === Formateo automático con Prettier al guardar ===
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[yaml]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+  // === ESLint: autofix al guardar (config plana, ESLint 9) ===
+  "eslint.useFlatConfig": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // === TypeScript: usar la versión del repo, no la de VS Code ===
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+
+  // === Error Lens: errores/avisos en línea ===
+  "errorLens.enabled": true,
+  "errorLens.delay": 300,
+  "errorLens.gutterIconsEnabled": true,
+
+  // === LaTeX Workshop: artefactos de compilación a build/ (coherente con .latexmkrc) ===
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  // La primera receta es la que se usa al guardar. latexmk (la herramienta
+  // estándar) requiere Perl instalado; hasta entonces, la receta manual
+  // pdflatex+biber hace lo mismo sin Perl.
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%",
+        "%DOC%",
+      ],
+    },
+    { "name": "biber", "command": "biber", "args": ["%OUTDIR%/%DOCFILE%"] },
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=%OUTDIR%",
+        "%DOC%",
+      ],
+    },
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex × 2 + biber (sin Perl)",
+      "tools": ["pdflatex", "biber", "pdflatex", "pdflatex"],
+    },
+    { "name": "latexmk (requiere Perl)", "tools": ["latexmk"] },
+  ],
+
+  // === Menos ruido en la búsqueda ===
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/pnpm-lock.yaml": true
+  }
+}

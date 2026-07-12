@@ -1,0 +1,53 @@
+% =========================================================================
+% Carga y configuración de paquetes, agrupados por función y con el porqué
+% de cada uno. hyperref se carga casi al final (requisito del paquete).
+% =========================================================================
+
+% --- Codificación y fuentes (pdflatex) ---
+\usepackage[utf8]{inputenc}   % Codificación de entrada UTF-8
+\usepackage[T1]{fontenc}      % Acentos correctos en el PDF (copiables/buscables)
+
+% --- Idiomas: español principal; euskera e inglés para el resumen trilingüe ---
+% es-tabla: "Tabla" en vez de "Cuadro".
+% es-noshorthands: desactiva los caracteres activos del español (no los
+%   necesitamos: escribimos los acentos en UTF-8) y evita un conflicto real
+%   entre babel-spanish y el hook de biblatex-apa sobre \@makecaption
+%   ("Generic hooks cannot be added to '\@makecaption'").
+\usepackage[english, basque, spanish, es-tabla, es-noshorthands]{babel}
+\usepackage{csquotes}         % Comillas correctas según idioma (lo pide biblatex)
+% Nomenclatura de la guía de la EIB: "Anexo" para los apéndices e "Índice de
+% ilustraciones" para las figuras ("Índice de tablas" ya es el defecto con
+% es-tabla):
+\addto\captionsspanish{%
+  \renewcommand{\appendixname}{Anexo}%
+  \renewcommand{\listfigurename}{Índice de ilustraciones}%
+}
+
+% --- Gráficos y tablas ---
+\usepackage{graphicx}
+\graphicspath{{figures/}}     % Las imágenes se buscan siempre en figures/
+\usepackage{booktabs}         % Tablas profesionales (\toprule, \midrule, \bottomrule)
+
+% --- Utilidades ---
+\usepackage{xspace}           % Espaciado correcto tras macros de texto (\bukit)
+\usepackage{xcolor}           % Colores (usado por \todonote)
+\usepackage{acronym}          % Lista de acrónimos (ver frontmatter/acronyms.tex)
+
+% --- Bibliografía: biblatex + biber, en normas APA (exigido por la guía) ---
+% Citar con \parencite{clave} -> "(Williams, 1995)"
+%       o  \textcite{clave}   -> "Williams (1995)"
+\usepackage[backend=biber, style=apa]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+% biblatex-apa no trae localización en euskera (basque-apa.lbx); mapeamos a
+% la española para silenciar el aviso. Solo afectaría a citas hechas DENTRO
+% del bloque en euskera (el Laburpena), donde nunca citamos.
+\DeclareLanguageMapping{basque}{spanish-apa}
+
+% --- Enlaces y metadatos del PDF (cargar al final) ---
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={\thesisTitle},
+  pdfauthor={\thesisAuthor},
+  pdfsubject={\thesisSubtitle},
+  pdfkeywords={\thesisKeywordsEs},
+}

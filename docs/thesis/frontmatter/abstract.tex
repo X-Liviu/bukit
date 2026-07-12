@@ -1,0 +1,37 @@
+% =========================================================================
+% Resumen trilingüe (castellano / euskera / inglés) + palabras clave,
+% como exige la plantilla del centro. La guía además pide que recoja de
+% forma sintética objetivos, líneas de trabajo y resultados (máx. 3 págs).
+% Consejo: es lo ÚLTIMO que se escribe — resume el trabajo ya terminado.
+% =========================================================================
+
+\chapter*{Resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+
+\todonote{Escribir el resumen al final del proyecto: objetivos, líneas
+principales de trabajo y resultados más significativos.}
+
+\bigskip
+\noindent\textbf{Palabras clave:} \thesisKeywordsEs
+
+% --- Euskera ---
+\begin{otherlanguage}{basque}
+  \chapter*{Laburpena}
+  \addcontentsline{toc}{chapter}{Laburpena}
+
+  \todonote{Laburpena proiektuaren amaieran idatzi.}
+
+  \bigskip
+  \noindent\textbf{Gako-hitzak:} \thesisKeywordsEu
+\end{otherlanguage}
+
+% --- Inglés ---
+\begin{otherlanguage}{english}
+  \chapter*{Abstract}
+  \addcontentsline{toc}{chapter}{Abstract}
+
+  \todonote{Write the abstract at the end of the project.}
+
+  \bigskip
+  \noindent\textbf{Keywords:} \thesisKeywordsEn
+\end{otherlanguage}

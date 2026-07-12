@@ -1,0 +1,81 @@
+% =========================================================================
+% BUKIT — Memoria del TFG (estructura según la plantilla de la Escuela de
+% Ingeniería de Bilbao + guía de TFG de la UPV/EHU)
+% Documento raíz: aquí SOLO se ensambla el documento. El contenido vive
+% en los módulos (config/, frontmatter/, chapters/, appendices/).
+%
+% Compilar:  desde VSCode al guardar (LaTeX Workshop), o `latexmk` en esta
+% carpeta (requiere Perl). El PDF queda en build/main.pdf.
+% =========================================================================
+
+% Clase provisional: el formato oficial (Calibri, márgenes, títulos...)
+% se aplicará en config/style.tex en la fase de diseño.
+\documentclass[12pt, a4paper, oneside]{report}
+
+% --- Configuración global (el orden importa) ---
+\input{config/metadata}   % Variables globales (título, autor, fechas...)
+\input{config/packages}   % Paquetes y su configuración
+\input{config/macros}     % Comandos propios
+\input{config/style}      % Formato y diseño (pendiente de definir)
+
+% --- Bibliografía ---
+\addbibresource{bibliography/references.bib}
+
+\begin{document}
+
+% ----- Portada -----
+\input{frontmatter/titlepage}
+
+% ----- Preliminares (numeración romana), en el orden de la guía de la EIB:
+%       resumen -> índices de tablas/ilustraciones -> acrónimos -> empleo de
+%       IA -> índice de la memoria -----
+\pagenumbering{roman}
+% \input{frontmatter/acknowledgements}   % Opcional: descomentar si se incluyen
+\input{frontmatter/abstract}             % Resumen trilingüe + palabras clave
+
+\clearpage\phantomsection\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\clearpage\phantomsection\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+% (El "Índice de gráficas" de la guía solo procede si separamos las gráficas
+% de las ilustraciones con un tipo de float propio; de momento van juntas.)
+\input{frontmatter/acronyms}             % Listado de acrónimos
+\input{frontmatter/empleo-ia}            % Empleo de IA (guía EIB, apdo. V)
+
+\tableofcontents                         % Índice de la memoria
+
+% ----- MEMORIA (numeración arábiga desde aquí) -----
+\clearpage
+\pagenumbering{arabic}
+
+\input{chapters/01-introduccion}         % obligatorio
+\input{chapters/02-contexto}             % obligatorio
+\input{chapters/03-objetivos-alcance}    % obligatorio
+\input{chapters/04-beneficios-ods}       % obligatorio
+\input{chapters/05-estado-del-arte}      % si procede (procede)
+\input{chapters/06-analisis-alternativas}% si procede (procede)
+\input{chapters/07-analisis-riesgos}     % si procede (procede)
+\input{chapters/08-solucion-propuesta}   % si procede (procede)
+\input{chapters/09-diseno}               % si procede (procede)
+\input{chapters/10-tareas-gantt}         % si procede (procede)
+\input{chapters/11-calculos-algoritmos}  % si procede
+\input{chapters/12-analisis-resultados}  % si procede
+\input{chapters/13-gantt-tfg}            % obligatorio
+\input{chapters/14-presupuesto}          % obligatorio
+\input{chapters/15-conclusiones}         % obligatorio
+
+% ----- BIBLIOGRAFÍA (normas APA) -----
+% TEMPORAL: \nocite fuerza la entrada de ejemplo para que el capítulo
+% "Bibliografía" exista en el PDF y el índice. Quitar con la primera cita real.
+\nocite{prisma-docs}
+\printbibliography[heading=bibintoc]
+
+% ----- ANEXOS -----
+\appendix
+% La plantilla numera los anexos en romanos: Anexo I, II, III (no A, B, C).
+\renewcommand{\thechapter}{\Roman{chapter}}
+\input{appendices/a-pliego-condiciones}
+\input{appendices/b-diseno-detalle}
+\input{appendices/c-manuales}
+
+\end{document}

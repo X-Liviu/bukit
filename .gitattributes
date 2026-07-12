@@ -1,0 +1,2 @@
+﻿# Forzar que todos los archivos de texto se gestionen con saltos de línea LF (para .txt de momento)
+*.txt text=auto eol=lf

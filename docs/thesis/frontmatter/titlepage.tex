@@ -1,0 +1,47 @@
+% =========================================================================
+% Portada según la plantilla de la Escuela de Ingeniería de Bilbao:
+% logos, "GRADO EN... / TRABAJO FIN DE GRADO", título, foto opcional,
+% iconos de sostenibilidad, estudiante, director/a, curso y fecha.
+% La estructura ya es la correcta; el acabado visual (banda de color,
+% tipografía...) se hará en la fase de diseño.
+% =========================================================================
+
+% La portada no genera ancla de página en el PDF: el entorno titlepage
+% resetea el contador y, sin esto, hyperref avisa de dos páginas "1"/"i".
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+
+  % --- Logos institucionales (normativa de identidad visual UPV/EHU) ---
+  % TODO: guardar los logos en figures/logos/ y descomentar:
+  % \noindent
+  % \includegraphics[height=1.6cm]{logos/upv-ehu}\hfill
+  % \includegraphics[height=1.6cm]{logos/centro}
+  \vspace*{1cm}
+
+  {\noindent\large\bfseries \MakeUppercase{\thesisDegree}\par}
+  \smallskip
+  {\noindent\Huge\bfseries TRABAJO FIN DE GRADO\par}
+  \vspace{1.5cm}
+
+  \begin{center}
+    {\LARGE\bfseries\itshape \thesisTitle\par}
+
+    \vfill
+    % TODO: foto representativa del trabajo (tamaño máximo: 10x10 cm):
+    % \includegraphics[width=8cm]{portada-foto}
+    \vfill
+    % TODO: iconos de sostenibilidad (tamaño: 2x2 cm cada uno):
+    % \includegraphics[height=2cm]{logos/ods-09}
+  \end{center}
+  \vfill
+
+  \noindent\textbf{Estudiante:} \thesisAuthorFormal\par
+  \medskip
+  \noindent\textbf{Director/Directora:} \thesisDirector\par
+  % TODO: descomentar solo si hay codirector/a:
+  % \noindent\textbf{Codirector/Codirectora:} \thesisCoDirector\par
+  \bigskip
+  \noindent\textbf{Curso:} \thesisCourse\hfill\textbf{Fecha:} \thesisDate\par
+
+\end{titlepage}
+\hypersetup{pageanchor=true}

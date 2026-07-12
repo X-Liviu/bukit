@@ -1,0 +1,21 @@
+// Esquema de datos de BUKIT.
+// Un solo Postgres cubre grafo social (relaciones nativas), mapa (PostGIS) y
+// afinidad (pgvector).
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // Extensiones ya decididas (son infraestructura, no modelo de datos): mapa + afinidad.
+  extensions = [postgis, vector]
+}
+
+// ── MODELOS DE DATOS ─────────────────────────────────────────────────────────
+// Intencionadamente VACÍO.
+// El modelo de datos (entidades, relaciones, cascadas, índices) se diseñará de
+// forma incremental y meditada, para garantizar la mejor integridad referencial
+// posible. Aquí irán los `model ...` cuando los definamos juntos, uno a uno.

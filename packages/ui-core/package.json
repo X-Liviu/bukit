@@ -1,0 +1,18 @@
+{
+  "name": "@bukit/ui-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lógica/estado compartido web ↔ móvil, sin DOM ni UI (stub por ahora)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@bukit/core": "workspace:*"
+  }
+}

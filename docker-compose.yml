@@ -1,0 +1,27 @@
+# Postgres local para desarrollo, tests y CI.
+# Imagen personalizada (ver docker/postgres/Dockerfile) = PostGIS + pgvector juntos.
+# Producción NO usa esto: irá en Neon (EU). Estas credenciales son solo de dev.
+services:
+  db:
+    build: ./docker/postgres
+    image: bukit-postgres:16
+    container_name: bukit-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bukit
+      POSTGRES_PASSWORD: bukit
+      POSTGRES_DB: bukit
+    ports:
+      - "5432:5432"
+    volumes:
+      - bukit-db-data:/var/lib/postgresql/data
+      # Habilita las extensiones al crear la BD por primera vez:
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bukit -d bukit"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  bukit-db-data:
