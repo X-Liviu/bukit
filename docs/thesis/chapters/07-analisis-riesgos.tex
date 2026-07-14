@@ -8,4 +8,178 @@
 \chapter{Análisis de riesgos}
 \label{ch:riesgos}
 
-\todonote{Contenido pendiente.}
+La gestión de riesgos de este \ac{TFG} se plantea como un proceso continuo y no como un trámite inicial: los riesgos se identifican y evalúan al comienzo, pero se revisan durante toda la ejecución conforme a un procedimiento definido de antemano \parencite{boehm-risk}.
+Este planteamiento es especialmente relevante en un proyecto unipersonal: no existe un equipo que detecte de forma natural los problemas de otro miembro, así que la vigilancia debe estar institucionalizada en el propio método de trabajo (capítulo \ref{ch:tareas}).
+
+\section{Método de evaluación}
+\label{sec:riesgos-metodo}
+
+Cada riesgo se evalúa cualitativamente en dos dimensiones, con tres niveles por dimensión: la \emph{probabilidad} de que ocurra (baja = 1, media = 2, alta = 3) y el \emph{impacto} sobre los objetivos del trabajo si ocurre (bajo = 1, medio = 2, alto = 3).
+El producto de ambas define la \emph{exposición}, que clasifica el riesgo en tres niveles de severidad: \textbf{crítico} (exposición 6--9), \textbf{significativo} (3--4) y \textbf{moderado} (1--2).
+Se elige una escala de tres niveles, y no una más fina de cinco, porque con un único evaluador la granularidad extra no aporta precisión real y sí discusiones estériles consigo mismo; la escala gruesa fuerza decisiones claras.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{lccc}
+    \toprule
+    & \textbf{Prob. baja (1)} & \textbf{Prob. media (2)} & \textbf{Prob. alta (3)} \\
+    \midrule
+    \textbf{Impacto alto (3)}  & 3 — Significativo & 6 — Crítico & 9 — Crítico \\
+    \textbf{Impacto medio (2)} & 2 — Moderado & 4 — Significativo & 6 — Crítico \\
+    \textbf{Impacto bajo (1)}  & 1 — Moderado & 2 — Moderado & 3 — Significativo \\
+    \bottomrule
+  \end{tabular}
+  \caption{Matriz de exposición y severidad (probabilidad $\times$ impacto).}
+  \label{tab:matriz-riesgos}
+\end{table}
+
+La severidad determina la cadencia mínima de revisión de cada riesgo (sección \ref{sec:riesgos-seguimiento}), de modo que el esfuerzo de seguimiento sea proporcional a la amenaza.
+
+\section{Identificación y evaluación}
+\label{sec:riesgos-registro}
+
+La identificación inicial parte de tres fuentes: las restricciones propias de este trabajo (una única persona, dedicación variable, dos entregables en paralelo), la experiencia previa del autor en el proyecto de la asignatura de Gestión de Proyectos, y las incertidumbres técnicas concretas del producto (capítulo \ref{ch:objetivos}).
+La tabla \ref{tab:registro-riesgos} recoge el registro resultante, ordenado por exposición; es un registro \emph{vivo}: la sección \ref{sec:riesgos-seguimiento} define cómo se actualiza.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{clcccl}
+    \toprule
+    \textbf{Id} & \textbf{Riesgo} & \textbf{P} & \textbf{I} & \textbf{Exp.} & \textbf{Severidad} \\
+    \midrule
+    R1  & Crecimiento descontrolado del alcance            & 3 & 3 & 9 & Crítico \\
+    R2  & Reducción de disponibilidad en septiembre        & 3 & 2 & 6 & Crítico \\
+    R3  & Error sistemático de estimación                  & 3 & 2 & 6 & Crítico \\
+    R4  & Memoria relegada frente al desarrollo            & 2 & 3 & 6 & Crítico \\
+    R5  & Bloqueo técnico en tecnologías nuevas            & 2 & 2 & 4 & Significativo \\
+    R6  & Dependencia de servicios externos                & 2 & 2 & 4 & Significativo \\
+    R7  & Indisponibilidad prolongada del autor            & 1 & 3 & 3 & Significativo \\
+    R8  & Pérdida de trabajo o del entorno local           & 1 & 3 & 3 & Significativo \\
+    R9  & Incumplimiento del \acs{RGPD} en el diseño       & 1 & 3 & 3 & Significativo \\
+    R10 & Fricción de la cadena de herramientas            & 2 & 1 & 2 & Moderado \\
+    \bottomrule
+  \end{tabular}
+  \caption{Registro de riesgos: evaluación inicial (14/07/2026).}
+  \label{tab:registro-riesgos}
+\end{table}
+
+\section{Plan de respuesta}
+\label{sec:riesgos-plan}
+
+Para cada riesgo se define una \emph{mitigación} (acción preventiva, aplicada desde ya), una \emph{contingencia} (respuesta si el riesgo se materializa) y un \emph{disparador} (indicador observable que exige revisión inmediata).
+
+\subsection{Riesgos críticos}
+
+\paragraph{R1 — Crecimiento descontrolado del alcance.}
+\bukit es un producto ambicioso (red social completa con \eng{feed}, mapa, chat e \ac{IA}) y el autor es a la vez cliente y desarrollador, la combinación perfecta para añadir funcionalidades sin control.
+\textbf{Mitigación:} el alcance queda delimitado por contrato en el capítulo \ref{ch:objetivos} (secciones dentro/fuera), el \eng{backlog} se prioriza con MoSCoW (capítulo \ref{ch:tareas}) y toda idea nueva entra por el \eng{backlog}, nunca directamente al \eng{sprint} en curso.
+\textbf{Contingencia:} descartar las prioridades \emph{Could}, renegociar las \emph{Should} y mover lo recortado a líneas futuras.
+\textbf{Disparador:} un \eng{sprint} cierra con historias no planificadas que desplazaron a las planificadas.
+
+\paragraph{R2 — Reducción de disponibilidad en septiembre.}
+Por motivos personales, la dedicación de septiembre será sensiblemente menor que la del verano; es un riesgo de probabilidad alta porque ya está anunciado.
+\textbf{Mitigación:} la planificación por capacidad variable lo incorpora de serie (capítulo \ref{ch:tareas}): los \eng{sprints} de septiembre nacen con capacidad reducida y las épicas imprescindibles se adelantan al verano.
+\textbf{Contingencia:} re-priorizar el \eng{backlog}, y absorber el retraso con la holgura existente hasta la defensa (convocatoria de junio de \thesisYear).
+\textbf{Disparador:} dos \eng{sprints} consecutivos con velocidad real por debajo de la capacidad ya reducida que se les asignó.
+
+\paragraph{R3 — Error sistemático de estimación.}
+Es la primera vez que el autor estima en solitario con puntos de historia, sin el contraste de un equipo; la propia planificación inicial ya declara una tensión entre alcance comprometido y capacidad nominal (capítulo \ref{ch:tareas}).
+\textbf{Mitigación:} medir la velocidad real desde el primer \eng{sprint}, recalibrar la equivalencia horas/punto cada cierre y trocear cualquier historia mayor de 8 puntos antes de abordarla.
+\textbf{Contingencia:} re-priorización MoSCoW y ampliación de la horquilla de cierre, comunicada en el capítulo \ref{ch:gantt-tfg}.
+\textbf{Disparador:} la velocidad real de los tres primeros \eng{sprints} se desvía más de un 25\,\% de la hipótesis inicial.
+
+\paragraph{R4 — Memoria relegada frente al desarrollo.}
+La tentación natural de un \ac{TFG} con producto es programar ahora y documentar después, lo que degrada la calidad de la memoria y pierde el detalle de las decisiones.
+\textbf{Mitigación:} la redacción es una épica transversal con hueco en todos los \eng{sprints} (capítulo \ref{ch:tareas}), la Definición de Hecho exige documentar las decisiones, y el diario de desarrollo se escribe al cierre de cada sesión, no de memoria semanas después.
+\textbf{Contingencia:} dedicar \eng{sprints} exclusivos a la memoria antes del cierre (los dos últimos ya lo prevén parcialmente).
+\textbf{Disparador:} un capítulo afectado por el trabajo de dos \eng{sprints} seguidos permanece sin redactar.
+
+\subsection{Riesgos significativos}
+
+\paragraph{R5 — Bloqueo técnico en tecnologías nuevas.}
+PostGIS, pgvector, la mensajería en tiempo real y la combinación Expo/pnpm son territorio nuevo para el autor, con potencial de consumir días en un problema imprevisto.
+\textbf{Mitigación:} investigaciones acotadas en el tiempo (\eng{spikes} con límite explícito) antes de comprometer historias que dependan de la tecnología, y preferencia por servicios gestionados donde exista esa opción.
+\textbf{Contingencia:} adoptar la alternativa técnica documentada en el análisis de alternativas o degradar la función a su versión mínima.
+\textbf{Disparador:} una historia técnica duplica su estimación sin resolución a la vista.
+
+\paragraph{R6 — Dependencia de servicios externos.}
+La \ac{IA} de plazos, la base de datos gestionada y la verificación de identidad dependen de terceros con costes, cuotas y disponibilidad fuera del control del proyecto.
+\textbf{Mitigación:} todas las integraciones externas se declaran objetivos secundarios o se implementan en modo de pruebas con dobles locales (\eng{stubs}), de forma que el núcleo del producto nunca dependa de ellas.
+\textbf{Contingencia:} sustituir el servicio por un doble local y documentar la integración real como línea futura.
+\textbf{Disparador:} cambio de precios, de límites de uso o interrupción del servicio.
+
+\paragraph{R7 — Indisponibilidad prolongada del autor.}
+Una enfermedad o imprevisto personal detiene por completo un proyecto unipersonal: no hay a quién traspasar el trabajo.
+\textbf{Mitigación:} margen temporal deliberado (el cierre objetivo es octubre--noviembre de 2026 frente a una defensa en junio de \thesisYear) y documentación continua (diario más memoria) que permite retomar el contexto tras una pausa sin pérdida.
+\textbf{Contingencia:} pausa formal, re-planificación completa del calendario y, en el extremo, cambio de convocatoria.
+\textbf{Disparador:} una semana natural completa sin poder trabajar por causa sobrevenida.
+
+\paragraph{R8 — Pérdida de trabajo o del entorno local.}
+Un fallo del equipo de desarrollo o un borrado accidental puede destruir trabajo no respaldado.
+\textbf{Mitigación:} absolutamente todo (código, memoria, diario, planificación) vive en el mismo repositorio git con remoto en GitHub, con subidas frecuentes; esta es precisamente una de las razones por las que la documentación del proyecto se versiona junto al código.
+\textbf{Contingencia:} restaurar desde el remoto; la pérdida máxima queda acotada a la sesión en curso.
+\textbf{Disparador:} cualquier síntoma de fallo del equipo o del disco.
+
+\paragraph{R9 — Incumplimiento del \acs{RGPD} en el diseño.}
+El producto maneja datos especialmente delicados: ubicación de personas, verificación de identidad con documento y la regla de mayoría de edad para conocer desconocidos.
+\textbf{Mitigación:} minimización desde el diseño, ya decidida en el capítulo \ref{ch:objetivos}: la verificación se delega en un proveedor externo guardando solo estado y \eng{token}, la ubicación se difumina y exige consentimiento, y los datos residen en región europea.
+\textbf{Contingencia:} recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento.
+\textbf{Disparador:} cualquier decisión de diseño que requiera almacenar un dato personal nuevo.
+
+\subsection{Riesgos moderados}
+
+\paragraph{R10 — Fricción de la cadena de herramientas.}
+El entorno Windows ya ha mostrado aristas (compilación \LaTeX{} sin Perl, enlaces simbólicos de pnpm con Metro, Docker) que roban tiempo sin aportar valor.
+\textbf{Mitigación:} cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez.
+\textbf{Contingencia:} aplicar la alternativa documentada (por ejemplo, el modo \eng{hoisted} de pnpm) o trasladar el paso conflictivo a la integración continua, que corre en Linux.
+\textbf{Disparador:} más de una hora perdida en la misma fricción ya conocida.
+
+\section{Seguimiento de riesgos}
+\label{sec:riesgos-seguimiento}
+
+De nada sirve un plan de riesgos que no se vuelve a leer.
+Esta sección fija \emph{cuándo} se revisa cada riesgo, \emph{dónde} queda constancia y \emph{qué} se considera una novedad digna de registro.
+
+\subsection{Decisión: revisión anclada a la retrospectiva, sin actas}
+\label{sec:riesgos-decision-seguimiento}
+
+En el proyecto grupal de la asignatura de Gestión de Proyectos, el seguimiento se realizaba mediante actas de reunión semanales.
+Esa alternativa se ha considerado y se descarta aquí: el valor de un acta es sincronizar a un equipo y dejar constancia de acuerdos entre personas, y en un proyecto unipersonal no existe nadie con quien sincronizarse, por lo que el acta degeneraría en burocracia duplicada con el diario de desarrollo y terminaría por abandonarse.
+En su lugar, la revisión de riesgos se ancla a un ritual que ya existe y que, por método, no puede saltarse: la retrospectiva de cierre de cada \eng{sprint} (capítulo \ref{ch:tareas}), cuya entrada del diario de desarrollo incluye una sección fija de revisión de riesgos.
+Anclar el seguimiento a un hábito existente, en lugar de crear un artefacto nuevo, es la forma más fiable de garantizar que ocurra.
+
+La cadencia mínima de revisión es proporcional a la severidad:
+
+\begin{itemize}
+  \item \textbf{Críticos}: en todas las retrospectivas (cadencia semanal).
+  \item \textbf{Significativos}: cada dos \eng{sprints} (cadencia quincenal).
+  \item \textbf{Moderados}: cada cuatro \eng{sprints} (cadencia aproximadamente mensual).
+\end{itemize}
+
+Además de la cadencia fija, cualquier riesgo se revisa de inmediato si se observa su disparador o si aparece un riesgo nuevo, sin esperar a la siguiente retrospectiva.
+Este componente dirigido por eventos es coherente con la filosofía general del proyecto (reaccionar a los hechos en lugar de sondear por calendario) y evita que un disparador observado un martes espere hasta el domingo.
+
+\subsection{Registro de las revisiones}
+\label{sec:riesgos-registro-revisiones}
+
+El diario de desarrollo registra \emph{todas} las revisiones, incluidas las que concluyen «sin novedad», porque demostrar que el seguimiento ocurrió también es evidencia.
+La memoria, en cambio, solo acumula \emph{cambios}: reevaluaciones de probabilidad o impacto, materializaciones, cierres, riesgos nuevos y acciones tomadas.
+Separar ambos registros mantiene esta memoria legible (señal) sin perder la trazabilidad fina (ruido útil), que queda en el diario versionado en el repositorio.
+
+Cada riesgo está en todo momento en uno de estos estados: \emph{identificado}, \emph{estable}, \emph{agravado}, \emph{mitigado}, \emph{materializado} o \emph{cerrado}.
+La tabla \ref{tab:seguimiento-riesgos} es la plantilla de ese registro de cambios, sembrada con la evaluación inicial; cuando un cambio reevalúa un riesgo, la tabla \ref{tab:registro-riesgos} se actualiza para reflejar siempre el estado vigente, y el histórico queda aquí.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{llcll}
+    \toprule
+    \textbf{Fecha} & \textbf{Sprint} & \textbf{Riesgo} & \textbf{Estado} & \textbf{Acción / decisión} \\
+    \midrule
+    14/07/2026 & S0 & Todos & Identificado & Evaluación inicial y plan de respuesta (v1). \\
+    \bottomrule
+  \end{tabular}
+  \caption{Registro de seguimiento de riesgos (solo cambios; las revisiones sin novedad constan en el diario).}
+  \label{tab:seguimiento-riesgos}
+\end{table}

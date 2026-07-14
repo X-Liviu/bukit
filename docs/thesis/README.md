@@ -21,7 +21,7 @@ thesis/
 │   └── acknowledgements.tex
 ├── chapters/             ← un archivo por capítulo (índice oficial EIB, 1-15):
 │   ├── 01-introduccion.tex            09-diseno.tex
-│   ├── 02-contexto.tex                10-tareas-gantt.tex
+│   ├── 02-contexto.tex                10-planificacion_temporal-estimacion_esfuerzo.tex
 │   ├── 03-objetivos-alcance.tex       11-calculos-algoritmos.tex
 │   ├── 04-beneficios-ods.tex          12-analisis-resultados.tex
 │   ├── 05-estado-del-arte.tex         13-gantt-tfg.tex

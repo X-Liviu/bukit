@@ -42,3 +42,6 @@ Thumbs.db
 
 # Turborepo (si se añade más adelante)
 .turbo/
+
+# Graphify
+graphify-out/
