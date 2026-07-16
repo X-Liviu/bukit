@@ -3,21 +3,23 @@
 % Planificación del propio TFG (no del producto): fases del trabajo
 % académico, cronograma previsto vs. real. Fuente de los datos reales:
 % el dev-journal (docs/dev-journal/, con las horas de cada sesión).
+% Re-basado el 16-07-2026 sobre el calendario real (verano con trabajo,
+% Erasmus sept-ene, prácticas desde febrero); ver cap. 10 y dev-journal.
 % =========================================================================
 
 \chapter{Diagrama de Gantt del TFG}
 \label{ch:gantt-tfg}
 
 Mientras que el capítulo \ref{ch:tareas} planifica el desarrollo del producto, este capítulo planifica el \ac{TFG} completo como proyecto académico: sus fases, sus hitos y su cronograma, primero en versión prevista y, al cierre, en versión real con el análisis de las desviaciones.
-La coherencia entre ambos capítulos es deliberada: las fases de desarrollo (F0 a F4) son las mismas, y aquí se les añade lo que las rodea (la memoria como trabajo transversal, el margen de desviación y la defensa).
+La coherencia entre ambos capítulos es deliberada: las fases (F0 a F4) y las dos pausas planificadas son las mismas, y aquí se les añade lo que las rodea (la memoria como trabajo transversal, el margen hasta el depósito y la defensa).
 
 \section{Cronograma previsto}
 \label{sec:gantt-previsto}
 
-El trabajo comenzó el 12/07/2026 con la creación del repositorio y la primera entrada del diario de desarrollo.
-La figura \ref{fig:gantt-tfg-previsto} representa el cronograma previsto; conviene leerla junto a dos decisiones ya justificadas.
+El trabajo comenzó el 12/07/2026 con la creación del repositorio, y la semana del 14 al 19 de julio constituye el \eng{sprint} de planificación S0 (fase F0), en el que se elaboran los objetivos, el plan de riesgos y la planificación que aquí se representa.
+La figura \ref{fig:gantt-tfg-previsto} recoge el cronograma previsto completo, del arranque a la defensa; conviene leerla junto a dos decisiones ya justificadas.
 Primera: en coherencia con la metodología del capítulo \ref{ch:tareas}, el detalle fino (qué historia se aborda cada semana) vive en el \eng{backlog} y no en este diagrama, que solo compromete fases e hitos; un Gantt de tareas individuales sería precisión falsa en un alcance emergente.
-Segunda: el diagrama incluye explícitamente como barra el margen de desviación de unas cuatro semanas derivado de la tensión declarada entre alcance y capacidad (sección \ref{sec:fases-tension}), en lugar de esconderlo.
+Segunda: el diagrama representa explícitamente las dos pausas planificadas (los traslados de ida y vuelta de la estancia Erasmus) y el margen entre el cierre del desarrollo y el depósito, en lugar de esconderlos.
 
 \begin{figure}[htbp]
   \centering
@@ -36,60 +38,82 @@ Segunda: el diagrama incluye explícitamente como barra el margen de desviación
         group label font=\small\bfseries,
         milestone label font=\small\itshape,
         milestone/.append style={fill=black},
-      ]{2026-07-13}{2026-11-15}
-      \gantttitle{2026}{126} \\
-      \gantttitle{julio}{19}
-      \gantttitle{agosto}{31}
-      \gantttitle{septiembre}{30}
-      \gantttitle{octubre}{31}
-      \gantttitle{nov.}{15} \\
-      \ganttbar{F0 Preparación y planificación}{2026-07-13}{2026-07-19} \\
-      \ganttgroup{Ejecución (S1--S13)}{2026-07-20}{2026-10-18} \\
-      \ganttbar{F1 Fundaciones}{2026-07-20}{2026-08-09} \\
-      \ganttbar{F2 Núcleo social}{2026-08-10}{2026-08-30} \\
-      \ganttbar{F3 Diferenciadores}{2026-08-31}{2026-10-04} \\
-      \ganttbar{F4 Cierre de producto}{2026-10-05}{2026-10-18} \\
-      \ganttbar{Memoria (transversal)}{2026-07-13}{2026-11-15} \\
-      \ganttbar[bar/.append style={fill=black!10, draw=black!50, dashed}]{Margen de desviación}{2026-10-19}{2026-11-15} \\
-      \ganttmilestone{Cierre de ejecución previsto}{2026-10-18} \\
-      \ganttmilestone{Cierre total previsto}{2026-11-15}
+      ]{2026-07-13}{2027-07-31}
+      \gantttitle{2026}{172} \gantttitle{2027}{212} \\
+      \gantttitle{jul}{19}
+      \gantttitle{ago}{31}
+      \gantttitle{sep}{30}
+      \gantttitle{oct}{31}
+      \gantttitle{nov}{30}
+      \gantttitle{dic}{31}
+      \gantttitle{ene}{31}
+      \gantttitle{feb}{28}
+      \gantttitle{mar}{31}
+      \gantttitle{abr}{30}
+      \gantttitle{may}{31}
+      \gantttitle{jun}{30}
+      \gantttitle{jul}{31} \\
+      \ganttbar{F0 Planificación (S0)}{2026-07-14}{2026-07-19} \\
+      \ganttgroup{Ejecución (S1--S39)}{2026-07-20}{2027-05-16} \\
+      \ganttbar{F1 Fundaciones de la API}{2026-07-20}{2026-08-30} \\
+      \ganttbar[bar/.append style={fill=black!8, draw=black!40}]{Pausa: traslado al Erasmus}{2026-08-31}{2026-09-20} \\
+      \ganttbar{F2 Cliente web, listas y publicaciones}{2026-09-21}{2027-01-24} \\
+      \ganttbar[bar/.append style={fill=black!8, draw=black!40}]{Pausa: regreso a Bilbao}{2027-01-25}{2027-01-31} \\
+      \ganttbar{F3 Núcleo social y diferenciadores}{2027-02-01}{2027-03-28} \\
+      \ganttbar{F4 Cierre de producto y memoria}{2027-03-29}{2027-05-16} \\
+      \ganttbar{Memoria (transversal)}{2026-07-14}{2027-05-16} \\
+      \ganttbar[bar/.append style={fill=black!10, draw=black!50, dashed}]{Margen hasta el depósito}{2027-05-17}{2027-06-30} \\
+      \ganttmilestone{Cierre del desarrollo previsto}{2027-05-16}
     \end{ganttchart}%
   }
-  \caption{Cronograma previsto del \acs{TFG} (las líneas punteadas separan los \eng{sprints} semanales; la defensa, en junio de \thesisYear, queda fuera de la escala).}
+  \caption{Cronograma previsto del \acs{TFG} (las líneas punteadas separan los \eng{sprints} semanales; la defensa se sitúa en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva).}
   \label{fig:gantt-tfg-previsto}
 \end{figure}
 
-La franja de septiembre de la fase F3 se ve más larga de lo que pesa: son cinco semanas de calendario, pero solo 70 horas de capacidad, por la reducción de disponibilidad ya planificada (riesgo R2).
+Las longitudes de las barras engañan a propósito de la carga de trabajo: F2 es la fase más larga en calendario (dieciocho semanas) pero solo la segunda en horas (90), porque durante la estancia Erasmus la capacidad declarada baja a unas 5 horas semanales; F3, con la mitad de semanas, concentra más horas (120) al convivir solo con las prácticas de empresa.
+En un Gantt clásico la longitud es esfuerzo; aquí es calendario, y el esfuerzo lo fija la capacidad declarada de cada periodo (capítulo \ref{ch:tareas}).
 
 La tabla \ref{tab:hitos-tfg} fija los hitos de control del proyecto.
-Obsérvese la holgura estructural: el cierre total previsto es noviembre de 2026, pero la defensa se sitúa en la convocatoria de junio de \thesisYear.
-Esos meses de margen no son tiempo planificado de trabajo, sino el amortiguador que hace que los riesgos de calendario (R2, R3, R7) amenacen al objetivo ambicioso del autor, y no a la entrega del \ac{TFG}.
 
 \begin{table}[htbp]
   \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
   \begin{tabular}{ll}
     \toprule
     \textbf{Hito} & \textbf{Fecha prevista} \\
     \midrule
-    Inicio del proyecto (repositorio y diario)        & 12/07/2026 \\
-    Inicio de la ejecución (S1)                       & 20/07/2026 \\
-    Cierre de F1 — fundaciones                        & 09/08/2026 \\
-    Cierre de F2 — núcleo social                      & 30/08/2026 \\
-    Cierre de F3 — diferenciadores                    & 04/10/2026 \\
-    Cierre de F4 — fin de la ejecución                & 18/10/2026 \\
-    Cierre total (producto y memoria completos)      & 15/11/2026 \\
-    Depósito y defensa                                & convocatoria de junio de \thesisYear \\
+    Inicio del proyecto (repositorio y diario)            & 12/07/2026 \\
+    Cierre de F0 — plan inicial completo                  & 19/07/2026 \\
+    Inicio de la ejecución (S1)                           & 20/07/2026 \\
+    Cierre de F1 — fundaciones de la API                  & 30/08/2026 \\
+    Cierre de F2 — cliente web, listas y publicaciones    & 24/01/\thesisYear \\
+    Cierre de F3 — núcleo social y diferenciadores        & 28/03/\thesisYear \\
+    Cierre de F4 — fin del desarrollo (producto y memoria) & 16/05/\thesisYear \\
+    Depósito y defensa                                    & junio--julio de \thesisYear{} (septiembre de reserva) \\
     \bottomrule
   \end{tabular}
   \caption{Hitos del \acs{TFG}.}
   \label{tab:hitos-tfg}
 \end{table}
 
+\section{Escenarios de disponibilidad: el plan como techo, no como suelo}
+\label{sec:gantt-escenarios}
+
+Las capacidades declaradas por periodo describen deliberadamente el escenario razonable de \emph{menor} disponibilidad, no una previsión media ni optimista.
+La mayor incógnita del calendario es la carga real de la estancia Erasmus: se planifica con 5 horas semanales de promedio porque es la cifra defendible hoy, pero es perfectamente posible que la estancia deje bastante más tiempo libre del previsto.
+Planificar sobre ese mejor caso sería apostar el \ac{TFG} a una hipótesis que no se puede verificar hasta estar allí; planificar sobre el peor caso razonable garantiza que incluso él termina el trabajo antes del depósito.
+
+La consecuencia práctica es que las fechas de este capítulo son un techo comprometido, no un suelo: si la disponibilidad real supera la hipótesis, la recalibración semanal de la velocidad (capítulo \ref{ch:tareas}) adelanta los hitos de forma natural, sin cambiar de método ni de plan.
+El orden de magnitud del posible adelanto es grande: tras el verano quedan unos 117 puntos de trabajo comprometido (unas 316 horas nominales), de modo que una estancia que dejara 20--25 horas semanales reales —frente a las 5 declaradas— situaría el cierre completo del desarrollo entre diciembre de 2026 y enero de \thesisYear, con meses de sobra para revisar la memoria con calma.
+Ese escenario no se promete: se registra aquí para que el seguimiento (sección \ref{sec:gantt-real}) pueda comparar la realidad contra ambos extremos, y para dejar claro que cualquier desviación positiva de capacidad se traduce en adelanto de hitos, no en ampliación del alcance (la entrada de prioridades deseables u opcionales sigue condicionada a la velocidad, sección \ref{sec:fases-tension}).
+En el sentido contrario vigila el riesgo R7 (capacidad real por debajo incluso de lo declarado, capítulo \ref{ch:riesgos}): entre ambos, el plan queda acotado por arriba y por abajo.
+
 \section{Encaje con la dedicación de referencia}
 \label{sec:gantt-horas}
 
-La tabla \ref{tab:horas-previstas} reparte por fases las 360 horas de referencia de los 12 créditos \ac{ECTS}.
-Las horas de redacción de la memoria durante la ejecución están contenidas en la capacidad de los \eng{sprints} (épica transversal EP15); la partida final de cierre cubre la revisión global posterior a la ejecución.
+La tabla \ref{tab:horas-previstas} reparte por fases la dedicación prevista.
+Las horas de redacción de la memoria durante la ejecución están contenidas en la capacidad de los \eng{sprints} (épica transversal EP15); el excedente de F4 sobre sus épicas de producto está reservado precisamente para el cierre de la memoria.
 
 \begin{table}[htbp]
   \centering
@@ -97,24 +121,27 @@ Las horas de redacción de la memoria durante la ejecución están contenidas en
     \toprule
     \textbf{Fase} & \textbf{Horas previstas} \\
     \midrule
-    F0 — Preparación y planificación            & 30 \\
-    F1 — Fundaciones (S1--S3)                   & 90 \\
-    F2 — Núcleo social (S4--S6)                 & 90 \\
-    F3 — Diferenciadores (S7--S11)              & 70 \\
-    F4 — Cierre de producto (S12--S13)          & 60 \\
-    Cierre de memoria (19/10 -- 15/11)          & 20 \\
+    F0 — Planificación (S0)                             & $\sim$20 \\
+    F1 — Fundaciones de la API (S1--S6)                 & 60 \\
+    F2 — Cliente web, listas y publicaciones (S7--S24)  & 90 \\
+    F3 — Núcleo social y diferenciadores (S25--S32)     & 120 \\
+    F4 — Cierre de producto y memoria (S33--S39)        & 105 \\
     \midrule
-    \textbf{Total}                              & \textbf{360} \\
+    \textbf{Total previsto}                             & \textbf{$\sim$395} \\
     \bottomrule
   \end{tabular}
   \caption{Distribución prevista de la dedicación (en horas).}
   \label{tab:horas-previstas}
 \end{table}
 
+El total previsto (unas 395 horas) supera en un 10\,\% las 360 horas de referencia de los 12 créditos \ac{ECTS}.
+Ese exceso es deliberado y se declara: absorbe la curva de aprendizaje de una pila tecnológica mayoritariamente nueva para el autor (riesgo R6) y el coste de gestión de un proyecto que, además de producto, produce su propia documentación de seguimiento.
+La referencia \ac{ECTS} es una medida académica del tamaño esperado del trabajo, no un límite de dedicación; la desviación real se medirá con las horas del diario.
+
 \section{Seguimiento: previsto frente a real}
 \label{sec:gantt-real}
 
 El cronograma real no se reconstruirá de memoria al final, sino que se deriva de datos registrados por el propio método de trabajo: el diario de desarrollo anota las horas de cada sesión, y cada cierre de \eng{sprint} deja su velocidad y su retrospectiva.
 Al cierre de cada fase se consolidarán aquí tres datos: sus fechas reales, sus horas reales agregadas del diario y la desviación frente a lo previsto con su causa.
-Al término del proyecto, esta sección presentará el diagrama de Gantt real superpuesto al previsto y el análisis de las desviaciones, en particular la evolución de la tensión alcance--capacidad declarada en la sección \ref{sec:fases-tension}.
+Al término del proyecto, esta sección presentará el diagrama de Gantt real superpuesto al previsto y el análisis de las desviaciones, en particular dos comparaciones ya comprometidas: la evolución del encaje al límite entre alcance y capacidad (sección \ref{sec:fases-tension}) y la posición de la realidad entre el escenario conservador planificado y el escenario favorable descrito en la sección \ref{sec:gantt-escenarios}.
 \todonote{Sección pendiente de ejecución: completar al cierre de cada fase con los datos del diario.}

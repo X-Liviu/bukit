@@ -27,6 +27,16 @@
 \usepackage{graphicx}
 \graphicspath{{figures/}}     % Las imágenes se buscan siempre en figures/
 \usepackage{booktabs}         % Tablas profesionales (\toprule, \midrule, \bottomrule)
+\usepackage{array}            % >{\raggedright\arraybackslash} en columnas p{} de texto
+% El plan de riesgos (cap. 7) es una tabla de texto que supera una página:
+% longtable la parte entre páginas repitiendo la cabecera (un table flotante
+% no puede partirse y desbordaría).
+% AVISO ESPERADO: toda longtable larga emite "ignored error: Infinite glue
+% shrinkage found in box being split" en cada salto de página. Es un bug
+% conocido e inofensivo de longtable con los kernels LaTeX recientes
+% (latex3/latex2e#1907, corregido en la rama de desarrollo); no depende de
+% nuestro contenido (reproducido con una tabla trivial y preámbulo desnudo).
+\usepackage{longtable}
 % Gantt dibujado en LaTeX (no imagen pegada): el cronograma evoluciona con el
 % proyecto y así cada ajuste queda como diff limpio en git (cap. 13).
 \usepackage{pgfgantt}
@@ -40,6 +50,12 @@
 % Citar con \parencite{clave} -> "(Williams, 1995)"
 %       o  \textcite{clave}   -> "Williams (1995)"
 \usepackage[backend=biber, style=apa]{biblatex}
+% Permitir a biblatex partir las URL largas de la bibliografía en más
+% puntos (números y letras), evitando líneas desbordadas en las entradas
+% con enlaces.
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
 \DeclareLanguageMapping{spanish}{spanish-apa}
 % biblatex-apa no trae localización en euskera (basque-apa.lbx); mapeamos a
 % la española para silenciar el aviso. Solo afectaría a citas hechas DENTRO

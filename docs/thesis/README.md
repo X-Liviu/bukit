@@ -46,7 +46,9 @@ thesis/
 
 ## Convenciones
 
+- **Guía de estilo de la universidad = norma**: transcripción literal en [../referencias/guia-estilo-TFG.md](../referencias/guia-estilo-TFG.md); ante cualquier duda de estilo (extensión, formato, citas, tablas/figuras), ese documento manda.
 - **Citas en APA** (exigido por la guía): `\parencite{clave}` → "(Williams, 1995)"; `\textcite{clave}` → "Williams (1995)". Las referencias van en [bibliography/references.bib](bibliography/references.bib).
+- **Toda información de fuente externa se referencia siempre** (datos, afirmaciones, marcos teóricos, definiciones ajenas). La guía lo exige y advierte de que la detección de plagio supone el suspenso directo: ninguna afirmación no original sin su cita.
 - **Acrónimos**: definirlos en [frontmatter/acronyms.tex](frontmatter/acronyms.tex) y usarlos con `\ac{TFG}` (la primera vez imprime la forma completa).
 - **Una frase por línea** en los `.tex`: los diffs de git quedan limpios.
 - **Labels con prefijo**: `ch:` capítulos, `sec:` secciones, `fig:` figuras, `tab:` tablas, `ap:` anexos.
@@ -54,6 +56,9 @@ thesis/
 - **Datos globales**: nunca escribir título/autor/curso a mano; usar `\thesisTitle`, `\thesisAuthorFormal`... (en `config/metadata.tex`, con los `TODO` pendientes marcados).
 - **Pendientes**: marcar con `\todonote{...}` (rojo en el PDF); antes de entregar, buscar "todonote" y eliminar todos.
 
-## Requisitos de formato aún no aplicados
+## Formato de la guía de estilo (aplicado el 16-07-2026)
 
-Anotados en [config/style.tex](config/style.tex) para la fase de diseño: Calibri (via `carlito` o XeLaTeX), márgenes 2,5 cm, interlineado sencillo + 6 pt entre párrafos, formato de títulos, doble cara, ~40 páginas, logos de identidad visual UPV/EHU en la portada.
+Implementado en [config/style.tex](config/style.tex): Carlito con `[sfdefault]` (clon métrico libre de Calibri; alternativa XeLaTeX/LuaLaTeX descartada por romper la cadena pdflatex+biber verificada), márgenes 2,5 cm (`geometry`), interlineado sencillo + 6 pt entre párrafos sin sangría (`parskip`), títulos según la guía con `titlesec` (capítulo MAYÚSCULA 14 pt negrita; 1er nivel MAYÚSCULA 12 pt negrita; 2º minúscula 12 pt negrita; 3º minúscula 12 pt cursiva; numeración con punto: 1., 1.1., 1.1.1.), doble cara (`twoside` en `main.tex`, cuerpo a 11 pt).
+Detalles no obvios: Carlito no tiene versalitas (se sustituyen por redonda vía `.fd` + `\DeclareFontShape`; por eso `\bukit` pasó de versalitas a mayúsculas), y los títulos largos van en `\raggedright` para no desbordar línea.
+Pendiente para la fase de diseño: solo los logos de identidad visual UPV/EHU en la portada.
+La fuente literal de estos requisitos es [../referencias/guia-estilo-TFG.md](../referencias/guia-estilo-TFG.md) (apartados a y b).

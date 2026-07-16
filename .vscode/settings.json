@@ -44,6 +44,7 @@
       "name": "pdflatex",
       "command": "pdflatex",
       "args": [
+        "--enable-installer",
         "-synctex=1",
         "-interaction=nonstopmode",
         "-file-line-error",
@@ -72,6 +73,17 @@
     },
     { "name": "latexmk (requiere Perl)", "tools": ["latexmk"] }
   ],
+  // Usar siempre la primera receta (la de sin Perl) al compilar.
+  "latex-workshop.latex.recipe.default": "first",
+  // Recompilar automáticamente al guardar cualquier .tex del proyecto.
+  // LaTeX Workshop detecta que main.tex es la raíz (tiene \documentclass) y lo
+  // compila aunque guardes un capítulo suelto de chapters/, así que el PDF
+  // main.pdf se actualiza edites el archivo que edites.
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  // Abrir/actualizar el PDF en una pestaña de VS Code (no en navegador externo).
+  "latex-workshop.view.pdf.viewer": "tab",
+  // No borrar los .aux/.bcf entre compilaciones: biber los necesita para las citas.
+  "latex-workshop.latex.autoClean.run": "never",
 
   // === Menos ruido en la búsqueda ===
   "search.exclude": {

@@ -61,7 +61,7 @@ Principio rector: web y móvil **comparten lógica** (tipos, validación Zod, ap
   - **IA (estimación de plazos + afinidad)**: dirigida por eventos, nunca polling. LLM con salida JSON estructurada solo al crear/editar lista o pedir estimación, en job en segundo plano (**BullMQ + Redis**), con caché; no recomputar si la lista no cambió. Embeddings al crear metas/intereses → pgvector.
   - **KYC**: proveedor externo (Stripe Identity / Veriff / Onfido), nunca reconocimiento propio. Guardar solo estado + token; verificar y borrar la imagen del DNI (minimización, RGPD).
   - **Ads**: red existente (AdMob móvil, AdSense/Ad Manager web) + tabla propia de posts patrocinados inyectada por el ranking.
-  - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo). **Push**: Expo Push o FCM.
+  - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo; objetivo secundario del TFG, decidido el 14-07-2026). **Push**: Expo Push o FCM.
 - Ubicación: solo aproximada/difuminada, solo con consentimiento y verificación. Datos en región EU.
 
 #### 1.4.2 Frontend (web + móvil)
@@ -79,7 +79,7 @@ GitHub Actions **fail-fast**: lint/estático → typecheck → tests unitarios +
 
 ### 1.5 Líneas futuras (fuera del alcance del TFG)
 
-Planes de pago (más de 3 listas), KYC con proveedor real en producción, red de anuncios real, vídeo (Mux/Stream), publicación en App Store / Play Store, penalización social por metas incumplidas, panel de administración TOP, Supabase como alternativa de aceleración para una v2 (decidido: el backend propio Node+Prisma+Postgres es el núcleo del TFG porque demuestra las competencias del grado).
+Planes de pago (más de 3 listas), contratación comercial del proveedor de KYC en producción (la integración en modo sandbox sí entra en el TFG), red de anuncios real, publicación en App Store / Play Store, penalización social por metas incumplidas, panel de administración TOP, Supabase como alternativa de aceleración para una v2 (decidido: el backend propio Node+Prisma+Postgres es el núcleo del TFG porque demuestra las competencias del grado).
 
 ### 1.6 Diseño (pendiente de definir)
 
@@ -93,7 +93,7 @@ Planes de pago (más de 3 listas), KYC con proveedor real en producción, red de
 ### 2.1 Comandos personalizados (definidos en `.claude/commands/`)
 
 - **`/memoria`** — revisar y actualizar la memoria LaTeX (`docs/thesis/`) con los cambios recientes del proyecto (git log + dev-journal + sesión actual), recompilando y verificando al final.
-- **`/journal`** — crear la entrada del dev-journal de la sesión de hoy (`docs/dev-journal/DD-MM-YYYY.md` a partir de `TEMPLATE.md`), antes de cerrar la sesión.
+- **`/journal`** — crear **o actualizar** la entrada del dev-journal de la sesión de hoy (`docs/dev-journal/DD-MM-YYYY.md`), antes de cerrar la sesión. Si ya existe una entrada de hoy (escrita a mano o por un `/journal` de otra sesión del día), **pregunta** si añadir a esa entrada conservando lo que hay o crear una nueva con sufijo `-b`.
 
 ### 2.2 Procedimientos
 
@@ -114,23 +114,28 @@ Planes de pago (más de 3 listas), KYC con proveedor real en producción, red de
 
 Convenciones completas en `docs/thesis/README.md`; resumen de lo innegociable:
 
+- **La guía de estilo de la universidad es NORMATIVA y se aplica a rajatabla**: transcripción literal en `docs/referencias/guia-estilo-TFG.md` (extensión 40 pp. —máx. 60 excepcional—, formato, citas APA-Harvard con sus 15 tipos de fuente, tablas/figuras con doble numeración). Ante cualquier duda de estilo, ese documento manda. El bloque de formato visual está **aplicado** desde el 16-07-2026 en `config/style.tex`: Carlito (clon métrico libre de Calibri, pdflatex no puede usar la real), márgenes 2,5 cm, 6 pt entre párrafos, títulos según la guía (cap. MAYÚSCULA 14 pt, apartados 12 pt), doble cara, cuerpo 11 pt.
+
 - **Compilación (Windows, MiKTeX sin Perl)**: `latexmk` y `pnpm docs:pdf` NO funcionan (falta Perl). Usar la receta de LaTeX Workshop "pdflatex × 2 + biber (sin Perl)" o a mano: `pdflatex --enable-installer -interaction=nonstopmode -file-line-error -output-directory=build main.tex` → `biber build/main` → 2 pases más de pdflatex. PDF en `docs/thesis/build/main.pdf`.
 - **No quitar `es-noshorthands` de babel** (config/packages.tex): evita un conflicto real entre babel-spanish y biblatex-apa ("Generic hooks cannot be added to '\@makecaption'"). No tocar sin volver a probar la compilación.
 - Estructura modular: `main.tex` solo ensambla; un capítulo = un archivo (`chapters/01`–`15`, índice oficial EIB); datos globales solo en `config/metadata.tex` (`\thesisTitle`, `\thesisAuthorFormal`...), nunca escritos a mano.
 - **Una frase por línea** en los `.tex` (diffs limpios). Labels con prefijo: `ch:` `sec:` `fig:` `tab:` `ap:`.
-- Citas en **APA** con `\parencite{}` / `\textcite{}` (referencias en `bibliography/references.bib`; plantillas de entradas en `PLANTILLAS.md`, nunca comentarios dentro del `.bib`). Quitar el `\nocite{prisma-docs}` temporal de `main.tex` con la primera cita real.
+- **Toda información procedente de una fuente externa se referencia SIEMPRE** (datos, afirmaciones, marcos teóricos, definiciones ajenas): la guía de TFG de la universidad exige normas APA y advierte de que la detección de plagio supone el suspenso directo. Ninguna afirmación no original sin su cita.
+- Citas en **APA** con `\parencite{}` / `\textcite{}` (referencias en `bibliography/references.bib`; plantillas de entradas en `PLANTILLAS.md`, nunca comentarios dentro del `.bib`).
 - Acrónimos: definir en `frontmatter/acronyms.tex` y usar `\ac{TFG}` en el texto.
 - Pendientes: marcar con `\todonote{...}`; antes de entregar, buscar "todonote" y eliminarlos todos.
-- El formato visual (Calibri, márgenes 2,5 cm, títulos, doble cara) está **aplazado**: los requisitos están anotados en `config/style.tex`; no aplicarlos hasta la fase de diseño.
-- Tras cualquier cambio en la memoria, **compilar y verificar exit 0** sin warnings nuevos (los 6 `acro:*` actuales son esperados hasta usar `\ac{}` en texto real).
+- El formato visual está **aplicado** en `config/style.tex` (Carlito como Calibri, márgenes 2,5 cm, parskip 6 pt, titlesec según la guía, twoside); solo quedan pendientes los logos UPV/EHU de la portada.
+- Tras cualquier cambio en la memoria, **compilar y verificar exit 0** sin warnings nuevos. Esperados a 16-07-2026: únicamente los "ignored error: Infinite glue shrinkage" de longtable (ya no queda ningún acrónimo sin usar) (bug conocido e inofensivo de longtable con kernels recientes, latex3/latex2e#1907; ver comentario en `config/packages.tex`).
 
 ### 2.5 Gestión del proyecto (metodología decidida el 14-07-2026)
 
 Detalle completo y justificación en los capítulos 7, 10 y 13 de la memoria; resumen operativo:
 
-- **Método híbrido (Scrumban) adaptado a una persona**: historias de usuario + Story Points (Fibonacci 1–13; 13 = dividir) + sprints **semanales** (lunes–domingo, S1 = 20-07-2026, S13 = fin 18-10-2026), con mecánica de flujo Kanban: el compromiso es el orden del backlog y el límite WIP (máx. 2: 1 historia de producto + memoria), no un contrato de sprint. Descartados: RUP/PERT (alcance emergente, capacidad variable) y SCRUM puro (roles/ceremonias de equipo sin sentido en solitario).
-- **Capacidad variable declarada**: ~30 h/semana en verano y octubre, ~10 h/semana en septiembre. Hipótesis inicial: ~11 SP por sprint pleno (~2,7 h/SP), recalibrar con la velocidad real desde S1.
-- **Ceremonias**: planning lunes (~20 min); la "daily" es leer la última entrada del journal al abrir sesión; retro = sección en la entrada del journal del domingo, **incluye la revisión de riesgos** (críticos cada sprint, significativos cada 2, moderados cada 4, o inmediata si se observa un disparador). Los cambios de estado de riesgos se reflejan en las tablas del cap. 7.
+- **Método híbrido (Scrumban) adaptado a una persona**: historias de usuario + Story Points (Fibonacci 1–13; 13 = dividir) + sprints **semanales** (lunes–domingo; S0 planificación = 14/19-07-2026, S1 = 20-07-2026, S39 = fin 16-05-2027), con mecánica de flujo Kanban: el compromiso es el orden del backlog y el límite WIP (máx. 2: 1 historia de producto + memoria), no un contrato de sprint. Descartados: RUP/PERT (alcance emergente, capacidad variable) y SCRUM puro (roles/ceremonias de equipo sin sentido en solitario).
+- **Calendario re-basado el 16-07-2026** (detalle en cap. 10): F1 verano S1–S6 (20-07→30-08); pausa 31-08→20-09 (traslado Erasmus); F2 Erasmus S7–S24 (21-09-2026→24-01-2027); pausa 25-01→31-01; F3 S25–S32 (01-02→28-03-2027); F4 S33–S39 (29-03→16-05-2027). Defensa: junio/julio 2027, septiembre de reserva.
+- **Capacidad variable declarada**: ~10 h/semana en verano, ~5 h/semana de promedio en el Erasmus (semanas de viaje a 0), ~15 h/semana desde febrero (compatible con prácticas). Hipótesis inicial: ~2,7 h/SP (la velocidad esperada de cada sprint se deriva de su capacidad), recalibrar con la velocidad real desde S1.
+- **En la memoria, redacción en castellano llano**: mínima jerga metodológica (nada de MoSCoW/stubs/spikes sin parafrasear: «imprescindible/deseable/opcional», «versiones simuladas», «investigación acotada»); términos técnicos solo si el cap. 10 los define.
+- **Ceremonias**: planning lunes (~20 min); la "daily" es leer la última entrada del journal al abrir sesión; retro = sección en la entrada del journal del domingo, **incluye la revisión de riesgos** (críticos cada sprint, significativos cada 2, moderados cada 4, o inmediata si se observa un disparador). La revisión se rellena como documento fechado en `docs/thesis/seguimiento-riesgos/` (plantilla propia) y el journal lo enlaza; si un apartado ⟳ se rellena, se emite nueva versión del plan en `docs/thesis/plan-riesgos/` y fila en la tabla de seguimiento del cap. 7.
 - **Tablero**: GitHub Projects + Issues (historias) + Milestones (fases F1–F4). El backlog inicial (épicas EP01–EP15) está en el cap. 10.
 
 ## 3. graphify

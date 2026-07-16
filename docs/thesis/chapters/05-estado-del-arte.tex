@@ -1,12 +1,156 @@
 % =========================================================================
 % Capítulo 5 — Descripción de requerimientos y análisis del estado del arte
 % (si procede — para BUKIT procede)
-% Estado del arte: redes sociales existentes (Instagram, Pinterest, apps
-% de hábitos/objetivos) y qué hueco cubre BUKIT. Requerimientos:
-% funcionales y no funcionales del sistema.
+% Estado del arte: dos familias de productos (redes de contenido y
+% herramientas de propósito), el hueco que BUKIT ocupa, y los requisitos
+% funcionales y no funcionales numerados (RF/RNF) para trazabilidad.
 % =========================================================================
 
 \chapter{Descripción de requerimientos y análisis del estado del arte}
 \label{ch:estado-del-arte}
 
-\todonote{Contenido pendiente.}
+Este capítulo sitúa a \bukit frente a lo que ya existe y fija, a partir de esa comparación y de las reglas de producto del capítulo \ref{ch:contexto}, los requisitos que el sistema debe cumplir.
+Los requisitos se numeran (RF para los funcionales, RNF para los no funcionales) para que el diseño (capítulo \ref{ch:diseno}) y las pruebas puedan referirse a ellos sin ambigüedad.
+
+\section{Análisis del estado del arte}
+\label{sec:estado-arte}
+
+El espacio de productos relevante se divide en dos familias, y \bukit nace precisamente del hueco entre ambas.
+
+\subsection{Redes sociales de contenido}
+\label{sec:estado-arte-redes}
+
+La primera familia son las redes sociales generalistas, con Instagram \parencite{instagram-app} como referente de interacción (perfil, historias, mensajería, \eng{feed} algorítmico) y Pinterest \parencite{pinterest-app} como referente de descubrimiento visual en mosaico.
+Ambas resuelven con solvencia la parte social del problema —conectar personas y distribuir contenido— y ambas son, de hecho, la referencia explícita de interfaz para varias pestañas de \bukit (capítulo \ref{ch:contexto}).
+Lo que no ofrecen es estructura de ejecución: una meta vital es, como mucho, un tablero de inspiración o una publicación aspiracional, sin plazo, sin recordatorios y sin seguimiento del progreso.
+Su modelo de negocio optimiza el tiempo de atención, lo que empuja justamente hacia el patrón de consumo pasivo que la literatura asocia a peor bienestar subjetivo \parencite{verduyn-sns}, y la visibilidad premia la popularidad del contenido, no el avance de quien lo publica.
+
+\subsection{Herramientas de propósito}
+\label{sec:estado-arte-herramientas}
+
+La segunda familia son las herramientas de productividad y hábitos.
+Todoist \parencite{todoist-app} representa la gestión pura de tareas: estructura excelente (proyectos, fechas, recordatorios) sin ninguna dimensión comunitaria.
+Habitica \parencite{habitica-app} añade recompensa al avance mediante juego (experiencia, niveles) y grupos pequeños, pero está orientada al hábito diario más que a la meta vital con plazo, y su comunidad es un complemento del juego, no un espacio de descubrimiento de personas.
+En esta familia la carencia es la inversa de la anterior: hay estructura, pero se persigue la meta en solitario, renunciando al mecanismo de apoyo y rendición de cuentas social cuya eficacia sobre el logro de metas está documentada \parencite{harkin-monitoring}.
+
+Dos productos de nicho demuestran que la síntesis de ambas familias funciona.
+Strava \parencite{strava-app} es una red social cuyo \eng{feed} se compone de actividades deportivas realizadas —publicaciones de progreso, en el vocabulario de \bukit— y su éxito valida que una comunidad puede sostenerse sobre el avance y no sobre el entretenimiento.
+Goodreads \parencite{goodreads-app} valida el patrón lista-más-comunidad: sus listas de lectura pendiente son \eng{bucket lists} de un único dominio, compartidas y comentadas.
+Ninguno de los dos generaliza: Strava vive en el deporte y Goodreads en la lectura.
+
+\subsection{El hueco que ocupa BUKIT}
+\label{sec:estado-arte-hueco}
+
+La tabla \ref{tab:comparativa-estado-arte} resume la comparación sobre los tres pilares del producto (capítulo \ref{ch:contexto}): estructura, comunidad y recompensa al avance.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{lcccl}
+    \toprule
+    \textbf{Producto} & \textbf{Metas con plazo} & \textbf{Comunidad y descubrimiento} & \textbf{Recompensa al avance} & \textbf{Ámbito} \\
+    \midrule
+    Instagram  & No      & Sí      & No      & General \\
+    Pinterest  & No      & Parcial & No      & General \\
+    Todoist    & Sí      & No      & No      & General \\
+    Habitica   & Parcial & Parcial & Sí      & General \\
+    Strava     & Parcial & Sí      & Sí      & Deporte \\
+    Goodreads  & Parcial & Sí      & Parcial & Lectura \\
+    \midrule
+    \bukit     & Sí      & Sí      & Sí      & General \\
+    \bottomrule
+  \end{tabular}
+  \caption{Comparativa del estado del arte sobre los tres pilares del producto.}
+  \label{tab:comparativa-estado-arte}
+\end{table}
+
+La lectura de la tabla es el argumento del producto: ningún competidor generalista combina las tres columnas, y los dos que las combinan parcialmente lo hacen encerrados en un nicho.
+\bukit ocupa esa celda vacía: la unidad social no es el contenido sino el objetivo (la lista con plazo), el descubrimiento busca personas con metas afines —incluida la dimensión geográfica del mapa— y la visibilidad del \eng{feed} premia el progreso.
+El riesgo simétrico de esa posición también se declara: generalizar lo que Strava y Goodreads logran en nichos es precisamente la apuesta no validada del producto, y de ahí que el alcance comprometido del \ac{TFG} (capítulo \ref{ch:objetivos}) sea construir y verificar el sistema, no demostrar su tracción de mercado.
+
+\section{Descripción de requerimientos}
+\label{sec:requerimientos}
+
+Los requisitos derivan de las reglas de producto (capítulo \ref{ch:contexto}), del alcance comprometido (capítulo \ref{ch:objetivos}) y del análisis anterior.
+Cada requisito lleva la prioridad del vocabulario del plan (capítulo \ref{ch:tareas}): \emph{imprescindible}, \emph{deseable} u \emph{opcional}; los dos últimos niveles corresponden a los objetivos declarados secundarios.
+
+\subsection{Requisitos funcionales}
+\label{sec:requisitos-funcionales}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{14mm}>{\raggedright\arraybackslash}p{102mm}>{\raggedright\arraybackslash}p{24mm}@{}}
+  \caption{Requisitos funcionales del sistema.}
+  \label{tab:requisitos-funcionales}\\
+  \toprule
+  \textbf{Id} & \textbf{Requisito} & \textbf{Prioridad} \\
+  \midrule
+  \endfirsthead
+  \multicolumn{3}{c}{\emph{\tablename~\thetable{} — continuación de la página anterior}}\\
+  \toprule
+  \textbf{Id} & \textbf{Requisito} & \textbf{Prioridad} \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{3}{r@{}}{\emph{Continúa en la página siguiente…}}\\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  RF-01 & Registro de cuentas e inicio de sesión. & Imprescindible \\
+  RF-02 & Dos tipos de usuario (normal y TOP) con distinta ponderación en el \eng{feed}; el alta TOP llega por un proceso externo de admisión. & Imprescindible \\
+  RF-03 & Creación, consulta, edición y eliminación de listas de metas, cada una con al menos una meta y una fecha límite. & Imprescindible \\
+  RF-04 & Límite de tres listas por cuenta en el plan gratuito. & Imprescindible \\
+  RF-05 & Recordatorios de los plazos de las metas. & Imprescindible \\
+  RF-06 & Publicaciones de progreso y de meta completada, creables únicamente desde listas propias. & Imprescindible \\
+  RF-07 & \eng{Feed} personalizado en mosaico y segundo \eng{feed} exclusivo de seguidos, accesible deslizando. & Imprescindible \\
+  RF-08 & Buscador global de perfiles, publicaciones y listas. & Imprescindible \\
+  RF-09 & Mensajería privada entre personas usuarias, con entrega en tiempo real. & Imprescindible \\
+  RF-10 & Notificaciones de la actividad relevante (recordatorios, mensajes, interacciones). & Imprescindible \\
+  RF-11 & Mapa de seguidos mutuos, con ubicación aproximada y lugares de metas cumplidas. & Imprescindible \\
+  RF-12 & Mapa de descubrimiento de personas afines por país, radio o mundo. & Imprescindible \\
+  RF-13 & Perfil con un máximo de cinco publicaciones libres e historias ilimitadas. & Imprescindible \\
+  RF-14 & Caducidad del contenido de perfil a los 60 días, salvo acción expresa de mantenerlo. & Imprescindible \\
+  RF-15 & Verificación de identidad que desbloquea publicar desde el perfil y aparecer en el descubrimiento. & Imprescindible \\
+  RF-16 & Mayoría de edad verificada como condición para el mapa de descubrimiento. & Imprescindible \\
+  RF-17 & Sugerencias de personas afines a partir de metas e intereses. & Deseable \\
+  RF-18 & Estimación de plazos realistas por meta asistida por \ac{IA}, ejecutada en segundo plano y dirigida por eventos. & Opcional \\
+  RF-19 & Subida y reproducción de vídeo, delegadas en un servicio gestionado. & Opcional \\
+\end{longtable}
+\endgroup
+
+\subsection{Requisitos no funcionales}
+\label{sec:requisitos-no-funcionales}
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{16mm}>{\raggedright\arraybackslash}p{124mm}@{}}
+  \caption{Requisitos no funcionales del sistema.}
+  \label{tab:requisitos-no-funcionales}\\
+  \toprule
+  \textbf{Id} & \textbf{Requisito} \\
+  \midrule
+  \endfirsthead
+  \multicolumn{2}{c}{\emph{\tablename~\thetable{} — continuación de la página anterior}}\\
+  \toprule
+  \textbf{Id} & \textbf{Requisito} \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{2}{r@{}}{\emph{Continúa en la página siguiente…}}\\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  RNF-01 & Arquitectura \ac{SPA} más \ac{API} \ac{REST} en tres niveles, con la lógica común (tipos, validación, cliente HTTP) compartida entre web y móvil desde paquetes comunes. \\
+  RNF-02 & Una única base de datos PostgreSQL que cubra el grafo social (relacional), el mapa (PostGIS) y la afinidad (pgvector). \\
+  RNF-03 & Seguridad: autenticación \ac{JWT} con rotación de los \eng{tokens} de refresco, contraseñas cifradas, doble capa de limitación de peticiones y manejo centralizado de errores. \\
+  RNF-04 & Protección de datos (\acs{RGPD}): minimización, ubicación siempre aproximada y con consentimiento, datos en región europea y prohibición de almacenar el documento de identidad. \\
+  RNF-05 & Entrega en tiempo real de mensajes y notificaciones, sin recargar la aplicación. \\
+  RNF-06 & Calidad verificable: pruebas unitarias, de integración y \ac{E2E}, con integración continua de fallo rápido y despliegue automático. \\
+  RNF-07 & Coste de operación cero: todos los servicios externos en capa gratuita (la verificación de identidad, solo en modo de prueba). \\
+  RNF-08 & \eng{Feed} con carga incremental fluida (paginación infinita) como patrón de rendimiento. \\
+\end{longtable}
+\endgroup
+
+Cada requisito queda cubierto por una o varias épicas del \eng{backlog} inicial (capítulo \ref{ch:tareas}), y su cumplimiento se verifica con los criterios de cierre de las historias correspondientes; esa cadena requisito--épica--historia--prueba es la trazabilidad que permitirá evaluar en el capítulo \ref{ch:resultados} qué se cumplió y qué no.

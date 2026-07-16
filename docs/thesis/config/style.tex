@@ -1,24 +1,94 @@
 % =========================================================================
-% Formato y diseño del documento. PENDIENTE: se aplicará en la fase de
-% diseño. Los requisitos ya conocidos (guía de TFG de la UPV/EHU) quedan
-% anotados aquí para no perderlos:
-%
-%   - Márgenes: 2,5 cm por los cuatro lados        -> paquete geometry
-%   - Interlineado sencillo; 6 pt entre párrafos   -> parskip / setspace
-%   - Tipo de letra: Calibri                       -> con pdflatex no existe
-%     Calibri; opciones: paquete `carlito` (clon métricamente compatible)
-%     o compilar con XeLaTeX/LuaLaTeX + fontspec usando la Calibri de
-%     Windows. Decidir en la fase de diseño.
-%   - Títulos: capítulo MAYÚSCULA 14 pt negrita; apartado 1er nivel
-%     MAYÚSCULA 12 pt negrita; 2º nivel minúscula 12 pt negrita; 3er nivel
-%     minúscula 12 pt cursiva                      -> paquete titlesec
-%   - Numeración de apartados: 1., 1.1., 1.1.1.    [ya es el defecto]
-%   - Tablas/figuras: doble numeración capítulo.orden  [report ya lo hace]
-%   - Impresión a doble cara                       -> \documentclass[..., twoside]
-%   - Extensión objetivo: 40 páginas (máx. 60 excepcional)
-%   - Identidad visual UPV/EHU en la portada (logos)
-%
-% Ejemplos de lo que vivirá aquí (dejar comentado de momento):
-% \usepackage[a4paper, margin=2.5cm]{geometry}
-% \usepackage{parskip}
-% \usepackage{titlesec}
+% Formato y diseño del documento, según la guía de estilo del TFG.
+% Fuente NORMATIVA literal: docs/referencias/guia-estilo-TFG.md (la guía
+% manda ante cualquier duda; este archivo solo la operativiza).
+% Aplicado el 16-07-2026; hasta entonces estos requisitos vivían aquí
+% solo anotados.
+% =========================================================================
+
+% --- Márgenes: 2,5 cm por los cuatro lados ---
+% Con twoside, geometry mantiene 2,5 cm simétricos en páginas pares e
+% impares (la guía no pide margen de encuadernación distinto).
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+% --- Tipo de letra: Calibri ---
+% Calibri es una fuente propietaria de Microsoft sin soporte en pdflatex.
+% Se usa Carlito, su clon libre métricamente compatible (mismo ancho por
+% carácter: la paginación no cambia respecto a Calibri real).
+% Alternativa descartada: compilar con XeLaTeX/LuaLaTeX + fontspec y la
+% Calibri del sistema; rompería la cadena pdflatex+biber ya verificada en
+% este entorno (MiKTeX sin Perl) y la solución probada del conflicto
+% babel-spanish/biblatex-apa (ver packages.tex), a cambio de una diferencia
+% visual imperceptible.
+% sfdefault: Carlito (sans) pasa a ser la familia por defecto del documento.
+\usepackage[sfdefault]{carlito}
+% Carlito no tiene versalitas (las pide biblatex-apa en la bibliografía):
+% se declara la sustitución silenciosa por redonda para no arrastrar dos
+% avisos "Font shape undefined" en cada compilación. Calibri tampoco las
+% tiene, así que el resultado es fiel a la guía. Hay que cargar antes las
+% definiciones de la familia (.fd), que LaTeX solo cargaría al usarla; el
+% .fd usa comandos internos con @, de ahí el makeatletter.
+\makeatletter
+\input{t1Crlt-OsF.fd}
+\makeatother
+\DeclareFontShape{T1}{Crlt-OsF}{m}{sc}{<->ssub*Crlt-OsF/m/n}{}
+\DeclareFontShape{T1}{Crlt-OsF}{b}{sc}{<->ssub*Crlt-OsF/b/n}{}
+
+% --- Espaciado: interlineado sencillo; 6 pt entre párrafos ---
+% El interlineado sencillo es el defecto de LaTeX (no hay que hacer nada).
+% parskip con skip=6pt separa párrafos 6 pt y anula la sangría de primera
+% línea, reproduciendo el modelo de párrafo de Word del que parte la guía.
+\usepackage[skip=6pt]{parskip}
+
+% --- Títulos (iluminación tipográfica de la guía) ---
+%   Capítulo:            MAYÚSCULA 14 pt + negrita
+%   Apartado 1er nivel:  MAYÚSCULA 12 pt + negrita
+%   Apartado 2º nivel:   minúscula 12 pt + negrita
+%   Apartado 3er nivel:  minúscula 12 pt + cursiva
+%   Numeración: 1., 1.1., 1.1.1. (con punto final en el rótulo)
+% El interlineado de cada título es su tamaño x 1,2 (proporción estándar).
+% \raggedright en capítulo y 1er nivel: los títulos largos en mayúsculas no
+% se justifican (la justificación forzaba líneas desbordadas al no poder
+% partir bien palabras en versal).
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+  {\normalfont\bfseries\fontsize{14pt}{16.8pt}\selectfont\raggedright}
+  {\thechapter.}{0.5em}{\MakeUppercase}
+% Sin el descuelgue enorme del capítulo de report: título compacto arriba,
+% coherente con un documento limitado a 40 páginas.
+\titlespacing*{\chapter}{0pt}{0pt}{14pt}
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{12pt}{14.4pt}\selectfont\raggedright}
+  {\thesection.}{0.5em}{\MakeUppercase}
+\titleformat{\subsection}
+  {\normalfont\bfseries\fontsize{12pt}{14.4pt}\selectfont}
+  {\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalfont\itshape\fontsize{12pt}{14.4pt}\selectfont}
+  {\thesubsubsection.}{0.5em}{}
+% \paragraph (4º nivel) no está regulado por la guía: se deja el defecto.
+
+% --- Saltos de página de los apartados (formato personal del autor, 16-07-2026) ---
+% Un título nunca queda huérfano al pie de página: antes de cada apartado se
+% exige espacio para el título y ~3 líneas de su contenido; si no lo hay, el
+% apartado completo salta a la página siguiente. Los apartados largos sí
+% pueden partirse entre páginas (variante estándar de tesis).
+% Alternativa descartada: bloques atómicos (cada apartado cabe entero o salta
+% completo, con lo que casi toda página empezaría en un título); porqué: deja
+% medias páginas en blanco que cuentan contra el límite normativo de 40.
+\usepackage{needspace}
+\AddToHook{cmd/section/before}{\Needspace*{5\baselineskip}}
+\AddToHook{cmd/subsection/before}{\Needspace*{5\baselineskip}}
+\AddToHook{cmd/subsubsection/before}{\Needspace*{4\baselineskip}}
+\AddToHook{cmd/paragraph/before}{\Needspace*{4\baselineskip}}
+% Control de líneas viudas y huérfanas: ningún párrafo deja una línea suelta
+% al principio o al final de una página.
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+
+% --- Tablas y figuras: doble numeración capítulo.orden ---
+% Ya es el comportamiento de la clase report (\thetable = cap.orden).
+
+% --- Pendiente de la fase de diseño (no normativo de la guía de estilo) ---
+%   - Identidad visual UPV/EHU en la portada (logos oficiales).

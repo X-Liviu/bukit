@@ -8,9 +8,13 @@
 % carpeta (requiere Perl). El PDF queda en build/main.pdf.
 % =========================================================================
 
-% Clase provisional: el formato oficial (Calibri, márgenes, títulos...)
-% se aplicará en config/style.tex en la fase de diseño.
-\documentclass[12pt, a4paper, oneside]{report}
+% Formato oficial de la guía de estilo aplicado en config/style.tex (16-07-2026).
+% Cuerpo a 11 pt: la guía fija los títulos (12 y 14 pt) pero no el cuerpo;
+% 11 pt es el tamaño por defecto de Calibri en Word (plantilla de origen de
+% la guía) y mantiene visible la jerarquía tipográfica frente a los títulos.
+% twoside: la guía exige impresión a doble cara (report abre capítulos en
+% cualquier página, así que no inserta páginas en blanco que inflen las 40).
+\documentclass[11pt, a4paper, twoside]{report}
 
 % --- Configuración global (el orden importa) ---
 \input{config/metadata}   % Variables globales (título, autor, fechas...)

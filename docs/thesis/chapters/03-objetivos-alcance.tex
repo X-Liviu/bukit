@@ -10,8 +10,8 @@
 Los objetivos de este \ac{TFG} se formulan siguiendo el marco \ac{SMART}, es decir, como compromisos específicos, medibles, alcanzables, relevantes y acotados en el tiempo \parencite{doran-smart}.
 Se opta por este marco frente a una enumeración informal de intenciones porque convierte cada objetivo en un criterio verificable: al cierre del trabajo puede comprobarse de forma objetiva si se ha cumplido o no.
 
-El horizonte temporal común a todos los objetivos es la defensa del trabajo en la convocatoria de junio de \thesisYear.
-El desarrollo se concentra en un periodo de ejecución de unos tres meses, con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} de la asignatura.
+El horizonte temporal común a todos los objetivos es la defensa del trabajo en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva.
+El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos (condicionada por compromisos laborales, una estancia Erasmus y las prácticas de empresa), con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG}.
 La planificación detallada de tareas, fechas e hitos se recoge en los capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}.
 
 Los objetivos se organizan en dos bloques: los \emph{técnicos y de producto}, que describen qué debe existir y funcionar al terminar, y los \emph{de gestión y académicos}, que describen cómo debe ejecutarse y documentarse el trabajo.
@@ -36,7 +36,7 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
         Desarrollar con React y Vite una \ac{SPA} que implemente las cuatro pestañas del producto: inicio con \eng{feed} personalizado, listas, mensajes con mapa y notificaciones, y perfil.
         Medible: una persona usuaria puede completar de principio a fin los flujos núcleo desde el navegador, sin errores bloqueantes, antes del cierre del periodo de ejecución.
   \item \textbf{Lógica compartida sin duplicación.}
-        Centralizar los tipos, la validación (Zod) y el cliente HTTP en los paquetes compartidos del \eng{monorepo} (\texttt{packages/core}, \texttt{packages/api-client}, \texttt{packages/ui-core}) como única fuente de verdad para web y móvil.
+        Centralizar los tipos, la validación (Zod) y el cliente HTTP en los paquetes compartidos del repositorio único que aloja todas las aplicaciones del proyecto (\eng{monorepo}): \texttt{packages/core}, \texttt{packages/api-client} y \texttt{packages/ui-core}, como única fuente de verdad para web y móvil.
         Medible: cero esquemas de validación duplicados entre aplicaciones al cierre del desarrollo.
   \item \textbf{Aplicación móvil parcial (objetivo secundario).}
         Construir con React Native y Expo las pantallas núcleo (autenticación, listas y \eng{feed}) reutilizando la lógica compartida, como demostración de la arquitectura multiplataforma.
@@ -44,6 +44,9 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
   \item \textbf{Estimación de plazos asistida por \ac{IA} (objetivo secundario).}
         Integrar la estimación de plazos realistas por meta mediante un modelo de lenguaje con salida estructurada, ejecutada en segundo plano y dirigida por eventos (nunca por sondeo).
         Se declara secundario porque depende de servicios externos cuyo coste y disponibilidad quedan fuera del control del proyecto.
+  \item \textbf{Soporte de vídeo (objetivo secundario).}
+        Permitir la subida y reproducción de vídeo —en particular, los vídeos de motivación exclusivos de los usuarios TOP— delegando la transcodificación y el \eng{streaming} en un servicio gestionado.
+        Se declara secundario por el mismo criterio que la estimación de plazos: depende de un servicio externo de pago, y el resto del producto funciona con imágenes si no llega a integrarse.
   \item \textbf{Calidad y despliegue continuo.}
         Montar una cadena de integración continua con estrategia de fallo rápido (análisis estático, comprobación de tipos, pruebas unitarias y de integración, y pruebas \ac{E2E} como última barrera) con despliegue automático al superar todas las etapas.
         Medible: la rama principal se mantiene en verde y cada cambio validado llega a producción sin intervención manual.
@@ -54,7 +57,7 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
 
 \begin{itemize}
   \item \textbf{Dedicación y plazo.}
-        Ejecutar el desarrollo en un periodo de unos tres meses, con una dedicación total en el entorno de las 360 horas correspondientes a los 12 créditos \ac{ECTS}, finalizando producto y memoria antes de la convocatoria de junio de \thesisYear.
+        Ejecutar el desarrollo dentro del calendario de fases declarado en el capítulo \ref{ch:tareas} (cierre del desarrollo el 16/05/\thesisYear), con una dedicación total en el entorno de las 360 horas correspondientes a los 12 créditos \ac{ECTS}, finalizando producto y memoria antes de la convocatoria de junio--julio de \thesisYear.
         Medible: el registro de horas por sesión del diario de desarrollo del repositorio.
   \item \textbf{Trazabilidad de las decisiones.}
         Registrar el 100\,\% de las sesiones de trabajo en el diario de desarrollo, anotando fecha, horas invertidas, problemas encontrados y cada decisión junto con la alternativa descartada y su porqué.
@@ -87,11 +90,12 @@ Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguien
 \begin{itemize}
   \item \textbf{Usuarios, roles y verificación.}
         Registro e identificación única, con dos tipos de usuario (normal y TOP) que reciben distinta ponderación en el \eng{feed}.
-        La verificación de identidad se delega en un proveedor externo en modo de pruebas, almacenando únicamente el estado y el \eng{token} de la verificación por minimización de datos conforme al \ac{RGPD}; superarla desbloquea publicar desde el perfil y el mapa de descubrimiento, restringido a personas mayores de edad.
+        El flujo completo de verificación de identidad se implementa dentro del \ac{TFG}, delegado en un proveedor externo especializado e integrado en su modo de pruebas (\eng{sandbox}), lo que permite demostrarlo de punta a punta sin coste y sin tratar documentos de identidad reales.
+        El sistema almacena únicamente el estado y el \eng{token} de la verificación, por minimización de datos conforme al \ac{RGPD}; superar la verificación desbloquea publicar desde el perfil y el mapa de descubrimiento, restringido a personas mayores de edad.
   \item \textbf{Listas y metas (unidad central del producto).}
         Creación, consulta, edición y eliminación de listas de metas con plazo, con recordatorios asociados y un máximo de tres listas en el plan gratuito.
   \item \textbf{Publicaciones y \eng{feed}.}
-        Publicaciones de progreso y de meta completada, creadas únicamente desde listas propias; \eng{feed} personalizado en mosaico con ponderación por tipo de usuario; segundo \eng{feed} solo de seguidos; y buscador de perfiles, publicaciones y listas.
+        Publicaciones de progreso y de meta completada, creadas únicamente desde listas propias; \eng{feed} personalizado en mosaico con ponderación por tipo de usuario; segundo \eng{feed} solo de seguidos; vídeos de motivación de usuarios TOP, apoyados en el soporte de vídeo declarado como objetivo secundario (sección \ref{sec:objetivos-tecnicos}); y buscador de perfiles, publicaciones y listas.
   \item \textbf{Mensajería, mapa y notificaciones.}
         Chat en tiempo real entre personas usuarias; mapa con vista de seguidos mutuos y vista de descubrimiento por proximidad, apoyada en el cálculo de afinidad basado en \eng{embeddings}; y centro de notificaciones.
   \item \textbf{Perfil.}
@@ -108,12 +112,10 @@ Para acotar el esfuerzo y proteger los plazos, quedan explícitamente fuera del 
 \begin{itemize}
   \item \textbf{Planes de pago.}
         No se implementan pasarelas de pago ni lógica de suscripción; el límite de tres listas del plan gratuito queda fijo.
-  \item \textbf{Verificación de identidad en producción.}
-        El proveedor externo se integra únicamente en modo de pruebas; su contratación real y los costes asociados quedan fuera.
+  \item \textbf{Contratación del proveedor de verificación en producción.}
+        La integración con el proveedor de verificación de identidad entra en el alcance y se demuestra en su modo de pruebas; lo que queda fuera es su contratación comercial, por el coste del servicio y para no tratar documentos de identidad reales durante el desarrollo.
   \item \textbf{Red de anuncios real.}
         No se integra ninguna red comercial; el hueco publicitario del \eng{feed} se cubre con una tabla propia de publicaciones patrocinadas.
-  \item \textbf{Soporte de vídeo.}
-        No se implementan transcodificación ni \eng{streaming}; el contenido multimedia se limita a imágenes.
   \item \textbf{Publicación en tiendas de aplicaciones.}
         La distribución en App Store y Play Store queda fuera; la aplicación móvil se valida con compilaciones de desarrollo.
   \item \textbf{Funciones aún en definición.}

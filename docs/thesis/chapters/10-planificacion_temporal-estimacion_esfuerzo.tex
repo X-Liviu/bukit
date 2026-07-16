@@ -24,7 +24,7 @@ La elección no parte de preferencias abstractas, sino de las condiciones reales
   \item \textbf{Alcance emergente.}
         El modelo de datos y las entidades se diseñan de forma incremental y meditada durante el desarrollo, una decisión ya tomada del proyecto; una red completa de tareas definida por adelantado quedaría obsoleta en semanas.
   \item \textbf{Disponibilidad variable y conocida.}
-        La dedicación de septiembre será sensiblemente menor por motivos personales (riesgo R2, capítulo \ref{ch:riesgos}); la metodología debe absorber esa variación sin romperse.
+        El verano está condicionado por compromisos laborales, septiembre por el traslado a una estancia Erasmus que se prolonga hasta finales de enero, y desde febrero el trabajo convive con las prácticas de empresa; la metodología debe absorber esa variación —y el riesgo de que sea aún mayor (R7, capítulo \ref{ch:riesgos})— sin romperse.
   \item \textbf{Una única persona.}
         No hay roles que repartir ni reuniones que sincronizar; toda ceremonia debe justificar su coste ante un equipo de uno.
   \item \textbf{Dos entregables simultáneos.}
@@ -32,28 +32,28 @@ La elección no parte de preferencias abstractas, sino de las condiciones reales
   \item \textbf{Telemetría para esta memoria.}
         El método debe producir por sí mismo los datos de seguimiento (horas, velocidad, desviaciones) que alimentan este capítulo y el \ref{ch:gantt-tfg}.
   \item \textbf{Marco académico.}
-        Unas 360 horas de dedicación de referencia (12 créditos \ac{ECTS}) en un periodo de ejecución objetivo de unos tres meses (capítulo \ref{ch:objetivos}).
+        Unas 360 horas de dedicación de referencia (12 créditos \ac{ECTS}) repartidas a lo largo de un curso completo, con la defensa prevista en la convocatoria de junio--julio de \thesisYear{} (capítulo \ref{ch:objetivos}).
 \end{itemize}
 
 \subsection{Alternativas consideradas y descartadas}
 \label{sec:metodologia-alternativas}
 
 \paragraph{Metodologías predictivas (cascada, \acs{RUP}) con planificación por precedencias.}
-El enfoque tradicional visto en la asignatura de Gestión de Proyectos (ciclos tipo \ac{RUP} y técnicas de planificación temporal como \ac{PERT}, Roy o los diagramas de precedencias) exige descomponer el proyecto completo en tareas con duraciones y dependencias estables antes de empezar \parencite{kruchten-rup}.
+El enfoque tradicional de la gestión de proyectos (ciclos tipo \ac{RUP} y técnicas de planificación temporal como \ac{PERT}, Roy o los diagramas de precedencias) exige descomponer el proyecto completo en tareas con duraciones y dependencias estables antes de empezar \parencite{kruchten-rup}.
 Esa premisa falla aquí dos veces: el alcance es emergente por decisión de diseño, y la capacidad disponible varía a lo largo del periodo, de modo que la red de tareas exigiría re-planificación continua, un coste permanente sin valor añadido.
 A ello se suma que \ac{RUP} prescribe una disciplina de artefactos y roles pensada para equipos, desproporcionada para una persona.
 De este enfoque se rescata, no obstante, una pieza: un plan macro de fases e hitos con fechas (capítulo \ref{ch:gantt-tfg}), que da la visión de conjunto que una pila de historias no ofrece.
 
 \paragraph{Scrum puro.}
-Scrum fue la metodología empleada por el autor en el proyecto grupal de la asignatura, con resultados satisfactorios, y por ello fue la primera candidata.
+Scrum es la metodología que el autor ya empleó, con resultados satisfactorios, en un proyecto de software desarrollado en equipo durante el grado, y por ello fue la primera candidata.
 Sin embargo, Scrum se define explícitamente sobre un equipo con roles diferenciados (\eng{Product Owner}, \eng{Scrum Master}, \eng{Developers}) y ceremonias cuyo propósito es sincronizar y proteger a ese equipo \parencite{scrum-guide}.
-En solitario, la mitad del marco queda vacío: no hay a quién hacer de contrapeso en la negociación del alcance, la \eng{daily} no tiene interlocutor y la \eng{review} no tiene público.
+En solitario, la mitad del marco queda vacío: no hay a quién hacer de contrapeso en la negociación del alcance, la reunión diaria de sincronización (\eng{daily}) no tiene interlocutor y la demostración del avance al cierre de cada iteración (\eng{review}) no tiene público.
 Además, el compromiso cerrado de cada \eng{sprint} encaja mal con una capacidad que se sabe variable: un mes de baja dedicación encadenaría «fracasos» de \eng{sprint} que no informan de nada.
 Declarar «se usó Scrum» sería, en rigor, falso; lo honesto es declarar qué elementos de Scrum se adoptan y por qué.
 
 \paragraph{Kanban puro.}
 El método Kanban (flujo continuo, trabajo visualizado, límite de trabajo en curso) encaja de forma natural con la disponibilidad variable: si una semana rinde menos, fluye menos trabajo, sin ningún compromiso roto \parencite{anderson-kanban}.
-Se descarta como método único porque carece de cadencia: sin iteraciones no hay ritmo fijo de re-planificación ni retrospectiva, y no se genera la medida periódica de velocidad que este \ac{TFG} necesita como telemetría para la memoria y para corregir su primera experiencia de estimación en solitario (riesgo R3).
+Se descarta como método único porque carece de cadencia: sin iteraciones no hay ritmo fijo de re-planificación ni retrospectiva, y no se genera la medida periódica de velocidad que este \ac{TFG} necesita como telemetría para la memoria y para corregir su primera experiencia de estimación en solitario (riesgo R2).
 
 \subsection{Decisión: método híbrido (Scrumban) adaptado a una persona}
 \label{sec:metodologia-decision}
@@ -68,13 +68,13 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
     \toprule
     \textbf{Elemento} & \textbf{Origen} & \textbf{Adaptación a una persona} \\
     \midrule
-    \eng{Product Backlog} & Scrum & Historias de usuario priorizadas con MoSCoW; toda idea nueva entra por aquí (control del alcance, R1). \\
+    \eng{Product Backlog} & Scrum & Historias de usuario clasificadas por prioridad en cuatro niveles (imprescindible, deseable, opcional, excluida; sección \ref{sec:backlog}); toda idea nueva entra por aquí (control del alcance, R1). \\
     Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por sprint. \\
     Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido semanal es una proyección. \\
-    Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la épica transversal de memoria; nunca dos historias de producto a medias. \\
+    Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la redacción de la memoria; nunca dos historias de producto a medias. \\
     Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos cada lunes: fijar capacidad y seleccionar del \eng{backlog}. \\
     \eng{Daily} & Scrum & Sustituida por el procedimiento ya vigente de abrir cada sesión releyendo la última entrada del diario de desarrollo. \\
-    \eng{Review} & Scrum & Verificación del incremento contra la Definición de Hecho (sección \ref{sec:dod}). \\
+    \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}). \\
     Retrospectiva & Scrum & Sección fija de la entrada del diario al cierre del \eng{sprint}, que incluye la revisión de riesgos (capítulo \ref{ch:riesgos}). \\
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
@@ -83,52 +83,50 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
   \label{tab:metodologia-elementos}
 \end{table}
 
-La duración de una semana por \eng{sprint} (frente a las dos semanas empleadas en el proyecto grupal) se justifica por tres razones.
+La duración de una semana por \eng{sprint} (frente a las dos semanas empleadas en aquella experiencia previa en equipo) se justifica por tres razones.
 Primera: la realimentación de velocidad llega al doble de frecuencia justo cuando más falta hace, en las primeras semanas de la primera estimación en solitario del autor.
-Segunda: el grano semanal permite modular la capacidad de septiembre sin tocar el método (cambia la capacidad, no el ritmo).
+Segunda: el grano semanal permite modular la capacidad de cada periodo (verano con trabajo, estancia Erasmus, prácticas de empresa) sin tocar el método: cambia la capacidad, no el ritmo.
 Tercera: el argumento clásico contra los \eng{sprints} cortos, el coste proporcional de las ceremonias, desaparece en solitario, donde todas las ceremonias juntas cuestan menos de una hora semanal.
 
 \subsection{Herramienta de gestión}
 \label{sec:metodologia-herramienta}
 
-La gestión del \eng{backlog} y del tablero se realiza con GitHub Projects, con las historias como \eng{issues}, los puntos y la épica como etiquetas y las fases como \eng{milestones}.
+La gestión del \eng{backlog} y del tablero se realiza con GitHub Projects, con las historias como \eng{issues} (las fichas de trabajo de GitHub), los puntos y la épica de pertenencia (el bloque de funcionalidad que la agrupa; sección \ref{sec:backlog}) como etiquetas, y las fases como hitos (\eng{milestones}).
 El tablero tiene cuatro columnas (\eng{Backlog}, Preparado, En curso con límite de \acs{WIP} 2, y Hecho).
-Se descarta OpenProject, la herramienta empleada en el proyecto grupal, porque su valor diferencial son las funciones de equipo (roles, actas, flujos de aprobación) que aquí no se usarían, y exige desplegar y mantener un servidor propio.
-GitHub Projects, en cambio, vive junto al repositorio y enlaza cada historia con sus \eng{commits} y \eng{pull requests}, lo que genera trazabilidad historia--código sin esfuerzo adicional: evidencia gratuita para esta memoria.
+Al ser parte de GitHub, el tablero vive junto al repositorio y enlaza cada historia con los cambios de código que la implementan (\eng{commits} y \eng{pull requests}), lo que genera trazabilidad historia--código sin esfuerzo adicional: evidencia gratuita para esta memoria.
 El tablero es la herramienta operativa del día a día; esta memoria conserva las instantáneas relevantes (el \eng{backlog} inicial aquí, el estado final y las desviaciones en los capítulos \ref{ch:resultados} y \ref{ch:gantt-tfg}).
 
 \section{Estimación del esfuerzo}
 \label{sec:estimacion}
 
 El esfuerzo se estima en puntos de historia (\eng{story points}), una medida relativa de tamaño, con la escala de Fibonacci modificada (1, 2, 3, 5, 8 y 13).
-La estimación relativa se elige frente a la estimación directa en horas porque comparar («esto es como aquello, pero el doble») es más fiable que predecir duraciones absolutas, y porque desacopla el tamaño del trabajo de la capacidad disponible, que aquí varía por diseño \parencite{cohn-estimating}.
-Al no existir equipo, no procede el \eng{planning poker}; en su lugar, cada historia se estima por triangulación contra historias de referencia ya conocidas.
-La referencia inicial procede del precedente técnico del autor (el proyecto TrackBites): 2 puntos equivalen a «un \eng{endpoint} CRUD sencillo con validación compartida y pruebas de integración», y 1 punto a una tarea mecánica bien conocida.
-Toda historia estimada en 13 puntos se considera demasiado grande y debe dividirse antes de entrar en un \eng{sprint} (mitigación del riesgo R3).
+La estimación relativa se elige frente a la estimación directa en horas porque comparar es más fiable que predecir duraciones absolutas, y porque desacopla el tamaño del trabajo de la capacidad disponible, que aquí varía por diseño \parencite{cohn-estimating}.
+Al no existir equipo, no procede la estimación por votación simultánea del equipo (\eng{planning poker}); en su lugar, cada historia se estima por triangulación contra historias de referencia ya conocidas.
 
-Como hipótesis inicial de velocidad se toman unos 11 puntos por \eng{sprint} a plena capacidad (30 horas semanales), es decir, unas 2,7 horas por punto.
-Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del tercer \eng{sprint} la manda la velocidad real medida, y la hipótesis se recalibra en cada retrospectiva.
+Como hipótesis inicial de equivalencia se toman unas 2,7 horas por punto, de modo que la velocidad esperada de cada \eng{sprint} se deriva de su capacidad declarada (por ejemplo, unos 4 puntos en un \eng{sprint} de verano de 10 horas).
+Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del tercer \eng{sprint} la manda la velocidad real medida, y la hipótesis se recalibra en cada retrospectiva (riesgo R2).
 
-\section{Definición de Hecho}
+\section{Criterios de cierre de una historia}
 \label{sec:dod}
 
-Una historia solo se considera terminada cuando cumple todas las condiciones siguientes:
+Una historia solo se considera terminada cuando cumple todas las condiciones siguientes (lo que Scrum denomina la \emph{Definición de Hecho}):
 
 \begin{itemize}
   \item El análisis estático y la comprobación de tipos del \eng{monorepo} pasan en verde.
   \item Las pruebas de la historia existen y pasan, y la suite completa no sufre regresiones.
   \item El cambio está integrado en la rama principal.
   \item Las decisiones tomadas quedan anotadas en el diario de desarrollo, con la alternativa descartada y su porqué.
-  \item Si la historia afecta a un capítulo de esta memoria, el capítulo queda actualizado (mitigación del riesgo R4).
+  \item Si la historia afecta a un capítulo de esta memoria, el capítulo queda actualizado (mitigación del riesgo R3).
 \end{itemize}
 
-Esta lista es el criterio de la \eng{review} de cada incremento y protege los objetivos de calidad y trazabilidad del capítulo \ref{ch:objetivos}.
+Esta lista es el criterio con el que se verifica cada incremento —la parte del producto terminada en el \eng{sprint}— y protege los objetivos de calidad y trazabilidad del capítulo \ref{ch:objetivos}.
 
 \section{\eng{Product Backlog} inicial}
 \label{sec:backlog}
 
-El \eng{backlog} inicial se construye descomponiendo las reglas de producto de \bukit en épicas, y estas en historias de usuario con el formato «como \emph{rol}, quiero \emph{acción}, para \emph{beneficio}».
-Cada épica recibe una prioridad MoSCoW \parencite{clegg-moscow}, que traduce el alcance del capítulo \ref{ch:objetivos} a decisiones operativas: \emph{Must} para el alcance comprometido del que dependen los criterios de éxito, \emph{Should} para lo incluido en el alcance sin criterio de éxito asociado, \emph{Could} para los objetivos declarados secundarios, y \emph{Won't} para lo explícitamente excluido (sección \ref{sec:alcance-fuera}), que no se repite aquí.
+El \eng{backlog} inicial se construye descomponiendo las reglas de producto de \bukit en \emph{épicas} —bloques grandes de funcionalidad que agrupan varias historias de usuario relacionadas y que son demasiado extensos para abordarse de una vez—, y estas en historias de usuario con el formato «como \emph{rol}, quiero \emph{acción}, para \emph{beneficio}».
+Cada épica se clasifica por prioridad en cuatro niveles, siguiendo la técnica conocida como MoSCoW \parencite{clegg-moscow}: \emph{imprescindible} para el alcance comprometido del que dependen los criterios de éxito, \emph{deseable} para lo incluido en el alcance sin criterio de éxito asociado, \emph{opcional} para los objetivos declarados secundarios, y \emph{excluida} para lo explícitamente fuera del alcance (sección \ref{sec:alcance-fuera}), que no se repite aquí.
+Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una regla operativa simple: lo imprescindible se protege siempre, y lo deseable y lo opcional solo entran si sobra velocidad.
 
 \begin{table}[htbp]
   \centering
@@ -137,21 +135,21 @@ Cada épica recibe una prioridad MoSCoW \parencite{clegg-moscow}, que traduce el
     \toprule
     \textbf{Id} & \textbf{Épica} & \textbf{Prioridad} & \textbf{Puntos} & \textbf{Fase} \\
     \midrule
-    EP01 & Fundaciones técnicas e integración continua      & Must   & 8  & F1 \\
-    EP02 & Cuentas y autenticación                          & Must   & 13 & F1 \\
-    EP03 & Andamiaje del cliente web y sesión               & Must   & 8  & F1 \\
-    EP04 & Listas y metas                                   & Must   & 13 & F2 \\
-    EP05 & Publicaciones ligadas a listas                   & Must   & 13 & F2 \\
-    EP06 & Grafo social y \eng{feed} de seguidos            & Must   & 10 & F2 \\
-    EP07 & Perfil y verificación de identidad               & Must   & 8  & F3 \\
-    EP08 & \eng{Feed} personalizado y buscador              & Must   & 13 & F4 \\
-    EP09 & Mapa social                                      & Must   & 10 & F3 \\
-    EP10 & Afinidad entre personas usuarias                 & Should & 8  & --- \\
-    EP11 & Mensajería y notificaciones                      & Must   & 13 & F3 \\
-    EP12 & Pruebas \acs{E2E} y despliegue continuo          & Must   & 8  & F4 \\
-    EP13 & \acs{IA} de estimación de plazos                 & Could  & 8  & --- \\
-    EP14 & Aplicación móvil parcial                         & Could  & 13 & --- \\
-    EP15 & Memoria y gestión del proyecto (transversal)     & Must   & 21 & Todas \\
+    EP01 & Fundaciones técnicas e integración continua      & Imprescindible & 8  & F1 \\
+    EP02 & Cuentas y autenticación                          & Imprescindible & 13 & F1 \\
+    EP03 & Andamiaje del cliente web y sesión               & Imprescindible & 8  & F2 \\
+    EP04 & Listas y metas                                   & Imprescindible & 13 & F2 \\
+    EP05 & Publicaciones ligadas a listas                   & Imprescindible & 13 & F2 \\
+    EP06 & Grafo social y \eng{feed} de seguidos            & Imprescindible & 10 & F3 \\
+    EP07 & Perfil y verificación de identidad               & Imprescindible & 8  & F3 \\
+    EP08 & \eng{Feed} personalizado y buscador              & Imprescindible & 13 & F4 \\
+    EP09 & Mapa social                                      & Imprescindible & 10 & F3 \\
+    EP10 & Afinidad entre personas usuarias                 & Deseable       & 8  & --- \\
+    EP11 & Mensajería y notificaciones                      & Imprescindible & 13 & F3 \\
+    EP12 & Pruebas \acs{E2E} y despliegue continuo          & Imprescindible & 8  & F4 \\
+    EP13 & \acs{IA} de estimación de plazos                 & Opcional       & 8  & --- \\
+    EP14 & Aplicación móvil parcial                         & Opcional       & 13 & --- \\
+    EP15 & Memoria y gestión del proyecto (transversal)     & Imprescindible & 21 & Todas \\
     \bottomrule
   \end{tabular}
   \caption{Épicas del \eng{Product Backlog} inicial, con estimación gruesa y fase prevista.}
@@ -167,7 +165,7 @@ Como muestra del nivel de detalle al que se baja cada historia antes de entrar e
   \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
 \end{quote}
 
-La tabla \ref{tab:backlog-f1} recoge el desglose completo de la primera fase, ya refinado.
+La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y EP02 forman la fase F1, y EP03 abre la F2.
 
 \begin{table}[htbp]
   \centering
@@ -181,44 +179,48 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de la primera fase, ya
     US-03 & Despliegue del esqueleto de la \acs{API}                  & EP01 & 2 \\
     US-04 & Modelo de datos de usuario y registro de cuentas          & EP02 & 3 \\
     US-05 & Inicio de sesión con \acs{JWT} de acceso y refresco       & EP02 & 3 \\
-    US-06 & Rotación y revocación de \eng{refresh tokens}             & EP02 & 5 \\
+    US-06 & Rotación y revocación de los \eng{tokens} de refresco     & EP02 & 5 \\
     US-07 & Doble capa de limitación de peticiones                    & EP02 & 2 \\
     US-08 & Andamiaje web con enrutado de las cuatro pestañas         & EP03 & 3 \\
     US-09 & Cliente \acs{API} tipado y gestión de sesión en la web    & EP03 & 3 \\
     US-10 & Pantallas de registro e inicio de sesión                  & EP03 & 2 \\
     \bottomrule
   \end{tabular}
-  \caption{Desglose en historias de la fase F1 (fundaciones), 29 puntos.}
+  \caption{Desglose en historias de las épicas de fundaciones EP01--EP03, 29 puntos.}
   \label{tab:backlog-f1}
 \end{table}
 
 \section{Fases y cronograma del desarrollo}
 \label{sec:fases}
 
-El periodo de ejecución se organiza en cuatro fases que agrupan trece \eng{sprints} semanales, del 20/07/2026 al 18/10/2026, precedidas por una fase de preparación ya en curso.
+El periodo de ejecución se organiza en cuatro fases que agrupan 39 \eng{sprints} semanales (lunes--domingo), del 20/07/2026 al 16/05/\thesisYear, precedidas por un \eng{sprint} de planificación (S0, del 14 al 19 de julio de 2026) en el que se elaboran los objetivos, el plan de riesgos y este plan: la planificación inicial que la metodología elegida toma prestada del enfoque tradicional.
+El calendario incorpora además dos pausas planificadas sin \eng{sprints}, correspondientes a los traslados de ida y vuelta de la estancia Erasmus: planificar semanas de capacidad cero no aporta información y solo introduciría ruido en la medida de velocidad.
 Cada fase cierra con un incremento demostrable, que actúa como hito de control.
 
 \begin{table}[htbp]
   \centering
   \small
+  \setlength{\tabcolsep}{4pt}
   \begin{tabular}{clllc}
     \toprule
     \textbf{Fase} & \textbf{Contenido} & \textbf{Sprints} & \textbf{Fechas} & \textbf{Horas} \\
     \midrule
-    F0 & Preparación: entorno, memoria base, este plan & ---        & hasta 19/07      & $\sim$30 \\
-    F1 & Fundaciones: EP01, EP02, EP03                 & S1--S3     & 20/07 -- 09/08   & 90 \\
-    F2 & Núcleo social: EP04, EP05, EP06               & S4--S6     & 10/08 -- 30/08   & 90 \\
-    F3 & Diferenciadores: EP07, EP09, EP11             & S7--S11    & 31/08 -- 04/10   & 70 \\
-    F4 & Cierre de producto: EP08, EP12                & S12--S13   & 05/10 -- 18/10   & 60 \\
+    F0  & Planificación: objetivos, riesgos, metodología    & S0       & 14/07 -- 19/07/2026 & $\sim$20 \\
+    F1  & Fundaciones de la \acs{API}: EP01, EP02           & S1--S6   & 20/07 -- 30/08/2026 & 60 \\
+    --- & Pausa: viajes y traslado a la estancia Erasmus    & ---      & 31/08 -- 20/09/2026 & 0 \\
+    F2  & Cliente web, listas y publicaciones: EP03--EP05   & S7--S24  & 21/09/2026 -- 24/01/\thesisYear & 90 \\
+    --- & Pausa: regreso e instalación en Bilbao            & ---      & 25/01 -- 31/01/\thesisYear & 0 \\
+    F3  & Núcleo social y diferenciadores: EP06, EP07, EP09, EP11 & S25--S32 & 01/02 -- 28/03/\thesisYear & 120 \\
+    F4  & Cierre de producto y memoria: EP08, EP12          & S33--S39 & 29/03 -- 16/05/\thesisYear & 105 \\
     \bottomrule
   \end{tabular}
   \caption{Fases del desarrollo con su capacidad estimada (la épica transversal EP15 se reparte entre todas).}
   \label{tab:fases}
 \end{table}
 
-La capacidad de cada \eng{sprint} refleja la disponibilidad real esperada: 30 horas semanales en verano y octubre, y 10 horas semanales en septiembre (\eng{sprints} S7 a S10), conforme al riesgo R2 ya identificado.
-Por eso la fase F3 abarca cinco \eng{sprints}: su duración en semanas no indica más trabajo, sino menos capacidad por semana.
-\todonote{Confirmar las capacidades estimadas por sprint (30/10/30 horas) y la fecha de inicio de S1 antes del 20/07.}
+La capacidad declarada refleja la disponibilidad real esperada de cada periodo: unas 10 horas semanales en verano, condicionado por compromisos laborales; unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las prácticas de empresa.
+Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R7 (capítulo \ref{ch:riesgos}), con las horas registradas en el diario como evidencia.
+Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación de lunes con el conocimiento acumulado hasta entonces.
 
 \begin{table}[htbp]
   \centering
@@ -227,30 +229,27 @@ Por eso la fase F3 abarca cinco \eng{sprints}: su duración en semanas no indica
     \toprule
     \textbf{Sprint} & \textbf{Fechas} & \textbf{Tema orientativo} & \textbf{Horas} \\
     \midrule
-    S1  & 20/07 -- 26/07 & Integración continua mínima; modelo de usuario y registro & 30 \\
-    S2  & 27/07 -- 02/08 & Autenticación completa con rotación de \eng{tokens}       & 30 \\
-    S3  & 03/08 -- 09/08 & Andamiaje web y flujo de sesión; \emph{cierre de F1}      & 30 \\
-    S4  & 10/08 -- 16/08 & Listas y metas                                            & 30 \\
-    S5  & 17/08 -- 23/08 & Publicaciones desde listas                                & 30 \\
-    S6  & 24/08 -- 30/08 & Grafo social y \eng{feed} de seguidos; \emph{cierre de F2} & 30 \\
-    S7  & 31/08 -- 06/09 & Perfil y verificación de identidad                        & 10 \\
-    S8  & 07/09 -- 13/09 & Perfil y verificación de identidad (continuación)         & 10 \\
-    S9  & 14/09 -- 20/09 & Mapa social                                               & 10 \\
-    S10 & 21/09 -- 27/09 & Mapa social (continuación)                                & 10 \\
-    S11 & 28/09 -- 04/10 & Mensajería y notificaciones; \emph{cierre de F3}          & 30 \\
-    S12 & 05/10 -- 11/10 & \eng{Feed} personalizado y buscador                       & 30 \\
-    S13 & 12/10 -- 18/10 & \acs{E2E} y despliegue continuo; \emph{cierre de F4}      & 30 \\
+    S0 & 14/07 -- 19/07 & Planificación: objetivos, riesgos, metodología y este plan & $\sim$20 \\
+    S1 & 20/07 -- 26/07 & Integración continua mínima (EP01)                         & 10 \\
+    S2 & 27/07 -- 02/08 & Esqueleto de la \acs{API}, errores y registro de sucesos (EP01) & 10 \\
+    S3 & 03/08 -- 09/08 & Modelo de usuario y registro de cuentas (EP02)             & 10 \\
+    S4 & 10/08 -- 16/08 & Inicio de sesión con \eng{tokens} de acceso y refresco (EP02) & 10 \\
+    S5 & 17/08 -- 23/08 & Rotación y revocación de \eng{tokens} (EP02)               & 10 \\
+    S6 & 24/08 -- 30/08 & Limitación de peticiones; \emph{cierre de F1}              & 10 \\
     \bottomrule
   \end{tabular}
-  \caption{Calendario de \eng{sprints} con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
+  \caption{Calendario de \eng{sprints} de F0 y F1 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
   \label{tab:sprints}
 \end{table}
 
-\subsection{Encaje del plan y tensión declarada}
+\subsection{Encaje del plan y margen declarado}
 \label{sec:fases-tension}
 
-El inventario comprometido (\emph{Must}) suma 138 puntos, mientras que la capacidad nominal de los trece \eng{sprints} (310 horas, a la hipótesis de 2,7 horas por punto) da unos 115 puntos.
-Existe por tanto una tensión inicial de unos 23 puntos ($\approx$ 60 horas, unas dos semanas a plena capacidad), que se declara aquí en lugar de maquillarse ajustando estimaciones a la baja.
-La decisión consciente es triple: se mantiene el 18/10/2026 como fecha objetivo ambiciosa, se comunica una horquilla de cierre realista entre esa fecha y mediados de noviembre de 2026 (capítulo \ref{ch:gantt-tfg}), y las prioridades \emph{Should} y \emph{Could} solo entran si la velocidad real supera la hipótesis.
-Esta tensión es, de hecho, la primera observación registrada del riesgo R3, y su evolución se vigila desde el primer cierre de \eng{sprint}.
-En cualquier caso, la holgura estructural del calendario académico (defensa en junio de \thesisYear) hace que esta tensión amenace al objetivo propio del autor, no al \ac{TFG}.
+El inventario comprometido (prioridad imprescindible) suma 138 puntos, y la capacidad nominal de los 39 \eng{sprints} (375 horas, a la hipótesis de 2,7 horas por punto) da unos 139: el plan encaja, pero al límite, sin holgura interna.
+El reparto por fases es igual de ajustado y también se declara: F2 nace ligeramente sobrecargada (34 puntos frente a unos 33 nominales) y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
+Esa ausencia de margen se declara aquí en lugar de maquillarse ajustando estimaciones a la baja: cualquier velocidad sostenida por debajo de la hipótesis desplaza trabajo más allá de la fecha objetivo.
+La decisión consciente es triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real supera la hipótesis.
+Este encaje al límite es, de hecho, la primera observación registrada del riesgo R2, y su evolución se vigila desde el primer cierre de \eng{sprint}.
+
+Conviene subrayar, por último, la naturaleza deliberadamente conservadora de estas hipótesis de capacidad: las horas declaradas por periodo describen el escenario razonable de \emph{menor} disponibilidad, no una previsión optimista, porque la carga real de la estancia Erasmus es la mayor incógnita del calendario y planificar sobre su mejor caso sería apostar el \ac{TFG} a ella.
+Si la disponibilidad real resulta mayor, la recalibración semanal de la velocidad adelanta los hitos de forma natural, sin cambiar el método (capítulo \ref{ch:gantt-tfg}): las fechas de este plan funcionan como techo comprometido, no como suelo.

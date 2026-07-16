@@ -2,17 +2,65 @@
 % Capítulo 4 — Beneficios que aporta el trabajo y su relación con los ODS
 % (OBLIGATORIO)
 % Beneficios técnicos, sociales y económicos, y su conexión con los
-% Objetivos de Desarrollo Sostenible (p. ej. salud y bienestar, reducción
-% de desigualdades), justificándola.
+% Objetivos de Desarrollo Sostenible, justificada y sin lecturas vacías:
+% se reclaman pocos ODS y se argumenta cada vínculo con literatura citada.
 % =========================================================================
 
 \chapter{Beneficios que aporta el trabajo y su relación con los Objetivos
   de Desarrollo Sostenible}
 \label{ch:beneficios}
 
-\todonote{Contenido pendiente.}
+Este capítulo responde a dos preguntas: qué aporta este trabajo (a quién y en qué plano) y qué relación honesta guarda con los \ac{ODS}.
+Se evita deliberadamente el catálogo exhaustivo: se reclaman solo los beneficios y vínculos que pueden argumentarse, y cada afirmación apoyada en conocimiento externo lleva su fuente.
+
+\section{Beneficios del trabajo}
+\label{sec:beneficios}
+
+\subsection{Beneficio social: estructura y compañía para cumplir metas}
+\label{sec:beneficios-social}
+
+El problema que \bukit ataca está bien caracterizado por la psicología de la motivación.
+Las metas concretas y con plazo producen mejor rendimiento que las intenciones vagas del tipo «hazlo lo mejor que puedas» \parencite{locke-latham-goals}, y aun así la intención por sí sola explica solo una parte pequeña de la conducta: es la llamada brecha intención--conducta \parencite{sheeran-intention}.
+Dos mecanismos con evidencia sólida ayudan a cerrarla: planificar el cuándo y el cómo de la acción \parencite{gollwitzer-implementation}, y hacer seguimiento del progreso, más eficaz aún cuando el avance se registra o se comparte públicamente \parencite{harkin-monitoring}.
+Las decisiones de producto del capítulo \ref{ch:contexto} son la traducción directa de esos mecanismos: metas agrupadas en listas con fecha límite y recordatorios (estructura), publicaciones de progreso ligadas a las listas (seguimiento público) y una comunidad de personas con objetivos afines (compañía y rendición de cuentas).
+
+El segundo beneficio social es de diseño: orientar la experiencia a la acción en lugar de al consumo.
+La literatura sobre redes sociales distingue entre el uso pasivo (desplazarse por contenido ajeno), asociado a peor bienestar subjetivo, y el uso activo e interactivo, asociado a efectos neutros o positivos \parencite{verduyn-sns}.
+La comparación social que una red inevitablemente produce \parencite{festinger-comparison} se dirige aquí hacia modelos imitables —personas con la misma meta, más adelante en el camino— en lugar de hacia la exhibición de popularidad.
+De ahí las reglas que penalizarían a una red de entretenimiento clásica: la visibilidad premia el avance y no la fama, el contenido de perfil caduca a los 60 días y los vídeos del \eng{feed} son de motivación, no de relleno.
+Debe decirse con claridad: esto es una hipótesis de diseño fundamentada, no un resultado demostrado; medir el impacto real en el bienestar de las personas usuarias queda fuera del alcance de este \ac{TFG}.
+
+\subsection{Beneficio técnico: una arquitectura y un método documentados}
+\label{sec:beneficios-tecnico}
+
+En el plano técnico, el trabajo deja dos piezas reutilizables más allá del producto.
+La primera es la arquitectura: una única base de datos PostgreSQL que resuelve a la vez el grafo social (integridad relacional), el mapa (consultas geoespaciales con PostGIS) y la afinidad entre personas (búsqueda vectorial con pgvector), con la lógica compartida entre web y móvil desde paquetes comunes; el capítulo \ref{ch:alternativas} justifica cada elección frente a sus alternativas.
+La segunda es el método: la memoria y el diario de desarrollo documentan, con horas y decisiones fechadas, cómo una sola persona planifica, gestiona los riesgos y desarrolla un producto de este tamaño con asistencia intensiva de \ac{IA} generativa, incluyendo las salvaguardas para que esa asistencia no degenere en dependencia acrítica (riesgo R5, capítulo \ref{ch:riesgos}).
+Esa trazabilidad convierte el trabajo en un caso de estudio verificable, algo todavía escaso en un contexto donde el desarrollo asistido por \ac{IA} se adopta más deprisa de lo que se documenta.
+
+\subsection{Beneficio económico}
+\label{sec:beneficios-economico}
+
+El beneficio económico se plantea con modestia.
+El producto incorpora desde el diseño un modelo de sostenibilidad plausible (usuarios TOP como creadores verificados, publicidad integrada en el \eng{feed} y planes de pago como línea futura), pero validarlo comercialmente queda fuera del alcance.
+El beneficio económico demostrable es otro: todo el proyecto se construye y opera con coste de infraestructura cero (capas gratuitas de servicios, restricción declarada en los capítulos \ref{ch:riesgos} y \ref{ch:tareas}), lo que documenta una vía de muy bajo coste para validar productos de software en fase temprana.
 
 \section{Relación con los Objetivos de Desarrollo Sostenible}
 \label{sec:ods}
 
-\todonote{Contenido pendiente.}
+Los \ac{ODS} de la Agenda 2030 \parencite{onu-agenda2030} son el marco de referencia que la \ac{EIB} pide relacionar con cada \ac{TFG}.
+Un trabajo de software puede «cumplir» casi cualquier \ac{ODS} si se fuerza la lectura: el 9 por ser tecnología, el 8 por poder generar actividad económica.
+Esa lectura vacía se rechaza aquí: se reclama un vínculo principal y uno secundario, se justifica cada uno, y se declara descartado el resto.
+
+\paragraph{Vínculo principal: ODS 3, salud y bienestar (meta 3.4).}
+La meta 3.4 incluye expresamente «promover la salud mental y el bienestar» \parencite{onu-agenda2030}.
+Es el propósito literal del producto: ayudar a que las personas conviertan deseos en compromisos alcanzables y no los persigan en solitario, con los mecanismos avalados por la evidencia citada en la sección \ref{sec:beneficios-social} (estructura, seguimiento, apoyo social) y con un diseño que evita los patrones de uso pasivo asociados a peor bienestar \parencite{verduyn-sns}.
+El vínculo no es una etiqueta añadida al final: las reglas de producto que lo sostienen (recompensa al avance, contenido efímero, comunidad orientada a la acción) existían antes que este capítulo y condicionan el modelo de datos y la \ac{API}.
+
+\paragraph{Vínculo secundario: ODS 16, sociedades seguras (meta 16.2).}
+Conocer en persona a desconocidos es la función de mayor riesgo del producto, y su diseño la condiciona a tres salvaguardas: verificación de identidad delegada en un proveedor especializado, mayoría de edad obligatoria para el mapa de descubrimiento y ubicación siempre aproximada y consentida.
+Estas decisiones protegen especialmente a las personas menores frente a contactos no deseados, en línea con la meta 16.2 (poner fin al maltrato y la explotación de la infancia) \parencite{onu-agenda2030}.
+Se declara secundario porque la protección es una condición de contorno del producto, no su objetivo.
+
+\paragraph{Vínculos descartados.}
+Se consideraron y descartaron el \ac{ODS} 4 (educación de calidad), el 9 (industria, innovación e infraestructura) y el 10 (reducción de las desigualdades): cualquier justificación habría descansado en generalidades aplicables a casi cualquier aplicación, y un vínculo que vale para todo no informa de nada.
