@@ -61,7 +61,7 @@ Principio rector: web y móvil **comparten lógica** (tipos, validación Zod, ap
   - **IA (estimación de plazos + afinidad)**: dirigida por eventos, nunca polling. LLM con salida JSON estructurada solo al crear/editar lista o pedir estimación, en job en segundo plano (**BullMQ + Redis**), con caché; no recomputar si la lista no cambió. Embeddings al crear metas/intereses → pgvector.
   - **KYC**: proveedor externo (Stripe Identity / Veriff / Onfido), nunca reconocimiento propio. Guardar solo estado + token; verificar y borrar la imagen del DNI (minimización, RGPD).
   - **Ads**: red existente (AdMob móvil, AdSense/Ad Manager web) + tabla propia de posts patrocinados inyectada por el ranking.
-  - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo; objetivo secundario del TFG, decidido el 14-07-2026). **Push**: Expo Push o FCM.
+  - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo; objetivo secundario del TFG, decidido el 16-07-2026 según el dev-journal). **Push**: Expo Push o FCM.
 - Ubicación: solo aproximada/difuminada, solo con consentimiento y verificación. Datos en región EU.
 
 #### 1.4.2 Frontend (web + móvil)

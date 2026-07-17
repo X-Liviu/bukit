@@ -58,6 +58,7 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 2. **TypeScript** estricto, config base en la raíz, paquetes consumidos **sin compilar**.
 3. BD **PostgreSQL** + **PostGIS** (mapa) + **pgvector** (afinidad); **Prisma** como ORM
    (geo/vector en SQL crudo). Dev en **Docker**, producción en **Neon** (EU, RGPD).
+4. Framework HTTP: **Express 5** estructurado a mano (descartado NestJS: el valor académico
+   está en lo hecho a mano; ver cap. 6 de la memoria).
 
-Pendiente: framework HTTP del backend (Express bien estructurado vs. NestJS) y scaffolding
-de `apps/web` y `apps/mobile`.
+Pendiente: scaffolding de `apps/web` y `apps/mobile`.

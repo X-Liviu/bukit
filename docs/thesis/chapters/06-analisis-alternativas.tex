@@ -1,13 +1,219 @@
 % =========================================================================
-% Capítulo 6 — Análisis de alternativas (si procede — para BUKIT procede)
-% Comparativa razonada de las opciones tecnológicas y justificación de la
-% elegida. Aquí encajan las decisiones ya tomadas en el proyecto:
-% npm/pnpm/Turborepo, SQL/NoSQL (PostgreSQL), ORM/SQL puro (Prisma),
-% Express/NestJS, backend propio/Supabase, etc.
+% Capítulo 6 — Análisis de alternativas
+% Método: para cada ámbito, qué se necesita, qué opciones había, cuál se
+% elige y por qué. El punto de partida es siempre la arquitectura de
+% TrackBites (proyecto previo del autor); las decisiones aún abiertas se
+% declaran como tales, con sus candidatas y el criterio que decidirá.
+% Fuentes: propuesta original (§4), dev-journal, CLAUDE.md y el propio
+% estado del repositorio. La solución resultante se describe en el cap. 8.
 % =========================================================================
 
 \chapter{Análisis de alternativas}
 \label{ch:alternativas}
 
-\todonote{Contenido pendiente. Fuente: decisiones documentadas en el
-dev-journal y en la propuesta del TFG.}
+Este capítulo recorre las decisiones tecnológicas del proyecto: para cada ámbito se expone qué se necesita, qué opciones se han considerado, cuál se elige y por qué.
+El análisis no parte de cero.
+El autor desarrolló previamente TrackBites \parencite{deleanu-trackbites}, una aplicación web completa de registro nutricional, y aquella arquitectura funciona aquí como línea base: cada elección se plantea como «lo ya dominado» frente a lo que este producto exige, y solo se salta donde el salto aporta.
+La propuesta de este \ac{TFG} concentró ese salto en cuatro mejoras: TypeScript en todo el código, lógica compartida entre web y móvil, una base de datos relacional con capacidades geoespaciales y vectoriales, y el cierre del ciclo de entrega con despliegue automático.
+
+Tres criterios transversales, fijados en capítulos anteriores, atraviesan todas las decisiones.
+Primero, el \ac{TFG} debe demostrar las competencias del grado, así que las piezas centrales se construyen a mano en lugar de delegarse en plataformas que las regalan hechas (sección \ref{sec:alt-supabase}).
+Segundo, la restricción de coste cero: solo se adoptan servicios con capa gratuita suficiente para un uso académico (riesgo R9, capítulo \ref{ch:riesgos}).
+Tercero, el \ac{RGPD} condiciona dónde viven los datos (región europea) y qué servicios pueden tratarlos (riesgo R7).
+Las decisiones que siguen abiertas no se disimulan: se declaran con sus candidatas y con el criterio que las cerrará.
+La solución resultante de este análisis se describe en el capítulo \ref{ch:solucion}.
+
+\section{Lenguaje: TypeScript en todo el código}
+\label{sec:alt-lenguaje}
+
+TrackBites se escribió en JavaScript.
+Aquí todo el código —servidor, web, móvil y paquetes compartidos— pasa a TypeScript, la decisión que más mantenibilidad aporta a medio y largo plazo: el compilador detecta antes de ejecutar errores que en JavaScript solo aparecen en ejecución \parencite{typescript-docs}, y los tipos son la base técnica de la validación compartida de la sección \ref{sec:alt-validacion}.
+La configuración es deliberadamente estricta (modo \eng{strict} con comprobaciones adicionales) y única para todo el repositorio, de modo que ningún paquete pueda relajarla por su cuenta.
+
+\section{Estructura del repositorio: \eng{monorepo} con pnpm}
+\label{sec:alt-monorepo}
+
+Compartir tipos, validación y cliente de \ac{API} entre tres aplicaciones exige que todo el código viva junto: un único repositorio con las aplicaciones (\texttt{apps/}) y los paquetes compartidos (\texttt{packages/}), el llamado \eng{monorepo}.
+La alternativa de un repositorio por aplicación se descarta porque cada pieza compartida tendría que publicarse y versionarse para poder consumirse, un peaje continuo sin sentido para una sola persona.
+
+Dentro del \eng{monorepo} compitieron dos herramientas.
+La propuesta original apuntaba a Turborepo, un orquestador que acelera \eng{monorepos} grandes con caché de tareas y compilaciones incrementales \parencite{turborepo-docs}.
+Al montar el repositorio se optó en su lugar por los \eng{workspaces} de pnpm sin orquestador \parencite{pnpm-docs}.
+La arquitectura elegida explica por sí sola esa renuncia: los paquetes compartidos se consumen \emph{sin compilar} (sus puntos de entrada apuntan directamente al código fuente y cada aplicación los compila con su propia herramienta), así que apenas quedan tareas que orquestar ni compilaciones que cachear, y la capa extra de Turborepo pagaría complejidad sin devolver velocidad en un equipo de una persona.
+pnpm aporta además la reproducibilidad que el proyecto se exige: versiones de dependencias fijadas exactas (sin rangos) con el archivo de bloqueo versionado en el repositorio, y versiones de Node y del propio gestor clavadas en la configuración, de modo que cualquier máquina reconstruye el mismo entorno.
+Queda preparada una contingencia documentada: si el empaquetador de React Native no tolerase los enlaces simbólicos con los que pnpm instala, una línea comentada en la configuración cambia a una instalación plana equivalente a la de npm sin perder el almacén rápido de pnpm.
+
+\section{Base de datos: PostgreSQL con PostGIS y pgvector}
+\label{sec:alt-bd}
+
+Es la decisión más relevante del conjunto, y la única que hereda una lección previa documentada.
+TrackBites usó MongoDB con Mongoose, y su memoria dejó registrado un compromiso consciente: aquel dominio, estrictamente jerárquico, encajaba mejor en una base relacional, y la integridad referencial y los borrados en cascada hubo que emularlos a mano con ganchos del propio Mongoose.
+\bukit lleva esa conclusión a la práctica.
+Su dominio es un grafo social —personas que se siguen, listas, metas, publicaciones ligadas a listas— con dos necesidades especiales: buscar personas por cercanía geográfica y por afinidad de intereses.
+Un modelo relacional resuelve el grafo con claves foráneas e integridad nativas, y aprovecha la base sólida en \ac{SQL} del autor.
+
+Las dos necesidades especiales no obligan a añadir motores dedicados, porque PostgreSQL las cubre con extensiones: PostGIS añade tipos y consultas geoespaciales —búsqueda por radio con índice espacial— \parencite{postgis-docs}, y pgvector añade columnas vectoriales y búsqueda por similitud \parencite{pgvector-docs} sobre las representaciones numéricas (\eng{embeddings}) de metas e intereses con las que se calcula la afinidad.
+La alternativa de sumar servicios especializados (una base vectorial y un servicio geoespacial junto a la base principal) multiplicaría las piezas que operar, pagar y sincronizar; un único PostgreSQL cubre las tres necesidades a la vez.
+
+En desarrollo, pruebas e integración continua la base corre en Docker, con una imagen propia que añade pgvector a la imagen oficial de PostGIS y activa ambas extensiones desde el arranque.
+En producción está prevista Neon, un PostgreSQL gestionado con capa gratuita y regiones europeas \parencite{neon-docs}, elegido entre las candidatas de la propuesta (Neon, Supabase, Railway); la residencia europea del dato es el criterio registrado de esa elección, y su capa gratuita satisface además la restricción de coste cero.
+
+\section{Acceso a datos: Prisma}
+\label{sec:alt-orm}
+
+Como capa de acceso a datos (\ac{ORM}) se adopta Prisma, que aporta migraciones versionadas del esquema y generación automática de los tipos TypeScript de cada entidad \parencite{prisma-docs}: cada cambio del modelo queda versionado junto al código, y los tipos del servidor no pueden desincronizarse de la base.
+Sustituye a Mongoose, la capa equivalente del mundo MongoDB, que queda descartada junto con su motor.
+Prisma no cubre las consultas geoespaciales ni vectoriales de las extensiones; esas consultas concretas se escriben en \ac{SQL} crudo desde el propio Prisma, una convivencia prevista desde el diseño.
+Las extensiones se declaran además en el propio esquema de Prisma, de modo que el código y la base nunca discrepen sobre qué hay activado.
+
+\section{Servidor de la \acs{API}: Express 5 frente a NestJS}
+\label{sec:alt-servidor}
+
+La propuesta dejó abierta la elección entre NestJS y «Express bien estructurado», y el arranque del repositorio la cerró a favor de Express en su versión 5.
+NestJS ofrece una arquitectura completa y opinada —módulos, inyección de dependencias, decoradores— \parencite{nestjs-docs}; Express es minimalista y deja la estructura en manos del proyecto \parencite{express-docs}.
+Esa diferencia basta para sostener la elección.
+El valor académico de este \eng{backend} está justamente en lo hecho a mano —autenticación con \ac{JWT} y rotación de los \eng{tokens} de refresco, doble capa de limitación de peticiones, manejo de errores centralizado: patrones que el autor ya domina de TrackBites, precisamente sobre Express—, y NestJS los entregaría envueltos en las abstracciones del marco, restando demostración y sumando su propia curva de aprendizaje a la del resto de la pila (riesgo R6, capítulo \ref{ch:riesgos}).
+De TrackBites se hereda también un patrón concreto de testabilidad: la aplicación se exporta separada del arranque del servidor, de modo que las pruebas de integración la ejercitan sin abrir ningún puerto.
+
+\section{La alternativa global: Supabase}
+\label{sec:alt-supabase}
+
+Antes de elegir pieza a pieza cabía una enmienda a la totalidad.
+Supabase empaqueta en un solo producto casi todo lo que este \eng{backend} construye: PostgreSQL gestionado con PostGIS y pgvector, autenticación, almacenamiento de archivos, tiempo real y funciones en la nube \parencite{supabase-docs}.
+Su ventaja es real y se reconoce: desarrollo mucho más rápido y menos infraestructura que mantener.
+Se descarta por la razón inversa: menos \eng{backend} hecho a mano, que es justo lo que el autor domina y quiere demostrar.
+Un \ac{TFG} cuyo \eng{backend} fuese configuración de Supabase acreditaría integración, no diseño; el \eng{backend} propio con Node, Prisma y PostgreSQL es el núcleo que demuestra las competencias del grado.
+Supabase queda anotada como vía de aceleración legítima para una eventual segunda versión, ya fuera de este \ac{TFG}.
+
+\section{Validación compartida: Zod frente a Joi}
+\label{sec:alt-validacion}
+
+TrackBites validaba con Joi solo en el servidor, sin validación compartida con el cliente.
+Aquí la validación vive una única vez, en el paquete compartido \texttt{packages/core}, escrita con Zod: cada esquema valida los datos en ejecución y de él se infiere automáticamente el tipo TypeScript \parencite{zod-docs}, de modo que servidor, web y móvil comparten literalmente la misma regla y el mismo tipo.
+Con Joi, validación y tipos habrían tenido que mantenerse por separado \parencite{joi-docs}: el doble mantenimiento que este diseño elimina es exactamente el porqué del cambio.
+La regla de proyecto lo fija: ningún esquema se duplica en las aplicaciones.
+
+\section{Cliente web: React y Vite, con TanStack Query}
+\label{sec:alt-web}
+
+La base del cliente web se conserva de TrackBites: React con Vite, ahora en TypeScript.
+Cambiar de marco (por ejemplo, a uno con renderizado en el servidor) no aportaría a una aplicación que vive tras un inicio de sesión, y desperdiciaría la experiencia acumulada.
+El cambio está en el estado de servidor.
+En TrackBites la caché de datos remotos se gestionaba a mano con Redux Toolkit, podando el árbol de estado local para evitar recargas; funcionó, pero a costa de mucho código repetitivo de carga, error y caché.
+Para un producto cuyo centro es un \eng{feed} con desplazamiento infinito, esa gestión manual se descarta en favor de TanStack Query, que resuelve de serie la caché, los reintentos, la invalidación y la paginación infinita del estado de servidor \parencite{tanstack-query-docs}.
+Queda abierta, y así se declara, la biblioteca de estado global de interfaz (Redux Toolkit con Reselect se mantiene en consideración por la experiencia previa); se decidirá al montar el cliente web, cuando exista el primer estado global real que gestionar.
+Por el mismo principio, las aplicaciones web y móvil no tienen todavía andamiaje: se generarán con sus herramientas oficiales al abordarlas, porque una configuración escrita a mano hoy quedaría desactualizada.
+
+\section{Cliente móvil: React Native con Expo}
+\label{sec:alt-movil}
+
+La aplicación móvil es objetivo secundario (capítulo \ref{ch:objetivos}), pero su elección condiciona la arquitectura desde el primer día.
+Se elige React Native con Expo.
+React Native permite escribir la interfaz móvil en el mismo lenguaje y paradigma que la web \parencite{react-native-docs}, con lo que los paquetes compartidos (tipos, validación, cliente de \ac{API}, lógica de estado) sirven a ambas plataformas sin traducción; el desarrollo nativo por plataforma —o un marco multiplataforma de otro lenguaje— rompería exactamente esa compartición, que es el principio rector de la arquitectura.
+Expo añade la cadena de entrega: compilación en la nube, distribución de versiones de prueba y actualizaciones remotas sin pasar por las tiendas \parencite{expo-docs}.
+La única fricción conocida (el empaquetador de React Native frente a los enlaces simbólicos de pnpm) tiene su contingencia preparada en la configuración del \eng{monorepo} (sección \ref{sec:alt-monorepo}).
+
+\section{Servicios externos: enfoque decidido, proveedor abierto}
+\label{sec:alt-servicios}
+
+Varias funciones dependen de servicios de terceros.
+En todas ellas el análisis distingue dos niveles: el \emph{enfoque}, decidido y condicionante del diseño, y el \emph{proveedor} concreto, que se deja abierto hasta el momento de integrarlo y se cerrará con dos criterios fijos: capa gratuita suficiente allí donde exista (riesgo R9) y, cuando trate datos personales, garantías europeas de protección de datos (riesgo R7).
+Cuando un servicio puede no ofrecer capa gratuita utilizable —el caso del vídeo y de la \ac{IA}—, esa dependencia de pago es justamente lo que relega su función a objetivo secundario (capítulo \ref{ch:objetivos}), con versiones simuladas como contingencia (riesgo R9).
+
+\paragraph{Estimación de plazos y afinidad con \ac{IA}.}
+El enfoque decidido es dirigido por eventos: el modelo de lenguaje (\ac{LLM}) se llama únicamente cuando la persona crea o edita una lista o pide una estimación; el sondeo periódico se descarta por costoso e innecesario.
+La llamada se ejecuta como trabajo en segundo plano en una cola sobre Redis (BullMQ \parencite{bullmq-docs}) para no bloquear la petición, con respuesta estructurada en formato \ac{JSON} y con caché: si la lista no cambió, no se recalcula.
+Las representaciones vectoriales de metas e intereses se generan al crearlos y se guardan en pgvector (sección \ref{sec:alt-bd}).
+El proveedor del modelo (la \ac{API} de Anthropic o la de OpenAI) queda abierto.
+
+\paragraph{Verificación de identidad.}
+Construir un reconocimiento propio de documentos queda descartado de plano: se integra un proveedor especializado (candidatos: Stripe Identity, Veriff, Onfido) del que se guarda únicamente el estado de la verificación y una clave de referencia, nunca la imagen del documento, por minimización de datos (\ac{RGPD}).
+La integración entra en el alcance en modo de pruebas; la contratación del servicio en producción queda fuera (capítulo \ref{ch:objetivos}).
+
+\paragraph{Mensajería en tiempo real.}
+El chat exige un canal bidireccional persistente entre cliente y servidor.
+Las candidatas son Socket.IO \parencite{socketio-docs}, gestionado sobre el propio servidor, o un servicio equivalente ya gestionado; se decidirá al abordar la mensajería, con la capa gratuita como criterio.
+
+\paragraph{Imágenes y vídeo.}
+Las imágenes irán a un almacenamiento de objetos (Cloudflare R2 o S3, abierto).
+El vídeo —objetivo secundario desde el 16/07/2026— irá a un servicio gestionado de vídeo (candidatos: Mux o Cloudflare Stream, abierto).
+
+\paragraph{Notificaciones y anuncios.}
+Los recordatorios de metas llegarán por notificaciones \eng{push} (Expo Push o Firebase Cloud Messaging, abierto).
+La publicidad no se programa desde cero: el producto prevé una red de anuncios existente (AdMob en móvil; AdSense o Ad Manager en web, abierto) más una tabla propia de publicaciones patrocinadas que la ordenación del \eng{feed} inyecta.
+Dentro de este \ac{TFG} solo se implementa la tabla propia de patrocinados: la integración de la red comercial queda fuera del alcance (capítulo \ref{ch:objetivos}).
+
+\section{Entrega: de la integración continua heredada al despliegue continuo}
+\label{sec:alt-entrega}
+
+De TrackBites se hereda la cadena de comprobaciones automáticas (\eng{pipeline}) de integración continua en GitHub Actions, con estrategia de fallo rápido —análisis estático, pruebas unitarias y de integración en paralelo, y las pruebas de extremo a extremo con Playwright como última barrera—, ampliada ahora con la comprobación de tipos de TypeScript.
+El salto nuevo es el despliegue continuo: en TrackBites se omitió deliberadamente, y aquí se completa el ciclo, de modo que todo cambio que pasa el \eng{pipeline} llega solo a producción.
+El \eng{backend} se empaqueta con Docker, que sustituye el despliegue manual anterior por entornos reproducibles \parencite{docker-docs}.
+Los destinos concretos siguen abiertos y así se declaran: la \ac{API} en Render, Railway o Fly.io; la web en Vercel o Cloudflare Pages; la aplicación móvil por la cadena de Expo.
+La base de datos es la excepción: su destino ya está decidido en Neon (sección \ref{sec:alt-bd}).
+El criterio para cerrar los abiertos vuelve a ser el mismo: capa gratuita suficiente para un uso académico.
+
+\section{Resumen del análisis}
+\label{sec:alt-resumen}
+
+La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, frente a qué alternativa y en qué estado queda cada decisión.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{31mm}>{\raggedright\arraybackslash}p{44mm}>{\raggedright\arraybackslash}p{44mm}>{\raggedright\arraybackslash}p{28mm}@{}}
+  \caption{Resumen del análisis de alternativas.}
+  \label{tab:resumen-alternativas}\\
+  \toprule
+  \textbf{Ámbito} & \textbf{Elección} & \textbf{Frente a} & \textbf{Estado} \\
+  \midrule
+  \endfirsthead
+  \multicolumn{4}{c}{\emph{\tablename~\thetable{} — continuación de la página anterior}}\\
+  \toprule
+  \textbf{Ámbito} & \textbf{Elección} & \textbf{Frente a} & \textbf{Estado} \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{4}{r@{}}{\emph{Continúa en la página siguiente…}}\\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  Lenguaje & TypeScript transversal & JavaScript (TrackBites) & Decidida \\
+  \addlinespace
+  Repositorio & \eng{Monorepo} con \eng{workspaces} de pnpm & Turborepo; repositorios separados* & Decidida \\
+  \addlinespace
+  Base de datos & PostgreSQL + PostGIS + pgvector & MongoDB + Mongoose; motores especializados aparte & Decidida \\
+  \addlinespace
+  Base de datos en producción & Neon (región europea) & Supabase; Railway & Decidida \\
+  \addlinespace
+  Acceso a datos & Prisma (geo/vector en \acs{SQL} crudo) & Mongoose & Decidida \\
+  \addlinespace
+  Servidor de la \acs{API} & Express 5 estructurado a mano & NestJS & Decidida \\
+  \addlinespace
+  Plataforma \eng{backend} & \eng{Backend} propio (Node + Prisma + PostgreSQL) & Supabase como plataforma integral & Decidida \\
+  \addlinespace
+  Validación y tipos & Zod compartido en \texttt{packages/core} & Joi solo en el servidor & Decidida \\
+  \addlinespace
+  Cliente web & React + Vite + TanStack Query & Caché manual con Redux (TrackBites) & Decidida \\
+  \addlinespace
+  Estado global de interfaz & Pendiente (Redux Toolkit + Reselect en consideración) & — & Abierta \\
+  \addlinespace
+  Cliente móvil & React Native + Expo & Desarrollo nativo por plataforma* & Decidida \\
+  \addlinespace
+  \acs{IA} de plazos y afinidad & Por eventos + cola en segundo plano & Sondeo periódico & Enfoque decidido; proveedor abierto \\
+  \addlinespace
+  Verificación de identidad & Proveedor externo, en modo de pruebas & Reconocimiento propio & Enfoque decidido; proveedor abierto \\
+  \addlinespace
+  Mensajería en tiempo real & Canal bidireccional persistente & — & Enfoque decidido; proveedor abierto \\
+  \addlinespace
+  Imágenes y vídeo & Almacén de objetos + servicio de vídeo gestionado & — & Enfoque decidido; proveedor abierto \\
+  \addlinespace
+  Notificaciones \eng{push} & Expo Push o Firebase Cloud Messaging & — & Abierta \\
+  \addlinespace
+  Publicidad & Tabla propia de patrocinados (red existente prevista) & Publicidad programada desde cero & Enfoque decidido; integración real fuera del alcance \\
+  \addlinespace
+  Entrega & Integración continua de fallo rápido + despliegue continuo + Docker & Omitir el despliegue continuo (TrackBites) & Decidida; destinos abiertos \\
+  \addlinespace
+  \multicolumn{4}{@{}l@{}}{\emph{* Alternativa analizada en este capítulo; no consta como barajada en la documentación previa del proyecto.}} \\
+\end{longtable}
+\endgroup

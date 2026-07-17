@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Servidor / API de BUKIT (Node + Prisma). Framework HTTP pendiente de decidir.",
+  "description": "Servidor / API de BUKIT (Node + Express 5 + Prisma).",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.build.json",
