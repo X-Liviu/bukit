@@ -24,7 +24,7 @@ La elección no parte de preferencias abstractas, sino de las condiciones reales
   \item \textbf{Alcance emergente.}
         El modelo de datos y las entidades se diseñan de forma incremental y meditada durante el desarrollo, una decisión ya tomada del proyecto; una red completa de tareas definida por adelantado quedaría obsoleta en semanas.
   \item \textbf{Disponibilidad variable y conocida.}
-        El verano está condicionado por compromisos laborales, septiembre por el traslado a una estancia Erasmus que se prolonga hasta finales de enero, y desde febrero el trabajo convive con las prácticas de empresa; la metodología debe absorber esa variación —y el riesgo de que sea aún mayor (R7, capítulo \ref{ch:riesgos})— sin romperse.
+        El verano está condicionado por compromisos laborales, septiembre por el traslado a una estancia Erasmus que se prolonga hasta finales de enero, y desde febrero el trabajo convive con las posibles prácticas de empresa; la metodología debe absorber esa variación —y el riesgo de que sea aún mayor (R8, capítulo \ref{ch:riesgos})— sin romperse.
   \item \textbf{Una única persona.}
         No hay roles que repartir ni reuniones que sincronizar; toda ceremonia debe justificar su coste ante un equipo de uno.
   \item \textbf{Dos entregables simultáneos.}
@@ -102,6 +102,7 @@ El tablero es la herramienta operativa del día a día; esta memoria conserva la
 El esfuerzo se estima en puntos de historia (\eng{story points}), una medida relativa de tamaño, con la escala de Fibonacci modificada (1, 2, 3, 5, 8 y 13).
 La estimación relativa se elige frente a la estimación directa en horas porque comparar es más fiable que predecir duraciones absolutas, y porque desacopla el tamaño del trabajo de la capacidad disponible, que aquí varía por diseño \parencite{cohn-estimating}.
 Al no existir equipo, no procede la estimación por votación simultánea del equipo (\eng{planning poker}); en su lugar, cada historia se estima por triangulación contra historias de referencia ya conocidas.
+La historia es además la única unidad que recibe puntos: si al ejecutarla conviene descomponerla en subtareas técnicas, estas se anotan como lista de comprobación dentro de su propia ficha del tablero, sin estimación propia, porque puntuar dos niveles a la vez contaría el mismo trabajo dos veces y distorsionaría la medida de velocidad.
 
 Como hipótesis inicial de equivalencia se toman unas 2,7 horas por punto, de modo que la velocidad esperada de cada \eng{sprint} se deriva de su capacidad declarada (por ejemplo, unos 4 puntos en un \eng{sprint} de verano de 10 horas).
 Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del tercer \eng{sprint} la manda la velocidad real medida, y la hipótesis se recalibra en cada retrospectiva (riesgo R2).
@@ -157,14 +158,6 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
 \end{table}
 
 Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas: siguiendo la elaboración progresiva propia de los métodos ágiles, solo se detallan en historias las épicas de la fase inminente, y el resto se refina justo antes de abordarse, con el conocimiento acumulado hasta entonces.
-Como muestra del nivel de detalle al que se baja cada historia antes de entrar en un \eng{sprint}, se desarrolla una completa:
-
-\begin{quote}
-  \textbf{US-11 (EP04, 5 puntos).}
-  Como persona usuaria registrada, quiero crear una lista con metas y fecha límite, para convertir mis deseos en compromisos medibles.
-  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
-\end{quote}
-
 La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y EP02 forman la fase F1, y EP03 abre la F2.
 
 \begin{table}[htbp]
@@ -189,6 +182,18 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fund
   \caption{Desglose en historias de las épicas de fundaciones EP01--EP03, 29 puntos.}
   \label{tab:backlog-f1}
 \end{table}
+
+En la tabla \ref{tab:backlog-f1} cada historia aparece resumida en una línea, pero antes de entrar en un \eng{sprint} toda historia se desarrolla hasta un nivel de detalle que la hace verificable.
+Como muestra de ese nivel se desarrolla completa la que sería la primera historia de EP04, continuando la numeración de la tabla:
+
+\begin{quote}
+  \textbf{US-11 (EP04, 5 puntos).}
+  Como persona usuaria registrada, quiero crear una lista con metas y fecha límite, para convertir mis deseos en compromisos medibles.
+  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
+\end{quote}
+
+Este desarrollo es una anticipación puramente ilustrativa, no el refinamiento de EP04, que se hará en su momento como el de cualquier otra épica.
+Sus 5 puntos tampoco añaden trabajo nuevo al inventario: forman parte de los 13 estimados en grueso para EP04 en la tabla \ref{tab:backlog-epicas}.
 
 \section{Fases y cronograma del desarrollo}
 \label{sec:fases}
@@ -219,7 +224,7 @@ Cada fase cierra con un incremento demostrable, que actúa como hito de control.
 \end{table}
 
 La capacidad declarada refleja la disponibilidad real esperada de cada periodo: unas 10 horas semanales en verano, condicionado por compromisos laborales; unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las prácticas de empresa.
-Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R7 (capítulo \ref{ch:riesgos}), con las horas registradas en el diario como evidencia.
+Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R8 (capítulo \ref{ch:riesgos}), con las horas registradas en el diario como evidencia.
 Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación de lunes con el conocimiento acumulado hasta entonces.
 
 \begin{table}[htbp]

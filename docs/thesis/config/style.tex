@@ -86,6 +86,12 @@
 \widowpenalty=10000
 \clubpenalty=10000
 \displaywidowpenalty=10000
+% Las páginas cortas terminan cortas, sin estirar el espacio vertical para
+% cuadrar el pie (comportamiento de Word, del que parte la guía). Sin esto,
+% el \flushbottom por defecto de twoside estira los 6 pt normativos entre
+% párrafos en cada página que un apartado abandona por la regla anterior
+% (avisos "Underfull \vbox" y huecos irregulares entre párrafos).
+\raggedbottom
 
 % --- Tablas y figuras: doble numeración capítulo.orden ---
 % Ya es el comportamiento de la clase report (\thetable = cap.orden).

@@ -1,14 +1,68 @@
 % =========================================================================
 % Capítulo 14 — Descripción del presupuesto/gastos del TFG (OBLIGATORIO)
-% Horas de trabajo (valoradas), licencias, infraestructura (hosting,
-% dominios, APIs de IA...). La guía permite añadir apartados: un análisis
+% Criterio: separar gasto desembolsado (real, registrado mes a mes) de
+% coste valorado (horas y amortización, se calculan al cierre con las
+% horas reales del diario). La guía permite añadir apartados: un análisis
 % de rentabilidad (modelo de negocio: publicidad, cuentas TOP...) sumaría.
 % =========================================================================
 
 \chapter{Descripción del presupuesto y gastos del TFG}
 \label{ch:presupuesto}
 
-\todonote{Contenido pendiente.}
+Este capítulo aplica al dinero el mismo criterio que los capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg} aplican al tiempo: lo que se registra es lo real, y lo estimado se declara como estimación.
+Para ello distingue dos naturalezas de coste.
+El \emph{gasto desembolsado} es el dinero que efectivamente sale del bolsillo del autor, y se anota mes a mes conforme ocurre.
+El \emph{coste valorado} es el que no genera ningún pago pero tiene valor económico —las horas de trabajo y el desgaste del equipo—, y se calculará al cierre del proyecto con las horas reales del diario de desarrollo, no con cifras inventadas.
+
+\section{Gastos desembolsados}
+\label{sec:gastos-desembolsados}
+
+\subsection{Suscripción de asistencia con inteligencia artificial}
+\label{sec:gasto-ia}
+
+El único gasto directo del proyecto es la suscripción mensual a Claude (Anthropic), el asistente de \ac{IA} con el que se desarrolla el trabajo, como se declara en el capítulo \ref{ch:beneficios}.
+La suscripción no tiene un precio fijo durante el proyecto porque se dimensiona cada mes según la dedicación declarada en el capítulo \ref{ch:tareas}: en los meses de dedicación alta se contrata el plan Max (93~€/mes) y en los de dedicación baja basta el plan Pro (18~€/mes), con las tarifas vigentes en julio de 2026.
+La tabla \ref{tab:gasto-ia} recoge el desglose: los meses ya transcurridos figuran como gasto real y los futuros como previsión coherente con la capacidad declarada, que se irá sustituyendo por el gasto real conforme ocurra.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lllr}
+    \toprule
+    \textbf{Mes} & \textbf{Dedicación prevista (cap. \ref{ch:tareas})} & \textbf{Plan} & \textbf{Importe} \\
+    \midrule
+    Julio 2026                  & Planificación y arranque de F1 (alta) & Max & 93~€ (real) \\
+    Agosto 2026                 & F1, verano (alta)                     & Max & 93~€ \\
+    Septiembre 2026             & Pausa por traslado (mínima)           & Pro & 18~€ \\
+    Octubre 2026 -- enero 2027  & F2, Erasmus (baja)                    & Pro & 4 $\times$ 18 = 72~€ \\
+    Febrero -- mayo 2027        & F3--F4, con prácticas (alta)          & Max & 4 $\times$ 93 = 372~€ \\
+    \midrule
+    \textbf{Total estimado}     &                                       &     & \textbf{648~€} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Gasto en la suscripción de asistencia con \acs{IA}, mes a mes (real hasta la fecha, previsión en adelante).}
+  \label{tab:gasto-ia}
+\end{table}
+
+Dos matices completan la tabla.
+Primero, la previsión hereda la lectura conservadora del capítulo \ref{ch:gantt-tfg}: si el escenario de mayor disponibilidad adelantara el cierre del desarrollo, los últimos meses de plan Max no llegarían a contratarse y el total bajaría.
+Segundo, los meses de junio y julio de \thesisYear{} (preparación de la defensa) quedan fuera del cómputo, porque el desarrollo estará cerrado y el plan contratado dependerá solo del uso personal que el autor haga de la herramienta en ese momento.
+
+\subsection{Infraestructura: coste cero}
+\label{sec:gasto-infraestructura}
+
+El resto de servicios que el proyecto necesita opera íntegramente en capas gratuitas: el alojamiento del código, el tablero y la integración continua (GitHub), la base de datos gestionada, el despliegue de la \ac{API} y del cliente web, y la verificación de identidad en modo de pruebas.
+No es una casualidad sino una restricción de diseño declarada: superar los límites de esas capas gratuitas está identificado como el riesgo R9 en el capítulo \ref{ch:riesgos}, con su plan de respuesta correspondiente.
+
+\section{Costes valorados (no desembolsados)}
+\label{sec:costes-valorados}
+
+Al cierre del proyecto se valorarán las dos partidas que no generan desembolso.
+La primera son las horas de trabajo del autor: se tomarán las horas reales acumuladas en el diario de desarrollo (la referencia prevista son unas 395, capítulo \ref{ch:gantt-tfg}) y se valorarán con una tarifa de mercado justificada en ese momento.
+La segunda es la amortización proporcional del equipo personal (un portátil ya en propiedad) durante los meses del proyecto.
+Se posponen deliberadamente: calcularlas hoy obligaría a usar las horas previstas en lugar de las reales, contradiciendo el criterio de registro del capítulo.
+\todonote{Completar al cierre: horas reales del diario $\times$ tarifa justificada + amortización del equipo.}
 
 % Apartado opcional (añadido permitido por la guía) — descomentar si aplica:
 % \section{Análisis de rentabilidad}

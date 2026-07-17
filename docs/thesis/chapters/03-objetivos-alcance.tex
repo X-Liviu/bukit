@@ -1,7 +1,7 @@
 % =========================================================================
 % Capítulo 3 — Objetivos y alcance del trabajo (OBLIGATORIO)
-% Objetivo principal + objetivos secundarios (medibles), qué entra y qué
-% queda explícitamente FUERA del alcance (límites), y criterios de éxito.
+% Objetivo principal + objetivos medibles + criterios de éxito globales,
+% y qué entra y qué queda explícitamente FUERA del alcance (límites).
 % =========================================================================
 
 \chapter{Objetivos y alcance del trabajo}
@@ -28,7 +28,7 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
 \begin{itemize}
   \item \textbf{Backend único para las tres necesidades del producto.}
         Implementar con Express y Prisma una \ac{API} \ac{REST} sobre una única base de datos PostgreSQL que resuelva el grafo social (integridad relacional), el mapa (consultas geoespaciales por radio con PostGIS) y la afinidad entre personas usuarias (búsqueda por similitud vectorial con pgvector).
-        El objetivo se considera cumplido cuando el 100\,\% de los flujos núcleo del producto (cuentas, listas y metas, publicaciones, seguimiento, mensajería, mapa y notificaciones) está expuesto por la \ac{API} y cubierto por pruebas de integración antes del cierre del periodo de ejecución.
+        Medible: el 100\,\% de los flujos núcleo del producto (cuentas, listas y metas, publicaciones, seguimiento, mensajería, mapa y notificaciones) está expuesto por la \ac{API} y cubierto por pruebas de integración antes del cierre del periodo de ejecución.
   \item \textbf{Autenticación y seguridad desde el diseño.}
         Proteger la \ac{API} con autenticación \ac{JWT} con rotación de \eng{refresh tokens}, contraseñas cifradas con Bcrypt, doble capa de limitación de peticiones y manejo centralizado de errores.
         Medible: el 100\,\% de los \eng{endpoints} privados exige un token válido, y los casos de abuso básicos (credenciales inválidas, exceso de peticiones) quedan cubiertos por pruebas automatizadas.
@@ -38,18 +38,21 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
   \item \textbf{Lógica compartida sin duplicación.}
         Centralizar los tipos, la validación (Zod) y el cliente HTTP en los paquetes compartidos del repositorio único que aloja todas las aplicaciones del proyecto (\eng{monorepo}): \texttt{packages/core}, \texttt{packages/api-client} y \texttt{packages/ui-core}, como única fuente de verdad para web y móvil.
         Medible: cero esquemas de validación duplicados entre aplicaciones al cierre del desarrollo.
-  \item \textbf{Aplicación móvil parcial (objetivo secundario).}
-        Construir con React Native y Expo las pantallas núcleo (autenticación, listas y \eng{feed}) reutilizando la lógica compartida, como demostración de la arquitectura multiplataforma.
-        Se declara secundario porque el compromiso mínimo del trabajo es \eng{backend} más web; completarlo valida la decisión arquitectónica central, pero no completarlo no invalida el trabajo.
-  \item \textbf{Estimación de plazos asistida por \ac{IA} (objetivo secundario).}
-        Integrar la estimación de plazos realistas por meta mediante un modelo de lenguaje con salida estructurada, ejecutada en segundo plano y dirigida por eventos (nunca por sondeo).
-        Se declara secundario porque depende de servicios externos cuyo coste y disponibilidad quedan fuera del control del proyecto.
-  \item \textbf{Soporte de vídeo (objetivo secundario).}
-        Permitir la subida y reproducción de vídeo —en particular, los vídeos de motivación exclusivos de los usuarios TOP— delegando la transcodificación y el \eng{streaming} en un servicio gestionado.
-        Se declara secundario por el mismo criterio que la estimación de plazos: depende de un servicio externo de pago, y el resto del producto funciona con imágenes si no llega a integrarse.
   \item \textbf{Calidad y despliegue continuo.}
         Montar una cadena de integración continua con estrategia de fallo rápido (análisis estático, comprobación de tipos, pruebas unitarias y de integración, y pruebas \ac{E2E} como última barrera) con despliegue automático al superar todas las etapas.
         Medible: la rama principal se mantiene en verde y cada cambio validado llega a producción sin intervención manual.
+  \item \textbf{Aplicación móvil parcial (objetivo secundario).}
+        Construir con React Native y Expo las pantallas núcleo (autenticación, listas y \eng{feed}) reutilizando la lógica compartida, como demostración de la arquitectura multiplataforma.
+        Medible: las tres pantallas funcionan contra la \ac{API} real en una compilación de desarrollo, consumiendo la validación y el cliente HTTP de los paquetes compartidos sin duplicarlos.
+        Se declara secundario porque el compromiso mínimo del trabajo es \eng{backend} más web; completarlo valida la decisión arquitectónica central, pero no completarlo no invalida el trabajo.
+  \item \textbf{Estimación de plazos asistida por \ac{IA} (objetivo secundario).}
+        Integrar la estimación de plazos realistas por meta mediante un modelo de lenguaje con salida estructurada, ejecutada en segundo plano y dirigida por eventos (nunca por sondeo).
+        Medible: al crear o editar una lista, el sistema genera y guarda en segundo plano una propuesta de plazo por meta, sin repetir el cálculo si la lista no ha cambiado.
+        Se declara secundario porque depende de servicios externos cuyo coste y disponibilidad quedan fuera del control del proyecto.
+  \item \textbf{Soporte de vídeo (objetivo secundario).}
+        Permitir la subida y reproducción de vídeo —en particular, los vídeos de motivación exclusivos de los usuarios TOP— delegando la transcodificación y el \eng{streaming} en un servicio gestionado.
+        Medible: un usuario TOP puede subir un vídeo y cualquier persona usuaria reproducirlo desde el \eng{feed} sin errores bloqueantes.
+        Se declara secundario por el mismo criterio que la estimación de plazos: depende de un servicio externo de pago, y el resto del producto funciona con imágenes si no llega a integrarse.
 \end{itemize}
 
 \section{Objetivos de gestión y académicos}
@@ -58,17 +61,34 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
 \begin{itemize}
   \item \textbf{Dedicación y plazo.}
         Ejecutar el desarrollo dentro del calendario de fases declarado en el capítulo \ref{ch:tareas} (cierre del desarrollo el 16/05/\thesisYear), con una dedicación total en el entorno de las 360 horas correspondientes a los 12 créditos \ac{ECTS}, finalizando producto y memoria antes de la convocatoria de junio--julio de \thesisYear.
-        Medible: el registro de horas por sesión del diario de desarrollo del repositorio.
+        Medible: la suma del registro de horas por sesión del diario de desarrollo se sitúa en el entorno de las 360 horas, y cada fase se cierra dentro de su fecha planificada.
   \item \textbf{Trazabilidad de las decisiones.}
         Registrar el 100\,\% de las sesiones de trabajo en el diario de desarrollo, anotando fecha, horas invertidas, problemas encontrados y cada decisión junto con la alternativa descartada y su porqué.
+        Medible: ninguna sesión de trabajo queda sin entrada en el diario, ni ninguna decisión relevante sin su alternativa y justificación anotadas.
         Este diario es la fuente de datos real de la planificación (capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}), por lo que su exhaustividad condiciona directamente la calidad de la memoria.
   \item \textbf{Memoria en paralelo al desarrollo.}
         Redactar la memoria de forma incremental, junto al desarrollo y no al final, manteniendo el documento siempre compilable sin errores.
         Medible: al cierre de cada fase del desarrollo, los capítulos que la documentan contienen redacción real y no marcadores de contenido pendiente.
-  \item \textbf{Empleo documentado de la \ac{IA} generativa.}
-        Emplear herramientas de \ac{IA} generativa como asistentes del desarrollo y declarar su uso conforme a la guía de la \ac{EIB}, analizando de forma crítica su aportación real, sus límites y los problemas encontrados.
-        Medible: la declaración de empleo de \ac{IA} de esta memoria enumera todas las herramientas utilizadas y los usos que se les han dado.
 \end{itemize}
+
+\section{Criterios de éxito}
+\label{sec:criterios-exito}
+
+Los objetivos anteriores llevan cada uno su criterio de medición individual; los criterios de éxito los condensan en las condiciones globales que verifican el objetivo principal.
+El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binaria (sí/no) las siguientes condiciones:
+
+\begin{enumerate}
+  \item \textbf{Producto funcional desplegado.}
+        Una persona usuaria puede registrarse, crear una lista con metas y plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat y usar el mapa, sin errores bloqueantes y sobre el despliegue de producción.
+  \item \textbf{Arquitectura compartida demostrada.}
+        Los tipos y la validación viven una única vez en los paquetes compartidos y ninguna aplicación duplica esquemas.
+  \item \textbf{Calidad automatizada.}
+        La cadena de integración y despliegue continuos está operativa, en verde sobre la rama principal, y cada cambio validado se despliega sin intervención manual.
+  \item \textbf{Trazabilidad completa.}
+        El diario de desarrollo cubre todas las sesiones de trabajo y la memoria completa el índice oficial de la \ac{EIB} sin contenidos pendientes, con las decisiones justificadas frente a sus alternativas.
+  \item \textbf{Ejecución dentro del marco académico.}
+        El desarrollo se ha completado dentro del periodo planificado y la dedicación registrada es coherente con las 360 horas de los 12 créditos \ac{ECTS}.
+\end{enumerate}
 
 \section{Alcance}
 \label{sec:alcance}
@@ -119,25 +139,6 @@ Para acotar el esfuerzo y proteger los plazos, quedan explícitamente fuera del 
   \item \textbf{Publicación en tiendas de aplicaciones.}
         La distribución en App Store y Play Store queda fuera; la aplicación móvil se valida con compilaciones de desarrollo.
   \item \textbf{Funciones aún en definición.}
-        La penalización social por metas incumplidas y el panel de administración de usuarios TOP se posponen hasta que su diseño madure.
+        Se posponen dos ideas de producto cuyo diseño no está cerrado: una penalización (en visibilidad o en puntos) para quien no cumple sus metas en el plazo comprometido, y un panel interno de administración para gestionar la admisión y las cuentas de los usuarios TOP.
 \end{itemize}
 
-Estas líneas se retoman como trabajo futuro en el capítulo \ref{ch:conclusiones}.
-
-\section{Criterios de éxito}
-\label{sec:criterios-exito}
-
-El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binaria (sí/no) las siguientes condiciones:
-
-\begin{enumerate}
-  \item \textbf{Producto funcional desplegado.}
-        Una persona usuaria puede registrarse, crear una lista con metas y plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat y usar el mapa, sin errores bloqueantes y sobre el despliegue de producción.
-  \item \textbf{Arquitectura compartida demostrada.}
-        Los tipos y la validación viven una única vez en los paquetes compartidos y ninguna aplicación duplica esquemas.
-  \item \textbf{Calidad automatizada.}
-        La cadena de integración y despliegue continuos está operativa, en verde sobre la rama principal, y cada cambio validado se despliega sin intervención manual.
-  \item \textbf{Trazabilidad completa.}
-        El diario de desarrollo cubre todas las sesiones de trabajo y la memoria completa el índice oficial de la \ac{EIB} sin contenidos pendientes, con las decisiones justificadas frente a sus alternativas.
-  \item \textbf{Ejecución dentro del marco académico.}
-        El desarrollo se ha completado dentro del periodo planificado y la dedicación registrada es coherente con las 360 horas de los 12 créditos \ac{ECTS}.
-\end{enumerate}
