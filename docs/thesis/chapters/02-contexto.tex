@@ -10,4 +10,52 @@
 \chapter{Contexto}
 \label{ch:contexto}
 
-\todonote{Contenido pendiente.}
+\section{El problema: metas que se abandonan y redes que no acompañan}
+\label{sec:contexto-problema}
+
+Las metas vitales se abandonan siguiendo un patrón reconocible: deseos formulados sin plazo ni medida, progreso que nadie registra y un camino que se recorre en solitario, sin nadie alrededor que acompañe o pida cuentas.
+El capítulo \ref{ch:beneficios} fundamenta esa lectura con la literatura de la psicología de la motivación; este capítulo la da por presentada para situar el producto.
+
+Las redes sociales de entretenimiento no alivian el problema, y hay razones fundadas para pensar que lo agravan.
+Su experiencia gira en torno al desplazamiento infinito por contenido ajeno y a la comparación con vidas editadas: un uso pasivo que la literatura asocia a peor bienestar subjetivo \parencite{verduyn-sns}, y cuyos patrones concretos se examinan producto a producto en el capítulo \ref{ch:estado-del-arte}.
+El hueco que \bukit ocupa es precisamente ese: no existe una red social generalista cuya experiencia completa esté orientada a que la persona \emph{haga}, en lugar de a que mire (el capítulo \ref{ch:estado-del-arte} recorre las aplicaciones existentes y demuestra ese hueco).
+
+\section{La propuesta: una red social orientada a la acción}
+\label{sec:contexto-propuesta}
+
+\bukit se organiza en cuatro pestañas, el patrón de navegación asentado por las redes dominantes \parencite{instagram-app}, para que la barrera de entrada sea la de una aplicación ya conocida:
+
+\begin{enumerate}
+  \item \textbf{Inicio}: un \eng{feed} —el flujo de publicaciones de la pantalla de inicio— personalizado en mosaico con ideas de metas, progresos, metas completadas y no logradas y vídeos de motivación, más un buscador de perfiles, publicaciones y listas; deslizando, un segundo \eng{feed} solo con el contenido de las personas seguidas.
+  \item \textbf{Listas}: el centro de control de los objetivos: crear, ver, editar y eliminar listas de metas con plazo, con recordatorios que envía la propia aplicación.
+  \item \textbf{Mensajes y mapa}: la mensajería, con un mini-mapa en la parte superior; el mapa a pantalla completa ofrece dos vistas —la de seguidos mutuos y la de descubrimiento de personas afines por cercanía— y aquí viven también las notificaciones.
+  \item \textbf{Perfil}: quién eres: hasta cinco publicaciones libres e historias ilimitadas.
+\end{enumerate}
+
+Sobre esa estructura, cinco reglas de producto definen el carácter de la red y condicionan el diseño técnico del resto de la memoria:
+
+\begin{itemize}
+  \item \textbf{Las listas son la unidad de las metas.}
+        Una lista agrupa metas con plazo, y las publicaciones de progreso o de meta completada solo pueden crearse desde listas propias: nadie puede presumir de un avance que no persigue de verdad.
+        El plan gratuito admite un máximo de tres listas.
+  \item \textbf{La visibilidad premia el avance.}
+        Hay dos tipos de usuario: normal (cualquier persona registrada) y TOP (creador admitido por formulario externo, con vídeo ilimitado y mayor peso en el \eng{feed}); la ordenación del \eng{feed} pondera el progreso y la aportación, no la mera popularidad, y los vídeos de motivación son exclusivos de los perfiles TOP.
+  \item \textbf{El contenido de perfil es efímero.}
+        Todo lo publicado en el perfil caduca a los 60 días salvo que su autor pulse «mantener»: el escaparate personal no es el centro de la experiencia.
+  \item \textbf{Conocer gente exige verificación.}
+        La verificación de identidad —documento y teléfono, delegada en un proveedor especializado— desbloquea publicar desde el perfil y el mapa de descubrimiento, reservado a personas mayores de edad, con ubicación siempre aproximada y con consentimiento explícito.
+  \item \textbf{Los recordatorios empujan.}
+        La aplicación recuerda los plazos de las metas: el compromiso es medible y con fecha, no un deseo vago.
+\end{itemize}
+
+La traducción de estas reglas a beneficios esperados, con su fundamento en la literatura, está en el capítulo \ref{ch:beneficios}; su traducción a requisitos del sistema, en el capítulo \ref{ch:estado-del-arte}.
+
+\section{Marco académico y personal}
+\label{sec:contexto-marco}
+
+Este proyecto es el \ac{TFG} del Grado en Ingeniería Informática de Gestión y Sistemas de Información de la \ac{EIB}, centro de la \ac{UPVEHU}, con 12 créditos \ac{ECTS} —unas 360 horas de referencia— y desarrollo previsto a lo largo del curso 2026--2027 completo.
+El calendario está condicionado por circunstancias personales declaradas en la planificación: compromisos laborales durante el verano, una estancia Erasmus en el primer cuatrimestre y prácticas de empresa desde febrero (capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}).
+
+El trabajo no parte de cero.
+Su precedente directo es TrackBites \parencite{deleanu-trackbites}, la aplicación web completa que el autor construyó con anterioridad y cuya arquitectura funciona como línea base de todas las decisiones tecnológicas de este proyecto (capítulo \ref{ch:alternativas}).
+El desarrollo se realiza en solitario y con asistencia intensiva de \ac{IA} generativa: una elección metodológica declarada, con salvaguardas explícitas en el plan de riesgos (capítulo \ref{ch:riesgos}) y con su coste real registrado mes a mes en el presupuesto (capítulo \ref{ch:presupuesto}).

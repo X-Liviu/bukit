@@ -36,14 +36,14 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
         Desarrollar con React y Vite una \ac{SPA} que implemente las cuatro pestañas del producto: inicio con \eng{feed} personalizado, listas, mensajes con mapa y notificaciones, y perfil.
         Medible: una persona usuaria puede completar de principio a fin los flujos núcleo desde el navegador, sin errores bloqueantes, antes del cierre del periodo de ejecución.
   \item \textbf{Lógica compartida sin duplicación.}
-        Centralizar los tipos, la validación (Zod) y el cliente HTTP en los paquetes compartidos del repositorio único que aloja todas las aplicaciones del proyecto (\eng{monorepo}): \texttt{packages/core}, \texttt{packages/api-client} y \texttt{packages/ui-core}, como única fuente de verdad para web y móvil.
+        Centralizar los tipos, la validación (Zod) y el cliente \ac{HTTP} como única fuente de verdad para web y móvil, en los paquetes compartidos del repositorio único que aloja las aplicaciones (\eng{monorepo}): \texttt{packages/}\allowbreak\texttt{core}, \texttt{packages/}\allowbreak\texttt{api-client} y \texttt{packages/}\allowbreak\texttt{ui-core}.
         Medible: cero esquemas de validación duplicados entre aplicaciones al cierre del desarrollo.
   \item \textbf{Calidad y despliegue continuo.}
         Montar una cadena de integración continua con estrategia de fallo rápido (análisis estático, comprobación de tipos, pruebas unitarias y de integración, y pruebas \ac{E2E} como última barrera) con despliegue automático al superar todas las etapas.
         Medible: la rama principal se mantiene en verde y cada cambio validado llega a producción sin intervención manual.
   \item \textbf{Aplicación móvil parcial (objetivo secundario).}
         Construir con React Native y Expo las pantallas núcleo (autenticación, listas y \eng{feed}) reutilizando la lógica compartida, como demostración de la arquitectura multiplataforma.
-        Medible: las tres pantallas funcionan contra la \ac{API} real en una compilación de desarrollo, consumiendo la validación y el cliente HTTP de los paquetes compartidos sin duplicarlos.
+        Medible: las tres pantallas funcionan contra la \ac{API} real en una compilación de desarrollo, consumiendo la validación y el cliente \ac{HTTP} de los paquetes compartidos sin duplicarlos.
         Se declara secundario porque el compromiso mínimo del trabajo es \eng{backend} más web; completarlo valida la decisión arquitectónica central, pero no completarlo no invalida el trabajo.
   \item \textbf{Estimación de plazos asistida por \ac{IA} (objetivo secundario).}
         Integrar la estimación de plazos realistas por meta mediante un modelo de lenguaje con salida estructurada, ejecutada en segundo plano y dirigida por eventos (nunca por sondeo).

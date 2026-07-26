@@ -9,5 +9,38 @@
 \chapter*{Empleo de Inteligencia Artificial (IA)}
 \addcontentsline{toc}{chapter}{Empleo de Inteligencia Artificial (IA)}
 
-\todonote{Contenido pendiente: declarar las herramientas de IA empleadas
-y su propósito en el desarrollo y la redacción.}
+Este apartado declara, por transparencia y como exige el centro, qué herramientas de \ac{IA} se han empleado para realizar el trabajo y con qué propósito.
+El desarrollo de \bukit se ha apoyado de forma intensiva en la \ac{IA} generativa como herramienta de trabajo, de modo que ocultarlo o minimizarlo faltaría a la honestidad con la que se plantea toda la memoria.
+Conviene distinguir desde el principio dos usos que comparten nombre pero no naturaleza: aquí se habla de la \ac{IA} como \emph{herramienta de desarrollo}, distinta de la \ac{IA} como \emph{funcionalidad del propio producto} --la estimación de plazos y el cálculo de afinidad que describen los capítulos \ref{ch:objetivos} y \ref{ch:alternativas}--, que no es objeto de este apartado.
+
+\paragraph{Por qué se ha recurrido a la IA.}
+El \ac{TFG} tiene un alcance amplio y un doble entregable --un producto de software y esta memoria-- que recae sobre una sola persona.
+La \ac{IA} se ha adoptado como un multiplicador que hace abordable ese alcance en solitario sin renunciar al rigor: acelera las tareas mecánicas y la redacción, y deja más tiempo para las decisiones, que siguen siendo humanas.
+Documentar ese uso de forma trazable no es un trámite, sino parte del valor del trabajo: convierte el proyecto en un caso de estudio verificable de desarrollo asistido, como se argumenta en el capítulo \ref{ch:beneficios}.
+
+\paragraph{Herramienta elegida.}
+La herramienta principal es Claude Code, el agente de línea de comandos de Anthropic, utilizado a través del plan de suscripción de Claude --plan Max en los meses de dedicación alta y plan Pro en los de dedicación baja--.
+Se eligió frente a otras opciones por trabajar con acceso directo al repositorio en lugar de copiar y pegar fragmentos: opera sobre el conjunto del proyecto, edita los archivos y ejecuta las comprobaciones de calidad por sí mismo.
+Eso permite \emph{diseñar} el modo de trabajo --con reglas de proyecto persistentes, comandos propios y tareas repartidas entre varios agentes-- y no solo consultar un asistente.
+Se descartaron un asistente de chat convencional, que carece de ese contexto del repositorio y obliga al trasiego manual de código, y las herramientas de autocompletado, útiles para sugerir líneas sueltas pero no para planificar ni sostener una decisión.
+El coste de la suscripción es el único gasto directo del proyecto y su desglose mes a mes se detalla en el capítulo \ref{ch:presupuesto}.
+
+\paragraph{Para qué se ha usado.}
+El uso principal ha sido la redacción de esta memoria: escribirla de forma correcta, rápida e iterativa, con un formato coherente y sin pérdidas entre sesiones.
+En segundo lugar, la asistencia en la programación del producto, siempre con el autor decidiendo el diseño: el modelo de datos, por ejemplo, se acuerda entidad por entidad y la herramienta no lo amplía por iniciativa propia.
+Y, de forma auxiliar, la generación y el mantenimiento de material de apoyo --tablas, figuras, renumeraciones de referencias e inventarios de decisiones-- y de un grafo del código que la herramienta consulta antes de leerlo en bruto.
+
+\paragraph{Cómo se trabaja con ella.}
+El método se apoya en un conjunto de reglas de proyecto persistentes que actúan como única fuente de verdad y que la herramienta lee al empezar cada sesión, de modo que las decisiones ya tomadas prevalecen y no se reabren sin motivo.
+La regla de oro es que cada decisión se explica y se justifica anotando la alternativa descartada y el porqué, y queda registrada en un diario de desarrollo que es, a la vez, la materia prima de esta memoria.
+Ese diario es el registro real del trabajo; abrir una sesión consiste en leer su última entrada.
+La automatización se acompaña de garantías: comandos propios para las tareas recurrentes, la obligación de compilar la memoria y pasar las comprobaciones de calidad tras cada cambio, y una revisión de todo lo generado antes de darlo por integrado.
+
+\paragraph{Fortalezas, limitaciones y responsabilidad.}
+Las fortalezas observadas son la velocidad y la capacidad de iteración en la redacción, la automatización con garantías de las tareas repetitivas, el reparto de las tareas tediosas entre varios agentes y la trazabilidad que convierte el resultado en un caso de estudio.
+Las limitaciones también son reales: la herramienta puede introducir errores o atribuciones y citas poco fiables, existe el riesgo de una dependencia acrítica que lleve a integrar algo sin comprenderlo, y su uso tiene un coste económico.
+Cada una de esas limitaciones tiene su salvaguarda documentada, y ninguna se deja al azar: toda fuente se verifica contra el original y las citas se auditan antes del depósito (riesgo R4), nada se da por bueno sin poder explicarlo y defenderlo sin la herramienta ante el tribunal (riesgo R5, capítulo \ref{ch:riesgos}), y el coste se declara y se dimensiona en el capítulo \ref{ch:presupuesto}.
+En última instancia la \ac{IA} asiste, pero la autoría, las decisiones y la responsabilidad del trabajo son del autor.
+
+\todonote{Decidir a futuro si la parte discursiva (método, fortalezas y limitaciones)
+se mantiene aquí o se traslada a Conclusiones (cap.~\ref{ch:conclusiones}) o a un apartado propio.}

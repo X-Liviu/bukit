@@ -1,11 +1,45 @@
 % =========================================================================
-% Capítulo 8 — Selección/Descripción de la solución propuesta (si procede)
-% Conclusión del análisis de alternativas: la solución elegida, su
-% descripción general y por qué. El diseño va en el capítulo 9; el diseño
-% de detalle/bajo nivel, al Anexo II.
+% Capítulo 8 — Descripción de la solución propuesta (OBLIGATORIO)
+% Conclusión del análisis de alternativas (cap. 6): la forma general de la
+% solución, que ya no cambia. El diseño va en el capítulo 9 (crece con el
+% desarrollo, entidad a entidad); el diseño de bajo nivel, al Anexo II.
 % =========================================================================
 
 \chapter{Descripción de la solución propuesta}
 \label{ch:solucion}
 
-\todonote{Contenido pendiente.}
+Este capítulo reúne las conclusiones del análisis de alternativas (capítulo \ref{ch:alternativas}) en una descripción de conjunto de la solución.
+El diseño de detalle —el modelo de datos, la estructura interna de cada aplicación, los contratos de la \ac{API}— vive en el capítulo \ref{ch:diseno} y crecerá con el desarrollo, porque el modelo se diseña de forma incremental y meditada, entidad a entidad; lo que este capítulo fija es la forma general del sistema, que ya no cambia.
+
+\section{Arquitectura general}
+\label{sec:solucion-arquitectura}
+
+La solución es un \eng{monorepo} con tres aplicaciones y tres paquetes compartidos.
+El servidor (\texttt{apps/api}) es una \ac{API} \ac{REST} propia construida con Express 5 sobre Node y con Prisma como capa de acceso a datos: autenticación con \ac{JWT} y rotación de los \eng{tokens} de refresco, doble capa de limitación de peticiones, manejo de errores centralizado, y la aplicación exportada separada del arranque del servidor para que las pruebas de integración la ejerciten sin abrir ningún puerto.
+El cliente web (\texttt{apps/web}) usa React con Vite y TanStack Query para el estado de servidor; la aplicación móvil (\texttt{apps/mobile}), con React Native y Expo, es parcial y objetivo secundario (capítulo \ref{ch:objetivos}).
+Los tres paquetes compartidos son el corazón de la arquitectura: \texttt{packages/core} contiene los esquemas Zod que son la única fuente de tipos y de validación para todo el sistema; \texttt{packages/api-client}, el cliente \ac{HTTP} tipado que consumen web y móvil; y \texttt{packages/ui-core}, la lógica de estado de interfaz sin componentes visuales, que cada plataforma viste con los suyos.
+
+Los datos viven en una única base PostgreSQL con dos extensiones: PostGIS resuelve el mapa social (búsqueda de personas por cercanía) y pgvector la afinidad (búsqueda por similitud sobre las representaciones vectoriales de metas e intereses), de modo que el grafo social, el mapa y la afinidad comparten motor, integridad y copia de seguridad.
+En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción está prevista Neon, en región europea por exigencia del \ac{RGPD}.
+\todonote{Añadir figura de la arquitectura general (\eng{monorepo}, apps, paquetes, base de datos y servicios externos) en la fase de diseño.}
+
+\section{Servicios externos: el núcleo nunca depende de ellos}
+\label{sec:solucion-servicios}
+
+Las funciones que dependen de terceros —la estimación de plazos y la afinidad con \ac{IA}, la verificación de identidad, la mensajería en tiempo real, las imágenes y el vídeo, las notificaciones \eng{push}— siguen todas el mismo principio: el núcleo del producto funciona de punta a punta contra versiones simuladas, de modo que ningún servicio externo puede bloquear el desarrollo ni las pruebas (riesgo R9, capítulo \ref{ch:riesgos}).
+La \ac{IA} del producto se dispara por eventos y se ejecuta en trabajos en segundo plano con cola, nunca dentro de la petición; la verificación de identidad se integra en modo de pruebas y guarda solo el estado y una clave de referencia.
+Los algoritmos propios que atraviesan estas funciones —la ordenación del \eng{feed} con ponderación por tipo de usuario y la inyección de publicaciones patrocinadas propias— se describirán en el capítulo \ref{ch:algoritmos} cuando se implementen.
+
+\section{La cadena de entrega es parte de la solución}
+\label{sec:solucion-entrega}
+
+La solución incluye su propia cadena de entrega, y es deliberadamente la primera pieza construida: la integración continua está operativa desde el primer \eng{sprint} de desarrollo, con estrategia de fallo rápido (análisis estático, comprobación de tipos y pruebas, en ese orden) sobre el \eng{monorepo} completo y con su estado visible en el repositorio.
+La primera prueba automatizada real cubre los esquemas compartidos de usuario: la pieza con más consumidores es la primera protegida.
+El despliegue continuo cerrará el ciclo cuando existan destinos que desplegar: todo cambio que pase el \eng{pipeline} llegará solo a producción (los destinos concretos quedan abiertos en el capítulo \ref{ch:alternativas}).
+Esta prioridad no es un capricho: con las comprobaciones automáticas en pie desde el principio, ninguna historia posterior puede darse por cerrada sin pasar por ellas, que es exactamente el criterio de cierre definido en el capítulo \ref{ch:tareas}.
+
+\section{El método de construcción}
+\label{sec:solucion-metodo}
+
+La solución no se construye de una vez, sino historia a historia según el \eng{backlog} del capítulo \ref{ch:tareas}, con el modelo de datos creciendo entidad a entidad bajo decisión expresa del autor.
+El desarrollo cuenta con asistencia intensiva de \ac{IA} generativa como herramienta: su declaración completa —qué herramienta, para qué, con qué salvaguardas y a qué coste— está en el apartado «Empleo de Inteligencia Artificial (IA)» de los preliminares de esta memoria, y sus riesgos y garantías, en el plan de riesgos (capítulo \ref{ch:riesgos}).

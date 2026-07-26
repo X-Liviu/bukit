@@ -51,6 +51,7 @@ thesis/
 - **Toda información de fuente externa se referencia siempre** (datos, afirmaciones, marcos teóricos, definiciones ajenas). La guía lo exige y advierte de que la detección de plagio supone el suspenso directo: ninguna afirmación no original sin su cita.
 - **Acrónimos**: definirlos en [frontmatter/acronyms.tex](frontmatter/acronyms.tex) y usarlos con `\ac{TFG}` (la primera vez imprime la forma completa).
 - **Una frase por línea** en los `.tex`: los diffs de git quedan limpios.
+- **Paginación dinámica (regla estricta del autor, 26-07-2026)**: prohibidos los saltos de página manuales (`\newpage`, `\clearpage`, `\pagebreak`) para empujar apartados, párrafos o puntos de listas; solo `\chapter` abre página nueva obligatoria. Los encabezados huérfanos ya los evita [config/style.tex](config/style.tex) automáticamente (`needspace` antes de cada nivel de apartado + penalizaciones máximas de viudas/huérfanas): el motor TeX decide el salto solo, y así el flujo no se rompe al editar texto anterior.
 - **Labels con prefijo**: `ch:` capítulos, `sec:` secciones, `fig:` figuras, `tab:` tablas, `ap:` anexos.
 - **Imágenes**: a `figures/`, en minúsculas con guiones. Doble numeración (Figura 3.2 = capítulo 3, figura 2): automática con `\begin{figure}` + `\caption`.
 - **Datos globales**: nunca escribir título/autor/curso a mano; usar `\thesisTitle`, `\thesisAuthorFormal`... (en `config/metadata.tex`, con los `TODO` pendientes marcados).

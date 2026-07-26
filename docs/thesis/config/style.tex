@@ -76,6 +76,13 @@
 % Alternativa descartada: bloques atómicos (cada apartado cabe entero o salta
 % completo, con lo que casi toda página empezaría en un título); porqué: deja
 % medias páginas en blanco y un documento de aspecto innecesariamente hinchado.
+% REGLA ESTRICTA Y PERMANENTE (autor, 26-07-2026): PROHIBIDO introducir saltos
+% de página manuales (\newpage, \clearpage, \pagebreak) en el contenido para
+% empujar apartados, párrafos o puntos de listas a la página siguiente; solo
+% \chapter abre página nueva obligatoria. Un salto manual deja de caer donde se
+% pensó en cuanto se edita el texto anterior y genera grandes huecos verticales
+% en blanco (Underfull \vbox): el espacio lo garantizan estos ganchos de
+% needspace o el propio motor TeX, nunca un salto a mano.
 \usepackage{needspace}
 \AddToHook{cmd/section/before}{\Needspace*{5\baselineskip}}
 \AddToHook{cmd/subsection/before}{\Needspace*{5\baselineskip}}
