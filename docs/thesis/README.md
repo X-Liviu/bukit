@@ -46,7 +46,7 @@ thesis/
 
 ## Convenciones
 
-- **Guía de estilo de la universidad = norma**: transcripción literal en [../referencias/guia-estilo-TFG.md](../referencias/guia-estilo-TFG.md); ante cualquier duda de estilo (extensión, formato, citas, tablas/figuras), ese documento manda.
+- **Guía de estilo de la universidad = norma**: transcripción literal en [../referencias/guia-estilo-TFG.md](../referencias/guia-estilo-TFG.md); ante cualquier duda de estilo (formato, citas, tablas/figuras), ese documento manda; su apartado de extensión (40/60 pp.) está excluido por decisión del autor (26-07-2026).
 - **Citas en APA** (exigido por la guía): `\parencite{clave}` → "(Williams, 1995)"; `\textcite{clave}` → "Williams (1995)". Las referencias van en [bibliography/references.bib](bibliography/references.bib).
 - **Toda información de fuente externa se referencia siempre** (datos, afirmaciones, marcos teóricos, definiciones ajenas). La guía lo exige y advierte de que la detección de plagio supone el suspenso directo: ninguna afirmación no original sin su cita.
 - **Acrónimos**: definirlos en [frontmatter/acronyms.tex](frontmatter/acronyms.tex) y usarlos con `\ac{TFG}` (la primera vez imprime la forma completa).

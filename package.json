@@ -20,6 +20,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r --filter \"!@bukit/e2e\" test",
+    "test:e2e": "pnpm --filter @bukit/e2e test",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:reset": "docker compose down -v",

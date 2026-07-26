@@ -1,0 +1,50 @@
+# =========================================================================
+# Integración continua del monorepo (US-01).
+# Estrategia de fallo rápido (cap. 10 de la memoria): las etapas corren en
+# orden lint → typecheck → pruebas y la primera que falla corta el pipeline.
+# Un único job con pasos secuenciales: los pasos ya son fallo-rápido por
+# diseño y evitan triplicar la instalación; se separará en jobs paralelos
+# cuando existan pruebas de integración que paralelizar (US-02+). Las E2E
+# (Playwright) entrarán como última barrera cuando haya app que arrancar.
+# =========================================================================
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Lee la versión de pnpm del campo packageManager de package.json,
+      # la misma que fija corepack en local (reproducibilidad).
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # La misma versión que fija Volta en package.json.
+          node-version: "24.18.0"
+          cache: pnpm
+
+      # frozen-lockfile: la CI nunca resuelve versiones nuevas; instala
+      # exactamente lo que fija pnpm-lock.yaml o falla.
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      # prisma generate no necesita base de datos: solo el esquema. Sin él,
+      # el typecheck de la API fallaría al importar @prisma/client.
+      - name: Generar cliente Prisma
+        run: pnpm --filter @bukit/api prisma:generate
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Pruebas
+        run: pnpm test

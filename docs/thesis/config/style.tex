@@ -55,7 +55,7 @@
   {\normalfont\bfseries\fontsize{14pt}{16.8pt}\selectfont\raggedright}
   {\thechapter.}{0.5em}{\MakeUppercase}
 % Sin el descuelgue enorme del capítulo de report: título compacto arriba,
-% coherente con un documento limitado a 40 páginas.
+% coherente con una memoria técnica que abre capítulo con frecuencia.
 \titlespacing*{\chapter}{0pt}{0pt}{14pt}
 \titleformat{\section}
   {\normalfont\bfseries\fontsize{12pt}{14.4pt}\selectfont\raggedright}
@@ -75,7 +75,7 @@
 % pueden partirse entre páginas (variante estándar de tesis).
 % Alternativa descartada: bloques atómicos (cada apartado cabe entero o salta
 % completo, con lo que casi toda página empezaría en un título); porqué: deja
-% medias páginas en blanco que cuentan contra el límite normativo de 40.
+% medias páginas en blanco y un documento de aspecto innecesariamente hinchado.
 \usepackage{needspace}
 \AddToHook{cmd/section/before}{\Needspace*{5\baselineskip}}
 \AddToHook{cmd/subsection/before}{\Needspace*{5\baselineskip}}

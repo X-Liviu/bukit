@@ -1,5 +1,7 @@
 # BUKIT (FASE DE DESARROLLO: IGNORAR!!!!!!!!!!!!!!!!)
 
+[![CI](https://github.com/X-Liviu/bukit/actions/workflows/ci.yml/badge.svg)](https://github.com/X-Liviu/bukit/actions/workflows/ci.yml)
+
 La red social para cumplir tus objetivos. Monorepo del TFG (Grado en Ing. Informática, UPV/EHU).
 
 ## Estructura

@@ -2,7 +2,7 @@
 
 > **Documento NORMATIVO.** Transcripción literal del apartado "7.- GUÍA DE ESTILO DEL TFG" de la guía de TFG de la universidad (`guia-TFG.pdf`), aportada por el autor el 14-07-2026.
 > Claude Code debe aplicar esta guía **a rajatabla** en todo lo relativo a la memoria (`docs/thesis/`).
-> Única alteración respecto al original: se han retirado los números de página del PDF que partían frases; el texto no se ha corregido ni parafraseado (se conservan sus erratas).
+> Alteraciones respecto al original: (1) se han retirado los números de página del PDF que partían frases; el texto no se ha corregido ni parafraseado (se conservan sus erratas). (2) El apartado «a. Extensión» queda **EXCLUIDO** de la norma aplicable a este TFG por decisión del autor (26-07-2026): la memoria no se somete a límite de páginas.
 >
 > Dónde se operativiza cada bloque: extensión y formato → `docs/thesis/config/style.tex` (aplicación aplazada a la fase de diseño, requisitos anotados allí); citas APA → `biblatex-apa` en `config/packages.tex` + plantillas en `bibliography/PLANTILLAS.md`; obligación de citar toda fuente externa → CLAUDE.md §2.4 y `docs/thesis/README.md`.
 
@@ -10,7 +10,7 @@
 
 ### a. Extensión
 
-La extensión de la Memoria del TFG será de 40 páginas, si bien en algún caso excepcional y por razones justificadas puede extenderse a un máximo de 60 páginas.
+> **Apartado EXCLUIDO por decisión del autor (26-07-2026): este TFG no aplica límite de extensión.** El texto original fijaba 40 páginas, ampliables a un máximo de 60 en casos excepcionales justificados.
 
 ### b. Formato
 
