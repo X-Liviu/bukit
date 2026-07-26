@@ -94,6 +94,7 @@ Planes de pago (más de 3 listas), contratación comercial del proveedor de KYC 
 
 - **`/memoria`** — revisar y actualizar la memoria LaTeX (`docs/thesis/`) con los cambios recientes del proyecto (git log + dev-journal + sesión actual), recompilando y verificando al final.
 - **`/journal`** — crear **o actualizar** la entrada del dev-journal de la sesión de hoy (`docs/dev-journal/DD-MM-YYYY.md`), antes de cerrar la sesión. Si ya existe una entrada de hoy (escrita a mano o por un `/journal` de otra sesión del día), **pregunta** si añadir a esa entrada conservando lo que hay o crear una nueva con sufijo `-b`.
+- **`/grafo-semantico`** — lanzar el pase semántico de graphify (`graphify extract . --backend claude`, ver §3): añade aristas inferidas y mejores nombres de comunidad usando el LLM (el `update` de los git hooks es solo AST). Reservado para cuando el código haya crecido; consume tokens, así que no en cada sesión.
 
 ### 2.2 Procedimientos
 
@@ -132,7 +133,7 @@ Convenciones completas en `docs/thesis/README.md`; resumen de lo innegociable:
 
 Detalle completo y justificación en los capítulos 7, 10 y 13 de la memoria; resumen operativo:
 
-- **Método híbrido (Scrumban) adaptado a una persona**: historias de usuario + Story Points (Fibonacci 1–13; 13 = dividir) + sprints **semanales** (lunes–domingo; S0 planificación = 14/19-07-2026, S1 = 20-07-2026, S39 = fin 16-05-2027), con mecánica de flujo Kanban: el compromiso es el orden del backlog y el límite WIP (máx. 2: 1 historia de producto + memoria), no un contrato de sprint. Descartados: RUP/PERT (alcance emergente, capacidad variable) y SCRUM puro (roles/ceremonias de equipo sin sentido en solitario).
+- **Método híbrido (Scrumban) adaptado a una persona**: historias de usuario + Story Points (Fibonacci 1–13; 13 = dividir; **solo puntúan las historias**: las subtareas van como checklist sin puntos dentro de la issue, porque en solitario no hay reparto y puntuarlas duplicaría la velocidad) + sprints **semanales** (lunes–domingo; S0 planificación = 14/19-07-2026, S1 = 20-07-2026, S39 = fin 16-05-2027), con mecánica de flujo Kanban: el compromiso es el orden del backlog y el límite WIP (máx. 2: 1 historia de producto + memoria), no un contrato de sprint. Descartados: RUP/PERT (alcance emergente, capacidad variable) y SCRUM puro (roles/ceremonias de equipo sin sentido en solitario).
 - **Calendario re-basado el 16-07-2026** (detalle en cap. 10): F1 verano S1–S6 (20-07→30-08); pausa 31-08→20-09 (traslado Erasmus); F2 Erasmus S7–S24 (21-09-2026→24-01-2027); pausa 25-01→31-01; F3 S25–S32 (01-02→28-03-2027); F4 S33–S39 (29-03→16-05-2027). Defensa: junio/julio 2027, septiembre de reserva.
 - **Capacidad variable declarada**: ~10 h/semana en verano, ~5 h/semana de promedio en el Erasmus (semanas de viaje a 0), ~15 h/semana desde febrero (compatible con prácticas). Hipótesis inicial: ~2,7 h/SP (la velocidad esperada de cada sprint se deriva de su capacidad), recalibrar con la velocidad real desde S1.
 - **En la memoria, redacción en castellano llano**: mínima jerga metodológica (nada de MoSCoW/stubs/spikes sin parafrasear: «imprescindible/deseable/opcional», «versiones simuladas», «investigación acotada»); términos técnicos solo si el cap. 10 los define.
