@@ -35,10 +35,11 @@ jobs:
       - name: Instalar dependencias
         run: pnpm install --frozen-lockfile
 
-      # prisma generate no necesita base de datos: solo el esquema. Sin él,
-      # el typecheck de la API fallaría al importar @prisma/client.
-      - name: Generar cliente Prisma
-        run: pnpm --filter @bukit/api prisma:generate
+      # Sin paso de "prisma generate": el esquema aún no tiene modelos a
+      # propósito (las entidades se diseñan incrementalmente con el autor) y
+      # generate falla en vacío; los tipos placeholder de @prisma/client
+      # bastan para el typecheck. Recuperar este paso con el primer modelo
+      # (US-04): pnpm --filter @bukit/api prisma:generate
 
       - name: Lint
         run: pnpm lint
