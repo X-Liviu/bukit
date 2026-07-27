@@ -8,27 +8,27 @@ import { loginSchema, registerUserSchema, userTierSchema } from "./user";
 // vacío sin demostrar nada.
 describe("registerUserSchema", () => {
   it("acepta un registro válido", () => {
-    const resultado = registerUserSchema.safeParse({
+    const result = registerUserSchema.safeParse({
       email: "persona@ejemplo.com",
       password: "contraseña-larga",
     });
-    expect(resultado.success).toBe(true);
+    expect(result.success).toBe(true);
   });
 
   it("rechaza un email mal formado", () => {
-    const resultado = registerUserSchema.safeParse({
+    const result = registerUserSchema.safeParse({
       email: "no-es-un-email",
       password: "contraseña-larga",
     });
-    expect(resultado.success).toBe(false);
+    expect(result.success).toBe(false);
   });
 
   it("rechaza contraseñas de menos de 8 caracteres", () => {
-    const resultado = registerUserSchema.safeParse({
+    const result = registerUserSchema.safeParse({
       email: "persona@ejemplo.com",
       password: "corta",
     });
-    expect(resultado.success).toBe(false);
+    expect(result.success).toBe(false);
   });
 });
 
@@ -42,10 +42,10 @@ describe("userTierSchema", () => {
 
 describe("loginSchema", () => {
   it("exige una contraseña no vacía", () => {
-    const resultado = loginSchema.safeParse({
+    const result = loginSchema.safeParse({
       email: "persona@ejemplo.com",
       password: "",
     });
-    expect(resultado.success).toBe(false);
+    expect(result.success).toBe(false);
   });
 });

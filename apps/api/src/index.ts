@@ -1,7 +1,8 @@
 import { config } from "./utils/config.js";
-import { app } from "./app.js";
+import { createApp } from "./app.js";
+import { logger } from "./logger.js";
 
 // Punto de entrada: arranca el servidor HTTP.
-app.listen(config.port, () => {
-  console.log(`[bukit-api] escuchando en http://localhost:${config.port}`);
+createApp().listen(config.port, () => {
+  logger.info(`[bukit-api] escuchando en http://localhost:${config.port}`);
 });

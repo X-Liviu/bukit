@@ -2,3 +2,4 @@
 // web (Vite), móvil (Metro) y api (tsx) lo compilan junto a su propio código.
 export * from "./user.js";
 export * from "./list.js";
+export * from "./api-error.js";
