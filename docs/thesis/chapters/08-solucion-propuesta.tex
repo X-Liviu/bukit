@@ -28,13 +28,15 @@ En desarrollo, pruebas e integración continua la base corre en Docker con una i
 
 Las funciones que dependen de terceros —la estimación de plazos y la afinidad con \ac{IA}, la verificación de identidad, la mensajería en tiempo real, las imágenes y el vídeo, las notificaciones \eng{push}— siguen todas el mismo principio: el núcleo del producto funciona de punta a punta contra versiones simuladas, de modo que ningún servicio externo puede bloquear el desarrollo ni las pruebas (riesgo R9, capítulo \ref{ch:riesgos}).
 La \ac{IA} del producto se dispara por eventos y se ejecuta en trabajos en segundo plano con cola, nunca dentro de la petición; la verificación de identidad se integra en modo de pruebas y guarda solo el estado y una clave de referencia.
-Los algoritmos propios que atraviesan estas funciones —la ordenación del \eng{feed} con ponderación por tipo de usuario y la inyección de publicaciones patrocinadas propias— se describirán en el capítulo \ref{ch:algoritmos} cuando se implementen.
+Los algoritmos propios que atraviesan estas funciones —la ordenación del \eng{feed} con ponderación por tipo de usuario y la inyección de publicaciones patrocinadas propias— se describen en el capítulo \ref{ch:algoritmos}.
 
 \section{La cadena de entrega es parte de la solución}
 \label{sec:solucion-entrega}
 
 La solución incluye su propia cadena de entrega, y es deliberadamente la primera pieza construida: la integración continua está operativa desde el primer \eng{sprint} de desarrollo, con estrategia de fallo rápido (análisis estático, comprobación de tipos y pruebas, en ese orden) sobre el \eng{monorepo} completo y con su estado visible en el repositorio.
 La primera prueba automatizada real cubre los esquemas compartidos de usuario: la pieza con más consumidores es la primera protegida.
+El segundo incremento siguió el mismo criterio de cimientos primero: el esqueleto de la \ac{API} incorporó el manejo centralizado de errores y el registro de sucesos antes que ninguna función de negocio.
+Toda respuesta de error cumple desde entonces un único contrato, definido junto al resto de la validación en \texttt{packages/core}, que nunca filtra detalles internos al cliente; y un registro estructurado anota cada petición y cada fallo con su nivel de gravedad, censurando las credenciales antes de escribirlas para que los diarios de ejecución no puedan convertirse en una fuga de datos.
 El despliegue continuo cerrará el ciclo cuando existan destinos que desplegar: todo cambio que pase el \eng{pipeline} llegará solo a producción (los destinos concretos quedan abiertos en el capítulo \ref{ch:alternativas}).
 Esta prioridad no es un capricho: con las comprobaciones automáticas en pie desde el principio, ninguna historia posterior puede darse por cerrada sin pasar por ellas, que es exactamente el criterio de cierre definido en el capítulo \ref{ch:tareas}.
 

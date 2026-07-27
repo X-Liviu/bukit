@@ -17,21 +17,20 @@
 \label{sec:intro-problema}
 
 Casi todo el mundo mantiene una lista, escrita o mental, de cosas que quiere hacer en la vida: viajes, hábitos, proyectos, experiencias —las llamadas \eng{bucket lists} o listas de deseos vitales—.
-La mayoría de esas metas se queda en deseo: la intención por sí sola explica solo una parte pequeña de la conducta \parencite{sheeran-intention}, y las condiciones que la convierten en acción —plazos concretos, seguimiento del progreso, apoyo de otras personas— rara vez acompañan a una lista guardada en un cajón.
-Las redes sociales dominantes no ayudan: su experiencia está volcada en el consumo de contenido, no en la acción —una lectura que el capítulo \ref{ch:beneficios} desarrolla y fundamenta—, y su uso pasivo está asociado a peor bienestar \parencite{verduyn-sns}.
+La mayoría de esas metas se queda en deseo, porque las condiciones que convierten la intención en acción —plazos concretos, seguimiento del progreso, apoyo de otras personas— rara vez acompañan a una lista guardada en un cajón; el capítulo \ref{ch:beneficios} fundamenta con literatura esa brecha entre querer y hacer.
+Las redes sociales dominantes no ayudan: su experiencia está volcada en el consumo de contenido, no en la acción (capítulos \ref{ch:contexto} y \ref{ch:beneficios}).
 
-\bukit es la respuesta que este \ac{TFG} construye: una red social cuyo propósito es ayudar a cumplir metas vitales y a no perseguirlas en solitario.
-Toda la experiencia se orienta a la acción sobre tres pilares: estructura (metas agrupadas en listas con plazo y recordatorios), comunidad (personas con objetivos afines que se acompañan) y recompensa al avance (visibilidad para quien progresa, no para quien más audiencia acumula).
+\bukit es la respuesta que este \ac{TFG} construye: una red social cuyo propósito es ayudar a cumplir metas vitales y a no perseguirlas en solitario, con toda la experiencia orientada a la acción sobre tres pilares: estructura, comunidad y recompensa al avance.
 El capítulo \ref{ch:contexto} desarrolla el concepto completo y el \ref{ch:beneficios} fundamenta con literatura por qué ese diseño puede funcionar.
 
-El resultado material del trabajo es una aplicación real: una \ac{API} propia con Node y PostgreSQL y un cliente web con mapa social, mensajería y verificación de identidad —el compromiso mínimo del trabajo—, acompañados como objetivos secundarios de una aplicación móvil parcial y de funciones asistidas por \ac{IA}, con la lógica compartida entre clientes desde paquetes comunes.
-Los objetivos comprometidos, con su alcance y sus límites exactos, se definen en el capítulo \ref{ch:objetivos}.
+El resultado material del trabajo es una aplicación real: una \ac{API} propia con Node y PostgreSQL y un cliente web con mapa social, mensajería y verificación de identidad —el compromiso mínimo del trabajo—, con la lógica compartida entre clientes desde paquetes comunes y varios objetivos secundarios por encima de ese mínimo.
+Todos los objetivos, con su alcance y sus límites exactos, se definen en el capítulo \ref{ch:objetivos}.
 
 \section{Pertinencia del tema y motivos de la elección}
 \label{sec:intro-motivos}
 
 Los motivos de la elección son tres.
-El primero es la continuidad: el autor ya construyó y documentó TrackBites \parencite{deleanu-trackbites}, una aplicación web completa de registro nutricional, y este trabajo da el salto de dificultad que aquella experiencia deja preparado —de una aplicación web en JavaScript a un producto multiplataforma en TypeScript con base de datos relacional, geolocalización, búsqueda por afinidad y despliegue continuo (capítulo \ref{ch:alternativas})—.
+El primero es la continuidad: este trabajo da el salto de dificultad que TrackBites, el precedente directo del autor (apartado \ref{sec:contexto-marco}), deja preparado, y el capítulo \ref{ch:alternativas} detalla ese salto tecnología a tecnología.
 El segundo es la cobertura de las competencias del grado: un producto de este tipo obliga a ejercitar en un solo proyecto el diseño de datos, la construcción de una \ac{API} segura, dos clientes con lógica compartida, las pruebas automatizadas, la entrega continua y la gestión completa del proyecto (planificación, riesgos, seguimiento y presupuesto) que esta memoria documenta.
 El tercero es personal y el capítulo \ref{ch:beneficios} lo declara abiertamente: el autor quiere una herramienta que empuje a las personas de consumir a crear, y ese propósito existía antes que este \ac{TFG}.
 
@@ -39,14 +38,12 @@ El tercero es personal y el capítulo \ref{ch:beneficios} lo declara abiertament
 \label{sec:intro-metodologia}
 
 El proyecto se gestiona con un método híbrido de la familia Scrumban adaptado a una sola persona: iteraciones semanales con capacidad variable declarada, tablero con límite de trabajo en curso, historias de usuario estimadas en puntos y medición continua de la velocidad para recalibrar el plan en cada cierre (capítulo \ref{ch:tareas}).
-El desarrollo se realiza con asistencia declarada de \ac{IA} generativa, con salvaguardas explícitas contra la dependencia acrítica (riesgo R5, capítulo \ref{ch:riesgos}); cada decisión queda registrada en un diario de desarrollo con su alternativa descartada y su porqué, y esa trazabilidad es la materia prima de esta memoria.
+El desarrollo se realiza con asistencia de \ac{IA} generativa —declarada por completo en el apartado «Empleo de Inteligencia Artificial (IA)» de los preliminares— y con salvaguardas explícitas contra la dependencia acrítica (riesgo R5, capítulo \ref{ch:riesgos}).
 La gestión de riesgos es un proceso continuo con seguimiento semanal (capítulo \ref{ch:riesgos}) y el gasto real del trabajo se registra mes a mes (capítulo \ref{ch:presupuesto}).
 
 \section{Estructura de la memoria}
 \label{sec:intro-estructura}
 
-La memoria sigue el índice oficial de la \ac{EIB} y su lógica interna va de la justificación (qué se hace y por qué) a la solución (cómo), de ahí a la gestión (cuándo y a qué coste) y cierra con la evidencia de lo logrado.
-El bloque de análisis lo forman el contexto y el concepto del producto (capítulo \ref{ch:contexto}), los objetivos y el alcance (capítulo \ref{ch:objetivos}), los beneficios y su relación con los \ac{ODS} (capítulo \ref{ch:beneficios}), el estado del arte con los requisitos del sistema (capítulo \ref{ch:estado-del-arte}), el análisis de alternativas tecnológicas (capítulo \ref{ch:alternativas}) y el plan de riesgos (capítulo \ref{ch:riesgos}).
-El bloque de solución describe la propuesta (capítulo \ref{ch:solucion}) y su diseño de alto nivel (capítulo \ref{ch:diseno}).
-El bloque de gestión y ejecución recoge la metodología con la planificación y la estimación del esfuerzo (capítulo \ref{ch:tareas}), los cálculos y algoritmos del producto (capítulo \ref{ch:algoritmos}), el análisis de resultados (capítulo \ref{ch:resultados}), el cronograma completo del \ac{TFG} (capítulo \ref{ch:gantt-tfg}) y el presupuesto (capítulo \ref{ch:presupuesto}).
-Cierran las conclusiones y el trabajo futuro (capítulo \ref{ch:conclusiones}).
+La memoria sigue el índice oficial de la \ac{EIB} y su lógica interna va de la justificación (qué se hace y por qué) a la solución (cómo), de ahí a la gestión (cuándo y a qué coste), y cierra con la evidencia de lo logrado.
+La justificación ocupa los capítulos \ref{ch:contexto} a \ref{ch:riesgos}: contexto y concepto del producto, objetivos y alcance, beneficios esperados con su relación con los \ac{ODS}, estado del arte con los requisitos, análisis de alternativas tecnológicas y plan de riesgos.
+La solución ocupa los capítulos \ref{ch:solucion} y \ref{ch:diseno}; la gestión y la ejecución, los capítulos \ref{ch:tareas} a \ref{ch:presupuesto} (metodología y planificación, algoritmos, resultados, cronograma y presupuesto); y las conclusiones con el trabajo futuro (capítulo \ref{ch:conclusiones}) cierran la memoria.

@@ -127,6 +127,7 @@ Convenciones completas en `docs/thesis/README.md`; resumen de lo innegociable:
 - Citas en **APA** con `\parencite{}` / `\textcite{}` (referencias en `bibliography/references.bib`; plantillas de entradas en `PLANTILLAS.md`, nunca comentarios dentro del `.bib`).
 - Acrónimos: definir en `frontmatter/acronyms.tex` y usar `\ac{TFG}` en el texto.
 - Pendientes: marcar con `\todonote{...}`; antes de entregar, buscar "todonote" y eliminarlos todos.
+- **La memoria es producto final, no cuaderno de trabajo (regla del autor, 27-07-2026)**: prohibido el andamiaje temporal en la prosa («se describirán cuando se implementen», «pendiente de definir», alusiones al proceso de redacción o al estado actual del repositorio). Las remisiones son atemporales («se describen en el capítulo X»); lo pendiente se marca únicamente con `\todonote`, que se purga antes del depósito. La memoria no es la guía de contexto de Claude — para eso están CLAUDE.md y el dev-journal.
 - El formato visual está **aplicado** en `config/style.tex` (Carlito como Calibri, márgenes 2,5 cm, parskip 6 pt, titlesec según la guía, twoside); solo quedan pendientes los logos UPV/EHU de la portada.
 - Tras cualquier cambio en la memoria, **compilar y verificar exit 0** sin warnings nuevos. Esperados a 16-07-2026: únicamente los "ignored error: Infinite glue shrinkage" de longtable (ya no queda ningún acrónimo sin usar) (bug conocido e inofensivo de longtable con kernels recientes, latex3/latex2e#1907; ver comentario en `config/packages.tex`).
 
