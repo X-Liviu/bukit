@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { loginSchema, registerUserSchema, userTierSchema } from "./user";
+import { loginSchema, registerUserSchema, userTierSchema } from "../src/user";
 
 // Primer test del monorepo. Cubre los esquemas compartidos de usuario por un
 // motivo doble: son la validación única front ↔ back (RNF-01) y dan contenido

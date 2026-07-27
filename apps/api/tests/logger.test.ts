@@ -1,7 +1,7 @@
 import { pino } from "pino";
 import { describe, expect, it } from "vitest";
 
-import { redactOptions } from "./logger";
+import { redactOptions } from "../src/logger";
 
 // La redacción es la garantía de que los logs no contienen credenciales
 // (hallazgo de la revisión adversarial del 27-07). Se prueba con un pino

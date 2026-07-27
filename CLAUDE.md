@@ -108,6 +108,7 @@ Planes de pago (más de 3 listas), contratación comercial del proveedor de KYC 
 - **Versiones exactas siempre** (`save-exact=true` ya lo fuerza en `pnpm add`); no usar rangos `^`/`~` a mano. Reproducibilidad garantizada por `pnpm-lock.yaml` commiteado.
 - TypeScript estricto; no introducir `any` sin justificar. Los tipos compartidos y la validación viven en `packages/core` (Zod = única fuente de verdad, validar una vez y compartir tipos a ambos lados); no duplicar esquemas en apps.
 - Comentarios en español y explicando el **porqué** (restricciones, alternativas), no el qué; seguir la densidad de comentarios del código existente.
+- **Los tests viven en la carpeta `tests/` de cada paquete o app** (`packages/core/tests/`, `apps/api/tests/`…), nunca colocados junto al código en `src/` — decisión del autor (27-07-2026), asumiendo imports relativos más largos (`../src/...`). Los `include` de cada tsconfig listan `tests`; el `tsconfig.build.json` de las apps solo `src` (los tests jamás entran en `dist/`).
 - Antes de dar algo por terminado: `pnpm lint` y `pnpm typecheck` en verde.
 - Scripts útiles (raíz): `pnpm db:up|down|reset` (Postgres Docker), `pnpm db:migrate|studio|seed` (Prisma en `apps/api`), `pnpm lint|format|typecheck`.
 

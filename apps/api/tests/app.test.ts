@@ -4,8 +4,8 @@ import { z } from "zod";
 
 import { apiErrorSchema } from "@bukit/core";
 
-import { createApp } from "./app";
-import { badRequest } from "./errors";
+import { createApp } from "../src/app";
+import { badRequest } from "../src/errors";
 
 // Pruebas de integración del flujo de error (US-02): el contrato es que TODA
 // respuesta de error —404, negocio, validación, framework o fallo interno—

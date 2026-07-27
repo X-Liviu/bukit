@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { apiErrorSchema } from "./api-error";
+import { apiErrorSchema } from "../src/api-error";
 
 // El contrato de error es la garantía de RNF-03 (formato uniforme): estas
 // pruebas fijan la forma para que la API y el futuro cliente no diverjan.
