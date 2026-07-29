@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 TFG de Liviu Deleanu — Grado en Ingeniería Informática de Gestión y Sistemas de Información, UPV/EHU (Escuela de Ingeniería de Bilbao, EIB). Curso 2026–2027. Tiene **dos entregables que evolucionan a la vez**:
 
 1. **La aplicación BUKIT** — monorepo pnpm (`apps/` + `packages/` + `e2e/`).
-2. **La memoria del TFG** — LaTeX modular en `docs/thesis/` (índice oficial de la EIB, 15 capítulos), alimentada por el diario de sesiones `docs/dev-journal/`.
+2. **La memoria del TFG** — LaTeX modular en `docs/thesis/` (índice oficial de la EIB: preliminares I–VI y 15 capítulos, transcrito en `docs/referencias/indice-oficial-TFG.md`), alimentada por el diario de sesiones `docs/dev-journal/`.
 
 **Idioma:** comunicación, comentarios de código y documentación en español; identificadores de código en inglés. La propuesta original (`BUKIT - Propuesta TFG.docx`) sigue siendo la referencia de producto, pero las decisiones ya tomadas (documentadas aquí y en el dev-journal) prevalecen sobre ella.
 
@@ -27,7 +27,7 @@ Las metas se abandonan por falta de constancia, plazos y apoyo; las redes actual
 
 Navegación inferior de 4 pestañas (estilo Instagram):
 
-1. **Inicio (FYP)**: feed personalizado en mosaico tipo Pinterest (ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación, ads) + buscador a pantalla completa (perfiles / posts / bucket lists). Deslizando a la derecha, segundo feed solo de seguidos; si estás al día, sugerencias afines.
+1. **Inicio (FYP)**: feed personalizado en mosaico tipo Pinterest (ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación, publicaciones patrocinadas) + buscador a pantalla completa (perfiles / posts / bucket lists). Deslizando a la derecha, segundo feed solo de seguidos; si estás al día, sugerencias afines.
 2. **Listas**: centro de control de objetivos (crear/ver/editar/eliminar). Una lista = conjunto de metas con plazo; la app envía recordatorios.
 3. **Mensajes + mapa + notificaciones**: chat estilo Instagram (sin "notas") con mini-mapa arriba. Mapa a pantalla completa con dos vistas: _seguidos mutuos_ (ubicación / lugares de metas cumplidas) y _descubrimiento_ (buscar personas afines por país/radio/mundo). Aquí viven también las notificaciones.
 4. **Perfil**: quién eres. Hasta 5 publicaciones libres + historias ilimitadas.
@@ -38,7 +38,7 @@ Reglas clave:
 - **Las listas son la unidad de las metas.** Plan gratuito: máx. 3 listas. **La fecha límite vive en cada meta, no en la lista** (decisión del autor, 28-07-2026: la lista solo agrupa; recordatorios e IA trabajan meta a meta). Los posts de progreso/completado solo pueden crearse **desde listas propias**.
 - **Contenido de perfil efímero.** Todo el contenido del perfil se borra a los 60 días salvo que se pulse "mantener".
 - **La verificación de identidad (DNI + teléfono + fotos validadas) desbloquea funciones**: publicar desde el perfil y el mapa de descubrimiento. Conocer desconocidos es 18+; el motivo es la seguridad de ambas partes.
-- Ideas aún por definir: penalización social/puntos por meta no cumplida en plazo; IA que proponga plazos realistas por meta.
+- Ideas ya clasificadas: la IA que propone plazos realistas por meta es **objetivo secundario** (decisión del 14-07-2026; RF-18 opcional, enfoque técnico en §1.4.1); la penalización social/puntos por meta no cumplida en plazo queda **pospuesta fuera del alcance** («Ideas de producto pospuestas», cap. 3; ver §1.5).
 
 ### 1.3 Stack tecnológico
 
@@ -56,10 +56,11 @@ Principio rector: web y móvil **comparten lógica** (tipos, validación Zod, ap
 #### 1.4.1 Backend (API + BD)
 
 - **`schema.prisma` está intencionadamente vacío de modelos**: las entidades se diseñan de forma incremental y meditada, una a una y **junto con el autor**. No añadir modelos por iniciativa propia.
-- Autenticación prevista: JWT + Bcrypt con rotación de refresh tokens, doble capa de rate limiting, manejo de errores centralizado.
+- **Implementado (US-02, cerrada el 27-07-2026)**: manejo de errores centralizado y registro de sucesos con **pino + pino-http** (decisión ratificada el 27-07-2026; justificación en el cap. 6).
+- Autenticación prevista: JWT + Bcrypt con rotación de refresh tokens y doble capa de rate limiting.
 - Funciones especiales (enfoque decidido, pendiente de implementar):
-  - **IA (estimación de plazos + afinidad)**: dirigida por eventos, nunca polling. LLM con salida JSON estructurada solo al crear/editar lista o pedir estimación, en job en segundo plano (**BullMQ + Redis**), con caché; no recomputar si la lista no cambió. Embeddings al crear metas/intereses → pgvector.
-  - **KYC**: proveedor externo (Stripe Identity / Veriff / Onfido), nunca reconocimiento propio. Guardar solo estado + token; verificar y borrar la imagen del DNI (minimización, RGPD).
+  - **IA (estimación de plazos + afinidad)**: dirigida por eventos, nunca polling. LLM con salida JSON estructurada solo al crear/editar lista o pedir estimación, en job en segundo plano (**BullMQ + Redis**), con caché; no recomputar si la lista no cambió. La estimación de plazos es **objetivo secundario** desde el 14-07-2026 (cap. 3: depende de un servicio externo de pago; proveedor abierto entre las API de Anthropic y OpenAI). Embeddings al crear metas/intereses → pgvector (la afinidad sí es alcance comprometido).
+  - **KYC**: proveedor externo (Stripe Identity / Veriff / Onfido), nunca reconocimiento propio. Guardar solo estado + token de la verificación; la imagen del documento no se almacena nunca en el sistema — la trata el proveedor (minimización, RGPD).
   - **Ads**: red existente (AdMob móvil, AdSense/Ad Manager web, fuera del TFG) + tabla propia de posts patrocinados inyectada por el ranking (**objetivo secundario** desde el 28-07-2026: EP17/RF-20 opcionales, decisión del autor).
   - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo; objetivo secundario del TFG, decidido el 16-07-2026 según el dev-journal). **Push**: Expo Push o FCM.
 - Ubicación: solo aproximada/difuminada, solo con consentimiento y verificación. Datos en región EU.
@@ -67,15 +68,17 @@ Principio rector: web y móvil **comparten lógica** (tipos, validación Zod, ap
 #### 1.4.2 Frontend (web + móvil)
 
 - Web: React + Vite, TanStack Query para estado de servidor / feed infinito (Redux Toolkit + Reselect en consideración para estado global).
-- Móvil: React Native + Expo (EAS Build, actualizaciones OTA, push).
+- Móvil: React Native + Expo (EAS Build, actualizaciones OTA, push). Versión **parcial y objetivo secundario** desde el 14-07-2026 (cap. 3: pantallas núcleo —autenticación, listas y feed— contra la API real; el compromiso mínimo del TFG es backend + web).
 
 #### 1.4.3 Testing
 
-Precedente TrackBites: Jest/Supertest (backend), Vitest/RTL (frontend), Playwright (E2E en `e2e/`). Aún no hay tests escritos.
+**Decidido para BUKIT (ratificado el 27-07-2026; justificación en el cap. 6): Vitest + Supertest en el backend** y Vitest/RTL en el frontend, con Playwright para E2E (`e2e/`). Jest/Supertest queda solo como precedente de TrackBites, no como elección de este proyecto. Hay tests desde la US-02, en la carpeta `tests/` de cada paquete o app (regla en §2.3).
 
-#### 1.4.4 CI/CD (pendiente de montar)
+#### 1.4.4 CI/CD
 
-GitHub Actions **fail-fast**: lint/estático → typecheck → tests unitarios + integración en paralelo → Playwright E2E como última barrera. Secretos en GitHub Secrets. Novedad de BUKIT respecto a TrackBites: **despliegue continuo** (auto-deploy al pasar el pipeline). Destinos en estudio: API dockerizada en Render/Railway/Fly.io, web en Vercel/Cloudflare Pages, móvil vía EAS, Postgres gestionado en Neon.
+- **CI mínima operativa desde el 26-07-2026 (US-01)**: GitHub Actions en un solo job secuencial **fail-fast**, sin E2E por ahora y con typecheck determinista (sin `prisma generate`: los marcadores de Prisma no importan el cliente hasta la US-04). Pendiente anotado el 27-07: evolucionar a jobs separados con instalación reutilizada.
+- **Diseño objetivo cuando el proyecto crezca**: lint/estático → typecheck → tests unitarios + integración en paralelo → Playwright E2E como última barrera. Secretos en GitHub Secrets.
+- **CD pendiente (US-03)** — la novedad de BUKIT respecto a TrackBites: despliegue continuo (auto-deploy al pasar el pipeline). Destinos en estudio: API dockerizada en Render/Railway/Fly.io, web en Vercel/Cloudflare Pages, móvil vía EAS, Postgres gestionado en Neon.
 
 ### 1.5 Líneas futuras (fuera del alcance del TFG)
 
@@ -117,8 +120,9 @@ Planes de pago (más de 3 listas), contratación comercial del proveedor de KYC 
 Convenciones completas en `docs/thesis/README.md`; resumen de lo innegociable:
 
 - **La guía de estilo de la universidad es NORMATIVA y se aplica a rajatabla**: transcripción literal en `docs/referencias/guia-estilo-TFG.md` (formato, citas APA-Harvard con sus 15 tipos de fuente, tablas/figuras con doble numeración; el apartado de extensión —40/60 pp.— está **excluido** por decisión del autor desde el 26-07-2026: la memoria no se somete a límite de páginas). Ante cualquier duda de estilo, ese documento manda. El bloque de formato visual está **aplicado** desde el 16-07-2026 en `config/style.tex`: Carlito (clon métrico libre de Calibri, pdflatex no puede usar la real), márgenes 2,5 cm, 6 pt entre párrafos, títulos según la guía (cap. MAYÚSCULA 14 pt, apartados 12 pt), doble cara, cuerpo 11 pt.
+- **El índice oficial de la EIB es igualmente NORMATIVO, incluido el ORDEN de los preliminares**: transcripción literal del resumen de apartados (preliminares I–VI + capítulos 1–15) en `docs/referencias/indice-oficial-TFG.md`. «Empleo de IA» es el apartado V y va entre el listado de acrónimos (IV) y el índice de la memoria (VI); decisión del autor (29-07-2026): **no reordenar los preliminares por estética** — `main.tex` ensambla exactamente en ese orden y su comentario de preliminares lo documenta.
 
-- **Compilación (Windows, MiKTeX sin Perl)**: `latexmk` y `pnpm docs:pdf` NO funcionan (falta Perl). Usar la receta de LaTeX Workshop "pdflatex × 2 + biber (sin Perl)" o a mano: `pdflatex --enable-installer -interaction=nonstopmode -file-line-error -output-directory=build main.tex` → `biber build/main` → 2 pases más de pdflatex. PDF en `docs/thesis/build/main.pdf`.
+- **Compilación (Windows, MiKTeX sin Perl)**: `latexmk` y `pnpm docs:pdf` NO funcionan (falta Perl). Usar la receta de LaTeX Workshop "pdflatex × 2 + biber (sin Perl)" o a mano: `pdflatex --enable-installer -interaction=nonstopmode -file-line-error -output-directory=build main.tex` → `biber build/main` → 2 pases más de pdflatex. PDF en `docs/thesis/build/main.pdf`. El paso de biber de la receta es **condicional desde el 29-07-2026** (guard en `.vscode/settings.json`): solo corre si el documento generó `.bcf`, de modo que los documentos independientes de riesgos (sin bibliografía) también compilan al guardar sin error de biber.
 - **No quitar `es-noshorthands` de babel** (config/packages.tex): evita un conflicto real entre babel-spanish y biblatex-apa ("Generic hooks cannot be added to '\@makecaption'"). No tocar sin volver a probar la compilación.
 - **Paginación dinámica — regla estricta y permanente del autor (26-07-2026)**: PROHIBIDO introducir saltos de página manuales (`\newpage`, `\clearpage`, `\pagebreak`) para "empujar" apartados, párrafos o puntos de listas a la página siguiente; solo `\chapter` (y la estructura de preliminares/índices de `main.tex`) inicia página nueva obligatoria. La protección contra encabezados huérfanos ya está **automatizada** en `config/style.tex` (`needspace`: `\Needspace*{5\baselineskip}` antes de `\section`/`\subsection`, `4\baselineskip` en niveles inferiores) junto con `\widowpenalty`/`\clubpenalty` a 10000: si un punto necesita garantizar espacio, lo gestionan esos ganchos o el motor TeX, **nunca** un salto manual. Motivo: los saltos manuales rompen el flujo al editar texto previo y generan grandes huecos verticales en blanco (`Underfull \vbox`).
 - Estructura modular: `main.tex` solo ensambla; un capítulo = un archivo (`chapters/01`–`15`, índice oficial EIB); datos globales solo en `config/metadata.tex` (`\thesisTitle`, `\thesisAuthorFormal`...), nunca escritos a mano.
@@ -139,8 +143,8 @@ Detalle completo y justificación en los capítulos 7, 10 y 13 de la memoria; re
 - **Calendario re-basado el 16-07-2026** (detalle en cap. 10): F1 verano S1–S6 (20-07→30-08); pausa 31-08→20-09 (traslado Erasmus); F2 Erasmus S7–S24 (21-09-2026→24-01-2027); pausa 25-01→31-01; F3 S25–S32 (01-02→28-03-2027); F4 S33–S39 (29-03→16-05-2027). Defensa: junio/julio 2027, septiembre de reserva.
 - **Capacidad variable declarada**: ~10 h/semana en verano, ~5 h/semana de promedio en el Erasmus (semanas de viaje a 0), ~15 h/semana desde febrero (compatible con prácticas). Hipótesis inicial: ~2,7 h/SP (la velocidad esperada de cada sprint se deriva de su capacidad), recalibrar con la velocidad real desde S1.
 - **En la memoria, redacción en castellano llano**: mínima jerga metodológica (nada de MoSCoW/stubs/spikes sin parafrasear: «imprescindible/deseable/opcional», «versiones simuladas», «investigación acotada»); términos técnicos solo si el cap. 10 los define.
-- **Ceremonias**: planning lunes (~20 min); la "daily" es leer la última entrada del journal al abrir sesión; retro = sección en la entrada del journal del domingo, **incluye la revisión de riesgos** (críticos cada sprint, significativos cada 2, moderados cada 4, o inmediata si se observa un disparador). La revisión se rellena como documento fechado en `docs/thesis/seguimiento-riesgos/` (plantilla propia) y el journal lo enlaza; si un apartado ⟳ se rellena, se emite nueva versión del plan en `docs/thesis/plan-riesgos/` y fila en la tabla de seguimiento del cap. 7.
-- **Tablero**: GitHub Projects + Issues (historias) + Milestones (fases F1–F4). El backlog inicial (épicas EP01–EP15) está en el cap. 10.
+- **Ceremonias**: planning lunes (~20 min); la "daily" es leer la última entrada del journal al abrir sesión; retro = sección en la entrada del journal del domingo, **incluye la revisión de riesgos** (críticos cada sprint, significativos cada 2, moderados cada 4, o inmediata si se observa un disparador). La revisión se rellena como documento fechado en `docs/thesis/seguimiento-riesgos/` (**en LaTeX desde el 28-07-2026**: copiar su `TEMPLATE.tex`, preámbulo compartido en `docs/thesis/config/riesgos-preamble.tex`, compilar con pdflatex ×2 sin biber desde la carpeta del documento; convenciones completas en los README de ambas carpetas) y el journal lo enlaza; si un apartado ⟳ se rellena, se emite nueva versión completa del plan en `docs/thesis/plan-riesgos/` (`plan-riesgos-vN-DD-MM-YYYY.tex`) y fila en la tabla de seguimiento del cap. 7.
+- **Tablero**: GitHub Projects + Issues (historias) + Milestones (fases F1–F4). El backlog inicial (épicas EP01–EP17; EP16 vídeo con servicio gestionado y EP17 posts patrocinados simulados, ambas opcionales) está en el cap. 10.
 
 ## 3. graphify
 

@@ -1,6 +1,6 @@
 # Memoria del TFG (LaTeX)
 
-Estructura **modular** según la **guía definitiva de la Escuela de Ingeniería de Bilbao** (índice oficial de 15 capítulos; documento aportado por el autor — si se quiere versionar, guardarlo en `docs/referencias/`).
+Estructura **modular** según la **guía definitiva de la Escuela de Ingeniería de Bilbao** (índice oficial: preliminares I–VI y 15 capítulos; transcripción literal del resumen de apartados en [../referencias/indice-oficial-TFG.md](../referencias/indice-oficial-TFG.md), que fija también el orden normativo de los preliminares).
 `main.tex` solo _ensambla_ el documento; el contenido vive en módulos.
 Regla de oro: **un capítulo = un archivo**, y los datos globales (título, autor...) se cambian en un único sitio ([config/metadata.tex](config/metadata.tex)).
 

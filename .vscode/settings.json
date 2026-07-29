@@ -52,7 +52,20 @@
         "%DOC%"
       ]
     },
-    { "name": "biber", "command": "biber", "args": ["%OUTDIR%/%DOCFILE%"] },
+    {
+      // biber condicional (29-07-2026): solo corre si el documento generó un
+      // .bcf (es decir, usa biblatex). Los documentos independientes de
+      // riesgos (docs/thesis/plan-riesgos/ y seguimiento-riesgos/) no tienen
+      // bibliografía y biber fallaba en vacío ("Cannot find .bcf") en cada
+      // guardado; con este guard la MISMA receta sirve para la memoria y
+      // para ellos, sin elegir receta a mano.
+      "name": "biber",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "if exist %OUTDIR%/%DOCFILE%.bcf (biber %OUTDIR%/%DOCFILE%) else (echo Documento sin biblatex: no hay .bcf y se omite biber)"
+      ]
+    },
     {
       "name": "latexmk",
       "command": "latexmk",
