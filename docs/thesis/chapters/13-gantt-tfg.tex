@@ -10,7 +10,7 @@
 \chapter{Diagrama de Gantt del TFG}
 \label{ch:gantt-tfg}
 
-Mientras que el capítulo \ref{ch:tareas} planifica el desarrollo del producto, este capítulo planifica el \ac{TFG} completo como proyecto académico: sus fases, sus hitos y su cronograma, primero en versión prevista y, al cierre, en versión real con el análisis de las desviaciones.
+Mientras que el capítulo \ref{ch:tareas} planifica el desarrollo del producto, este capítulo planifica el \ac{TFG} completo como proyecto académico: sus fases, sus hitos y su cronograma, en versión prevista y en versión real, con el análisis de las desviaciones.
 La coherencia entre ambos capítulos es deliberada: las fases (F0 a F4) y las dos pausas planificadas son las mismas, y aquí se les añade lo que las rodea (la memoria como trabajo transversal, el margen hasta el depósito y la defensa).
 
 \section{Cronograma previsto}
@@ -70,8 +70,8 @@ Segunda: el diagrama representa explícitamente las dos pausas planificadas (los
   \label{fig:gantt-tfg-previsto}
 \end{figure}
 
-Las longitudes de las barras engañan a propósito de la carga de trabajo: F2 es la fase más larga en calendario (dieciocho semanas) pero solo la segunda en horas (90), porque durante la estancia Erasmus la capacidad declarada baja a unas 5 horas semanales; F3, con la mitad de semanas, concentra más horas (120) al convivir solo con las prácticas de empresa.
-En un Gantt clásico la longitud es esfuerzo; aquí es calendario, y el esfuerzo lo fija la capacidad declarada de cada periodo (capítulo \ref{ch:tareas}).
+Las longitudes de las barras engañan a propósito de la carga de trabajo: F2 es la fase más larga en calendario (dieciocho semanas) pero solo la tercera en horas (90), porque durante la estancia Erasmus la capacidad declarada baja a unas 5 horas semanales; F3, con menos de la mitad de semanas, concentra más horas (120) al convivir solo con las prácticas de empresa.
+En un Gantt clásico, con dedicación uniforme, la longitud de la barra refleja también el esfuerzo; aquí es solo calendario, y el esfuerzo lo fija la capacidad declarada de cada periodo (capítulo \ref{ch:tareas}).
 
 La tabla \ref{tab:hitos-tfg} fija los hitos de control del proyecto.
 
@@ -101,7 +101,7 @@ La tabla \ref{tab:hitos-tfg} fija los hitos de control del proyecto.
 \label{sec:gantt-escenarios}
 
 Las capacidades declaradas por periodo describen deliberadamente el escenario razonable de \emph{menor} disponibilidad, no una previsión media ni optimista.
-La mayor incógnita del calendario es la carga real de la estancia Erasmus: se planifica con 5 horas semanales de promedio porque es la cifra defendible hoy, pero es perfectamente posible que la estancia deje bastante más tiempo libre del previsto.
+La mayor incógnita del calendario es la carga real de la estancia Erasmus: se planifica con 5 horas semanales de promedio porque es la cifra defendible con la información disponible al planificar, pero es perfectamente posible que la estancia deje bastante más tiempo libre del previsto.
 Planificar sobre ese mejor caso sería apostar el \ac{TFG} a una hipótesis que no se puede verificar hasta estar allí; planificar sobre el peor caso razonable garantiza que incluso él termina el trabajo antes del depósito.
 
 La consecuencia práctica es que las fechas de este capítulo son un techo comprometido, no un suelo: si la disponibilidad real supera la hipótesis, la recalibración semanal de la velocidad (capítulo \ref{ch:tareas}) adelanta los hitos de forma natural, sin cambiar de método ni de plan.
@@ -112,36 +112,17 @@ En el sentido contrario vigila el riesgo R8 (capacidad real por debajo incluso d
 \section{Encaje con la dedicación de referencia}
 \label{sec:gantt-horas}
 
-La tabla \ref{tab:horas-previstas} reparte por fases la dedicación prevista.
+La capacidad declarada de las fases (tabla \ref{tab:fases}, más las $\sim$20 horas de F0) suma unas 395 horas de dedicación prevista.
 Las horas de redacción de la memoria durante la ejecución están contenidas en la capacidad de los \eng{sprints} (épica transversal EP15); el excedente de F4 sobre sus épicas de producto está reservado precisamente para el cierre de la memoria.
 
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{lc}
-    \toprule
-    \textbf{Fase} & \textbf{Horas previstas} \\
-    \midrule
-    F0 — Planificación (S0)                             & $\sim$20 \\
-    F1 — Fundaciones de la API (S1--S6)                 & 60 \\
-    F2 — Cliente web, listas y publicaciones (S7--S24)  & 90 \\
-    F3 — Núcleo social y diferenciadores (S25--S32)     & 120 \\
-    F4 — Cierre de producto y memoria (S33--S39)        & 105 \\
-    \midrule
-    \textbf{Total previsto}                             & \textbf{$\sim$395} \\
-    \bottomrule
-  \end{tabular}
-  \caption{Distribución prevista de la dedicación (en horas).}
-  \label{tab:horas-previstas}
-\end{table}
-
-El total previsto (unas 395 horas) supera en un 10\,\% las 360 horas de referencia de los 12 créditos \ac{ECTS}.
+El total previsto (unas 395 horas) supera en un 10\,\% las 360 horas de referencia de los 12 créditos \ac{ECTS} \parencite{rd-1125-2003}.
 Ese exceso es deliberado y se declara: absorbe la curva de aprendizaje de una pila tecnológica mayoritariamente nueva para el autor (riesgo R6) y el coste de gestión de un proyecto que, además de producto, produce su propia documentación de seguimiento.
 La referencia \ac{ECTS} es una medida académica del tamaño esperado del trabajo, no un límite de dedicación; la desviación real se medirá con las horas del diario.
 
 \section{Seguimiento: previsto frente a real}
 \label{sec:gantt-real}
 
-El cronograma real no se reconstruirá de memoria al final, sino que se deriva de datos registrados por el propio método de trabajo: el diario de desarrollo anota las horas de cada sesión, y cada cierre de \eng{sprint} deja su velocidad y su retrospectiva.
-Al cierre de cada fase se consolidarán aquí tres datos: sus fechas reales, sus horas reales agregadas del diario y la desviación frente a lo previsto con su causa.
-Al término del proyecto, esta sección presentará el diagrama de Gantt real superpuesto al previsto y el análisis de las desviaciones, en particular dos comparaciones ya comprometidas: la evolución del encaje al límite entre alcance y capacidad (sección \ref{sec:fases-tension}) y la posición de la realidad entre el escenario conservador planificado y el escenario favorable descrito en la sección \ref{sec:gantt-escenarios}.
+El cronograma real no se reconstruye de memoria al final: se deriva de los datos que el propio método registra (las horas de cada sesión en el diario, y la velocidad y la retrospectiva de cada cierre de \eng{sprint}).
+Esta sección consolida, al cierre de cada fase, tres datos: sus fechas reales, sus horas reales agregadas del diario y la desviación frente a lo previsto con su causa.
+Presenta además el diagrama de Gantt real superpuesto al previsto y el análisis de las desviaciones, con dos comparaciones comprometidas de antemano: la evolución del encaje al límite entre alcance y capacidad (sección \ref{sec:fases-tension}) y la posición de la realidad entre el escenario conservador planificado y el escenario favorable de la sección \ref{sec:gantt-escenarios}.
 \todonote{Sección pendiente de ejecución: completar al cierre de cada fase con los datos del diario.}

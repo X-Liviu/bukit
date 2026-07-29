@@ -35,7 +35,7 @@ Navegación inferior de 4 pestañas (estilo Instagram):
 Reglas clave:
 
 - **Dos tipos de usuario.** _Normal_ (cualquier registrado; menor peso en el feed) y _TOP_ (creador/influencer admitido por formulario externo; vídeo ilimitado y alta probabilidad de aparecer en el feed). Los vídeos de motivación del feed son exclusivos de TOP. La ponderación filtra calidad, incentiva valor y sustenta el modelo de negocio.
-- **Las listas son la unidad de las metas.** Plan gratuito: máx. 3 listas. Los posts de progreso/completado solo pueden crearse **desde listas propias**.
+- **Las listas son la unidad de las metas.** Plan gratuito: máx. 3 listas. **La fecha límite vive en cada meta, no en la lista** (decisión del autor, 28-07-2026: la lista solo agrupa; recordatorios e IA trabajan meta a meta). Los posts de progreso/completado solo pueden crearse **desde listas propias**.
 - **Contenido de perfil efímero.** Todo el contenido del perfil se borra a los 60 días salvo que se pulse "mantener".
 - **La verificación de identidad (DNI + teléfono + fotos validadas) desbloquea funciones**: publicar desde el perfil y el mapa de descubrimiento. Conocer desconocidos es 18+; el motivo es la seguridad de ambas partes.
 - Ideas aún por definir: penalización social/puntos por meta no cumplida en plazo; IA que proponga plazos realistas por meta.
@@ -60,7 +60,7 @@ Principio rector: web y móvil **comparten lógica** (tipos, validación Zod, ap
 - Funciones especiales (enfoque decidido, pendiente de implementar):
   - **IA (estimación de plazos + afinidad)**: dirigida por eventos, nunca polling. LLM con salida JSON estructurada solo al crear/editar lista o pedir estimación, en job en segundo plano (**BullMQ + Redis**), con caché; no recomputar si la lista no cambió. Embeddings al crear metas/intereses → pgvector.
   - **KYC**: proveedor externo (Stripe Identity / Veriff / Onfido), nunca reconocimiento propio. Guardar solo estado + token; verificar y borrar la imagen del DNI (minimización, RGPD).
-  - **Ads**: red existente (AdMob móvil, AdSense/Ad Manager web) + tabla propia de posts patrocinados inyectada por el ranking.
+  - **Ads**: red existente (AdMob móvil, AdSense/Ad Manager web, fuera del TFG) + tabla propia de posts patrocinados inyectada por el ranking (**objetivo secundario** desde el 28-07-2026: EP17/RF-20 opcionales, decisión del autor).
   - **Chat en tiempo real**: Socket.IO o equivalente gestionado. **Media**: R2/S3 (imágenes), Mux/Cloudflare Stream (vídeo; objetivo secundario del TFG, decidido el 16-07-2026 según el dev-journal). **Push**: Expo Push o FCM.
 - Ubicación: solo aproximada/difuminada, solo con consentimiento y verificación. Datos en región EU.
 

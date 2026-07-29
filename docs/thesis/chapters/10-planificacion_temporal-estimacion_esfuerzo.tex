@@ -32,14 +32,14 @@ La elección no parte de preferencias abstractas, sino de las condiciones reales
   \item \textbf{Telemetría para esta memoria.}
         El método debe producir por sí mismo los datos de seguimiento (horas, velocidad, desviaciones) que alimentan este capítulo y el \ref{ch:gantt-tfg}.
   \item \textbf{Marco académico.}
-        Unas 360 horas de dedicación de referencia (12 créditos \ac{ECTS}) repartidas a lo largo de un curso completo, con la defensa prevista en la convocatoria de junio--julio de \thesisYear{} (capítulo \ref{ch:objetivos}).
+        Unas 360 horas de dedicación de referencia (12 créditos \ac{ECTS}) \parencite{rd-1125-2003} repartidas a lo largo de un curso completo, con la defensa prevista en la convocatoria de junio--julio de \thesisYear{} (capítulo \ref{ch:objetivos}).
 \end{itemize}
 
 \subsection{Alternativas consideradas y descartadas}
 \label{sec:metodologia-alternativas}
 
 \paragraph{Metodologías predictivas (cascada, \acs{RUP}) con planificación por precedencias.}
-El enfoque tradicional de la gestión de proyectos (ciclos tipo \ac{RUP} y técnicas de planificación temporal como \ac{PERT}, Roy o los diagramas de precedencias) exige descomponer el proyecto completo en tareas con duraciones y dependencias estables antes de empezar \parencite{kruchten-rup}.
+El enfoque tradicional de la gestión de proyectos (ciclos tipo \ac{RUP} y técnicas de planificación temporal como \ac{PERT}, Roy o los diagramas de precedencias) exige descomponer el proyecto completo en tareas con duraciones y dependencias estables antes de empezar \parencite{kruchten-rup, pmi-pmbok}.
 Esa premisa falla aquí dos veces: el alcance es emergente por decisión de diseño, y la capacidad disponible varía a lo largo del periodo, de modo que la red de tareas exigiría re-planificación continua, un coste permanente sin valor añadido.
 A ello se suma que \ac{RUP} prescribe una disciplina de artefactos y roles pensada para equipos, desproporcionada para una persona.
 De este enfoque se rescata, no obstante, una pieza: un plan macro de fases e hitos con fechas (capítulo \ref{ch:gantt-tfg}), que da la visión de conjunto que una pila de historias no ofrece.
@@ -68,7 +68,7 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
     \toprule
     \textbf{Elemento} & \textbf{Origen} & \textbf{Adaptación a una persona} \\
     \midrule
-    \eng{Product Backlog} & Scrum & Historias de usuario clasificadas por prioridad en cuatro niveles (imprescindible, deseable, opcional, excluida; sección \ref{sec:backlog}); toda idea nueva entra por aquí (control del alcance, R1). \\
+    \eng{Product Backlog} & Scrum & Historias de usuario agrupadas en épicas clasificadas por prioridad en cuatro niveles (imprescindible, deseable, opcional, excluida; sección \ref{sec:backlog}); toda idea nueva entra por aquí (control del alcance, R1). \\
     Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por sprint. \\
     Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido semanal es una proyección. \\
     Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la redacción de la memoria; nunca dos historias de producto a medias. \\
@@ -114,7 +114,7 @@ Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del 
 \section{Criterios de cierre de una historia}
 \label{sec:dod}
 
-Una historia solo se considera terminada cuando cumple todas las condiciones siguientes (lo que Scrum denomina la \emph{Definición de Hecho}):
+Una historia solo se considera terminada cuando cumple todas las condiciones siguientes (lo que Scrum denomina la \emph{Definición de Hecho} \parencite{scrum-guide}):
 
 \begin{itemize}
   \item El análisis estático y la comprobación de tipos del \eng{monorepo} pasan en verde.
@@ -129,7 +129,7 @@ Esta lista es el criterio con el que se verifica cada incremento —la parte del
 \section{\eng{Product Backlog} inicial}
 \label{sec:backlog}
 
-El \eng{backlog} inicial se construye descomponiendo las reglas de producto de \bukit en \emph{épicas} —bloques grandes de funcionalidad que agrupan varias historias de usuario relacionadas y que son demasiado extensos para abordarse de una vez—, y estas en historias de usuario con el formato «como \emph{rol}, quiero \emph{acción}, para \emph{beneficio}».
+El \eng{backlog} inicial se construye descomponiendo las reglas de producto de \bukit en \emph{épicas} —bloques grandes de funcionalidad que agrupan varias historias de usuario relacionadas y que son demasiado extensos para abordarse de una vez—, y estas en historias de usuario con el formato «como \emph{rol}, quiero \emph{acción}, para \emph{beneficio}» \parencite{cohn-user-stories}.
 Cada épica se clasifica por prioridad en cuatro niveles, siguiendo la técnica conocida como MoSCoW \parencite{clegg-moscow}: \emph{imprescindible} para el alcance comprometido del que dependen los criterios de éxito, \emph{deseable} para lo incluido en el alcance sin criterio de éxito asociado, \emph{opcional} para los objetivos declarados secundarios, y \emph{excluida} para lo explícitamente fuera del alcance (sección \ref{sec:alcance-fuera}), que no se repite aquí.
 Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una regla operativa simple: lo imprescindible se protege siempre, y lo deseable y lo opcional solo entran si sobra velocidad.
 
@@ -156,13 +156,15 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     EP14 & Aplicación móvil parcial                         & Opcional       & 13 & --- \\
     EP15 & Memoria y gestión del proyecto (transversal)     & Imprescindible & 21 & Todas \\
     EP16 & Subida y reproducción de vídeo (servicio gestionado) & Opcional   & 8  & --- \\
+    EP17 & Publicaciones patrocinadas simuladas             & Opcional       & 5  & --- \\
     \bottomrule
   \end{tabular}
   \caption{Épicas del \eng{Product Backlog} inicial, con estimación gruesa y fase prevista.}
   \label{tab:backlog-epicas}
 \end{table}
 
-Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas: siguiendo la elaboración progresiva propia de los métodos ágiles, solo se detallan en historias las épicas de la fase inminente, y el resto se refina justo antes de abordarse, con el conocimiento acumulado hasta entonces.
+Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas y no se someten a la escala de historias de la sección \ref{sec:estimacion}: anticipan la suma de los puntos de las historias que cada épica contendrá, y solo estas últimas se estiman con la escala declarada.
+Siguiendo la elaboración progresiva propia de los métodos ágiles, solo se detallan en historias las épicas de la fase inminente, y el resto se refina justo antes de abordarse, con el conocimiento acumulado hasta entonces.
 La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y EP02 forman la fase F1, y EP03 abre la F2.
 
 \begin{table}[htbp]
@@ -193,8 +195,8 @@ Como muestra de ese nivel se desarrolla completa la que sería la primera histor
 
 \begin{quote}
   \textbf{US-11 (EP04, 5 puntos).}
-  Como persona usuaria registrada, quiero crear una lista con metas y fecha límite, para convertir mis deseos en compromisos medibles.
-  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
+  Como persona usuaria registrada, quiero crear una lista de metas, cada una con su fecha límite, para convertir mis deseos en compromisos medibles.
+  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y cada meta una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
 \end{quote}
 
 Este desarrollo es una anticipación puramente ilustrativa, no el refinamiento de EP04, que se hará en su momento como el de cualquier otra épica.
@@ -203,7 +205,7 @@ Sus 5 puntos tampoco añaden trabajo nuevo al inventario: forman parte de los 13
 \section{Fases y cronograma del desarrollo}
 \label{sec:fases}
 
-El periodo de ejecución se organiza en cuatro fases que agrupan 39 \eng{sprints} semanales (lunes--domingo), del 20/07/2026 al 16/05/\thesisYear, precedidas por un \eng{sprint} de planificación (S0, del 14 al 19 de julio de 2026) en el que se elaboran los objetivos, el plan de riesgos y este plan: la planificación inicial que la metodología elegida toma prestada del enfoque tradicional.
+El periodo de ejecución se organiza en cuatro fases que agrupan 39 \eng{sprints} semanales (lunes--domingo), del 20/07/2026 al 16/05/\thesisYear, precedidas por una fase de planificación (F0, con un único \eng{sprint} S0, del 14 al 19 de julio de 2026) en la que se elaboran los objetivos, el plan de riesgos y este plan: la planificación inicial que la metodología elegida toma prestada del enfoque tradicional.
 El calendario incorpora además dos pausas planificadas sin \eng{sprints}, correspondientes a los traslados de ida y vuelta de la estancia Erasmus: planificar semanas de capacidad cero no aporta información y solo introduciría ruido en la medida de velocidad.
 Cada fase cierra con un incremento demostrable, que actúa como hito de control.
 
@@ -261,5 +263,4 @@ Esa ausencia de margen se declara aquí en lugar de maquillarse ajustando estima
 La decisión consciente es triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real supera la hipótesis.
 Este encaje al límite es, de hecho, la primera observación registrada del riesgo R2, y su evolución se vigila desde el primer cierre de \eng{sprint}.
 
-Conviene subrayar, por último, la naturaleza deliberadamente conservadora de estas hipótesis de capacidad: las horas declaradas por periodo describen el escenario razonable de \emph{menor} disponibilidad, no una previsión optimista, porque la carga real de la estancia Erasmus es la mayor incógnita del calendario y planificar sobre su mejor caso sería apostar el \ac{TFG} a ella.
-Si la disponibilidad real resulta mayor, la recalibración semanal de la velocidad adelanta los hitos de forma natural, sin cambiar el método (capítulo \ref{ch:gantt-tfg}): las fechas de este plan funcionan como techo comprometido, no como suelo.
+Estas hipótesis de capacidad son deliberadamente conservadoras: describen el escenario razonable de \emph{menor} disponibilidad, y sus consecuencias —las fechas como techo comprometido, no como suelo— se analizan en el capítulo \ref{ch:gantt-tfg}.

@@ -30,7 +30,7 @@ La comparación social que una red inevitablemente produce \parencite{festinger-
 De ahí las reglas que penalizarían a una red de entretenimiento clásica: la visibilidad premia el avance y no la fama, el contenido de perfil caduca a los 60 días y los vídeos del \eng{feed} son de motivación, no de relleno.
 
 Detrás de ese principio de diseño hay una lectura del momento actual que este trabajo asume abiertamente como parte de su motivación.
-Una parte del consumo de contenido no responde a una elección consciente, sino que funciona como vía de escape de los propios problemas o como forma de llenar el aburrimiento: mantener la atención siempre ocupada evita el silencio en el que esos problemas podrían pensarse, idea que condensa un aforismo de autoría incierta que el autor hace suyo: «las respuestas a nuestros problemas más complejos están en el silencio que evitamos».
+Una parte del consumo de contenido no responde a una elección consciente, sino que funciona como vía de escape de los propios problemas o como forma de llenar el aburrimiento: mantener la atención siempre ocupada evita el silencio en el que esos problemas podrían pensarse — y es en ese silencio evitado, entiende el autor, donde suelen estar las respuestas a los problemas más complejos.
 A ello se suma que la sobreabundancia de estímulos —de contenido, pero también de consumo material— desplaza continuamente el punto de referencia: lo conseguido se normaliza enseguida y el deseo salta a lo siguiente, más nuevo o más caro, sin alcanzar nunca una satisfacción estable, el fenómeno que la psicología describe como adaptación hedónica \parencite{brickman-campbell}.
 La respuesta de \bukit a ese diagnóstico es su impulso último: desplazar a la persona usuaria del papel de consumidora al de creadora.
 Ese desplazamiento se plantea deliberadamente gradual: crear no exige aquí el salto brusco de sentarse por primera vez ante un editor de vídeo sin conocimientos previos, sino registrar y compartir el avance hacia metas propias dentro de códigos de interacción heredados de las redes dominantes que analiza el capítulo \ref{ch:estado-del-arte}, de modo que la barrera de entrada sea la de una red social ya conocida.
@@ -42,15 +42,15 @@ Debe decirse con claridad: tanto las reglas de diseño como esta lectura son una
 En el plano técnico, el trabajo deja dos piezas reutilizables más allá del producto.
 La primera es la arquitectura: una única base de datos PostgreSQL que resuelve a la vez el grafo social (integridad relacional), el mapa (consultas geoespaciales con PostGIS) y la afinidad entre personas (búsqueda vectorial con pgvector), con la lógica compartida entre web y móvil desde paquetes comunes; el capítulo \ref{ch:alternativas} justifica cada elección frente a sus alternativas.
 La segunda es el método: la memoria y el diario de desarrollo documentan, con horas y decisiones fechadas, cómo una sola persona planifica, gestiona los riesgos y desarrolla un producto de este tamaño con asistencia intensiva de \ac{IA} generativa, incluyendo las salvaguardas para que esa asistencia no degenere en dependencia acrítica (riesgo R5, capítulo \ref{ch:riesgos}).
-Esa trazabilidad convierte el trabajo en un caso de estudio verificable, algo todavía escaso en un contexto donde el desarrollo asistido por \ac{IA} se adopta más deprisa de lo que se documenta.
+Esa trazabilidad convierte el trabajo en un caso de estudio verificable del desarrollo asistido por \ac{IA} generativa.
 
 \subsection{Beneficio económico}
 \label{sec:beneficios-economico}
 
 El beneficio económico se plantea con modestia.
-El producto incorpora desde el diseño un modelo de sostenibilidad plausible (usuarios TOP como creadores verificados, publicidad integrada en el \eng{feed} y planes de pago como línea futura), pero validarlo comercialmente queda fuera del alcance.
-El beneficio económico demostrable es otro: toda la infraestructura del proyecto se construye y opera con coste cero (capas gratuitas de servicios, restricción declarada en los capítulos \ref{ch:riesgos} y \ref{ch:tareas}).
-Coste de infraestructura cero no significa coste cero: el único gasto directo del trabajo es la suscripción mensual al asistente de \ac{IA} con el que se desarrolla, que oscila entre los 93 € de los meses de dedicación alta y los 18 € de los de dedicación baja según el plan contratado (el desglose mes a mes se recoge en el capítulo \ref{ch:presupuesto}).
+El producto incorpora desde el diseño un modelo de sostenibilidad plausible (usuarios TOP como creadores admitidos mediante solicitud —capítulo \ref{ch:contexto}—, publicidad integrada en el \eng{feed} y planes de pago como línea futura), pero validarlo comercialmente queda fuera del alcance.
+El beneficio económico demostrable es otro: toda la infraestructura del proyecto se construye y opera con coste cero (capas gratuitas de servicios, restricción declarada en los capítulos \ref{ch:alternativas} y \ref{ch:riesgos}).
+Coste de infraestructura cero no significa coste cero: el único gasto directo del trabajo es la suscripción mensual al asistente de \ac{IA} con el que se desarrolla, con un plan ajustado a la dedicación de cada mes (el desglose mes a mes se recoge en el capítulo \ref{ch:presupuesto}).
 Documentar esa estructura de costes —infraestructura gratuita más una suscripción de \ac{IA} dimensionada según la dedicación de cada mes— dibuja una vía realista y verificable de mínimo coste para que una sola persona construya y valide un producto de software en fase temprana.
 
 \section{Relación con los Objetivos de Desarrollo Sostenible}
@@ -58,12 +58,12 @@ Documentar esa estructura de costes —infraestructura gratuita más una suscrip
 
 Los \ac{ODS} de la Agenda 2030 \parencite{onu-agenda2030} son el marco de referencia que la \ac{EIB} pide relacionar con cada \ac{TFG}.
 Un trabajo de software puede «cumplir» casi cualquier \ac{ODS} si se fuerza la lectura: el 9 por ser tecnología, el 8 por poder generar actividad económica.
-Esa lectura vacía se rechaza aquí: se reclama un vínculo principal y uno secundario, se justifica cada uno, y se declara descartado el resto.
+Esa lectura vacía se rechaza aquí: se reclama un vínculo principal y uno secundario, se justifica cada uno, y se declaran los candidatos considerados y descartados.
 
 \paragraph{Vínculo principal: ODS 3, salud y bienestar (meta 3.4).}
 La meta 3.4 incluye expresamente «promover la salud mental y el bienestar» \parencite{onu-agenda2030}.
 Es el propósito literal del producto: ayudar a que las personas conviertan deseos en compromisos alcanzables y no los persigan en solitario, con los mecanismos avalados por la evidencia citada en la sección \ref{sec:beneficios-social} (estructura, seguimiento, apoyo social) y con un diseño que evita los patrones de uso pasivo asociados a peor bienestar \parencite{verduyn-sns}.
-El vínculo no es una etiqueta añadida al final: las reglas de producto que lo sostienen (recompensa al avance, contenido efímero, comunidad orientada a la acción) existían antes que este capítulo y condicionan el modelo de datos y la \ac{API}.
+El vínculo no es una etiqueta sobrevenida: las reglas de producto que lo sostienen (recompensa al avance, contenido efímero, comunidad orientada a la acción) forman parte del diseño desde su concepción y condicionan el modelo de datos y la \ac{API}.
 
 \paragraph{Vínculo secundario: ODS 16, sociedades seguras (meta 16.2).}
 Conocer en persona a desconocidos es la función de mayor riesgo del producto, y su diseño la condiciona a tres salvaguardas: verificación de identidad delegada en un proveedor especializado, mayoría de edad obligatoria para el mapa de descubrimiento y ubicación siempre aproximada y consentida.

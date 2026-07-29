@@ -9,7 +9,7 @@
 \label{ch:solucion}
 
 Este capítulo reúne las conclusiones del análisis de alternativas (capítulo \ref{ch:alternativas}) en una descripción de conjunto de la solución.
-El diseño de detalle —el modelo de datos, la estructura interna de cada aplicación, los contratos de la \ac{API}— vive en el capítulo \ref{ch:diseno} y crecerá con el desarrollo, porque el modelo se diseña de forma incremental y meditada, entidad a entidad; lo que este capítulo fija es la forma general del sistema, que ya no cambia.
+El diseño de detalle —el modelo de datos, la estructura interna de cada aplicación, los contratos de la \ac{API}— se describe en el capítulo \ref{ch:diseno}, donde el modelo de datos se presenta entidad a entidad conforme a su diseño incremental; lo que este capítulo fija es la forma general del sistema, que ya no cambia.
 
 \section{Arquitectura general}
 \label{sec:solucion-arquitectura}
@@ -20,7 +20,7 @@ El cliente web (\texttt{apps/web}) usa React con Vite y TanStack Query para el e
 Los tres paquetes compartidos son el corazón de la arquitectura: \texttt{packages/core} contiene los esquemas Zod que son la única fuente de tipos y de validación para todo el sistema; \texttt{packages/api-client}, el cliente \ac{HTTP} tipado que consumen web y móvil; y \texttt{packages/ui-core}, la lógica de estado de interfaz sin componentes visuales, que cada plataforma viste con los suyos.
 
 Los datos viven en una única base PostgreSQL con dos extensiones: PostGIS resuelve el mapa social (búsqueda de personas por cercanía) y pgvector la afinidad (búsqueda por similitud sobre las representaciones vectoriales de metas e intereses), de modo que el grafo social, el mapa y la afinidad comparten motor, integridad y copia de seguridad.
-En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción está prevista Neon, en región europea por exigencia del \ac{RGPD}.
+En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción está prevista Neon, en región europea conforme al criterio de residencia del dato derivado del \ac{RGPD} \parencite{rgpd-2016-679}.
 \todonote{Añadir figura de la arquitectura general (\eng{monorepo}, apps, paquetes, base de datos y servicios externos) en la fase de diseño.}
 
 \section{Servicios externos: el núcleo nunca depende de ellos}
@@ -37,7 +37,7 @@ La solución incluye su propia cadena de entrega, y es deliberadamente la primer
 La primera prueba automatizada real cubre los esquemas compartidos de usuario: la pieza con más consumidores es la primera protegida.
 El segundo incremento siguió el mismo criterio de cimientos primero: el esqueleto de la \ac{API} incorporó el manejo centralizado de errores y el registro de sucesos antes que ninguna función de negocio.
 Toda respuesta de error cumple desde entonces un único contrato, definido junto al resto de la validación en \texttt{packages/core}, que nunca filtra detalles internos al cliente; y un registro estructurado anota cada petición y cada fallo con su nivel de gravedad, censurando las credenciales antes de escribirlas para que los diarios de ejecución no puedan convertirse en una fuga de datos.
-El despliegue continuo cerrará el ciclo cuando existan destinos que desplegar: todo cambio que pase el \eng{pipeline} llegará solo a producción (los destinos concretos quedan abiertos en el capítulo \ref{ch:alternativas}).
+El despliegue continuo cierra el ciclo: todo cambio que pasa el \eng{pipeline} llega solo a producción, sobre los destinos cuyo análisis se recoge en el capítulo \ref{ch:alternativas}.
 Esta prioridad no es un capricho: con las comprobaciones automáticas en pie desde el principio, ninguna historia posterior puede darse por cerrada sin pasar por ellas, que es exactamente el criterio de cierre definido en el capítulo \ref{ch:tareas}.
 
 \section{El método de construcción}

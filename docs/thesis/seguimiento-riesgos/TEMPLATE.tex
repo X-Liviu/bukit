@@ -1,0 +1,155 @@
+% =========================================================================
+% PLANTILLA de seguimiento de riesgos (en blanco).
+% Uso: copiar como YYYY-MM-DD-SN.tex, rellenar los campos marcados con TODO
+% y repetir el bloque de riesgo tantas veces como riesgos toque revisar.
+% Diseño heredado de la plantilla de seguimiento de Gestión de Proyectos
+% del autor, adaptado a la configuración global de la memoria (preámbulo
+% compartido en ../config/riesgos-preamble.tex).
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build <documento>.tex
+% Recordatorio: si se rellena un apartado con el símbolo ⟳ hay que emitir
+% nueva versión del plan en ../plan-riesgos/, añadir fila en la tabla de
+% seguimiento del cap. 7 y anotarlo en el dev-journal.
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Seguimiento de riesgos — DD-MM-YYYY (SN)}}% TODO: fecha y sprint
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Seguimiento de riesgos — SN}\\[6pt]% TODO: sprint
+\end{center}
+
+\textbf{Fecha:} DD-MM-YYYY · \textbf{Sprint:} SN (DD-MM \(\to\) DD-MM-YYYY) · \textbf{Responsable:} \thesisAuthor% TODO: fechas
+
+Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada 2 sprints; \textbf{moderados} cada 4 sprints; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
+
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, hay que emitir una nueva versión completa del plan de riesgos} en \texttt{../plan-riesgos/} y registrar el cambio en la tabla de seguimiento del cap.~7 de la memoria.
+
+Riesgos revisados: \todonote{listar los que tocan por cadencia y los que entran por disparador observado}.
+
+\bigline
+
+\section{Medidas de mitigación (prevención)}
+
+Para cada medida de los riesgos que tocan revisión en este seguimiento: ¿se está aplicando?
+Si no, justificar y decidir si se mantiene/modifica/elimina.
+
+% Una fila por medida revisada (copiar la fila R-).
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R- &  & \checkbox\ Sí\newline \checkbox\ No &  & \checkbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Cambios realizados en las medidas de mitigación}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida original}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+ &  &  &  \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Nueva medida}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+ &  &  \\
+\hline
+\end{tabularx}
+
+\bigline
+
+\section{Riesgos a revisar en este seguimiento}
+
+Repetir el bloque siguiente por cada riesgo que toque por cadencia o por disparador observado.
+
+% ------------------ R-N (copiar desde aquí) ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R-N — Título}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+ &  &  & \checkbox\ Sí\quad \checkbox\ No &  \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia:
+% ------------------ R-N (copiar hasta aquí) ------------------
+
+\bigline
+
+\section{Reflexión desde el último seguimiento}
+
+\textbf{¿Ha ocurrido algo reseñable desde el último seguimiento?} \checkbox\ Sí · \checkbox\ No
+
+\Needspace*{6\baselineskip}
+\textbf{Nuevos riesgos identificados} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|C{0.8cm}|C{0.8cm}|C{1cm}|C{2.4cm}|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Descripción}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{P}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{I}} &
+\multicolumn{1}{C{1cm}|}{\textbf{Exp.}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Severidad}} \\
+\hline
+ &  &  &  &  &  \\
+\hline
+\end{tabularx}
+
+\textbf{¿Afecta algo a los objetivos o al alcance (cap.~3 de la memoria)?} \checkbox\ Sí · \checkbox\ No
+
+\textbf{Justificación:}
+
+\textbf{Otros eventos relevantes:}
+
+\end{document}

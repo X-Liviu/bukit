@@ -11,7 +11,7 @@ Los objetivos de este \ac{TFG} se formulan siguiendo el marco \ac{SMART}, es dec
 Se opta por este marco frente a una enumeración informal de intenciones porque convierte cada objetivo en un criterio verificable: al cierre del trabajo puede comprobarse de forma objetiva si se ha cumplido o no.
 
 El horizonte temporal común a todos los objetivos es la defensa del trabajo en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva.
-El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos (condicionada por compromisos laborales, una estancia Erasmus y las prácticas de empresa), con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG}.
+El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos (condicionada por compromisos laborales, una estancia Erasmus y las prácticas de empresa), con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG} \parencite{rd-1125-2003}.
 La planificación detallada de tareas, fechas e hitos se recoge en los capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}.
 
 Los objetivos se organizan en dos bloques: los \emph{técnicos y de producto}, que describen qué debe existir y funcionar al terminar, y los \emph{de gestión y académicos}, que describen cómo debe ejecutarse y documentarse el trabajo.
@@ -53,6 +53,10 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
         Permitir la subida y reproducción de vídeo —en particular, los vídeos de motivación exclusivos de los usuarios TOP— delegando la transcodificación y el \eng{streaming} en un servicio gestionado.
         Medible: un usuario TOP puede subir un vídeo y cualquier persona usuaria reproducirlo desde el \eng{feed} sin errores bloqueantes.
         Se declara secundario por el mismo criterio que la estimación de plazos: depende de un servicio externo de pago, y el resto del producto funciona con imágenes si no llega a integrarse.
+  \item \textbf{Publicaciones patrocinadas simuladas (objetivo secundario).}
+        Cubrir el hueco publicitario del \eng{feed} con una tabla propia de publicaciones patrocinadas que la ordenación intercala entre el contenido, como maqueta del modelo de negocio.
+        Medible: una publicación patrocinada de la tabla propia aparece intercalada en el \eng{feed}, distinguible como tal.
+        Se declara secundario porque es una maqueta del modelo de negocio y no funcionalidad de la experiencia núcleo: el producto funciona íntegro sin ella.
 \end{itemize}
 
 \section{Objetivos de gestión y académicos}
@@ -61,7 +65,7 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
 \begin{itemize}
   \item \textbf{Dedicación y plazo.}
         Ejecutar el desarrollo dentro del calendario de fases declarado en el capítulo \ref{ch:tareas} (cierre del desarrollo el 16/05/\thesisYear), con la dedicación planificada que el capítulo \ref{ch:gantt-tfg} concilia con las 360 horas de referencia de los 12 créditos \ac{ECTS}, finalizando producto y memoria antes de la convocatoria de junio--julio de \thesisYear.
-        Medible: la suma del registro de horas por sesión del diario de desarrollo es coherente con la planificación del capítulo \ref{ch:gantt-tfg} —con toda desviación justificada en el capítulo \ref{ch:resultados}— y cada fase se cierra dentro de su fecha planificada.
+        Medible: la suma del registro de horas por sesión del diario de desarrollo es coherente con la planificación del capítulo \ref{ch:gantt-tfg} —con toda desviación justificada en ese mismo capítulo— y cada fase se cierra dentro de su fecha planificada.
   \item \textbf{Trazabilidad de las decisiones.}
         Registrar el 100\,\% de las sesiones de trabajo en el diario de desarrollo, anotando fecha, horas invertidas, problemas encontrados y cada decisión junto con la alternativa descartada y su porqué.
         Medible: ninguna sesión de trabajo queda sin entrada en el diario, ni ninguna decisión relevante sin su alternativa y justificación anotadas.
@@ -79,7 +83,7 @@ El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binar
 
 \begin{enumerate}
   \item \textbf{Producto funcional desplegado.}
-        Una persona usuaria puede registrarse, crear una lista con metas y plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat y usar el mapa, sin errores bloqueantes y sobre el despliegue de producción.
+        Una persona usuaria puede registrarse, crear una lista con metas y plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat, usar el mapa y recibir notificaciones, sin errores bloqueantes y sobre el despliegue de producción.
   \item \textbf{Arquitectura compartida demostrada.}
         Los tipos y la validación viven una única vez en los paquetes compartidos y ninguna aplicación duplica esquemas.
   \item \textbf{Calidad automatizada.}
@@ -93,19 +97,20 @@ El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binar
 \section{Alcance}
 \label{sec:alcance}
 
-Delimitar el alcance es tan importante como enumerar los objetivos: fija qué se compromete, asegura la entrega de un producto mínimo funcional y protege el trabajo frente a la expansión descontrolada de requisitos (\eng{feature creep}).
+Delimitar el alcance es tan importante como enumerar los objetivos: fija qué se compromete, asegura la entrega de un producto mínimo funcional y protege el trabajo frente a la expansión descontrolada de requisitos.
 
 \subsection{Dominio de la aplicación}
 \label{sec:alcance-dominio}
 
 El sistema se contextualiza en el dominio de una red social orientada a la acción: ayudar a cumplir objetivos vitales (\eng{bucket lists}) y a no perseguirlos en solitario.
 Los elementos principales sobre los que orbita el sistema son las personas usuarias, las listas de metas con plazo, las publicaciones de progreso y las conexiones entre personas afines (seguimiento, mensajería y mapa).
-La experiencia se organiza en cuatro pestañas (inicio, listas, mensajes y perfil), y esa misma estructura ordena los módulos funcionales del alcance.
+La experiencia se organiza en cuatro pestañas (inicio, listas, mensajes y perfil), estructura que ordena los módulos funcionales centrales del alcance, precedidos por la gestión de usuarios y cerrados por la infraestructura transversal.
 
 \subsection{Requisitos funcionales (dentro del alcance)}
 \label{sec:alcance-dentro}
 
-Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguientes módulos:
+Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguientes módulos.
+Cada módulo recoge las reglas de producto del capítulo \ref{ch:contexto} y se formaliza en los requisitos RF-01--RF-20 del capítulo \ref{ch:estado-del-arte}:
 
 \begin{itemize}
   \item \textbf{Usuarios, roles y verificación.}
@@ -113,15 +118,15 @@ Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguien
         El flujo completo de verificación de identidad se implementa dentro del \ac{TFG}, delegado en un proveedor externo especializado e integrado en su modo de pruebas (\eng{sandbox}), lo que permite demostrarlo de punta a punta sin coste y sin tratar documentos de identidad reales.
         El sistema almacena únicamente el estado y el \eng{token} de la verificación, por minimización de datos conforme al \ac{RGPD}; superar la verificación desbloquea publicar desde el perfil y el mapa de descubrimiento, restringido a personas mayores de edad.
   \item \textbf{Listas y metas (unidad central del producto).}
-        Creación, consulta, edición y eliminación de listas de metas con plazo, con recordatorios asociados y un máximo de tres listas en el plan gratuito.
+        Creación, consulta, edición y eliminación de listas de metas con plazo, con recordatorios asociados y el límite de listas del plan gratuito.
   \item \textbf{Publicaciones y \eng{feed}.}
         Publicaciones de progreso y de meta completada, creadas únicamente desde listas propias; \eng{feed} personalizado en mosaico con ponderación por tipo de usuario; segundo \eng{feed} solo de seguidos; vídeos de motivación de usuarios TOP, apoyados en el soporte de vídeo declarado como objetivo secundario (sección \ref{sec:objetivos-tecnicos}); y buscador de perfiles, publicaciones y listas.
   \item \textbf{Mensajería, mapa y notificaciones.}
         Chat en tiempo real entre personas usuarias; mapa con vista de seguidos mutuos y vista de descubrimiento por proximidad, apoyada en el cálculo de afinidad basado en \eng{embeddings}; y centro de notificaciones.
   \item \textbf{Perfil.}
-        Hasta cinco publicaciones libres e historias ilimitadas, con contenido efímero que se elimina a los 60 días salvo acción expresa de mantenerlo.
+        Publicaciones libres limitadas e historias ilimitadas, con contenido efímero que se elimina al vencer su plazo salvo acción expresa de mantenerlo.
   \item \textbf{Infraestructura transversal.}
-        El \eng{monorepo} completo, con la aplicación móvil en su versión parcial (objetivo secundario, sección \ref{sec:objetivos-tecnicos}) y los paquetes compartidos de lógica; la estimación de plazos asistida por \ac{IA}, dirigida por eventos; y la infraestructura de calidad: pruebas unitarias, de integración y \ac{E2E}, con integración y despliegue continuos.
+        El \eng{monorepo} completo, con la aplicación móvil en su versión parcial (objetivo secundario, sección \ref{sec:objetivos-tecnicos}) y los paquetes compartidos de lógica; la estimación de plazos asistida por \ac{IA}, dirigida por eventos (objetivo secundario, sección \ref{sec:objetivos-tecnicos}); y la infraestructura de calidad: pruebas unitarias, de integración y \ac{E2E}, con integración y despliegue continuos.
 \end{itemize}
 
 \subsection{Funcionalidades excluidas (fuera del alcance)}
@@ -135,10 +140,10 @@ Para acotar el esfuerzo y proteger los plazos, quedan explícitamente fuera del 
   \item \textbf{Contratación del proveedor de verificación en producción.}
         La integración con el proveedor de verificación de identidad entra en el alcance y se demuestra en su modo de pruebas; lo que queda fuera es su contratación comercial, por el coste del servicio y para no tratar documentos de identidad reales durante el desarrollo.
   \item \textbf{Red de anuncios real.}
-        No se integra ninguna red comercial; el hueco publicitario del \eng{feed} se cubre con una tabla propia de publicaciones patrocinadas.
+        No se integra ninguna red comercial; el hueco publicitario del \eng{feed} se cubre, como objetivo secundario, con la tabla propia de publicaciones patrocinadas (sección \ref{sec:objetivos-tecnicos}).
   \item \textbf{Publicación en tiendas de aplicaciones.}
         La distribución en App Store y Play Store queda fuera; la aplicación móvil se valida con compilaciones de desarrollo.
-  \item \textbf{Funciones aún en definición.}
-        Se posponen dos ideas de producto cuyo diseño no está cerrado: una penalización (en visibilidad o en puntos) para quien no cumple sus metas en el plazo comprometido, y un panel interno de administración para gestionar la admisión y las cuentas de los usuarios TOP.
+  \item \textbf{Ideas de producto pospuestas.}
+        Quedan fuera dos ideas cuyo diseño se difiere a una fase posterior: una penalización (en visibilidad o en puntos) para quien no cumple sus metas en el plazo comprometido, y un panel interno de administración para gestionar la admisión y las cuentas de los usuarios TOP.
 \end{itemize}
 

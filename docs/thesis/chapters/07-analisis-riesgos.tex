@@ -15,7 +15,7 @@ Este planteamiento es especialmente relevante en un proyecto unipersonal: no exi
 \label{sec:riesgos-metodo}
 
 Cada riesgo se evalúa cualitativamente en dos dimensiones, con tres niveles por dimensión: la \emph{probabilidad} de que ocurra (baja = 1, media = 2, alta = 3) y el \emph{impacto} sobre los objetivos del trabajo si ocurre (bajo = 1, medio = 2, alto = 3).
-El producto de ambas define la \emph{exposición}, que clasifica el riesgo en tres niveles de severidad: \textbf{crítico} (exposición 6--9), \textbf{significativo} (3--4) y \textbf{moderado} (1--2).
+El producto de ambas define la \emph{exposición} \parencite{boehm-risk}, que clasifica el riesgo en tres niveles de severidad: \textbf{crítico} (exposición 6--9), \textbf{significativo} (3--4) y \textbf{moderado} (1--2).
 Se elige una escala de tres niveles, y no una más fina de cinco, porque con un único evaluador la granularidad extra no aporta precisión real y sí discusiones estériles consigo mismo; la escala gruesa fuerza decisiones claras.
 
 \begin{table}[htbp]
@@ -44,7 +44,7 @@ La severidad determina la cadencia mínima de revisión de cada riesgo (sección
 Antes de identificar conviene fijar qué cuenta como riesgo: un suceso \emph{incierto} que, si llega a ocurrir, afecta —negativa o positivamente— a los objetivos del trabajo \parencite{boehm-risk}.
 La identificación inicial parte de cuatro fuentes.
 La primera son las restricciones propias de este trabajo: lo realiza una única persona, con dedicación variable, y produce dos entregables que evolucionan a la vez (la aplicación \bukit y la memoria), de modo que el avance de uno puede robar tiempo al otro.
-La segunda es la experiencia del autor en la gestión de un proyecto de software desarrollado en equipo durante el grado, actuando como líder y responsable de decidir y priorizar el producto (\eng{Product Owner}), al haber elegido metodología ágil SCRUM en dicho proyecto.
+La segunda es la experiencia previa del autor gestionando un proyecto de software en equipo con Scrum durante el grado (capítulo \ref{ch:tareas}).
 La tercera es la experiencia acumulada en TrackBites \parencite{deleanu-trackbites}, un proyecto personal anterior a este \ac{TFG} que ha sido útil para seleccionar las tecnologías y los conceptos y conocimientos necesarios para su realización efectiva, y que por ello permite distinguir las incertidumbres reales de las ya despejadas.
 La cuarta son las incertidumbres técnicas concretas del producto (capítulo \ref{ch:objetivos}).
 La tabla \ref{tab:registro-riesgos} constituye el \emph{plan de riesgos inicial} (versión 0, de 17/07/2026): recoge explícitamente los riesgos encontrados al inicio del proyecto, ordenados por exposición.
@@ -83,7 +83,7 @@ Este plan inicial no se reescribe: cuando el seguimiento (sección \ref{sec:ries
   \addlinespace
   R5 & \textbf{Dependencia acrítica de la \ac{IA} generativa.} El desarrollo asistido por \ac{IA} es parte del método de trabajo; el riesgo es integrar código o texto generado sin la comprensión necesaria para defenderlo ante el tribunal, o con defectos de calidad o seguridad que una lectura superficial no detecta. & 2 & 3 & 6 & Crít. & Al redactar el diario, una decisión o un bloque integrados esa sesión no pueden explicarse sin recurrir de nuevo a la herramienta, o una revisión encuentra código integrado sin revisar ni probar. & — \\
   \addlinespace
-  R6 & \textbf{Curva de aprendizaje de la pila tecnológica.} PostGIS, pgvector, Prisma, la mensajería y las actualizaciones en tiempo real, las colas de trabajos en segundo plano y las notificaciones \eng{push} son territorio nuevo para el autor: buena parte del servidor se aprende sobre la marcha, con potencial de consumir días en un problema imprevisto. & 3 & 2 & 6 & Crít. & Una historia o una investigación previa consumen el doble de su tiempo previsto sin resolución a la vista. & Las investigaciones previas de las tecnologías señaladas cerradas, con su decisión integrada en el producto o su alternativa documentada. \\
+  R6 & \textbf{Curva de aprendizaje de la pila tecnológica.} PostGIS, pgvector, Prisma, la mensajería y las actualizaciones en tiempo real, las colas de trabajos en segundo plano y las notificaciones \eng{push} son territorio nuevo para el autor: buena parte del servidor se aprende sobre la marcha, con potencial de consumir días en un problema imprevisto. & 3 & 2 & 6 & Crít. & Una historia o una investigación previa consumen el doble de su tiempo previsto sin resolución a la vista. & - \\
   \addlinespace
   R7 & \textbf{Incumplimiento del \acs{RGPD} en el diseño.} El producto maneja ubicación de personas, verificación de identidad con documento y la regla de mayoría de edad: datos especialmente delicados. El reglamento es además estricto y transversal: casi cada función del producto toca datos personales, sobre todo al diseñar el modelo de datos, de modo que la ocasión de error se repite durante todo el desarrollo. & 2 & 3 & 6 & Crít. & Una entidad del modelo de datos incorpora un dato personal sin finalidad declarada, o un requisito exige almacenar la imagen del documento de identidad. & El modelo de datos completo pasa la revisión de minimización: cada dato personal con finalidad declarada y ningún documento de identidad almacenado. \\
   \addlinespace
@@ -97,7 +97,7 @@ Este plan inicial no se reescribe: cuando el seguimiento (sección \ref{sec:ries
   \addlinespace
   R12 & \textbf{Ciclos de revisión con el tutor.} La memoria depende de revisiones externas: una respuesta que se demora o una revisión que obliga a rehacer un capítulo dado por cerrado retrasan el cierre. La relación previa con el tutor y el cauce de comunicación ya establecido mantienen la probabilidad baja. & 1 & 2 & 2 & Mod. & Una consulta o un capítulo enviado a revisión acumula más de dos semanas sin respuesta, o una revisión devuelve cambios estructurales sobre un capítulo dado por cerrado. & El borrador completo de la memoria pasa una revisión del tutor sin cambios estructurales. \\
   \addlinespace
-  R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & Cuatro \eng{sprints} consecutivos sin ninguna fricción nueva que supere la hora de trabajo. \\
+  R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & - \\
 \end{longtable}
 \endgroup
 
@@ -134,25 +134,25 @@ El papel de disparador de una revisión inmediata lo cumple el indicador clave d
   \addlinespace
   R3 & La redacción tiene hueco reservado en todos los \eng{sprints} (capítulo \ref{ch:tareas}), ninguna historia se da por cerrada hasta que su decisión queda documentada, y el diario de desarrollo se escribe al cierre de cada sesión, no de memoria semanas después. & Dedicar \eng{sprints} exclusivos a la memoria antes del cierre (la última fase ya lo prevé parcialmente). \\
   \addlinespace
-  R4 & Toda afirmación procedente de una fuente externa se cita en el momento de escribirla, nunca en una pasada posterior; las entradas de bibliografía siguen las plantillas del repositorio; los pendientes se marcan con nota visible y se purgan antes del depósito; el número de páginas se observa en cada compilación. & Auditoría completa de citas, capítulo a capítulo contra sus fuentes, y condensación del texto hasta volver al límite de extensión antes del depósito. \\
+  R4 & Toda afirmación procedente de una fuente externa se cita en el momento de escribirla, nunca en una pasada posterior; las entradas de bibliografía siguen las plantillas del repositorio; los pendientes se marcan con nota visible y se purgan antes del depósito; el número de páginas se observa en cada compilación. & Auditoría completa de citas, capítulo a capítulo contra sus fuentes, antes del depósito. \\
   \addlinespace
   R5 & Regla ya operativa del proyecto: cada decisión se explica y justifica en el diario con su alternativa descartada, todo código generado se revisa antes de integrarse y nada se da por terminado sin pasar las comprobaciones automáticas de calidad y las pruebas. & Congelar el módulo afectado, estudiarlo y reescribirlo hasta poder explicarlo sin asistencia, y registrar el episodio en el diario como material para la reflexión sobre el uso de \ac{IA}. \\
   \addlinespace
   R6 & Antes de comprometer historias que dependan de una tecnología desconocida, dedicarle una investigación previa con límite de tiempo explícito, y preferir servicios gestionados donde exista esa opción. & Adoptar la alternativa documentada en el análisis de alternativas o recortar la función a su versión mínima. \\
   \addlinespace
-  R7 & Minimización desde el diseño, ya decidida en el capítulo \ref{ch:objetivos}: la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\
+  R7 & Minimización desde el diseño, ya decidida en las reglas de producto, el alcance y los requisitos (capítulos \ref{ch:contexto}, \ref{ch:objetivos} y \ref{ch:estado-del-arte}): la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\
   \addlinespace
-  R8 & Las horas reales se registran por sesión en el diario y cada retrospectiva las compara con las declaradas, de modo que la desviación se detecta en semanas y no al final; el calendario reserva holgura hasta la defensa, con la convocatoria de septiembre de \thesisYear{} como reserva de la de junio--julio. & Rebajar la capacidad declarada de los \eng{sprints} restantes al nivel realmente observado y recortar primero lo opcional del \eng{backlog}. \\
+  R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva) & Rebajar la capacidad declarada de los sprints restantes al nivel observado; recortar primero lo opcional. \\
   \addlinespace
   R9 & Todas las integraciones externas se declaran objetivos secundarios o se desarrollan contra versiones simuladas que funcionan sin el servicio real, de forma que el núcleo del producto nunca dependa de ellas; se eligen proveedores con capa gratuita suficiente para un uso académico. & Sustituir el servicio por una versión simulada o por una alternativa gratuita equivalente, y documentar la integración real como línea futura. \\
   \addlinespace
-  R10 & Margen temporal deliberado entre el cierre objetivo y la defensa (la convocatoria de septiembre de \thesisYear{} actúa como reserva) y documentación continua (diario más memoria) que permite retomar el contexto tras una pausa sin pérdida. & Pausa formal, re-planificación completa del calendario y, en el extremo, cambio de convocatoria. \\
+  R10 & Margen temporal deliberado entre el cierre objetivo y la defensa (la convocatoria de septiembre de \thesisYear{} actúa como reserva) y documentación continua (diario más memoria) que permite retomar el contexto tras una pausa sin pérdida. & Pausa formal, re-planificación del calendario y, en el extremo, cambio de convocatoria. \\
   \addlinespace
   R11 & Absolutamente todo (código, memoria, diario, planificación) vive en el mismo repositorio git con remoto en GitHub, con subidas frecuentes; esta es precisamente una de las razones por las que la documentación del proyecto se versiona junto al código. & Restaurar desde el remoto; la pérdida máxima queda acotada a la sesión en curso. \\
   \addlinespace
   R12 & Enviar los capítulos a revisión conforme se van cerrando, en lugar del borrador completo al final, y acordar en cada envío un plazo orientativo de respuesta. & Continuar con trabajo que no dependa de la revisión pendiente y re-planificar el capítulo afectado cuando llegue la respuesta. \\
   \addlinespace
-  R13 & Cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez. & Aplicar la alternativa documentada (por ejemplo, el modo alternativo de instalación de dependencias de pnpm, \eng{hoisted}) o trasladar el paso conflictivo a la integración continua, que corre en Linux. \\
+  R13 & Cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez. & Aplicar la alternativa documentada (por ejemplo, el modo alternativo de instalación de dependencias de pnpm) o trasladar el paso conflictivo a la integración continua, que corre en Linux. \\
 \end{longtable}
 \endgroup
 
@@ -192,13 +192,13 @@ La plantilla no se reproduce en esta memoria: vacía no aporta información, y s
 En esta memoria, en cambio, el único registro que crece durante el proyecto es la tabla de seguimiento de la sección \ref{sec:riesgos-versionado} (tabla \ref{tab:seguimiento-riesgos}), y solo acumula \emph{cambios}: una fila por cada reevaluación de probabilidad o impacto, materialización, cierre, riesgo nuevo o acción tomada; el resto del capítulo no se toca.
 Separar ambos registros —los documentos exhaustivos de seguimiento en el repositorio, la tabla de cambios en la memoria— mantiene esta memoria legible (señal) sin perder la trazabilidad fina, que queda versionada junto al resto de la documentación del proyecto.
 
-Cada riesgo está en todo momento en uno de estos estados: \emph{identificado} (acaba de entrar en el registro), \emph{sin novedad} (revisado sin cambios), \emph{activo} (su indicador clave ha saltado y está bajo vigilancia reforzada), \emph{materializado} (ha ocurrido y su contingencia está en marcha), \emph{resuelto} (se materializó en una revisión anterior y ya está superado) y \emph{cerrado} (ha desaparecido del proyecto).
+Cada riesgo está en todo momento en uno de estos estados: \emph{identificado} (consta en el registro sin que su indicador clave haya saltado), \emph{sin novedad} (revisado sin cambios), \emph{activo} (su indicador clave ha saltado y está bajo vigilancia reforzada), \emph{materializado} (ha ocurrido y su contingencia está en marcha), \emph{resuelto} (se materializó y su contingencia ya lo ha superado) y \emph{cerrado} (ha desaparecido del proyecto).
 En la tabla de cambios (tabla \ref{tab:seguimiento-riesgos}) no aparece nunca «sin novedad»: ese estado solo consta en los documentos de seguimiento, porque no supone un cambio del plan.
 
 \subsection{Versionado del plan de riesgos}
 \label{sec:riesgos-versionado}
 
-Cuando una revisión concluye que el plan debe cambiar (reevaluación de probabilidad o impacto, riesgo nuevo, materialización o cierre), el plan inicial de la sección \ref{sec:riesgos-registro} no se reescribe: se emite una \emph{versión nueva y completa} del plan de riesgos como documento independiente, numerada y fechada, que queda archivada en el directorio \texttt{docs/thesis/plan-riesgos/} del repositorio.
+Cuando una revisión concluye que el plan debe cambiar (reevaluación de probabilidad o impacto, riesgo nuevo, materialización, cierre o modificación de una mitigación o contingencia), el plan inicial de la sección \ref{sec:riesgos-registro} no se reescribe: se emite una \emph{versión nueva y completa} del plan de riesgos como documento independiente, numerada y fechada, que queda archivada en el directorio \texttt{docs/}\allowbreak\texttt{thesis/}\allowbreak\texttt{plan-riesgos/} del repositorio.
 Este esquema de versiones completas, numeradas y fechadas, se adopta por dos razones: cada versión es un entregable auditable de una pieza, y la comparación entre versiones —y con la línea base de este capítulo, que actúa como versión 0— documenta la evolución real de los riesgos para el análisis al cierre del trabajo.
 La alternativa de actualizar este capítulo \emph{in situ} se descarta porque destruiría esa línea base: la memoria dejaría de mostrar qué se previó al inicio, que es precisamente lo que permite juzgar después la calidad de la gestión.
 
@@ -211,7 +211,7 @@ La tabla \ref{tab:seguimiento-riesgos} registra cada cambio junto con la versió
     \toprule
     \textbf{Fecha} & \textbf{Sprint} & \textbf{Riesgo} & \textbf{Estado} & \textbf{Plan} & \textbf{Acción / decisión} \\
     \midrule
-    16/07/2026 & S0 & Todos & Identificado & v0 & Evaluación inicial y plan de respuesta. \\
+    16/07/2026 & S0 & Todos & Identificado & v0 & Identificación inicial y plan de respuesta (v0 enmendada y re-fechada a 17/07/2026 durante S0). \\
     26/07/2026 & S1 & R10 & Resuelto & v1 & Materializado en S1 ($\sim$9 días sin actividad); contingencia mínima aplicada (re-encaje dentro del sprint), sin impacto en el camino crítico. \\
     26/07/2026 & S1 & R4 & Identificado & v1 & Mitigación y contingencia ajustadas: eliminado el límite de extensión de la memoria por decisión del autor. \\
     \bottomrule

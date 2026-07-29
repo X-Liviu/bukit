@@ -20,7 +20,7 @@ Tres criterios transversales, fijados en capítulos anteriores, atraviesan todas
 Primero, el \ac{TFG} debe demostrar las competencias del grado, así que las piezas centrales se construyen a mano en lugar de delegarse en plataformas que las regalan hechas (sección \ref{sec:alt-supabase}).
 Segundo, la restricción de coste cero: solo se adoptan servicios con capa gratuita suficiente para un uso académico (riesgo R9, capítulo \ref{ch:riesgos}).
 Tercero, el \ac{RGPD} condiciona dónde viven los datos (región europea) y qué servicios pueden tratarlos (riesgo R7).
-Las decisiones que siguen abiertas no se disimulan: se declaran con sus candidatas y con el criterio que las cerrará.
+Las decisiones diferidas se recogen con sus candidatas y con el criterio que las cierra.
 La solución resultante de este análisis se describe en el capítulo \ref{ch:solucion}.
 
 \section{Lenguaje: TypeScript en todo el código}
@@ -55,8 +55,8 @@ Un modelo relacional resuelve el grafo con claves foráneas e integridad nativas
 Las dos necesidades especiales no obligan a añadir motores dedicados, porque PostgreSQL las cubre con extensiones: PostGIS añade tipos y consultas geoespaciales —búsqueda por radio con índice espacial— \parencite{postgis-docs}, y pgvector añade columnas vectoriales y búsqueda por similitud \parencite{pgvector-docs} sobre las representaciones numéricas (\eng{embeddings}) de metas e intereses con las que se calcula la afinidad.
 La alternativa de sumar servicios especializados (una base vectorial y un servicio geoespacial junto a la base principal) multiplicaría las piezas que operar, pagar y sincronizar; un único PostgreSQL cubre las tres necesidades a la vez.
 
-En desarrollo, pruebas e integración continua la base corre en Docker, con una imagen propia que añade pgvector a la imagen oficial de PostGIS y activa ambas extensiones desde el arranque.
-En producción está prevista Neon, un PostgreSQL gestionado con capa gratuita y regiones europeas \parencite{neon-docs}, elegido entre las candidatas de la propuesta (Neon, Supabase, Railway); la residencia europea del dato es el criterio registrado de esa elección, y su capa gratuita satisface además la restricción de coste cero.
+Para producción se elige Neon, un PostgreSQL gestionado \parencite{neon-docs}, entre las candidatas de la propuesta (Neon, Supabase, Railway): la residencia europea del dato es el criterio registrado de esa elección, y su capa gratuita satisface además la restricción de coste cero.
+La disposición operativa de la base —Docker en desarrollo, pruebas e integración continua; Neon en producción— se describe en el capítulo \ref{ch:solucion}.
 
 \section{Acceso a datos: Prisma}
 \label{sec:alt-orm}
@@ -73,7 +73,13 @@ La propuesta dejó abierta la elección entre NestJS y «Express bien estructura
 NestJS ofrece una arquitectura completa y opinada —módulos, inyección de dependencias, decoradores— \parencite{nestjs-docs}; Express es minimalista y deja la estructura en manos del proyecto \parencite{express-docs}.
 Esa diferencia basta para sostener la elección.
 El valor académico de este \eng{backend} está justamente en lo hecho a mano —autenticación con \ac{JWT} y rotación de los \eng{tokens} de refresco, doble capa de limitación de peticiones, manejo de errores centralizado: patrones que el autor ya domina de TrackBites, precisamente sobre Express—, y NestJS los entregaría envueltos en las abstracciones del marco, restando demostración y sumando su propia curva de aprendizaje a la del resto de la pila (riesgo R6, capítulo \ref{ch:riesgos}).
-De TrackBites se hereda también un patrón concreto de testabilidad: la aplicación se exporta separada del arranque del servidor, de modo que las pruebas de integración la ejercitan sin abrir ningún puerto.
+\section{Pruebas de la \acs{API} y registro de sucesos}
+\label{sec:alt-pruebas-registro}
+
+Dos decisiones de menor calado acompañan al servidor, ambas con alternativa heredada de TrackBites o de su ecosistema.
+Las pruebas de integración de la \ac{API} se escriben con Vitest \parencite{vitest-docs} y Supertest, frente al precedente de TrackBites (Jest con Supertest).
+Dos razones cierran la elección: un único ejecutor de pruebas para todo el \eng{monorepo} (los paquetes compartidos ya prueban con Vitest) y el hecho de que la \ac{API} se escribe como módulos ECMAScript, un terreno donde Jest exige una configuración frágil.
+El registro de sucesos se resuelve con pino \parencite{pino-docs} y su \eng{middleware} pino-http, frente a winston: pino produce de forma nativa registro estructurado en \ac{JSON} con niveles de gravedad, su \eng{middleware} \ac{HTTP} asigna un identificador a cada petición para seguirla en los registros, y su rendimiento es mejor.
 
 \section{La alternativa global: Supabase}
 \label{sec:alt-supabase}
@@ -101,8 +107,8 @@ Cambiar de marco (por ejemplo, a uno con renderizado en el servidor) no aportar�
 El cambio está en el estado de servidor.
 En TrackBites la caché de datos remotos se gestionaba a mano con Redux Toolkit, podando el árbol de estado local para evitar recargas; funcionó, pero a costa de mucho código repetitivo de carga, error y caché.
 Para un producto cuyo centro es un \eng{feed} con desplazamiento infinito, esa gestión manual se descarta en favor de TanStack Query, que resuelve de serie la caché, los reintentos, la invalidación y la paginación infinita del estado de servidor \parencite{tanstack-query-docs}.
-Queda abierta, y así se declara, la biblioteca de estado global de interfaz (Redux Toolkit con Reselect se mantiene en consideración por la experiencia previa); se decidirá al montar el cliente web, cuando exista el primer estado global real que gestionar.
-Por el mismo principio, las aplicaciones web y móvil no tienen todavía andamiaje: se generarán con sus herramientas oficiales al abordarlas, porque una configuración escrita a mano hoy quedaría desactualizada.
+La biblioteca de estado global de interfaz (Redux Toolkit con Reselect, en consideración por la experiencia previa) se decide al montar el cliente web, con el primer estado global real como caso de prueba.
+Por el mismo principio, el andamiaje de las aplicaciones web y móvil se genera con sus herramientas oficiales en el momento de abordarlas, de modo que la configuración nace alineada con la versión vigente de cada herramienta.
 
 \section{Cliente móvil: React Native con Expo}
 \label{sec:alt-movil}
@@ -117,14 +123,14 @@ La única fricción conocida (el empaquetador de React Native frente a los enlac
 \label{sec:alt-servicios}
 
 Varias funciones dependen de servicios de terceros.
-En todas ellas el análisis distingue dos niveles: el \emph{enfoque}, decidido y condicionante del diseño, y el \emph{proveedor} concreto, que se deja abierto hasta el momento de integrarlo y se cerrará con dos criterios fijos: capa gratuita suficiente allí donde exista (riesgo R9) y, cuando trate datos personales, garantías europeas de protección de datos (riesgo R7).
+En todas ellas el análisis distingue dos niveles: el \emph{enfoque}, decidido y condicionante del diseño, y el \emph{proveedor} concreto, que se elige en el momento de la integración con dos criterios fijos: capa gratuita suficiente allí donde exista (riesgo R9) y, cuando trate datos personales, garantías europeas de protección de datos (riesgo R7).
 Cuando un servicio puede no ofrecer capa gratuita utilizable —el caso del vídeo y de la \ac{IA}—, esa dependencia de pago es justamente lo que relega su función a objetivo secundario (capítulo \ref{ch:objetivos}), con versiones simuladas como contingencia (riesgo R9).
 
 \paragraph{Estimación de plazos y afinidad con \ac{IA}.}
 El enfoque decidido es dirigido por eventos: el modelo de lenguaje (\ac{LLM}) se llama únicamente cuando la persona crea o edita una lista o pide una estimación; el sondeo periódico se descarta por costoso e innecesario.
 La llamada se ejecuta como trabajo en segundo plano en una cola sobre Redis (BullMQ \parencite{bullmq-docs}) para no bloquear la petición, con respuesta estructurada en formato \ac{JSON} y con caché: si la lista no cambió, no se recalcula.
 Las representaciones vectoriales de metas e intereses se generan al crearlos y se guardan en pgvector (sección \ref{sec:alt-bd}).
-El proveedor del modelo (la \ac{API} de Anthropic o la de OpenAI) queda abierto.
+El proveedor del modelo se elige entre la \ac{API} de Anthropic y la de OpenAI con esos mismos criterios.
 
 \paragraph{Verificación de identidad.}
 Construir un reconocimiento propio de documentos queda descartado de plano: se integra un proveedor especializado (candidatos: Stripe Identity, Veriff, Onfido) del que se guarda únicamente el estado de la verificación y una clave de referencia, nunca la imagen del documento, por minimización de datos (\ac{RGPD}).
@@ -146,10 +152,10 @@ Dentro de este \ac{TFG} solo se implementa la tabla propia de patrocinados: la i
 \section{Entrega: de la integración continua heredada al despliegue continuo}
 \label{sec:alt-entrega}
 
-De TrackBites se hereda la cadena de comprobaciones automáticas (\eng{pipeline}) de integración continua en GitHub Actions, con estrategia de fallo rápido —análisis estático, pruebas unitarias y de integración en paralelo, y las pruebas de extremo a extremo con Playwright como última barrera—, ampliada ahora con la comprobación de tipos de TypeScript.
+De TrackBites se hereda la cadena de comprobaciones automáticas (\eng{pipeline}) de integración continua en GitHub Actions, con estrategia de fallo rápido —análisis estático, comprobación de tipos y pruebas, con las pruebas de extremo a extremo de Playwright como última barrera—, cuya materialización concreta se describe en el capítulo \ref{ch:solucion}.
 El salto nuevo es el despliegue continuo: en TrackBites se omitió deliberadamente, y aquí se completa el ciclo, de modo que todo cambio que pasa el \eng{pipeline} llega solo a producción.
 El \eng{backend} se empaqueta con Docker, que sustituye el despliegue manual anterior por entornos reproducibles \parencite{docker-docs}.
-Los destinos concretos siguen abiertos y así se declaran: la \ac{API} en Render, Railway o Fly.io; la web en Vercel o Cloudflare Pages; la aplicación móvil por la cadena de Expo.
+Los destinos concretos se eligen al abordar el despliegue: la \ac{API}, entre Render, Railway y Fly.io; la web, entre Vercel y Cloudflare Pages; la aplicación móvil, por la cadena de Expo.
 La base de datos es la excepción: su destino ya está decidido en Neon (sección \ref{sec:alt-bd}).
 El criterio para cerrar los abiertos vuelve a ser el mismo: capa gratuita suficiente para un uso académico.
 
@@ -190,6 +196,10 @@ La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, fr
   \addlinespace
   Servidor de la \acs{API} & Express 5 estructurado a mano & NestJS & Decidida \\
   \addlinespace
+  Pruebas de la \acs{API} & Vitest + Supertest & Jest + Supertest (TrackBites) & Decidida \\
+  \addlinespace
+  Registro de sucesos & pino + pino-http & winston & Decidida \\
+  \addlinespace
   Plataforma \eng{backend} & \eng{Backend} propio (Node + Prisma + PostgreSQL) & Supabase como plataforma integral & Decidida \\
   \addlinespace
   Validación y tipos & Zod compartido en \texttt{packages/core} & Joi solo en el servidor & Decidida \\
@@ -208,7 +218,7 @@ La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, fr
   \addlinespace
   Imágenes y vídeo & Almacén de objetos + servicio de vídeo gestionado & — & Enfoque decidido; proveedor abierto \\
   \addlinespace
-  Notificaciones \eng{push} & Expo Push o Firebase Cloud Messaging & — & Abierta \\
+  Notificaciones \eng{push} & Expo Push o Firebase Cloud Messaging & — & Enfoque decidido; proveedor abierto \\
   \addlinespace
   Publicidad & Tabla propia de patrocinados (red existente prevista) & Publicidad programada desde cero & Enfoque decidido; integración real fuera del alcance \\
   \addlinespace
