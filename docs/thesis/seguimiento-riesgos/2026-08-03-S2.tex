@@ -1,0 +1,603 @@
+% =========================================================================
+% Seguimiento de riesgos — 03-08-2026 (S2, segunda retrospectiva).
+% Documento independiente de la memoria; creado copiando TEMPLATE.tex
+% (ver README.md de esta carpeta). La retrospectiva de S2 tocaba el
+% domingo 02-08 y se realizó el lunes 03-08 por indisponibilidad del
+% autor durante el fin de semana (compromisos laborales); el desfase se
+% registra aquí como observación.
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build 2026-08-03-S2.tex
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Seguimiento de riesgos — 03-08-2026 (S2)}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Seguimiento de riesgos — S2}\\[6pt]
+\end{center}
+
+\textbf{Fecha:} 03-08-2026 · \textbf{Sprint:} S2 (27-07 \(\to\) 02-08-2026; retrospectiva realizada el lunes 03-08 por compromisos laborales del fin de semana) · \textbf{Responsable:} \thesisAuthor
+
+Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada 2 sprints; \textbf{moderados} cada 4 sprints; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
+
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, hay que emitir una nueva versión completa del plan de riesgos} en \texttt{../plan-riesgos/} y registrar el cambio en la tabla de seguimiento del cap.~7 de la memoria.
+
+Riesgos revisados: \textbf{R1–R7 por cadencia} (críticos, semanal) y \textbf{R8–R11 por cadencia} (significativos, cada dos sprints: primera revisión por cadencia de R8, R9 y R11; R10 repite tras su revisión por disparador en S1).
+Los moderados (R12, R13) tocan en el cierre de S4.
+Datos del sprint: velocidad de S2 = 3 SP (US-02, cerrada el 27-07); horas reales cronometradas por el autor = 5~h~40~min de las 10~h declaradas (57~\%), con viernes--domingo sin actividad por compromisos laborales.
+
+\bigline
+
+\section{Medidas de mitigación (prevención)}
+
+Para cada medida de los riesgos que tocan revisión en este seguimiento: ¿se está aplicando?
+Si no, justificar y decidir si se mantiene/modifica/elimina.
+
+% La tabla se divide en dos (críticos / significativos) porque tabularx no
+% parte entre páginas y las 11 filas de S2 juntas desbordan la página
+% (Overfull \vbox); la división coincide además con los dos grupos de
+% cadencia revisados en este seguimiento.
+% Tablas partidas en bloques de 3-4 filas (no \newpage, regla de paginación
+% dinámica): tabularx es una caja indivisible y con las celdas de evidencia
+% de S2 los 7 críticos juntos superan la altura de una página entera
+% (Overfull \vbox); cada bloque repite la cabecera y salta con \Needspace.
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos críticos (R1--R7, cadencia semanal)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R1 & Toda idea nueva entra por el backlog. & \checkedbox\ Sí (EP17, publicidad simulada, entró el 28-07 por el backlog como opcional, con su RF-20 y su objetivo secundario en el cap.~3; el sprint no ganó puntos).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R2 & Medir velocidad real desde el primer sprint y recalibrar en cada cierre. & \checkedbox\ Sí, parcial: la medición sí (segunda: 3 SP en S2); la recalibración de horas/punto, aún no.\newline \checkbox\ No & Dos datos no marcan tendencia (el indicador de R2 exige 3 \eng{sprints}); se recalibra al cierre de S3. & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R3 & Diario al cierre de cada sesión; memoria con hueco en todos los sprints. & \checkedbox\ Sí (diario el mismo día en las cuatro jornadas de S2; la memoria recibió la revisión completa del 28-07 —62 correcciones— y la lectura manual del autor hasta el cap.~8; el cap.~8 documenta la US-02).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R4 & Citar al escribir; pendientes con nota visible. & \checkedbox\ Sí (la revisión del 28-07 citó en el momento todo lo detectado, con 8 entradas nuevas de bibliografía; los pendientes viven como \texttt{todonote}).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{20\baselineskip}
+\underline{\textbf{Riesgos críticos (continuación)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R5 & Revisar todo lo generado antes de integrarlo; nada cerrado sin comprobaciones. & \checkedbox\ Sí (US-02 pasó revisión adversarial antes del commit —9 defectos corregidos— y CI en verde; el autor validó además la memoria con lectura manual propia).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R6 & Investigación previa acotada antes de tecnología desconocida. & \checkedbox\ Sí (pino/pino-http era terreno nuevo acotado y la US-02 cerró dentro de su estimación).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R7 & Minimización desde el diseño (RGPD). & \checkedbox\ Sí (sin modelo de datos aún; además, la regla del KYC quedó precisada por escrito: la imagen del documento no se almacena nunca en el sistema).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{22\baselineskip}
+\underline{\textbf{Riesgos significativos (R8--R11, cadencia quincenal)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas. & \checkedbox\ Sí (cronometraje directo del autor por sesión; esta retrospectiva compara: 5~h~40~min de 10~h declaradas).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R9 & Integraciones externas como objetivos secundarios o contra versiones simuladas; proveedores con capa gratuita. & \checkedbox\ Sí (sin integraciones aún; el principio de versiones simuladas, fijado en el cap.~8 al cierre de S1, quedó validado durante S2 por la revisión del 28-07 y la lectura manual del autor).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R10 & Margen temporal deliberado + documentación continua que permite retomar sin pérdida. & \checkedbox\ Sí (retomar hoy costó leer la última entrada del diario; el margen sigue bastando: el parón de 3 días no consume margen adicional al de la semana ya absorbida en S1).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R11 & Todo en git con remoto y subidas frecuentes. & \checkedbox\ Sí (las cuatro jornadas de S2 acabaron commiteadas y subidas —Días 5 a 8; la sesión del 28-07, partida, subió la mañana del 29 como Día 6—; árbol limpio al abrir esta retrospectiva).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Cambios realizados en las medidas de mitigación}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida original}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — & — \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Nueva medida}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — \\
+\hline
+\end{tabularx}
+
+\bigline
+
+\section{Riesgos a revisar en este seguimiento}
+
+% ------------------ R1 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R1 — Crecimiento descontrolado del alcance}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Sprint gana >2 SP tras la planificación / función fuera del backlog. & 0 & 0 (EP17 entró por el backlog como opcional; los refinamientos de reglas de la lectura manual son precisiones, no funciones nuevas). & \checkbox\ Sí\quad \checkedbox\ No & Sin acción. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R2 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R2 — Error sistemático de estimación del esfuerzo}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Velocidad de los 3 primeros sprints desviada >25~\% de la hipótesis. & — (necesita 3 sprints). & Segunda medición: 3 SP en S2. La jornada que cerró la US-02 sumó 1~h~20 en total (planning, migración de pruebas y revisión de los caps.~1--2 incluidos): la historia consumió como mucho esa cota, \(\leq\)0,45~h/SP —y sensiblemente menos en realidad— frente a la hipótesis de 2,7. Dos mediciones consecutivas muy por debajo. & \checkbox\ Sí\quad \checkedbox\ No & El indicador se evalúa formalmente al cierre de S3; con dos datos coincidentes, anticipar que la equivalencia horas/punto se recalibrará a la baja (la asistencia de IA acelera la ejecución muy por encima de lo previsto). \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R3 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R3 — Memoria relegada frente al desarrollo}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Capítulo afectado 2 sprints sin actualizar / diario >48~h tras la sesión. & 0 & 0 (diario el mismo día en las cuatro jornadas; en S2 la memoria fue el foco: revisión completa + lectura manual). & \checkbox\ Sí\quad \checkedbox\ No & Observación: la retrospectiva se desplazó del domingo al lunes por indisponibilidad; el indicador mide el diario de las sesiones, que no se vio afectado. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R4 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R4 — Incumplimiento de la normativa de la memoria}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Afirmación no original sin cita detectada en revisión. & 0 & La revisión completa del 28-07 encontró afirmaciones sin cita —todas corregidas en esa misma sesión, con 8 entradas nuevas de bibliografía—, de modo que el literal vigente del indicador se cumplió; la lectura manual del autor (preliminares a cap.~8) no encontró ninguna adicional. & \checkedbox\ Sí\quad \checkbox\ No & Reevaluación abajo, sin cambios; y el indicador se redefine \updatesymbol: una detección corregida al momento es la revisión funcionando, no la señal del riesgo. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \underline{\ 2\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkedbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio: la reevaluación confirma la valoración P2\(\times\)I3)
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+Cambio de \textbf{plan} (no de estado) \updatesymbol: el indicador clave se redefine — de «una revisión de capítulo encuentra una afirmación no original sin su cita» a «\ldots y esta no queda corregida en la misma sesión que la detecta» — porque en S1 y S2 el literal saltó por detecciones corregidas al momento, con lo que medía el funcionamiento de la revisión y no la señal del riesgo.
+Recogido en el plan v2 (emitido hoy) y en la tabla de seguimiento del cap.~7.
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad (el cambio es del plan, no del estado) · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R5 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R5 — Dependencia acrítica de la IA generativa}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Decisión/bloque integrado que no puede explicarse sin la herramienta. & 0 & 0 (la US-02 quedó razonada en el diario con sus alternativas; la lectura manual de la memoria por el autor y su lista propia de fallos son evidencia directa de comprensión y criterio sobre lo generado). & \checkbox\ Sí\quad \checkedbox\ No & Refuerzo metodológico de S2: los fallos de la lectura manual se aplican solo tras validar el entendimiento mutuo con un plan explicado. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R6 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R6 — Curva de aprendizaje de la pila tecnológica}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Historia\slash investigación al doble de su tiempo previsto. & 0 & 0 (pino/pino-http era terreno nuevo y la US-02 cerró dentro de una jornada de 1~h~20 en total, muy por debajo de su estimación). & \checkbox\ Sí\quad \checkedbox\ No & Sin acción. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R7 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R7 — Incumplimiento del RGPD en el diseño}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Dato personal sin finalidad declarada en el modelo / requisito que exija almacenar el DNI. & 0 & 0 (el modelo de datos aún no existe; en S2 la regla de minimización del KYC quedó además precisada por escrito: la imagen del documento no se almacena nunca). & \checkbox\ Sí\quad \checkedbox\ No & Primera revisión real cuando se diseñe la entidad de usuario (US-04). \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R8 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R8 — Capacidad real inferior a la declarada}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Horas reales <70~\% de las declaradas dos semanas consecutivas sin causa puntual identificada. & 0 & Dos semanas <70~\% (S1: 2~h~40, 27~\%; S2: 5~h~40, 57~\%), pero ambas \textbf{con causa puntual identificada} (S1: materialización de R10; S2: compromisos laborales de viernes a domingo). & \checkbox\ Sí\quad \checkedbox\ No & Vigilancia expresa para S3: si el déficit se repite por trabajo, la causa dejará de considerarse puntual (patrón estructural del verano), el indicador se dará por cumplido y tocará aplicar la contingencia (rebajar la capacidad declarada de F1 al nivel observado). \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R9 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R9 — Dependencia de servicios externos}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Cambio de precios/límites de un servicio, agotamiento de capa gratuita o indisponibilidad >24~h. & 0 & 0 (sin servicios externos integrados todavía; sin anuncios de cambios en los candidatos). & \checkbox\ Sí\quad \checkedbox\ No & Primera revisión con datos reales al integrar el primer servicio (US-03: destino de despliegue). \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R10 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R10 — Indisponibilidad prolongada del autor}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+>3 días consecutivos sin poder trabajar por causa sobrevenida. & 0 & 3 días justos (31-07 \(\to\) 02-08, compromisos laborales): en el umbral, sin superarlo. & \checkbox\ Sí\quad \checkedbox\ No & El episodio de S1 sigue superado (Resuelto). Consecuencia práctica del parón: la retrospectiva se desplazó al lunes 03-08. Si el próximo parón supera los 3 días, revisión inmediata. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad (el episodio de S1 permanece Resuelto) · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+% ------------------ R11 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R11 — Pérdida de trabajo o del entorno local}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Anomalías del equipo / >2 sesiones consecutivas sin subir al remoto. & 0 & 0 (las cuatro jornadas de S2 —Días 5 a 8— acabaron commiteadas y subidas; la del 28-07, partida, subió la mañana del 29; racha máxima sin subir: una sesión; sin anomalías del equipo). & \checkbox\ Sí\quad \checkedbox\ No & Sin acción. \\
+\hline
+\end{tabularx}
+
+Si el \textbf{indicador clave} se cumple: reevaluar probabilidad/impacto y severidad.
+Si el \textbf{indicador de resolución} se cumple: cerrar el riesgo.
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+ & \checkbox\ Sí\quad \checkbox\ No & \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia: no aplicable.
+
+\bigline
+
+\section{Reflexión desde el último seguimiento}
+
+\textbf{¿Ha ocurrido algo reseñable desde el último seguimiento?} \checkedbox\ Sí · \checkbox\ No
+
+S2 fue la semana de mayor actividad documental del proyecto: la US-02 se cerró el primer día del sprint con revisión adversarial previa al commit, la memoria pasó una revisión completa de coherencia (62 correcciones y 8 entradas nuevas de bibliografía), los documentos de riesgos migraron a LaTeX (plan v1 + este mecanismo de seguimiento), CLAUDE.md se realineó con la memoria y el autor realizó su lectura manual de preliminares a cap.~8, con una lista de fallos que se corrigen con un plan validado.
+Velocidad de S2: 3 SP; horas: 5~h~40~min de 10 declaradas (57~\%), con viernes--domingo sin actividad por compromisos laborales y la retrospectiva desplazada al lunes 03-08.
+
+\Needspace*{6\baselineskip}
+\textbf{Nuevos riesgos identificados} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|C{0.8cm}|C{0.8cm}|C{1cm}|C{2.4cm}|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Descripción}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{P}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{I}} &
+\multicolumn{1}{C{1cm}|}{\textbf{Exp.}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Severidad}} \\
+\hline
+— & — & — & — & — & — \\
+\hline
+\end{tabularx}
+
+\textbf{¿Afecta algo a los objetivos o al alcance (cap.~3 de la memoria)?} \checkbox\ Sí · \checkedbox\ No
+
+\textbf{Justificación:} las correcciones pendientes de la lectura manual son refinamientos de reglas de producto y de redacción, no cambios de objetivos ni de alcance; la consulta al tutor sobre la estructura del cap.~3 es documental; la posible re-base de la fecha de cierre (16/05/2027) se registrará cuando ocurra, con su versión del plan si procede.
+
+\textbf{Otros eventos relevantes:} redefinición del indicador clave de R4 decidida en esta misma revisión (\updatesymbol, recogida en el plan v2 emitido hoy y en la tabla de seguimiento del cap.~7); bloqueo de \texttt{graphify.exe} por una directiva de control de aplicaciones de Windows (detectado al preparar esta retrospectiva; pendiente de desbloquear, sin pérdida de sesión que active R13, cuya revisión por cadencia toca en S4); el límite de uso del plan de suscripción de la herramienta de IA partió la sesión del 28-07 (fricción asumida y prevista por el plan contratado).
+
+\end{document}
