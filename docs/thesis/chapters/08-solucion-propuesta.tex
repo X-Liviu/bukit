@@ -15,20 +15,18 @@ El diseño de detalle —el modelo de datos, la estructura interna de cada aplic
 \label{sec:solucion-arquitectura}
 
 La solución es un \eng{monorepo} con tres aplicaciones y tres paquetes compartidos.
-El servidor (\texttt{apps/api}) es una \ac{API} \ac{REST} propia construida con Express 5 sobre Node y con Prisma como capa de acceso a datos: autenticación con \ac{JWT} y rotación de los \eng{tokens} de refresco, doble capa de limitación de peticiones, manejo de errores centralizado, y la aplicación exportada separada del arranque del servidor para que las pruebas de integración la ejerciten sin abrir ningún puerto.
-El cliente web (\texttt{apps/web}) usa React con Vite y TanStack Query para el estado de servidor; la aplicación móvil (\texttt{apps/mobile}), con React Native y Expo, es parcial y objetivo secundario (capítulo \ref{ch:objetivos}).
+El servidor (\texttt{apps/api}) es una \ac{API} \ac{REST} propia con Express sobre Node y Prisma como acceso a datos; el cliente web (\texttt{apps/web}) usa React con Vite y TanStack Query; y la aplicación móvil (\texttt{apps/mobile}), con React Native y Expo, es parcial y objetivo secundario (capítulo \ref{ch:objetivos}).
 Los tres paquetes compartidos son el corazón de la arquitectura: \texttt{packages/core} contiene los esquemas Zod que son la única fuente de tipos y de validación para todo el sistema; \texttt{packages/api-client}, el cliente \ac{HTTP} tipado que consumen web y móvil; y \texttt{packages/ui-core}, la lógica de estado de interfaz sin componentes visuales, que cada plataforma viste con los suyos.
 
-Los datos viven en una única base PostgreSQL con dos extensiones: PostGIS resuelve el mapa social (búsqueda de personas por cercanía) y pgvector la afinidad (búsqueda por similitud sobre las representaciones vectoriales de metas e intereses), de modo que el grafo social, el mapa y la afinidad comparten motor, integridad y copia de seguridad.
+Los datos viven en una única base PostgreSQL con PostGIS para el mapa y pgvector para la afinidad, de modo que el grafo social, el mapa y la afinidad comparten motor, integridad y copia de seguridad; el porqué de cada elección frente a sus alternativas es materia del capítulo \ref{ch:alternativas}.
 En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción está prevista Neon, en región europea conforme al criterio de residencia del dato derivado del \ac{RGPD} \parencite{rgpd-2016-679}.
 \todonote{Añadir figura de la arquitectura general (\eng{monorepo}, apps, paquetes, base de datos y servicios externos) en la fase de diseño.}
 
 \section{Servicios externos: el núcleo nunca depende de ellos}
 \label{sec:solucion-servicios}
 
-Las funciones que dependen de terceros —la estimación de plazos y la afinidad con \ac{IA}, la verificación de identidad, la mensajería en tiempo real, las imágenes y el vídeo, las notificaciones \eng{push}— siguen todas el mismo principio: el núcleo del producto funciona de punta a punta contra versiones simuladas, de modo que ningún servicio externo puede bloquear el desarrollo ni las pruebas (riesgo R9, capítulo \ref{ch:riesgos}).
-La \ac{IA} del producto se dispara por eventos y se ejecuta en trabajos en segundo plano con cola, nunca dentro de la petición; la verificación de identidad se integra en modo de pruebas y guarda solo el estado y una clave de referencia.
-Los algoritmos propios que atraviesan estas funciones —la ordenación del \eng{feed} con ponderación por tipo de usuario y la inyección de publicaciones patrocinadas propias— se describen en el capítulo \ref{ch:algoritmos}.
+Las funciones que dependen de terceros siguen todas el mismo principio: el núcleo del producto funciona de punta a punta contra versiones simuladas, de modo que ningún servicio externo puede bloquear el desarrollo ni las pruebas (riesgo R9, capítulo \ref{ch:riesgos}).
+Qué servicios son y con qué candidatos y enfoque se cubren es materia del capítulo \ref{ch:alternativas}; los algoritmos propios que los atraviesan —la ordenación del \eng{feed} con ponderación por tipo de usuario y la inyección de publicaciones patrocinadas propias— se describen en el capítulo \ref{ch:algoritmos}.
 
 \section{La cadena de entrega es parte de la solución}
 \label{sec:solucion-entrega}
@@ -44,4 +42,4 @@ Esta prioridad no es un capricho: con las comprobaciones automáticas en pie des
 \label{sec:solucion-metodo}
 
 La solución no se construye de una vez, sino historia a historia según el \eng{backlog} del capítulo \ref{ch:tareas}, con el modelo de datos creciendo entidad a entidad bajo decisión expresa del autor.
-El desarrollo cuenta con asistencia intensiva de \ac{IA} generativa como herramienta: su declaración completa —qué herramienta, para qué, con qué salvaguardas y a qué coste— está en el apartado «Empleo de Inteligencia Artificial (IA)» de los preliminares de esta memoria, y sus riesgos y garantías, en el plan de riesgos (capítulo \ref{ch:riesgos}).
+El desarrollo cuenta con asistencia de \ac{IA} generativa, declarada en el apartado «Empleo de Inteligencia Artificial (IA)» de los preliminares y con sus riesgos y garantías en el capítulo \ref{ch:riesgos}.

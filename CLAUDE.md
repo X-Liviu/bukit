@@ -27,7 +27,7 @@ Las metas se abandonan por falta de constancia, plazos y apoyo; las redes actual
 
 Navegación inferior de 4 pestañas (estilo Instagram):
 
-1. **Inicio (FYP)**: feed personalizado en mosaico tipo Pinterest (ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación, publicaciones patrocinadas) + buscador a pantalla completa (perfiles / posts / bucket lists). Deslizando a la derecha, segundo feed solo de seguidos; si estás al día, sugerencias afines.
+1. **Inicio (FYP)**: feed personalizado en mosaico tipo Pinterest (ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación, publicaciones patrocinadas) + buscador a pantalla completa (perfiles / posts / bucket lists). Segundo feed conmutable solo de seguidos (el gesto concreto para cambiar es diseño UI/UX sin decidir); si estás al día, sugerencias afines.
 2. **Listas**: centro de control de objetivos (crear/ver/editar/eliminar). Una lista = conjunto de metas con plazo; la app envía recordatorios.
 3. **Mensajes + mapa + notificaciones**: chat estilo Instagram (sin "notas") con mini-mapa arriba. Mapa a pantalla completa con dos vistas: _seguidos mutuos_ (ubicación / lugares de metas cumplidas) y _descubrimiento_ (buscar personas afines por país/radio/mundo). Aquí viven también las notificaciones.
 4. **Perfil**: quién eres. Hasta 5 publicaciones libres + historias ilimitadas.
@@ -35,8 +35,8 @@ Navegación inferior de 4 pestañas (estilo Instagram):
 Reglas clave:
 
 - **Dos tipos de usuario.** _Normal_ (cualquier registrado; menor peso en el feed) y _TOP_ (creador/influencer admitido por formulario externo; vídeo ilimitado y alta probabilidad de aparecer en el feed). Los vídeos de motivación del feed son exclusivos de TOP. La ponderación filtra calidad, incentiva valor y sustenta el modelo de negocio.
-- **Las listas son la unidad de las metas.** Plan gratuito: máx. 3 listas. **La fecha límite vive en cada meta, no en la lista** (decisión del autor, 28-07-2026: la lista solo agrupa; recordatorios e IA trabajan meta a meta). Los posts de progreso/completado solo pueden crearse **desde listas propias**.
-- **Contenido de perfil efímero.** Todo el contenido del perfil se borra a los 60 días salvo que se pulse "mantener".
+- **Las listas son la unidad de las metas.** Plan gratuito: máx. **3 listas en curso** (decisión del autor, 03-08-2026): completar una lista libera su hueco (pueden acumularse más de 3 completadas); una completada puede borrarse sin afectar al límite, pero el **borrado es irreversible**; una meta vencida sin cumplir queda «no lograda» y su lista sigue contando para el límite — si se completa tarde, se marca completada con su **tiempo de retraso registrado** (para aprender a estimar mejor; no hay validación formal del logro: lo valida implícitamente la comunidad que visita el perfil, que también pide cuentas del retraso). **La fecha límite vive en cada meta, no en la lista** (decisión del autor, 28-07-2026: la lista solo agrupa; recordatorios e IA trabajan meta a meta). Los posts de progreso/completado solo pueden crearse **desde listas propias**.
+- **Contenido de perfil efímero** (precisado el 03-08-2026): las **publicaciones** del perfil caducan a los 60 días salvo pulsar «mantener», conservándose siempre visible la última; las **historias** caducan a las 24 h (estilo Instagram), con opción de destacadas o consulta privada desde los ajustes del perfil.
 - **La verificación de identidad (DNI + teléfono + fotos validadas) desbloquea funciones**: publicar desde el perfil y el mapa de descubrimiento. Conocer desconocidos es 18+; el motivo es la seguridad de ambas partes.
 - Ideas ya clasificadas: la IA que propone plazos realistas por meta es **objetivo secundario** (decisión del 14-07-2026; RF-18 opcional, enfoque técnico en §1.4.1); la penalización social/puntos por meta no cumplida en plazo queda **pospuesta fuera del alcance** («Ideas de producto pospuestas», cap. 3; ver §1.5).
 

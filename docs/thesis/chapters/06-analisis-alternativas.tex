@@ -13,7 +13,7 @@
 
 Este capítulo recorre las decisiones tecnológicas del proyecto: para cada ámbito se expone qué se necesita, qué opciones se han considerado, cuál se elige y por qué.
 El análisis no parte de cero.
-El autor desarrolló previamente TrackBites \parencite{deleanu-trackbites}, una aplicación web completa de registro nutricional, y aquella arquitectura funciona aquí como línea base: cada elección se plantea como «lo ya dominado» frente a lo que este producto exige, y solo se salta donde el salto aporta.
+El autor desarrolló previamente TrackBites \parencite{deleanu-trackbites} (apartado \ref{sec:contexto-marco}), y aquella arquitectura funciona aquí como línea base: cada elección se plantea como «lo ya dominado» frente a lo que este producto exige, y solo se salta donde el salto aporta.
 La propuesta de este \ac{TFG} concentró ese salto en cuatro mejoras: TypeScript en todo el código, lógica compartida entre web y móvil, una base de datos relacional con capacidades geoespaciales y vectoriales, y el cierre del ciclo de entrega con despliegue automático.
 
 Tres criterios transversales, fijados en capítulos anteriores, atraviesan todas las decisiones.
@@ -130,7 +130,7 @@ Cuando un servicio puede no ofrecer capa gratuita utilizable —el caso del víd
 El enfoque decidido es dirigido por eventos: el modelo de lenguaje (\ac{LLM}) se llama únicamente cuando la persona crea o edita una lista o pide una estimación; el sondeo periódico se descarta por costoso e innecesario.
 La llamada se ejecuta como trabajo en segundo plano en una cola sobre Redis (BullMQ \parencite{bullmq-docs}) para no bloquear la petición, con respuesta estructurada en formato \ac{JSON} y con caché: si la lista no cambió, no se recalcula.
 Las representaciones vectoriales de metas e intereses se generan al crearlos y se guardan en pgvector (sección \ref{sec:alt-bd}).
-El proveedor del modelo se elige entre la \ac{API} de Anthropic y la de OpenAI con esos mismos criterios.
+El proveedor del modelo queda abierto entre la \ac{API} de Anthropic y la de OpenAI; se elegirá al integrar la función comparando el coste por uso y las garantías europeas de protección de datos, los dos criterios fijados al inicio de esta sección.
 
 \paragraph{Verificación de identidad.}
 Construir un reconocimiento propio de documentos queda descartado de plano: se integra un proveedor especializado (candidatos: Stripe Identity, Veriff, Onfido) del que se guarda únicamente el estado de la verificación y una clave de referencia, nunca la imagen del documento, por minimización de datos (\ac{RGPD}).

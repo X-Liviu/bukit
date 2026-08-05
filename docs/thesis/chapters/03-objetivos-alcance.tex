@@ -11,7 +11,7 @@ Los objetivos de este \ac{TFG} se formulan siguiendo el marco \ac{SMART}, es dec
 Se opta por este marco frente a una enumeración informal de intenciones porque convierte cada objetivo en un criterio verificable: al cierre del trabajo puede comprobarse de forma objetiva si se ha cumplido o no.
 
 El horizonte temporal común a todos los objetivos es la defensa del trabajo en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva.
-El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos (condicionada por compromisos laborales, una estancia Erasmus y las prácticas de empresa), con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG} \parencite{rd-1125-2003}.
+El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos, condicionada por las circunstancias personales declaradas en el apartado \ref{sec:contexto-marco}, con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG} \parencite{rd-1125-2003}.
 La planificación detallada de tareas, fechas e hitos se recoge en los capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}.
 
 Los objetivos se organizan en dos bloques: los \emph{técnicos y de producto}, que describen qué debe existir y funcionar al terminar, y los \emph{de gestión y académicos}, que describen cómo debe ejecutarse y documentarse el trabajo.
@@ -99,18 +99,11 @@ El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binar
 
 Delimitar el alcance es tan importante como enumerar los objetivos: fija qué se compromete, asegura la entrega de un producto mínimo funcional y protege el trabajo frente a la expansión descontrolada de requisitos.
 
-\subsection{Dominio de la aplicación}
-\label{sec:alcance-dominio}
-
-El sistema se contextualiza en el dominio de una red social orientada a la acción: ayudar a cumplir objetivos vitales (\eng{bucket lists}) y a no perseguirlos en solitario.
-Los elementos principales sobre los que orbita el sistema son las personas usuarias, las listas de metas con plazo, las publicaciones de progreso y las conexiones entre personas afines (seguimiento, mensajería y mapa).
-La experiencia se organiza en cuatro pestañas (inicio, listas, mensajes y perfil), estructura que ordena los módulos funcionales centrales del alcance, precedidos por la gestión de usuarios y cerrados por la infraestructura transversal.
-
 \subsection{Requisitos funcionales (dentro del alcance)}
 \label{sec:alcance-dentro}
 
-Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguientes módulos.
-Cada módulo recoge las reglas de producto del capítulo \ref{ch:contexto} y se formaliza en los requisitos RF-01--RF-20 del capítulo \ref{ch:estado-del-arte}:
+Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguientes módulos, que siguen la estructura de pestañas del producto (capítulo \ref{ch:contexto}), precedidos por la gestión de usuarios y cerrados por la infraestructura transversal.
+Cada módulo recoge las reglas de producto de ese mismo capítulo y se formaliza en los requisitos RF-01--RF-20 del capítulo \ref{ch:estado-del-arte}:
 
 \begin{itemize}
   \item \textbf{Usuarios, roles y verificación.}
@@ -124,7 +117,7 @@ Cada módulo recoge las reglas de producto del capítulo \ref{ch:contexto} y se 
   \item \textbf{Mensajería, mapa y notificaciones.}
         Chat en tiempo real entre personas usuarias; mapa con vista de seguidos mutuos y vista de descubrimiento por proximidad, apoyada en el cálculo de afinidad basado en \eng{embeddings}; y centro de notificaciones.
   \item \textbf{Perfil.}
-        Publicaciones libres limitadas e historias ilimitadas, con contenido efímero que se elimina al vencer su plazo salvo acción expresa de mantenerlo.
+        Publicaciones libres limitadas —efímeras salvo acción expresa de mantenerlas, con la última siempre visible— e historias de 24 horas con destacadas y consulta privada.
   \item \textbf{Infraestructura transversal.}
         El \eng{monorepo} completo, con la aplicación móvil en su versión parcial (objetivo secundario, sección \ref{sec:objetivos-tecnicos}) y los paquetes compartidos de lógica; la estimación de plazos asistida por \ac{IA}, dirigida por eventos (objetivo secundario, sección \ref{sec:objetivos-tecnicos}); y la infraestructura de calidad: pruebas unitarias, de integración y \ac{E2E}, con integración y despliegue continuos.
 \end{itemize}
@@ -136,7 +129,7 @@ Para acotar el esfuerzo y proteger los plazos, quedan explícitamente fuera del 
 
 \begin{itemize}
   \item \textbf{Planes de pago.}
-        No se implementan pasarelas de pago ni lógica de suscripción; el límite de tres listas del plan gratuito queda fijo.
+        No se implementan pasarelas de pago ni lógica de suscripción; el límite de tres listas en curso del plan gratuito queda fijo.
   \item \textbf{Contratación del proveedor de verificación en producción.}
         La integración con el proveedor de verificación de identidad entra en el alcance y se demuestra en su modo de pruebas; lo que queda fuera es su contratación comercial, por el coste del servicio y para no tratar documentos de identidad reales durante el desarrollo.
   \item \textbf{Red de anuncios real.}

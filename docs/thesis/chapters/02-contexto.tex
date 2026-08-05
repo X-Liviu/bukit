@@ -25,7 +25,7 @@ El hueco que \bukit ocupa es precisamente ese: entre los productos que el capít
 \bukit se organiza en cuatro pestañas de navegación inferior, el patrón asentado por redes como Instagram \parencite{instagram-app}, para que la barrera de entrada sea la de una aplicación ya conocida:
 
 \begin{enumerate}
-  \item \textbf{Inicio}: un \eng{feed} —el flujo de publicaciones de la pantalla de inicio— personalizado en mosaico con ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación y publicaciones patrocinadas, más un buscador de perfiles, publicaciones y listas; deslizando, un segundo \eng{feed} solo con el contenido de las personas seguidas.
+  \item \textbf{Inicio}: un \eng{feed} —el flujo de publicaciones de la pantalla de inicio— personalizado en mosaico con ideas de metas, progresos, metas completadas y no logradas, vídeos de motivación y publicaciones patrocinadas, más un buscador de perfiles, publicaciones y listas; y un segundo \eng{feed} conmutable, solo con el contenido de las personas seguidas.
   \item \textbf{Listas}: el centro de control de los objetivos: crear, ver, editar y eliminar listas de metas con plazo, con recordatorios que envía la propia aplicación.
   \item \textbf{Mensajes y mapa}: la mensajería, con un mini-mapa en la parte superior; el mapa a pantalla completa ofrece dos vistas —la de seguidos mutuos y la de descubrimiento de personas afines, filtrable por país, por radio de cercanía o en todo el mundo— y aquí viven también las notificaciones.
   \item \textbf{Perfil}: quién eres: hasta cinco publicaciones de tema libre —las únicas no ligadas a listas— e historias ilimitadas.
@@ -36,11 +36,14 @@ Sobre esa estructura, cinco reglas de producto concretan los tres pilares del co
 \begin{itemize}
   \item \textbf{Las listas son la unidad de las metas.}
         Una lista agrupa metas con plazo, y las publicaciones de progreso o de meta completada solo pueden crearse desde listas propias: nadie puede presumir de un avance que no persigue de verdad.
-        El plan gratuito admite un máximo de tres listas.
+        El plan gratuito admite un máximo de tres listas en curso: completar una lista libera su hueco —pueden acumularse más de tres completadas—, y una lista completada puede borrarse sin afectar al límite, aunque el borrado es irreversible.
+        Una meta vencida sin cumplir queda como no lograda y su lista sigue contando para el límite; si más tarde se completa, se marca como completada con su tiempo de retraso registrado, pensado para aprender a estimar mejor las siguientes metas.
+        El logro no se valida formalmente: su valor lo reconoce, de forma implícita, la comunidad que visita el perfil, que es también quien pide cuentas del retraso.
   \item \textbf{La visibilidad premia el avance.}
         Hay dos tipos de usuario: normal (cualquier persona registrada) y TOP (creador admitido por formulario externo, con vídeo ilimitado y mayor peso en el \eng{feed}); la ordenación del \eng{feed} pondera el progreso y la aportación, no la mera popularidad, y los vídeos de motivación son exclusivos de los perfiles TOP.
   \item \textbf{El contenido de perfil es efímero.}
-        Todo lo publicado en el perfil caduca a los 60 días salvo que su autor pulse «mantener»: el escaparate personal no es el centro de la experiencia.
+        Las publicaciones del perfil caducan a los 60 días salvo que su autor pulse «mantener», conservándose siempre visible la última: el escaparate personal se mantiene vivo y actualizado sin ser el centro de la experiencia.
+        Las historias caducan a las 24 horas, con opción de destacarlas en el perfil o de consultarlas en privado desde los ajustes.
   \item \textbf{Conocer gente exige verificación.}
         La verificación de identidad —documento de identidad, teléfono y fotografías de validación, delegada en un proveedor especializado— desbloquea publicar desde el perfil y el mapa de descubrimiento, reservado a personas mayores de edad, con ubicación siempre aproximada y con consentimiento explícito.
   \item \textbf{Los recordatorios empujan.}
@@ -57,4 +60,4 @@ El calendario está condicionado por circunstancias personales declaradas en la 
 
 El trabajo no parte de cero.
 Su precedente directo es TrackBites \parencite{deleanu-trackbites}, la aplicación web completa que el autor construyó con anterioridad y cuya arquitectura funciona como línea base de las decisiones tecnológicas de este proyecto (capítulo \ref{ch:alternativas}).
-El desarrollo se realiza en solitario y con la asistencia de \ac{IA} generativa ya acotada en la metodología (apartado \ref{sec:intro-metodologia}).
+El desarrollo se realiza en solitario.
