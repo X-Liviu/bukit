@@ -32,7 +32,7 @@ La elección no parte de preferencias abstractas, sino de las condiciones reales
   \item \textbf{Telemetría para esta memoria.}
         El método debe producir por sí mismo los datos de seguimiento (horas, velocidad, desviaciones) que alimentan este capítulo y el \ref{ch:gantt-tfg}.
   \item \textbf{Marco académico.}
-        Unas 360 horas de dedicación de referencia (12 créditos \ac{ECTS}) \parencite{rd-1125-2003} repartidas a lo largo de un curso completo, con la defensa prevista en la convocatoria de junio--julio de \thesisYear{} (capítulo \ref{ch:objetivos}).
+        La dedicación de referencia del \ac{TFG}, fijada en el apartado \ref{sec:contexto-marco} y repartida a lo largo de un curso completo, con la defensa prevista en la convocatoria de junio--julio de \thesisYear{} (capítulo \ref{ch:objetivos}).
 \end{itemize}
 
 \subsection{Alternativas consideradas y descartadas}
@@ -53,7 +53,7 @@ Declarar «se usó Scrum» sería, en rigor, falso; lo honesto es declarar qué 
 
 \paragraph{Kanban puro.}
 El método Kanban (flujo continuo, trabajo visualizado, límite de trabajo en curso) encaja de forma natural con la disponibilidad variable: si una semana rinde menos, fluye menos trabajo, sin ningún compromiso roto \parencite{anderson-kanban}.
-Se descarta como método único porque carece de cadencia: sin iteraciones no hay ritmo fijo de re-planificación ni retrospectiva, y no se genera la medida periódica de velocidad que este \ac{TFG} necesita como telemetría para la memoria y para corregir su primera experiencia de estimación en solitario (riesgo R2, capítulo \ref{ch:riesgos}).
+Se descarta como método único porque carece de cadencia: sin iteraciones no hay ritmo fijo de re-planificación ni retrospectiva, y no se genera la medida periódica de velocidad que este \ac{TFG} necesita como telemetría para la memoria y para corregir su primera experiencia de estimación en solitario (riesgo R2).
 
 \subsection{Decisión: método híbrido (Scrumban) adaptado a una persona}
 \label{sec:metodologia-decision}
@@ -85,7 +85,7 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
 
 La duración de una semana por \eng{sprint} (frente a las dos semanas empleadas en aquella experiencia previa en equipo) se justifica por tres razones.
 Primera: la realimentación de velocidad llega al doble de frecuencia justo cuando más falta hace, en las primeras semanas de la primera estimación en solitario del autor.
-Segunda: el grano semanal permite modular la capacidad de cada periodo (verano con trabajo, estancia Erasmus, prácticas de empresa) sin tocar el método: cambia la capacidad, no el ritmo.
+Segunda: el grano semanal permite modular la capacidad de cada periodo (verano con trabajo, estancia Erasmus, posibles prácticas de empresa) sin tocar el método: cambia la capacidad, no el ritmo.
 Tercera: el argumento clásico contra los \eng{sprints} cortos, el coste proporcional de las ceremonias, desaparece en solitario, donde todas las ceremonias juntas cuestan menos de una hora semanal.
 
 \subsection{Herramienta de gestión}
@@ -196,7 +196,7 @@ Como muestra de ese nivel se desarrolla completa la que sería la primera histor
 \begin{quote}
   \textbf{US-11 (EP04, 5 puntos).}
   Como persona usuaria registrada, quiero crear una lista de metas, cada una con su fecha límite, para convertir mis deseos en compromisos medibles.
-  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y cada meta una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
+  \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas en curso y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y cada meta una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
 \end{quote}
 
 Este desarrollo es una anticipación puramente ilustrativa, no el refinamiento de EP04, que se hará en su momento como el de cualquier otra épica.
@@ -231,7 +231,7 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
   \label{tab:fases}
 \end{table}
 
-La capacidad declarada refleja la disponibilidad real esperada de cada periodo: unas 10 horas semanales en verano, condicionado por compromisos laborales; unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las prácticas de empresa.
+La capacidad declarada refleja la disponibilidad real esperada de cada periodo: unas 10 horas semanales en verano, condicionado por compromisos laborales; unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
 Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R8, con las horas registradas en el diario como evidencia.
 Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación de lunes con el conocimiento acumulado hasta entonces.
 
@@ -264,4 +264,4 @@ Esa ausencia de margen se declara aquí en lugar de maquillarse ajustando estima
 La decisión consciente es triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real supera la hipótesis.
 Este encaje al límite es, de hecho, la primera observación registrada del riesgo R2, y su evolución se vigila desde el primer cierre de \eng{sprint}.
 
-Estas hipótesis de capacidad son deliberadamente conservadoras: describen el escenario razonable de \emph{menor} disponibilidad, y sus consecuencias —las fechas como techo comprometido, no como suelo— se analizan en el capítulo \ref{ch:gantt-tfg}.
+Estas hipótesis de capacidad son deliberadamente conservadoras: describen el escenario razonable de \emph{menor} disponibilidad, y sus consecuencias —las fechas como techo del escenario prudente, no como suelo— se analizan en el capítulo \ref{ch:gantt-tfg}.
