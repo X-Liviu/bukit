@@ -1,0 +1,29 @@
+# =========================================================================
+# Pasos comunes de preparación de los jobs de CI (composite action):
+# pnpm leído del campo packageManager, Node fijado a la versión de Volta y
+# la instalación congelada desde el store cacheado. Viven aquí para que un
+# cambio (de versión de Node, de estrategia de caché) se haga en un único
+# sitio en lugar de en cada job.
+# =========================================================================
+name: Preparar Node + pnpm
+description: pnpm (packageManager) + Node 24.18.0 + pnpm install --frozen-lockfile con caché del store
+
+runs:
+  using: composite
+  steps:
+    # Lee la versión de pnpm del campo packageManager de package.json,
+    # la misma que fija corepack en local (reproducibilidad).
+    - uses: pnpm/action-setup@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        # La misma versión que fija Volta en package.json y la imagen Docker.
+        node-version: "24.18.0"
+        cache: pnpm
+
+    # frozen-lockfile: la CI nunca resuelve versiones nuevas; instala
+    # exactamente lo que fija pnpm-lock.yaml o falla. Con el store en caché
+    # la instalación solo enlaza: segundos por job.
+    - name: Instalar dependencias
+      run: pnpm install --frozen-lockfile
+      shell: bash

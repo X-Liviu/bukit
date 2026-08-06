@@ -1,11 +1,24 @@
 # =========================================================================
-# Integración continua del monorepo (US-01).
-# Estrategia de fallo rápido (cap. 10 de la memoria): las etapas corren en
-# orden lint → typecheck → pruebas y la primera que falla corta el pipeline.
-# Un único job con pasos secuenciales: los pasos ya son fallo-rápido por
-# diseño y evitan triplicar la instalación; se separará en jobs paralelos
-# cuando existan pruebas de integración que paralelizar (US-02+). Las E2E
-# (Playwright) entrarán como última barrera cuando haya app que arrancar.
+# Integración continua del monorepo (US-01; jobs separados desde el
+# 06-08-2026, cerrando el pendiente anotado el 27-07).
+# Estrategia de fallo rápido del cap. 10, ahora por jobs: lint (barrera
+# estática barata) → typecheck → pruebas, y la build de la imagen Docker
+# de la API en paralelo desde que lint aprueba (no depende de tipos ni
+# pruebas). Las E2E (Playwright) entrarán como última barrera cuando haya
+# aplicación que arrancar.
+#
+# Instalación reutilizada = caché del store de pnpm (setup-node cache:
+# pnpm): cada job instala desde el store cacheado en segundos (solo
+# enlaza). Alternativa descartada: pasar node_modules como artefacto entre
+# jobs — el node_modules de pnpm es una granja de symlinks al store
+# virtual y upload-artifact no los conserva (los desreferencia), así que
+# el artefacto se infla a cientos de MB, tarda más que instalar desde la
+# caché y puede llegar roto. Los pasos comunes viven en la composite
+# action .github/actions/setup.
+#
+# Cada job es además un "check" con nombre propio: el gating de despliegue
+# de Render (autoDeployTrigger: checksPass, render.yaml) espera a TODOS
+# antes de desplegar, y un fallo se localiza de un vistazo.
 # =========================================================================
 name: CI
 
@@ -14,38 +27,47 @@ on:
     branches: [main]
   pull_request:
 
+# Un push nuevo cancela la ejecución anterior de la misma rama: solo
+# interesa el estado del último commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm lint
 
-      # Lee la versión de pnpm del campo packageManager de package.json,
-      # la misma que fija corepack en local (reproducibilidad).
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          # La misma versión que fija Volta en package.json.
-          node-version: "24.18.0"
-          cache: pnpm
-
-      # frozen-lockfile: la CI nunca resuelve versiones nuevas; instala
-      # exactamente lo que fija pnpm-lock.yaml o falla.
-      - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile
-
+  typecheck:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
       # Sin paso de "prisma generate": el esquema aún no tiene modelos a
-      # propósito (las entidades se diseñan incrementalmente con el autor) y
-      # generate falla en vacío; los tipos placeholder de @prisma/client
+      # propósito (las entidades se diseñan incrementalmente con el autor)
+      # y generate falla en vacío; los tipos placeholder de @prisma/client
       # bastan para el typecheck. Recuperar este paso con el primer modelo
       # (US-04): pnpm --filter @bukit/api prisma:generate
+      - run: pnpm typecheck
 
-      - name: Lint
-        run: pnpm lint
+  pruebas:
+    needs: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm test
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Pruebas
-        run: pnpm test
+  docker:
+    # Solo la barrera estática como puerta: así el Dockerfile se valida en
+    # paralelo a typecheck/pruebas sin quemar minutos si lint ya falló.
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build de la imagen de la API (sin publicar)
+        run: docker build -f apps/api/Dockerfile .
