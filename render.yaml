@@ -1,0 +1,26 @@
+# =========================================================================
+# Blueprint de Render: la infraestructura de despliegue como código,
+# versionada junto al repositorio (US-03).
+#
+# - autoDeployTrigger: checksPass = el RNF-06 hecho configuración: Render
+#   solo despliega un commit de main cuando TODOS los checks de la CI de
+#   GitHub Actions están en verde, y no despliega commits sin checks.
+# - plan free + region frankfurt = RNF-07 (coste cero, sin tarjeta) y
+#   residencia europea del servicio (criterio RGPD del proyecto).
+# - El servicio gratuito se duerme tras 15 min sin tráfico y despierta con
+#   la siguiente petición (~1 min): peaje asumido y documentado en la
+#   memoria (cap. 6/8).
+# =========================================================================
+services:
+  - type: web
+    name: bukit-api
+    runtime: docker
+    region: frankfurt
+    plan: free
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_ENV
+        value: production

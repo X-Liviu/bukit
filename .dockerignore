@@ -1,0 +1,22 @@
+# Recorta el contexto de build de la imagen de la API: fuera todo lo que la
+# imagen no necesita (node_modules se instalan dentro; docs y placeholders
+# pesan y no viajan). OJO: los package.json de e2e y packages/* SÍ entran
+# (el Dockerfile los copia para validar el lockfile congelado).
+node_modules
+**/node_modules
+**/dist
+**/build
+.git
+.github
+.claude
+.vscode
+docs
+graphify-out
+apps/web
+apps/mobile
+e2e/tests
+e2e/playwright.config.ts
+docker
+*.log
+.env
+**/.env
