@@ -41,3 +41,5 @@ export const forbidden = (message = "Sin permisos para esta operación."): AppEr
   new AppError(403, "FORBIDDEN", message);
 export const notFound = (message = "Recurso no encontrado."): AppError =>
   new AppError(404, "NOT_FOUND", message);
+export const conflict = (message: string, details?: ErrorDetails): AppError =>
+  new AppError(409, "CONFLICT", message, details);

@@ -1,9 +1,18 @@
-// Marcador de posición del cliente Prisma hasta que el esquema tenga modelos (US-04).
-// El esquema está vacío a propósito (diseño incremental con el autor), así que
-// `prisma generate` aún no puede ejecutarse y el tipo PrismaClient solo existe si
-// el postinstall de @prisma/client llegó a crear el stub `.prisma`: importarlo aquí
-// hacía el typecheck NO determinista en CI (verde o rojo según la caché de pnpm).
-// Con el primer modelo, restaurar: import de PrismaClient, singleton reutilizado
-// entre recargas de tsx watch (para no agotar el pool de conexiones) y el paso
-// `prisma generate` de la CI (ver comentario en .github/workflows/ci.yml).
-export {};
+import "dotenv/config";
+import { PrismaClient } from "@prisma/client";
+
+// Cliente Prisma como singleton PEREZOSO: se crea en el primer uso real, no al
+// importar el módulo. Perezoso por dos razones: (1) el despliegue del esqueleto
+// (US-03) aún no tiene base de datos gestionada, y un cliente construido al
+// importar tiraría el proceso en el arranque por la DATABASE_URL ausente —
+// /health debe vivir sin BD; (2) en desarrollo, tsx watch recarga los módulos y
+// un cliente nuevo por recarga agotaría el pool de conexiones, así que el
+// singleton se conserva en globalThis entre recargas.
+// El import de dotenv garantiza la DATABASE_URL también fuera de index.ts
+// (p. ej. en las pruebas, que importan la app sin pasar por el arranque).
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export function getPrisma(): PrismaClient {
+  globalForPrisma.prisma ??= new PrismaClient();
+  return globalForPrisma.prisma;
+}

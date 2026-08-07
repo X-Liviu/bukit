@@ -54,20 +54,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      # Sin paso de "prisma generate": el esquema aún no tiene modelos a
-      # propósito (las entidades se diseñan incrementalmente con el autor)
-      # y generate falla en vacío; los tipos placeholder de @prisma/client
-      # bastan para el typecheck. Recuperar este paso con el primer modelo
-      # (US-04): pnpm --filter @bukit/api prisma:generate
+      # prisma generate, restaurado en la US-04 tal y como quedó previsto: el
+      # esquema ya tiene su primer modelo (User) y el typecheck necesita el
+      # cliente tipado generado.
+      - run: pnpm --filter @bukit/api prisma:generate
       - run: pnpm typecheck
 
   pruebas:
     needs: typecheck
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      # Credenciales SOLO de desarrollo: las mismas del docker-compose del repo.
+      DATABASE_URL: postgresql://bukit:bukit@localhost:5432/bukit?schema=public
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
+      - run: pnpm --filter @bukit/api prisma:generate
+      # BD real para las pruebas de integración (US-04): el mismo compose de
+      # desarrollo (imagen propia PostGIS + pgvector), esperado hasta healthy,
+      # con el esquema aplicado desde las migraciones versionadas.
+      - run: docker compose up -d --wait
+      - run: pnpm --filter @bukit/api db:deploy
       - run: pnpm test
 
   docker:
@@ -79,4 +87,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build de la imagen de la API (sin publicar)
-        run: docker build -f apps/api/Dockerfile .
+        run: docker build -f apps/api/Dockerfile -t bukit-api:ci .
+      # Humo (US-04): la imagen debe ARRANCAR y responder /health sin BD (el
+      # cliente Prisma se genera en la build y se construye perezoso). Una
+      # imagen que compila pero muere al arrancar pasaba inadvertida: la CI
+      # solo construía, nunca ejecutaba.
+      - name: La imagen arranca y /health responde
+        run: |
+          docker run -d --rm --name bukit-api-ci -p 3001:3001 bukit-api:ci
+          for i in $(seq 1 15); do
+            if curl -fsS http://localhost:3001/health; then exit 0; fi
+            sleep 2
+          done
+          docker logs bukit-api-ci
+          exit 1

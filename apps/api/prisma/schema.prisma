@@ -15,7 +15,35 @@ datasource db {
 }
 
 // ── MODELOS DE DATOS ─────────────────────────────────────────────────────────
-// Intencionadamente VACÍO.
-// El modelo de datos (entidades, relaciones, cascadas, índices) se diseñará de
-// forma incremental y meditada, para garantizar la mejor integridad referencial
-// posible. Aquí irán los `model ...` cuando los definamos juntos, uno a uno.
+// Diseño incremental: cada entidad se acuerda CON el autor antes de escribirse
+// aquí (regla del proyecto), y pasa su revisión de minimización (riesgo R7):
+// cada dato personal con su finalidad declarada; lo que hoy no tiene finalidad,
+// no se almacena (ni teléfono, ni fecha de nacimiento, ni ubicación; los campos
+// de verificación de identidad llegarán con su épica y serán solo estado +
+// clave de referencia del proveedor, nunca la imagen del documento).
+
+// Dos niveles de usuario (regla de producto): NORMAL, con menor peso en el
+// feed; TOP, creador admitido por un proceso externo, con vídeo y mayor peso.
+// Sin endpoint para cambiarlo: la admisión TOP no es autoservicio.
+enum UserTier {
+  NORMAL
+  TOP
+}
+
+// Cuenta de usuario (US-04, acordada con el autor el 07-08-2026). Finalidad de
+// cada dato: email = identificación y acceso (normalizado a minúsculas en el
+// esquema Zod compartido antes de llegar aquí); passwordHash = autenticación
+// (solo el hash bcrypt: la contraseña en claro jamás se persiste); username =
+// identidad pública del perfil; tier = ponderación del feed.
+// UUID como id: no enumerable (nadie recorre /users/1,2,3...) y tipo nativo de
+// Postgres. Descartados: BIGINT autoincremental (enumerable, revela volumen) y
+// cuid (se almacena como texto, sin tipo nativo).
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  passwordHash String
+  username     String   @unique
+  tier         UserTier @default(NORMAL)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

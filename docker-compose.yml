@@ -18,10 +18,16 @@ services:
       # Habilita las extensiones al crear la BD por primera vez:
       - ./docker/postgres/init:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bukit -d bukit"]
+      # -h 127.0.0.1 fuerza la comprobación por TCP: durante el initdb del
+      # primer arranque, Postgres levanta un servidor temporal SOLO con socket
+      # unix para ejecutar los scripts de init, y pg_isready sin -h daría
+      # healthy en esa ventana aunque el puerto 5432 aún no acepte conexiones
+      # (flake real de CI: migrate llegaría antes que el TCP).
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U bukit -d bukit"]
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 10s
 
 volumes:
   bukit-db-data:

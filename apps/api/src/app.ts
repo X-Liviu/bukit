@@ -5,6 +5,7 @@ import { pinoHttp } from "pino-http";
 
 import { logger } from "./logger.js";
 import { errorHandler, notFoundHandler } from "./middleware/error-handler.js";
+import { authRouter } from "./routes/auth.js";
 
 // La app Express, sin arrancar el servidor: se construye aparte del listen
 // para poder testearla con Supertest sin abrir un puerto (igual que en
@@ -27,6 +28,9 @@ export function createApp(extraRoutes?: (app: Express) => void): Express {
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
+
+  // Rutas de la API (US-04+).
+  app.use(authRouter);
 
   extraRoutes?.(app);
 

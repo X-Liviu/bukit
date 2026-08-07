@@ -28,6 +28,13 @@ COPY packages/api-client/package.json packages/api-client/
 COPY packages/ui-core/package.json packages/ui-core/
 COPY e2e/package.json e2e/
 RUN pnpm install --frozen-lockfile --prod
+# El cliente Prisma se genera DENTRO de la imagen: así descarga el motor de
+# linux-musl correcto para Alpine (US-04). El CLI de prisma es devDependency y
+# la instalación --prod no lo trae: se usa efímero con dlx, fijado a la misma
+# versión exacta que el lockfile. Sin este paso, el contenedor se quedaría con
+# el cliente stub del postinstall y cualquier acceso a datos fallaría.
+COPY apps/api/prisma apps/api/prisma
+RUN pnpm dlx prisma@6.1.0 generate --schema apps/api/prisma/schema.prisma
 
 FROM node:24.18.0-alpine
 ENV NODE_ENV=production
