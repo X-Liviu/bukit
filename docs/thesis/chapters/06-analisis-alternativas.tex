@@ -155,7 +155,10 @@ Dentro de este \ac{TFG} solo se implementa la tabla propia de patrocinados: la i
 De TrackBites se hereda la cadena de comprobaciones automáticas (\eng{pipeline}) de integración continua en GitHub Actions, con estrategia de fallo rápido —análisis estático, comprobación de tipos y pruebas, con las pruebas de extremo a extremo de Playwright como última barrera—, cuya materialización concreta se describe en el capítulo \ref{ch:solucion}.
 El salto nuevo es el despliegue continuo: en TrackBites se omitió deliberadamente, y aquí se completa el ciclo, de modo que todo cambio que pasa el \eng{pipeline} llega solo a producción.
 El \eng{backend} se empaqueta con Docker, que sustituye el despliegue manual anterior por entornos reproducibles \parencite{docker-docs}.
-Los destinos concretos se eligen al abordar el despliegue: la \ac{API}, entre Render, Railway y Fly.io; la web, entre Vercel y Cloudflare Pages; la aplicación móvil, por la cadena de Expo.
+El destino de la \ac{API} está decidido: Render \parencite{render-docs}, con una capa gratuita real y sin tarjeta (750 horas al mes, suficientes para el servicio continuo), despliegue por \eng{Dockerfile}, región de Fráncfort y, sobre todo, el despliegue condicionado de serie a que las comprobaciones de la integración continua estén en verde: el requisito RNF-06 convertido en configuración, versionada en el propio repositorio (\texttt{render.yaml}).
+El peaje asumido de esa capa gratuita es que el servicio se duerme tras 15 minutos sin tráfico y tarda en torno a un minuto en despertar, aceptable para un uso académico.
+Se descartaron Railway —tras su periodo de prueba, el plan gratuito queda en 1~\$ de crédito mensual, insuficiente para una \ac{API} siempre encendida, y además rechaza los despliegues gratuitos en las horas de mayor carga \parencite{railway-pricing}— y Fly.io, sin capa gratuita para las cuentas nuevas desde octubre de 2024 \parencite{flyio-pricing}.
+Los destinos restantes se eligen al abordar cada despliegue: la web, entre Vercel y Cloudflare Pages; la aplicación móvil, por la cadena de Expo.
 La base de datos es la excepción: su destino ya está decidido en Neon (sección \ref{sec:alt-bd}).
 El criterio para cerrar los abiertos vuelve a ser el mismo: capa gratuita suficiente para un uso académico.
 
@@ -222,7 +225,7 @@ La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, fr
   \addlinespace
   Publicidad & Tabla propia de patrocinados (red existente prevista) & Publicidad programada desde cero & Enfoque decidido; integración real fuera del alcance \\
   \addlinespace
-  Entrega & Integración continua de fallo rápido + despliegue continuo + Docker & Omitir el despliegue continuo (TrackBites) & Decidida; destinos abiertos \\
+  Entrega & Integración continua de fallo rápido + despliegue continuo + Docker & Omitir el despliegue continuo (TrackBites) & Decidida; \acs{API} en Render, web y móvil abiertos \\
   \addlinespace
   \multicolumn{4}{@{}l@{}}{\emph{* Alternativa analizada en este capítulo; no consta como barajada en la documentación previa del proyecto.}} \\
 \end{longtable}
