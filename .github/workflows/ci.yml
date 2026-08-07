@@ -33,9 +33,15 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# timeout-minutes en cada job: el 06-08-2026 dos runs consecutivos (con sus
+# reintentos) se colgaron en la preparación y hubo que cancelarlos a mano
+# tras ~15 min; la causa no se pudo determinar (incidencia transitoria de
+# los runners: al día siguiente el rerun pasó en verde sin ningún cambio) y
+# el tope evita que un cuelgue así queme minutos o espere al límite de 6 h.
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -44,6 +50,7 @@ jobs:
   typecheck:
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -57,6 +64,7 @@ jobs:
   pruebas:
     needs: typecheck
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
@@ -67,6 +75,7 @@ jobs:
     # paralelo a typecheck/pruebas sin quemar minutos si lint ya falló.
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Build de la imagen de la API (sin publicar)
