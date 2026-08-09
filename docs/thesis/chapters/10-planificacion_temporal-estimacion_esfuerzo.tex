@@ -110,6 +110,7 @@ Las tareas, en cambio, sí se conservan cuando ayudan: al ejecutar una historia,
 
 Como hipótesis inicial de equivalencia se toman unas 2,7 horas por punto, de modo que la velocidad esperada de cada \eng{sprint} se deriva de su capacidad declarada (por ejemplo, unos 4 puntos en un \eng{sprint} de verano de 10 horas).
 Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del tercer \eng{sprint} la manda la velocidad real medida, y la hipótesis se recalibra en cada retrospectiva (riesgo R2).
+La primera recalibración con tres \eng{sprints} medidos (cierre de S3, 09/08/2026) la fija en 2,0 horas por punto: el esfuerzo observado rondó las 1,2 —la asistencia de \ac{IA} aceleró la ejecución muy por encima de lo previsto—, y se adopta un valor deliberadamente prudente porque la muestra es solo de infraestructura; las épicas de mapa, tiempo real e \ac{IA} no tienen por qué rendir igual.
 
 \section{Criterios de cierre de una historia}
 \label{sec:dod}
@@ -219,7 +220,7 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
     \textbf{Fase} & \textbf{Contenido} & \textbf{Sprints} & \textbf{Fechas} & \textbf{Horas} \\
     \midrule
     F0  & Planificación: objetivos, riesgos, metodología    & S0       & 14/07 -- 19/07/2026 & $\sim$20 \\
-    F1  & Fundaciones de la \acs{API}: EP01, EP02           & S1--S6   & 20/07 -- 30/08/2026 & 60 \\
+    F1  & Fundaciones de la \acs{API}: EP01, EP02           & S1--S6   & 20/07 -- 30/08/2026 & 48 \\
     --- & Pausa: viajes y traslado a la estancia Erasmus    & ---      & 31/08 -- 20/09/2026 & 0 \\
     F2  & Cliente web, listas y publicaciones: EP03--EP05   & S7--S24  & 21/09/2026 -- 24/01/\thesisYear & 90 \\
     --- & Pausa: regreso e instalación en Bilbao            & ---      & 25/01 -- 31/01/\thesisYear & 0 \\
@@ -231,7 +232,7 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
   \label{tab:fases}
 \end{table}
 
-La capacidad declarada refleja la disponibilidad real esperada de cada periodo: unas 10 horas semanales en verano, condicionado por compromisos laborales; unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
+La capacidad declarada refleja la disponibilidad real esperada de cada periodo: el verano se planificó con 10 horas semanales condicionadas por los compromisos laborales, y la realidad de tres \eng{sprints} la re-basó a 6 desde S4 (09/08/2026, contingencia del riesgo R8: la carga laboral resultó estructural, no puntual); unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
 Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R8, con las horas registradas en el diario como evidencia.
 Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación de lunes con el conocimiento acumulado hasta entonces.
 
@@ -246,9 +247,9 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
     S1 & 20/07 -- 26/07 & Integración continua mínima (EP01)                         & 10 \\
     S2 & 27/07 -- 02/08 & Esqueleto de la \acs{API}, errores y registro de sucesos (EP01) & 10 \\
     S3 & 03/08 -- 09/08 & Modelo de usuario y registro de cuentas (EP02)             & 10 \\
-    S4 & 10/08 -- 16/08 & Inicio de sesión con \eng{tokens} de acceso y refresco (EP02) & 10 \\
-    S5 & 17/08 -- 23/08 & Rotación y revocación de \eng{tokens} (EP02)               & 10 \\
-    S6 & 24/08 -- 30/08 & Limitación de peticiones; \emph{cierre de F1}              & 10 \\
+    S4 & 10/08 -- 16/08 & Inicio de sesión con \eng{tokens} de acceso y refresco (EP02) & 6 \\
+    S5 & 17/08 -- 23/08 & Rotación y revocación de \eng{tokens} (EP02)               & 6 \\
+    S6 & 24/08 -- 30/08 & Limitación de peticiones; \emph{cierre de F1}              & 6 \\
     \bottomrule
   \end{tabular}
   \caption{Calendario de \eng{sprints} de F0 y F1 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
@@ -258,10 +259,9 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 \subsection{Encaje del plan y margen declarado}
 \label{sec:fases-tension}
 
-El inventario comprometido (prioridad imprescindible) suma 138 puntos, y la capacidad nominal de los 39 \eng{sprints} (375 horas, a la hipótesis de 2,7 horas por punto) da unos 139: el plan encaja, pero al límite, sin holgura interna.
-El reparto por fases es igual de ajustado y también se declara: F2 nace ligeramente sobrecargada (34 puntos frente a unos 33 nominales) y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
-Esa ausencia de margen se declara aquí en lugar de maquillarse ajustando estimaciones a la baja: cualquier velocidad sostenida por debajo de la hipótesis desplaza trabajo más allá de la fecha objetivo.
-La decisión consciente es triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real supera la hipótesis.
-Este encaje al límite es, de hecho, la primera observación registrada del riesgo R2, y su evolución se vigila desde el primer cierre de \eng{sprint}.
+El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) suma 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
+Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (363 horas), los 138 puntos comprometidos suponen unas 276 horas — una holgura nominal en torno al 24\,\%.
+La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
+La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 
 Estas hipótesis de capacidad son deliberadamente conservadoras: describen el escenario razonable de \emph{menor} disponibilidad, y sus consecuencias —las fechas como techo del escenario prudente, no como suelo— se analizan en el capítulo \ref{ch:gantt-tfg}.

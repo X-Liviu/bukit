@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
-import { publicUserSchema, registerUserSchema } from "@bukit/core";
+import { ownUserSchema, registerUserSchema } from "@bukit/core";
 
 import { getPrisma } from "../prisma.js";
 import { conflict } from "../errors.js";
@@ -27,11 +27,11 @@ authRouter.post("/auth/register", async (req, res) => {
       data: { email: input.email, username: input.username, passwordHash },
       select: { id: true, email: true, username: true, tier: true, createdAt: true },
     });
-    // El contrato compartido es la ÚNICA fuente de la forma pública: la
-    // respuesta se parsea con él, de modo que el hash (o cualquier campo futuro
-    // sin finalidad pública) no puede salir por accidente aunque el select
-    // cambiara.
-    res.status(201).json({ user: publicUserSchema.parse(user) });
+    // El contrato compartido de la vista del PROPIETARIO es la única fuente de
+    // la forma de respuesta: parsearla con él garantiza que el hash (o
+    // cualquier campo futuro sin finalidad en la respuesta) no puede salir por
+    // accidente aunque el select cambiara.
+    res.status(201).json({ user: ownUserSchema.parse(user) });
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
       // meta.target puede llegar como array de campos o como string según el

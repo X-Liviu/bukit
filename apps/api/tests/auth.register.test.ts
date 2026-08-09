@@ -1,7 +1,7 @@
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import bcrypt from "bcryptjs";
-import { apiErrorSchema, publicUserSchema } from "@bukit/core";
+import { apiErrorSchema, ownUserSchema } from "@bukit/core";
 
 import { createApp } from "../src/app.js";
 import { getPrisma } from "../src/prisma.js";
@@ -38,7 +38,7 @@ describe("POST /auth/register", () => {
     expect(res.status).toBe(201);
     // La forma de la respuesta se valida contra el MISMO contrato compartido
     // que produce la ruta: una sola fuente de verdad también en el test.
-    expect(publicUserSchema.safeParse(res.body.user).success).toBe(true);
+    expect(ownUserSchema.safeParse(res.body.user).success).toBe(true);
     expect(res.body.user).toMatchObject({
       email: "persona@ejemplo.com",
       username: "persona.ejemplo",

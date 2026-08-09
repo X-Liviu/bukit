@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { loginSchema, publicUserSchema, registerUserSchema, userTierSchema } from "../src/user";
+import { loginSchema, ownUserSchema, registerUserSchema, userTierSchema } from "../src/user";
 
 // Primer test del monorepo. Cubre los esquemas compartidos de usuario por un
 // motivo doble: son la validación única front ↔ back (RNF-01) y dan contenido
@@ -53,6 +53,25 @@ describe("registerUserSchema", () => {
       }).success).toBe(false);
     }
   });
+
+  it("acota la contraseña al límite real de bcrypt (72 bytes, no caracteres)", () => {
+    const base = { email: "persona@ejemplo.com", username: "persona" };
+    expect(registerUserSchema.safeParse({ ...base, password: "a".repeat(72) }).success).toBe(true);
+    expect(registerUserSchema.safeParse({ ...base, password: "a".repeat(73) }).success).toBe(false);
+    // 36 ñ = 72 bytes en UTF-8 (válida); 37 ñ = 74 bytes (rechazada aunque
+    // tenga menos de 72 caracteres): la comprobación es en bytes.
+    expect(registerUserSchema.safeParse({ ...base, password: "ñ".repeat(36) }).success).toBe(true);
+    expect(registerUserSchema.safeParse({ ...base, password: "ñ".repeat(37) }).success).toBe(false);
+  });
+
+  it("acota el email al tope del estándar (254)", () => {
+    const local = "a".repeat(250);
+    expect(registerUserSchema.safeParse({
+      email: `${local}@x.com`,
+      username: "persona",
+      password: "contraseña-larga",
+    }).success).toBe(false);
+  });
 });
 
 describe("userTierSchema", () => {
@@ -73,9 +92,9 @@ describe("loginSchema", () => {
   });
 });
 
-describe("publicUserSchema", () => {
-  it("valida la forma pública del usuario y descarta claves ajenas al contrato", () => {
-    const parsed = publicUserSchema.parse({
+describe("ownUserSchema", () => {
+  it("valida la vista del propietario y descarta claves ajenas al contrato", () => {
+    const parsed = ownUserSchema.parse({
       id: "3e2a1f60-0d3c-4a5e-9b0e-1f2a3b4c5d6e",
       email: "persona@ejemplo.com",
       username: "persona",

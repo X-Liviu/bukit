@@ -22,28 +22,46 @@ datasource db {
 // de verificación de identidad llegarán con su épica y serán solo estado +
 // clave de referencia del proveedor, nunca la imagen del documento).
 
+// CRITERIOS DE MODELO fijados con la primera entidad (revisión del 09-08-2026,
+// acordados con el autor; documentados en el cap. 9):
+// - Nombres de BD en snake_case vía @map/@@map: hay SQL crudo comprometido
+//   (PostGIS, pgvector) y los identificadores camelCase de Prisma exigirían
+//   comillas dobles exactas en cada consulta (Postgres pliega a minúsculas).
+// - Fechas SIEMPRE con zona horaria (@db.Timestamptz): los plazos de metas y
+//   las caducidades (60 días / 24 h) no pueden depender del TimeZone de la
+//   sesión del servidor.
+// - Longitudes máximas respaldadas en columna (defensa en profundidad: la
+//   normalización vive en el Zod compartido, pero la BD acota el tamaño).
+// - Ids generados también en BD (gen_random_uuid, nativa en PG13+): un INSERT
+//   fuera del cliente Prisma no debe romperse por falta de default.
+
 // Dos niveles de usuario (regla de producto): NORMAL, con menor peso en el
 // feed; TOP, creador admitido por un proceso externo, con vídeo y mayor peso.
 // Sin endpoint para cambiarlo: la admisión TOP no es autoservicio.
 enum UserTier {
   NORMAL
   TOP
+
+  @@map("user_tier")
 }
 
-// Cuenta de usuario (US-04, acordada con el autor el 07-08-2026). Finalidad de
-// cada dato: email = identificación y acceso (normalizado a minúsculas en el
-// esquema Zod compartido antes de llegar aquí); passwordHash = autenticación
-// (solo el hash bcrypt: la contraseña en claro jamás se persiste); username =
-// identidad pública del perfil; tier = ponderación del feed.
+// Cuenta de usuario (US-04, acordada con el autor el 07-08-2026; reforzada en
+// la revisión del 09-08-2026). Finalidad de cada dato: email = identificación
+// y acceso (normalizado a minúsculas en el esquema Zod compartido antes de
+// llegar aquí); passwordHash = autenticación (solo el hash bcrypt: la
+// contraseña en claro jamás se persiste); username = identidad pública del
+// perfil; tier = ponderación del feed.
 // UUID como id: no enumerable (nadie recorre /users/1,2,3...) y tipo nativo de
 // Postgres. Descartados: BIGINT autoincremental (enumerable, revela volumen) y
 // cuid (se almacena como texto, sin tipo nativo).
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique
-  passwordHash String
-  username     String   @unique
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String   @unique @db.VarChar(254)
+  passwordHash String   @map("password_hash")
+  username     String   @unique @db.VarChar(30)
   tier         UserTier @default(NORMAL)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("users")
 }
