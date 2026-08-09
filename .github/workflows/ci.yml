@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: pnpm lint
       # Mitigación R14 (10-08-2026): la auditoría de dependencias corre en
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       # prisma generate, restaurado en la US-04 tal y como quedó previsto: el
       # esquema ya tiene su primer modelo (User) y el typecheck necesita el
@@ -73,7 +73,7 @@ jobs:
       # Credenciales SOLO de desarrollo: las mismas del docker-compose del repo.
       DATABASE_URL: postgresql://bukit:bukit@localhost:5432/bukit?schema=public
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: pnpm --filter @bukit/api prisma:generate
       # BD real para las pruebas de integración (US-04): el mismo compose de
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build de la imagen de la API (sin publicar)
         run: docker build -f apps/api/Dockerfile -t bukit-api:ci .
       # Humo (US-04): la imagen debe ARRANCAR y responder /health sin BD (el
