@@ -54,6 +54,22 @@ export const loginSchema = z.object({
 export type LoginInput = z.infer<typeof loginSchema>;
 
 /**
+ * Par de tokens que emite el inicio de sesión (US-05): uno de acceso, de vida
+ * corta, que acompaña a cada petición, y uno de refresco, de vida larga, que
+ * sirve para obtener el siguiente sin volver a pedir la contraseña.
+ * Viajan en el cuerpo de la respuesta —no en una cookie— para que web y móvil
+ * consuman el mismo contrato desde el cliente compartido; cada plataforma los
+ * guarda como le corresponde (almacenamiento seguro en móvil, memoria en web).
+ */
+export const tokenPairSchema = z.object({
+  accessToken: z.string().min(1),
+  refreshToken: z.string().min(1),
+  /** Segundos de vida del token de acceso, para que el cliente lo renueve antes de que caduque. */
+  expiresIn: z.number().int().positive(),
+});
+export type TokenPair = z.infer<typeof tokenPairSchema>;
+
+/**
  * Usuario tal y como la API se lo devuelve a su PROPIETARIO — por eso incluye
  * su email — y nunca con el hash. La futura vista pública de perfil (sin
  * email) se definirá junto a su endpoint cuando exista: este contrato no debe
@@ -67,3 +83,10 @@ export const ownUserSchema = z.object({
   createdAt: z.coerce.date(),
 });
 export type OwnUser = z.infer<typeof ownUserSchema>;
+
+/** Respuesta del inicio de sesión: quién eres y con qué credenciales operas. */
+export const loginResponseSchema = z.object({
+  user: ownUserSchema,
+  tokens: tokenPairSchema,
+});
+export type LoginResponse = z.infer<typeof loginResponseSchema>;

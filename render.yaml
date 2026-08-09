@@ -24,3 +24,9 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # Secreto de firma de los tokens (US-05): Render lo genera aleatorio al
+      # aplicar el Blueprint y no vive en el repositorio. Sin él, el proceso
+      # arrancaría y /health estaría verde, pero cada login fallaría — el tipo
+      # de despliegue "sano a medias" que la revisión adversarial detectó.
+      - key: JWT_SECRET
+        generateValue: true

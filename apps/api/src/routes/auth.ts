@@ -1,10 +1,12 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
-import { ownUserSchema, registerUserSchema } from "@bukit/core";
+import { loginSchema, ownUserSchema, registerUserSchema } from "@bukit/core";
 
 import { getPrisma } from "../prisma.js";
-import { conflict } from "../errors.js";
+import { conflict, unauthorized } from "../errors.js";
+import { issueTokenPair } from "../utils/tokens.js";
+import { requireAuth } from "../middleware/require-auth.js";
 
 // Coste del hash bcrypt: 12 rondas por defecto (producción), configurable por
 // entorno. Con bcryptjs (JS puro) 12 rondas cuestan en torno a 1 s de CPU en el
@@ -53,4 +55,49 @@ authRouter.post("/auth/register", async (req, res) => {
     }
     throw err;
   }
+});
+
+// Hash de referencia para las comparaciones de emails inexistentes: se genera
+// UNA vez con el coste vigente (no un literal: la revisión adversarial cazó
+// que un hash de longitud incorrecta hace que bcryptjs devuelva false al
+// instante, y la igualación de tiempos no igualaba nada — 0 ms frente a
+// ~250 ms delataban qué emails existen).
+let hashDeReferencia: string | undefined;
+async function hashReferencia(): Promise<string> {
+  hashDeReferencia ??= await bcrypt.hash("contraseña-de-referencia", bcryptRounds());
+  return hashDeReferencia;
+}
+
+// Inicio de sesión (US-05, RNF-03): credenciales correctas → par de tokens.
+// La limitación de peticiones (fuerza bruta) llega en la US-07, su historia
+// propia del backlog: doble capa de rate limiting.
+authRouter.post("/auth/login", async (req, res) => {
+  const input = loginSchema.parse(req.body);
+  const user = await getPrisma().user.findUnique({ where: { email: input.email } });
+
+  // Un email inexistente y una contraseña incorrecta devuelven EXACTAMENTE la
+  // misma respuesta, y ambas vías pagan una comparación bcrypt completa: ni el
+  // cuerpo ni la latencia deben delatar qué emails están dados de alta
+  // (enumeración de usuarios).
+  const correcta = await bcrypt.compare(input.password, user?.passwordHash ?? (await hashReferencia()));
+  if (!user || !correcta) {
+    throw unauthorized("Email o contraseña incorrectos.");
+  }
+
+  res.json({
+    user: ownUserSchema.parse(user),
+    tokens: issueTokenPair(user.id),
+  });
+});
+
+// Sesión actual: primera ruta privada del sistema y prueba viva de que el
+// guardia funciona de punta a punta (el 100 % de las rutas privadas exige
+// token válido, criterio de la US-05).
+authRouter.get("/auth/me", requireAuth, async (req, res) => {
+  const user = await getPrisma().user.findUnique({ where: { id: req.userId } });
+  // El token es válido pero su usuario ya no existe (cuenta borrada entre la
+  // emisión y el uso): no es un 404 del recurso, es una credencial que ya no
+  // identifica a nadie.
+  if (!user) throw unauthorized("Token inválido o caducado.");
+  res.json({ user: ownUserSchema.parse(user) });
 });
