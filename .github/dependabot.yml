@@ -1,0 +1,17 @@
+# Mitigación R14 (10-08-2026): alertas y parches automáticos de seguridad.
+# Complementa al `pnpm audit` de la CI: la auditoría corta el pipeline si algo
+# grave ya está dentro; Dependabot propone la actualización que lo saca.
+# Semanal y con tope de PRs para no inundar el tablero de un proyecto de una
+# sola persona.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3

@@ -120,6 +120,7 @@ Una historia solo se considera terminada cuando cumple todas las condiciones sig
 \begin{itemize}
   \item El análisis estático y la comprobación de tipos del \eng{monorepo} pasan en verde.
   \item Las pruebas de la historia existen y pasan, y la suite completa no sufre regresiones.
+  \item Si la historia toca autenticación, autorización o datos personales, sus pruebas incluyen los casos de abuso correspondientes (entradas inválidas o maliciosas, accesos no autorizados): el objetivo de seguridad del capítulo \ref{ch:objetivos} se verifica historia a historia, no al final (riesgo R14).
   \item El cambio está integrado en la rama principal.
   \item Las decisiones tomadas quedan anotadas en el diario de desarrollo, con la alternativa descartada y su porqué.
   \item Si la historia afecta a un capítulo de esta memoria, el capítulo queda actualizado (mitigación del riesgo R3).

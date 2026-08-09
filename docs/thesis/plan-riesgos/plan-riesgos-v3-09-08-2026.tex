@@ -34,6 +34,9 @@
   \item \textbf{R8 (capacidad real inferior a la declarada)}: se materializó — tres sprints consecutivos por debajo del 70~\% de las horas declaradas (27~\%, 57~\% y 60~\%) con la misma causa, los compromisos laborales del verano, que deja de ser puntual y pasa a considerarse el patrón estructural del periodo — y queda \textbf{Resuelto} tras aplicar la contingencia en la misma revisión: las tres semanas restantes de F1 (S4--S6) se re-basan de 10 a 6 horas declaradas (F1 pasa de 60 a 48 horas), sin recorte de alcance.
   La evaluación (P2 \(\times\) I2, significativo) se confirma y no cambia.
   \item Contexto de la misma revisión (cambio del plan de PROYECTO, no de este plan): la equivalencia horas/punto se recalibró de 2,7 a 2,0 (primera recalibración con tres sprints medidos, cap.~10 de la memoria); con ella, el inventario comprometido cabe con holgura en la capacidad re-basada.
+  \item \textbf{R14 (verificación de seguridad insuficiente)} — riesgo NUEVO, identificado el 10-08-2026 e incorporado a esta misma versión por decisión del autor (la revisión de cierre de S3 se extendió a la sesión siguiente y no había más cambios que justificaran una v4): el objetivo de seguridad del cap.~3 compromete pruebas automatizadas de los casos de abuso, pero ningún mecanismo lo forzaba historia a historia, ni existía escaneo automático de vulnerabilidades en las dependencias.
+  P2 \(\times\) I2 = 4, significativo.
+  Mitigación activada el mismo día: auditoría de dependencias en cada push (corte en severidad alta en la CI), alertas y parches automáticos (Dependabot) y la Definición de Hecho ampliada con los casos de abuso obligatorios (cap.~10).
   \item El resto de riesgos: sin cambios (revisión de S3 en \path{../seguimiento-riesgos/2026-08-09-S3.tex}).
 \end{enumerate}
 
@@ -102,6 +105,8 @@ R12 & \textbf{Ciclos de revisión con el tutor.} La memoria depende de revisione
 
 R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & — & Identificado. \\ \hline
 
+R14 & \textbf{Verificación de seguridad insuficiente.} El objetivo de seguridad (capítulo 3) compromete pruebas automatizadas de los casos de abuso, pero sin un mecanismo que lo fuerce historia a historia la cobertura depende de la disciplina manual de cada revisión, y las vulnerabilidades de las dependencias no se vigilaban de forma automática. & 2 & 2 & 4 & Sign. & Una historia que toca autenticación, autorización o datos personales se cierra sin casos de abuso en sus pruebas, o la auditoría de dependencias reporta una vulnerabilidad de severidad alta sin resolver dentro del sprint. & El medible de seguridad del capítulo 3 se verifica al cierre: casos de abuso automatizados en el 100\,\% de los endpoints privados y auditoría de dependencias en verde. & Identificado. \\ \hline
+
 \end{longtable}
 }
 
@@ -153,6 +158,8 @@ R11 & Absolutamente todo (código, memoria, diario, planificación) vive en el m
 R12 & Enviar los capítulos a revisión conforme se van cerrando, en lugar del borrador completo al final, y acordar en cada envío un plazo orientativo de respuesta. & Continuar con trabajo que no dependa de la revisión pendiente y re-planificar el capítulo afectado cuando llegue la respuesta. \\ \hline
 
 R13 & Cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez. & Aplicar la alternativa documentada (por ejemplo, el modo alternativo de instalación de dependencias de pnpm) o trasladar el paso conflictivo a la integración continua, que corre en Linux. \\ \hline
+
+R14 & Auditoría automática de dependencias en cada push (corte en severidad alta en la CI) más alertas y parches automáticos (Dependabot); la Definición de Hecho exige los casos de abuso (pruebas negativas) en toda historia que toque autenticación, autorización o datos personales (capítulo 10). & Auditoría de seguridad dedicada (dependencias y casos de abuso de los endpoints existentes) con corrección antes de cerrar la fase en curso; en el extremo, retirar del despliegue público la función afectada hasta corregirla. \\ \hline
 
 \end{longtable}
 }
