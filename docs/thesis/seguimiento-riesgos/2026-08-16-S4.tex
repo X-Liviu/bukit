@@ -1,0 +1,321 @@
+% =========================================================================
+% Seguimiento de riesgos — 16-08-2026 (S4, cuarta retrospectiva).
+% Primera revisión COMPLETA por cadencia: críticos (semanal) + significativos
+% (cada 2: S2, S4) + moderados (cada 4: primera). Documento independiente de
+% la memoria; creado copiando TEMPLATE.tex (ver README.md de esta carpeta).
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build 2026-08-16-S4.tex
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Seguimiento de riesgos — 16-08-2026 (S4)}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Seguimiento de riesgos — S4}\\[6pt]
+\end{center}
+
+\textbf{Fecha:} 16-08-2026 · \textbf{Sprint:} S4 (10-08 \(\to\) 16-08-2026, cuarta retrospectiva) · \textbf{Responsable:} \thesisAuthor
+
+Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada 2 sprints; \textbf{moderados} cada 4 sprints; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
+
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, hay que emitir una nueva versión completa del plan de riesgos} en \texttt{../plan-riesgos/} y registrar el cambio en la tabla de seguimiento del cap.~7 de la memoria.
+
+Riesgos revisados — primera revisión completa del registro: \textbf{R1--R7 por cadencia} (críticos, semanal), \textbf{R8--R11 y R14 por cadencia} (significativos, cada dos sprints) y \textbf{R12--R13 por cadencia} (moderados, primera revisión, cada cuatro).
+Datos del sprint: velocidad de S4 = 3 SP (US-05, cerrada el lunes 10-08) — exactamente la esperada para 6 horas declaradas con la equivalencia de 2,0 h/SP; horas reales \(\approx\)1~h~40 de 6 declaradas (28~\%), con el sprint entero concentrado en el lunes y \textbf{cinco días consecutivos sin actividad} (11--15/08) por causa sobrevenida (ver R10).
+
+\bigline
+
+\section{Medidas de mitigación (prevención)}
+
+Para cada medida de los riesgos que tocan revisión en este seguimiento: ¿se está aplicando?
+Si no, justificar y decidir si se mantiene/modifica/elimina.
+
+% Bloques de 3-4 filas (tabularx no parte entre páginas; receta del S2).
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos críticos (R1--R4)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R1 & Toda idea nueva entra por el backlog. & \checkedbox\ Sí (R14 y sus mecanismos entraron por el registro de riesgos, no como alcance; US-05 siguió el orden).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R2 & Medir velocidad y recalibrar en cada cierre. & \checkedbox\ Sí (cuarta medición: 3 SP; primera semana bajo la equivalencia recalibrada de 2,0, que la realidad confirma).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R3 & Diario al cierre de cada sesión; memoria con hueco. & \checkedbox\ Sí (diario del lunes el mismo día; la memoria no tuvo cambios pendientes esta semana).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R4 & Citar al escribir; pendientes con nota visible. & \checkedbox\ Sí (sin afirmaciones externas nuevas esta semana; ningún todonote nuevo sin registrar).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos críticos (R5--R7) y significativo R8}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R5 & Revisar todo antes de integrar; nada sin comprobaciones. & \checkedbox\ Sí (la revisión adversarial de US-05 cazó 4 defectos de seguridad reales antes del commit, con uno refutado con motivo).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R6 & Investigación acotada ante tecnología nueva. & \checkedbox\ Sí (jsonwebtoken se eligió con comparación explícita frente a jose; sin descarrilamientos).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R7 & Minimización desde el diseño (RGPD). & \checkedbox\ Sí (US-05 no añadió entidad ni dato personal alguno; los tokens no persisten).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R8 & Horas por sesión en el diario; cada retro compara. & \checkedbox\ Sí (comparación hecha: 1 h 40 de 6; ver su ficha).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos significativos (R9--R11 y R14)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R9 & Objetivos secundarios o versiones simuladas; capas gratuitas. & \checkedbox\ Sí (Render operativo sin incidencias; sin integraciones nuevas).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R10 & Margen deliberado + documentación continua. & \checkedbox\ Sí (retomar hoy = leer el diario del lunes; el tema del sprint ya estaba entregado ANTES del parón: el margen ni se tocó).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R11 & Todo en git con remoto y subidas frecuentes. & \checkedbox\ Sí (las dos tandas del lunes subidas el mismo día; árbol limpio toda la semana).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R14 & Auditoría de dependencias en CI + Dependabot + casos de abuso en la DoD. & \checkedbox\ Sí y OBSERVABLE: el audit corrió en verde en cada push y PR; Dependabot generó dos tandas de PRs (09-08 y 16-08, con CI verde); US-05 cerró con 11 casos de abuso.\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{16\baselineskip}
+\underline{\textbf{Riesgos moderados (R12--R13, primera revisión por cadencia)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R12 & Capítulos a revisión conforme se cierran; plazo orientativo por envío. & \checkbox\ Sí\newline \checkedbox\ No: aún no se ha enviado nada al tutor. & La consulta pendiente (§3.5.2, anotada desde el 30-07) sigue sin enviarse; sin envío no hay ciclo que medir. & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R13 & Cada solución como receta reproducible al resolverla. & \checkedbox\ Sí (recetas de la cadencia: graphify/Smart App Control en CLAUDE.md §3, migración no interactiva de Prisma, relanzamiento de Docker, diagnóstico en vivo de jobs de CI).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Cambios realizados en las medidas de mitigación}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida original}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — & — \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Nueva medida}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — \\
+\hline
+\end{tabularx}
+
+\bigline
+
+\section{Riesgos a revisar en este seguimiento}
+
+Para no alargar el documento sin señal, los riesgos \textbf{sin novedad y sin observación relevante} se agrupan en la tabla siguiente (indicador en su valor esperado, sin salto, estado «sin novedad»); los que dejaron señal esta semana (R8, R10, R12, R14) conservan su ficha completa a continuación.
+
+\Needspace*{18\baselineskip}
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|C{2.6cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Indicador: valor real (esperado 0 en todos)}} &
+\multicolumn{1}{C{2.6cm}|}{\textbf{Nuevo estado}} \\
+\hline
+R1 & 0 — nada entró fuera del backlog; el sprint no ganó puntos. & Sin novedad \\
+\hline
+R2 & Indicador (3 primeros sprints) ya evaluado en S3; cuarta medición: 3 SP, la esperada con 2,0 h/SP — primera evidencia a favor de la recalibración. & Sin novedad \\
+\hline
+R3 & 0 — diario del lunes el mismo día; ningún capítulo pendiente de trabajo cerrado. & Sin novedad \\
+\hline
+R5 & 0 — decisiones de US-05 explicadas en el diario con alternativas; revisión adversarial con criterio (hallazgos aplicados Y refutados). & Sin novedad \\
+\hline
+R6 & 0 — sin historias al doble de tiempo; jsonwebtoken elegido con investigación acotada. & Sin novedad \\
+\hline
+R7 & 0 — US-05 sin datos personales nuevos (tokens sin persistir). & Sin novedad \\
+\hline
+R9 & 0 — sin cambios de precios/límites ni indisponibilidades; Render sin incidencias. & Sin novedad \\
+\hline
+R11 & 0 — todo subido el mismo lunes; sin anomalías del equipo. & Sin novedad \\
+\hline
+R13 & 0 — episodios de la cadencia (bloqueo de graphify por Smart App Control, caídas repetidas de Docker Desktop) resueltos en minutos y con receta; ninguno superó la hora del indicador. & Sin novedad \\
+\hline
+\end{tabularx}
+
+% ------------------ R8 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R8 — Capacidad real inferior a la declarada}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Horas <70~\% de las declaradas dos semanas consecutivas sin causa puntual identificada. & 0 & Primera semana bajo la capacidad RE-BASADA: 1 h 40 de 6 (28~\%), pero CON causa puntual identificada (la doble causa sobrevenida de R10). El episodio de S1--S3 quedó resuelto con la re-base y este es un cómputo nuevo contra las 6 horas. & \checkbox\ Sí\quad \checkedbox\ No & Vigilancia expresa para S5: si se repite el déficit contra las 6 horas, tocará valorar si la capacidad de verano admite más re-base o si el margen del calendario debe absorberlo. Matiz a favor: la velocidad del sprint fue la esperada (3 SP) — el plan re-basado aguantó una semana casi vacía. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
+
+% ------------------ R10 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R10 — Indisponibilidad prolongada del autor}}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+>3 días consecutivos sin poder trabajar por causa sobrevenida. & 0 & \textbf{5 días consecutivos} (11--15/08) por causa sobrevenida declarada por el autor: compromisos laborales más fatiga extrema por falta de sueño derivada de problemas personales. & \checkedbox\ Sí\quad \checkbox\ No & Segundo episodio (el primero, S1). Revisión dentro de esta retrospectiva; contingencia abajo. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \underline{\ 1\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkedbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio: dos episodios en siete sprints, ambos absorbidos; la evaluación se confirma)
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkedbox\ Sí · \checkbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkedbox\ Resuelto (materializado y superado en esta misma revisión, como en S1) · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+Pausa formal + re-planificación del calendario (+ cambio de convocatoria en el extremo). & \checkedbox\ Sí, en su versión mínima (como en S1): pausa de facto sin re-planificación — el tema del sprint (US-05) se había entregado el lunes ANTES del parón, así que S4 cumplió su calendario y el margen no se consumió.\newline \checkbox\ No & — \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia:
+el patrón «entregar la historia el lunes» convirtió un parón de cinco días en un sprint cumplido — la mecánica de flujo (historia pequeña, pronto en la semana) es en la práctica una mitigación extra de R10 que no estaba escrita.
+Diferencia con S1: allí el parón dejó el sprint al límite (la historia se cerró el último día); aquí no costó nada.
+Si los episodios se encadenan en S5--S6 (cierre de F1), tocará la conversación honesta sobre la capacidad real del verano.
+
+% ------------------ R12 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R12 — Ciclos de revisión con el tutor} (primera revisión por cadencia)}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructurales sobre capítulo cerrado. & 0 & 0 envíos realizados: no hay ciclo que medir. La consulta de §3.5.2 (anotada el 30-07) sigue SIN ENVIARSE — el riesgo no ha saltado, pero su mitigación (enviar pronto y por partes) tampoco se está ejercitando. & \checkbox\ Sí\quad \checkedbox\ No & Recomendación registrada: enviar la consulta de §3.5.2 esta semana; cada semana sin enviarla acerca el escenario del ciclo tardío que este riesgo describe. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
+
+% ------------------ R14 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R14 — Verificación de seguridad insuficiente} (primera revisión)}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Historia con autenticación, autorización o datos personales cerrada sin casos de abuso, o vulnerabilidad alta sin resolver en el sprint. & 0 & 0 — la única historia del sprint (US-05, autenticación pura) cerró con 11 casos de abuso; la auditoría de dependencias pasó en verde en todos los pushes y PRs de la semana. & \checkbox\ Sí\quad \checkedbox\ No & La mitigación es ya observable: Dependabot generó dos tandas de PRs (5 abiertos, todos con la CI en verde), pendientes de triaje — los parche/menores pueden fusionarse; los mayores (globals 15\(\to\)17, @types/node 22\(\to\)26) piden revisión porque el proyecto fija Node por Volta. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
+
+\bigline
+
+\section{Reflexión desde el último seguimiento}
+
+\textbf{¿Ha ocurrido algo reseñable desde el último seguimiento?} \checkedbox\ Sí · \checkbox\ No
+
+Semana de dos caras: el lunes concentró TODO el sprint (R14 formalizado con su mitigación activada y US-05 entregada con sus 11 casos de abuso) y del martes al sábado no hubo actividad — cinco días que materializan R10 por segunda vez (causa sobrevenida: compromisos laborales más fatiga por problemas personales).
+La lección buena queda escrita: con la historia entregada al inicio de la semana, el parón no costó calendario — velocidad 3 SP, la esperada, y F1 sigue en fecha (US-06 en S5, US-07 y cierre en S6).
+La retrospectiva se celebró en su domingo, en sesión corta (40 minutos) y con lo prioritario cubierto.
+
+\Needspace*{6\baselineskip}
+\textbf{Nuevos riesgos identificados} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|C{0.8cm}|C{0.8cm}|C{1cm}|C{2.4cm}|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Descripción}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{P}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{I}} &
+\multicolumn{1}{C{1cm}|}{\textbf{Exp.}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Severidad}} \\
+\hline
+— & — & — & — & — & — \\
+\hline
+\end{tabularx}
+
+\textbf{¿Afecta algo a los objetivos o al alcance (cap.~3 de la memoria)?} \checkbox\ Sí · \checkedbox\ No
+
+\textbf{Justificación:} el sprint cumplió su tema y su velocidad esperada; el episodio de R10 se absorbió sin tocar calendario ni alcance.
+
+\textbf{Otros eventos relevantes:} primera cosecha de Dependabot (dos tandas de PRs con la CI en verde), pendiente de triaje con criterio anotado en R14; la línea de horas del diario del lunes fue confirmada por el autor (1 h).
+
+\end{document}

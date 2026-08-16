@@ -1,0 +1,163 @@
+% =========================================================================
+% Plan de gestión de riesgos — versión 4 (emitida el 16-08-2026, cierre de S4).
+% Documento independiente de la memoria: la v0 es el cap. 7 y no se toca
+% (línea base); cada versión nueva es un documento completo (ver README.md).
+% REGLA DE CONTENIDO: las tablas reproducen LITERALMENTE las de la v2
+% (03-08-2026), salvo el único cambio que documenta el seguimiento de S3
+% (R8: materializado y resuelto). Diferencias de forma respecto al capítulo:
+% sin \ref (se escribe el número de capítulo) y sin \ac (el acrónimo
+% directamente), porque este documento compila solo.
+% Diseño heredado del plan de riesgos de Gestión de Proyectos del autor,
+% adaptado a la configuración global de la memoria (preámbulo compartido).
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build plan-riesgos-v4-16-08-2026.tex
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Plan de gestión de riesgos — versión 4 (16-08-2026)}}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries\bukit}\\[0.5cm]
+  {\Large\bfseries Plan de gestión de riesgos (versión 4)}\\[0.4cm]
+  {\large 16 de agosto de 2026}
+\end{center}
+\vspace{0.6cm}
+
+\textbf{Proyecto:} \thesisTitle\ — Trabajo de Fin de Grado de \thesisAuthor\ (curso \thesisCourse).
+
+\textbf{NOTA — cambios respecto a la v3} (09-08-2026):
+\begin{enumerate}
+  \item \textbf{R10 (indisponibilidad prolongada del autor)}: segundo episodio materializado — cinco días consecutivos sin actividad (11--15/08/2026) por causa sobrevenida (compromisos laborales y fatiga extrema por falta de sueño derivada de problemas personales) — y queda \textbf{Resuelto} en la misma revisión con la contingencia en su versión mínima, como en S1: pausa de facto sin re-planificación, porque la historia del sprint (US-05) se había entregado el lunes ANTES del parón y S4 cumplió su tema y su velocidad esperada (3 SP) sin consumir margen.
+  La evaluación (P1 \(\times\) I3, significativo) se confirma y no cambia.
+  \item El resto de riesgos: sin cambios (revisión completa de S4 —críticos, significativos y primera de moderados— en \path{../seguimiento-riesgos/2026-08-16-S4.tex}).
+\end{enumerate}
+
+Emitida en la cuarta retrospectiva del proyecto (cierre de S4).
+Registrada en la tabla de seguimiento del cap.~7 de la memoria y en el dev-journal del 16-08-2026.
+
+\section{Identificación, análisis y clasificación de riesgos}
+
+Escalas de valoración (matriz probabilidad--impacto del cap.~7):
+\begin{itemize}
+  \item \textbf{Probabilidad (P) e impacto (I):} de 1 a 3.
+  \item \textbf{Exposición:} P \(\times\) I.
+  \item \textbf{Severidad:} crítico (6–9), significativo (3–4), moderado (1–2); en la tabla se abrevian como Crít., Sign. y Mod.
+  \item \textbf{Estado:} situación del riesgo tras la última revisión; los estados posibles (cap.~7 de la memoria) son identificado, sin novedad, activo, materializado, resuelto y cerrado.
+\end{itemize}
+
+% Contenido literal de la tabla de la v2, con el único cambio de la NOTA
+% (R8: estado Resuelto). \footnotesize como en la v0. Anchos para 16 cm:
+% 12,15 cm de columnas p{} + ~0,8 cm de las tres columnas c
+% + separadores/filetes con \tabcolsep en 4 pt.
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+% \hspace{0pt} al abrir cada celda: TeX no guionea nunca la PRIMERA palabra
+% de un párrafo (y cada celda lo es); sin ese hueco de anchura cero,
+% «Identificado» no puede partirse y desborda la columna Estado.
+\begin{longtable}{|>{\RaggedRight\arraybackslash\hspace{0pt}}p{0.5cm}|>{\RaggedRight\arraybackslash\hspace{0pt}}p{3.9cm}|c|c|c|>{\RaggedRight\arraybackslash\hspace{0pt}}p{0.75cm}|>{\RaggedRight\arraybackslash\hspace{0pt}}p{3cm}|>{\RaggedRight\arraybackslash\hspace{0pt}}p{2.7cm}|>{\RaggedRight\arraybackslash\hspace{0pt}}p{1.3cm}|}
+\caption{Registro de riesgos (versión 4)} \label{tab:plan-v4-registro} \\
+\hline
+\textbf{Id} & \textbf{Riesgo} & \textbf{P} & \textbf{I} & \textbf{Exp.} & \textbf{Sev.} & \textbf{Indicador clave} & \textbf{Indicador de resolución} & \textbf{Estado} \\ \hline
+\endfirsthead
+
+\multicolumn{9}{c}{{\bfseries \tablename\ \thetable{} — continuación de la página anterior}} \\
+\hline
+\textbf{Id} & \textbf{Riesgo} & \textbf{P} & \textbf{I} & \textbf{Exp.} & \textbf{Sev.} & \textbf{Indicador clave} & \textbf{Indicador de resolución} & \textbf{Estado} \\ \hline
+\endhead
+
+\hline \multicolumn{9}{|r|}{{Continúa en la página siguiente...}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+R1 & \textbf{Crecimiento descontrolado del alcance.} Producto ambicioso (\eng{feed}, mapa, chat, IA) con el autor como cliente y desarrollador a la vez: nadie externo frena la incorporación de funciones no previstas. & 3 & 3 & 9 & Crít. & El \eng{sprint} activo gana más de 2 puntos de historia tras la planificación del lunes sin retirar un volumen equivalente, o se implementa una función ausente del capítulo 3 sin haber pasado por el \eng{backlog}. & — & Identificado. \\ \hline
+
+R2 & \textbf{Error sistemático de estimación del esfuerzo.} Primera estimación en solitario con puntos de historia y sin velocidad histórica propia: la hipótesis inicial de equivalencia entre puntos y horas (capítulo 10) puede estar sesgada de raíz. & 3 & 2 & 6 & Crít. & La velocidad real de los tres primeros \eng{sprints} se desvía más de un 25\,\% de la hipótesis inicial. & — & Identificado. \\ \hline
+
+R3 & \textbf{Memoria relegada frente al desarrollo.} La tentación natural de un TFG con producto es programar ahora y documentar después, perdiendo el porqué de las decisiones que alimenta esta memoria. & 2 & 3 & 6 & Crít. & Un capítulo afectado por trabajo ya cerrado acumula dos \eng{sprints} sin actualizarse, o el diario de una sesión se redacta más de 48 horas después de esta. & — & Identificado. \\ \hline
+
+R4 & \textbf{Incumplimiento de la normativa de la memoria.} La guía de estilo es normativa: una afirmación externa sin cita se trata como plagio (suspenso directo). El volumen de fuentes y el uso de IA generativa hacen posible que se cuele texto sin referenciar. & 2 & 3 & 6 & Crít. & Una revisión de capítulo encuentra una afirmación no original sin su cita y esta no queda corregida en la misma sesión que la detecta. & La revisión final previa al depósito concluye con cero afirmaciones sin cita, con auditoría manual junto con ayuda de IA. & Identificado. \\ \hline
+
+R5 & \textbf{Dependencia acrítica de la IA generativa.} El desarrollo asistido por IA es parte del método de trabajo; el riesgo es integrar código o texto generado sin la comprensión necesaria para defenderlo ante el tribunal, o con defectos de calidad o seguridad que una lectura superficial no detecta. & 2 & 3 & 6 & Crít. & Al redactar el diario, una decisión o un bloque integrados esa sesión no pueden explicarse sin recurrir de nuevo a la herramienta, o una revisión encuentra código integrado sin revisar ni probar. & — & Identificado. \\ \hline
+
+R6 & \textbf{Curva de aprendizaje de la pila tecnológica.} PostGIS, pgvector, Prisma, la mensajería y las actualizaciones en tiempo real, las colas de trabajos en segundo plano y las notificaciones \eng{push} son territorio nuevo para el autor: buena parte del servidor se aprende sobre la marcha, con potencial de consumir días en un problema imprevisto. & 3 & 2 & 6 & Crít. & Una historia o una investigación previa consumen el doble de su tiempo previsto sin resolución a la vista. & — & Identificado. \\ \hline
+
+R7 & \textbf{Incumplimiento del RGPD en el diseño.} El producto maneja ubicación de personas, verificación de identidad con documento y la regla de mayoría de edad: datos especialmente delicados. El reglamento es además estricto y transversal: casi cada función del producto toca datos personales, sobre todo al diseñar el modelo de datos, de modo que la ocasión de error se repite durante todo el desarrollo. & 2 & 3 & 6 & Crít. & Una entidad del modelo de datos incorpora un dato personal sin finalidad declarada, o un requisito exige almacenar la imagen del documento de identidad. & El modelo de datos completo pasa la revisión de minimización: cada dato personal con finalidad declarada y ningún documento de identidad almacenado. & Identificado. \\ \hline
+
+R8 & \textbf{Capacidad real inferior a la declarada.} La planificación (capítulo 10) ya incorpora las restricciones conocidas —los compromisos laborales del verano, la estancia Erasmus del primer cuatrimestre y las prácticas de empresa desde febrero—, pero las horas declaradas por periodo siguen siendo hipótesis: la capacidad real puede quedar por debajo incluso de esa previsión reducida. & 2 & 2 & 4 & Sign. & Las horas reales registradas en el diario quedan por debajo del 70\,\% de las declaradas durante dos semanas consecutivas sin causa puntual identificada. & — & \textbf{Resuelto} (materializado en S3, capacidad re-basada el 09-08-2026). \\ \hline
+
+R9 & \textbf{Dependencia de servicios externos.} La IA de plazos, la base de datos gestionada y la verificación de identidad dependen de terceros con costes, cuotas y disponibilidad ajenos al proyecto; además, el proyecto se autoimpone no pagar por ningún servicio, de modo que solo valen las capas gratuitas. & 2 & 2 & 4 & Sign. & Anuncio de cambio de precios o de límites de un servicio, agotamiento de su capa gratuita, o indisponibilidad superior a 24 horas. & El núcleo del producto funciona de punta a punta con versiones simuladas de los servicios externos, sin que ninguna prueba requiera uno real al finalizar la implementación de la aplicación y la versión final de la memoria. & Identificado. \\ \hline
+
+R10 & \textbf{Indisponibilidad prolongada del autor.} Una enfermedad o imprevisto personal detiene por completo un proyecto unipersonal: no hay a quién traspasar el trabajo. & 1 & 3 & 3 & Sign. & Más de tres días consecutivos sin poder trabajar por causa sobrevenida dentro de un periodo de dedicación plena. & — & \textbf{Resuelto} (S1 y S4, ambos superados). \\ \hline
+
+R11 & \textbf{Pérdida de trabajo o del entorno local.} Un fallo del único equipo de desarrollo o un borrado accidental puede destruir trabajo no respaldado. & 1 & 3 & 3 & Sign. & Reinicios espontáneos, errores de disco o arranques anómalos del equipo, o más de dos sesiones consecutivas sin subir los cambios al remoto. & — & Identificado. \\ \hline
+
+R12 & \textbf{Ciclos de revisión con el tutor.} La memoria depende de revisiones externas: una respuesta que se demora o una revisión que obliga a rehacer un capítulo dado por cerrado retrasan el cierre. La relación previa con el tutor y el cauce de comunicación ya establecido mantienen la probabilidad baja. & 1 & 2 & 2 & Mod. & Una consulta o un capítulo enviado a revisión acumula más de dos semanas sin respuesta, o una revisión devuelve cambios estructurales sobre un capítulo dado por cerrado. & El borrador completo de la memoria pasa una revisión del tutor sin cambios estructurales. & Identificado. \\ \hline
+
+R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & — & Identificado. \\ \hline
+
+R14 & \textbf{Verificación de seguridad insuficiente.} El objetivo de seguridad (capítulo 3) compromete pruebas automatizadas de los casos de abuso, pero sin un mecanismo que lo fuerce historia a historia la cobertura depende de la disciplina manual de cada revisión, y las vulnerabilidades de las dependencias no se vigilaban de forma automática. & 2 & 2 & 4 & Sign. & Una historia que toca autenticación, autorización o datos personales se cierra sin casos de abuso en sus pruebas, o la auditoría de dependencias reporta una vulnerabilidad de severidad alta sin resolver dentro del sprint. & El medible de seguridad del capítulo 3 se verifica al cierre: casos de abuso automatizados en el 100\,\% de los endpoints privados y auditoría de dependencias en verde. & Identificado. \\ \hline
+
+\end{longtable}
+}
+
+\section{Plan de respuesta ante riesgos}
+
+% Contenido literal de la tabla de la v2, sin cambios en esta versión.
+% \small como en la v0. Anchos del .tex de referencia: 0,8 + 6,9 + 6,9 cm
+% + separadores = 15,9 cm, dentro de los 16 cm de texto.
+{\small
+\begin{longtable}{|>{\RaggedRight\arraybackslash}p{0.8cm}|>{\RaggedRight\arraybackslash}p{6.9cm}|>{\RaggedRight\arraybackslash}p{6.9cm}|}
+\caption{Plan de respuesta (versión 4)} \label{tab:plan-v4-respuesta} \\
+\hline
+\textbf{Id} & \textbf{Mitigación (prevención)} & \textbf{Contingencia} \\ \hline
+\endfirsthead
+
+\multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} — continuación de la página anterior}} \\
+\hline
+\textbf{Id} & \textbf{Mitigación (prevención)} & \textbf{Contingencia} \\ \hline
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continúa en la página siguiente...}} \\ \hline
+\endfoot
+
+\hline
+\endlastfoot
+
+R1 & El alcance queda delimitado por contrato en el capítulo 3 (qué entra y qué queda fuera), cada historia del \eng{backlog} está marcada como imprescindible, deseable u opcional (capítulo 10), y toda idea nueva entra por el \eng{backlog}, nunca directamente al \eng{sprint} en curso. & Descartar las funciones opcionales, renegociar las deseables y mover lo recortado a líneas futuras. \\ \hline
+
+R2 & Medir la velocidad real desde el primer \eng{sprint}, recalibrar la equivalencia horas/punto en cada cierre y trocear cualquier historia grande antes de abordarla. & Recortar lo opcional para proteger lo imprescindible y ampliar la horquilla de cierre, dejando constancia de la desviación en el capítulo 13. \\ \hline
+
+R3 & La redacción tiene hueco reservado en todos los \eng{sprints} (capítulo 10), ninguna historia se da por cerrada hasta que su decisión queda documentada, y el diario de desarrollo se escribe al cierre de cada sesión, no de memoria semanas después. & Dedicar \eng{sprints} exclusivos a la memoria antes del cierre (la última fase ya lo prevé parcialmente). \\ \hline
+
+R4 & Toda afirmación procedente de una fuente externa se cita en el momento de escribirla, nunca en una pasada posterior; las entradas de bibliografía siguen las plantillas del repositorio; los pendientes se marcan con nota visible y se purgan antes del depósito. & Auditoría completa de citas, capítulo a capítulo contra sus fuentes, antes del depósito. \\ \hline
+
+R5 & Regla ya operativa del proyecto: cada decisión se explica y justifica en el diario con su alternativa descartada, todo código generado se revisa antes de integrarse y nada se da por terminado sin pasar las comprobaciones automáticas de calidad y las pruebas. & Congelar el módulo afectado, estudiarlo y reescribirlo hasta poder explicarlo sin asistencia, y registrar el episodio en el diario como material para la reflexión sobre el uso de IA. \\ \hline
+
+R6 & Antes de comprometer historias que dependan de una tecnología desconocida, dedicarle una investigación previa con límite de tiempo explícito, y preferir servicios gestionados donde exista esa opción. & Adoptar la alternativa documentada en el análisis de alternativas o recortar la función a su versión mínima. \\ \hline
+
+R7 & Minimización desde el diseño, ya decidida en las reglas de producto, el alcance y los requisitos (capítulos 2, 3 y 5): la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\ \hline
+
+R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los sprints restantes al nivel observado; recortar primero lo opcional. \\ \hline
+
+R9 & Todas las integraciones externas se declaran objetivos secundarios o se desarrollan contra versiones simuladas que funcionan sin el servicio real, de forma que el núcleo del producto nunca dependa de ellas; se eligen proveedores con capa gratuita suficiente para un uso académico. & Sustituir el servicio por una versión simulada o por una alternativa gratuita equivalente, y documentar la integración real como línea futura. \\ \hline
+
+R10 & Margen temporal deliberado entre el cierre objetivo y la defensa (la convocatoria de septiembre de \thesisYear{} actúa como reserva) y documentación continua (diario más memoria) que permite retomar el contexto tras una pausa sin pérdida. & Pausa formal, re-planificación del calendario y, en el extremo, cambio de convocatoria. \\ \hline
+
+R11 & Absolutamente todo (código, memoria, diario, planificación) vive en el mismo repositorio git con remoto en GitHub, con subidas frecuentes; esta es precisamente una de las razones por las que la documentación del proyecto se versiona junto al código. & Restaurar desde el remoto; la pérdida máxima queda acotada a la sesión en curso. \\ \hline
+
+R12 & Enviar los capítulos a revisión conforme se van cerrando, en lugar del borrador completo al final, y acordar en cada envío un plazo orientativo de respuesta. & Continuar con trabajo que no dependa de la revisión pendiente y re-planificar el capítulo afectado cuando llegue la respuesta. \\ \hline
+
+R13 & Cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez. & Aplicar la alternativa documentada (por ejemplo, el modo alternativo de instalación de dependencias de pnpm) o trasladar el paso conflictivo a la integración continua, que corre en Linux. \\ \hline
+
+R14 & Auditoría automática de dependencias en cada push (corte en severidad alta en la CI) más alertas y parches automáticos (Dependabot); la Definición de Hecho exige los casos de abuso (pruebas negativas) en toda historia que toque autenticación, autorización o datos personales (capítulo 10). & Auditoría de seguridad dedicada (dependencias y casos de abuso de los endpoints existentes) con corrección antes de cerrar la fase en curso; en el extremo, retirar del despliegue público la función afectada hasta corregirla. \\ \hline
+
+\end{longtable}
+}
+
+\end{document}
