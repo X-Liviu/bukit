@@ -1,0 +1,238 @@
+% =========================================================================
+% Seguimiento de riesgos — 24-08-2026 (S5, quinta retrospectiva).
+% Revisión desplazada un día (del domingo 23 al lunes 24), como en S2.
+% Por cadencia tocan solo los críticos (R1--R7); se suman R8 (vigilancia
+% expresa dejada por el seguimiento de S4) y R10 (disparador observado).
+% Documento independiente de la memoria; creado copiando TEMPLATE.tex
+% (ver README.md de esta carpeta).
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build 2026-08-24-S5.tex
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Seguimiento de riesgos — 24-08-2026 (S5)}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Seguimiento de riesgos — S5}\\[6pt]
+\end{center}
+
+\textbf{Fecha:} 24-08-2026 · \textbf{Sprint:} S5 (17-08 \(\to\) 23-08-2026, quinta retrospectiva; revisión desplazada un día, como en S2) · \textbf{Responsable:} \thesisAuthor
+
+Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada 2 sprints; \textbf{moderados} cada 4 sprints; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
+
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, hay que emitir una nueva versión completa del plan de riesgos} en \texttt{../plan-riesgos/} y registrar el cambio en la tabla de seguimiento del cap.~7 de la memoria.
+
+Riesgos revisados: \textbf{R1--R7 por cadencia} (críticos, semanal), \textbf{R8 por vigilancia expresa} (dejada anotada en el seguimiento de S4) y \textbf{R10 por disparador observado} (>3 días consecutivos sin actividad).
+Los significativos (R9, R11, R14) y los moderados (R12, R13) no tocan esta semana: próxima revisión por cadencia en S6 y S8 respectivamente.
+Datos del sprint: velocidad de S5 = \textbf{0 SP} (esperados 3 con 6 horas declaradas y la equivalencia de 2,0 h/SP); horas reales \textbf{0 de 6 (0~\%)}.
+\textbf{Semana completa sin actividad} (7 días consecutivos, 17--23/08): sin planificación el lunes 17, sin sesiones de trabajo, sin entradas de diario y con la retrospectiva del domingo desplazada a hoy — la primera semana del proyecto enteramente en blanco.
+La historia comprometida como tema del sprint (US-06) no llegó a arrancar.
+
+\bigline
+
+\section{Medidas de mitigación (prevención)}
+
+Para cada medida de los riesgos que tocan revisión en este seguimiento: ¿se está aplicando?
+Si no, justificar y decidir si se mantiene/modifica/elimina.
+
+% Bloques de 3-4 filas (tabularx no parte entre páginas; receta del S2).
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos críticos (R1--R4)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R1 & Toda idea nueva entra por el backlog. & \checkedbox\ Sí (sin actividad: nada entró fuera del backlog ni al sprint en curso).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R2 & Medir velocidad y recalibrar en cada cierre. & \checkedbox\ Sí (quinta medición registrada en esta retrospectiva: 0 SP; el cero es de disponibilidad, no de estimación — no altera la equivalencia de 2,0 h/SP, que solo se contrasta con semanas trabajadas).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R3 & Diario al cierre de cada sesión; memoria con hueco. & \checkedbox\ Sí (sin sesiones no hay entradas exigibles: el diario no acumula deuda; la retrospectiva se desplazó un día y se registra hoy, con el precedente de S2).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R4 & Citar al escribir; pendientes con nota visible. & \checkedbox\ Sí (sin texto nuevo esta semana; ninguna afirmación externa nueva que citar).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos críticos (R5--R7) y significativo R8}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R5 & Revisar todo antes de integrar; nada sin comprobaciones. & \checkedbox\ Sí (sin integraciones esta semana; nada que revisar).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R6 & Investigación acotada ante tecnología nueva. & \checkedbox\ Sí (sin investigaciones abiertas; ninguna historia consumió tiempo).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R7 & Minimización desde el diseño (RGPD). & \checkedbox\ Sí (el modelo de datos no cambió; la propuesta de la entidad de tokens de refresco sigue pendiente de diseño junto al autor).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R8 & Horas por sesión en el diario; cada retro compara. & \checkedbox\ Sí (comparación hecha: 0 de 6; ver su ficha).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Cambios realizados en las medidas de mitigación}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida original}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — & — \\
+\hline
+\end{tabularx}
+
+\Needspace*{6\baselineskip}
+\underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Nueva medida}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & — & — \\
+\hline
+\end{tabularx}
+
+Recomendación registrada (sin cambio del plan todavía): valorar en la retrospectiva de cierre de F1 si el patrón «entregar la historia comprometida cuanto antes en la semana» —que en S4 convirtió un parón de cinco días en un sprint cumplido— se adopta como medida de mitigación escrita de R10; esta semana el parón llegó antes del propio planning, así que el patrón ni pudo intentarse.
+
+\bigline
+
+\section{Riesgos a revisar en este seguimiento}
+
+Los riesgos \textbf{sin novedad y sin observación relevante} se agrupan en la tabla siguiente (formato del seguimiento de S4); los que dejaron señal esta semana (R8 y R10) conservan su ficha completa a continuación.
+
+\Needspace*{18\baselineskip}
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|C{2.6cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Indicador: valor real (esperado 0 en todos)}} &
+\multicolumn{1}{C{2.6cm}|}{\textbf{Nuevo estado}} \\
+\hline
+R1 & 0 — el sprint no ganó puntos ni funciones; nada entró fuera del backlog. & Sin novedad \\
+\hline
+R2 & 0 — el indicador (desviación de la velocidad frente a la hipótesis) no aplica a una semana sin horas: el cero es de disponibilidad (R10), no de estimación. & Sin novedad \\
+\hline
+R3 & 0 — sin trabajo cerrado que documentar ni sesiones que registrar; ningún capítulo quedó desactualizado. & Sin novedad \\
+\hline
+R4 & 0 — sin afirmaciones externas nuevas; ningún todonote nuevo. & Sin novedad \\
+\hline
+R5 & 0 — sin código ni texto integrado esta semana. & Sin novedad \\
+\hline
+R6 & 0 — sin historias en curso; ninguna investigación consumió tiempo. & Sin novedad \\
+\hline
+R7 & 0 — sin datos personales nuevos; el modelo no cambió. & Sin novedad \\
+\hline
+\end{tabularx}
+
+% ------------------ R8 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R8 — Capacidad real inferior a la declarada} (vigilancia expresa de S4)}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Horas <70~\% de las declaradas dos semanas consecutivas sin causa puntual identificada. & 0 & Segunda semana consecutiva bajo la capacidad RE-BASADA: 28~\% en S4 y 0~\% en S5 — pero ambas CON causa puntual identificada (los episodios segundo y tercero de R10, causas sobrevenidas declaradas). El salto formal del indicador no se produce por la cláusula de causa. & \checkbox\ Sí\quad \checkedbox\ No & La vigilancia dejada en S4 obliga a la valoración honesta: la capacidad de verano NO admite otra re-base útil — solo queda una semana de F1 (S6) y volver a rebajarla no protege nada. La re-entrada se hace por re-planificación de historias (contingencia de R10, en su ficha), y la lección de capacidad queda para el previsto-frente-a-real del cap.~13 al cierre de F1. Siguiente vigilancia real: F2 (Erasmus, 5 h declaradas) desde S7 — primera prueba de esa hipótesis. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
+
+% ------------------ R10 ------------------
+\Needspace*{12\baselineskip}
+\subsection*{Riesgo: \markfield{R10 — Indisponibilidad prolongada del autor} (disparador observado)}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+>3 días consecutivos sin poder trabajar por causa sobrevenida. & 0 & \textbf{7 días consecutivos} (17--23/08): la semana completa de S5, por causa sobrevenida declarada por el autor — problemas personales y la fatiga acumulada del final del trabajo de verano. & \checkedbox\ Sí\quad \checkbox\ No & Tercer episodio (S1: \(\sim\)9 días; S4: 5; S5: 7). A diferencia de S4, el parón llegó ANTES del planning del lunes: el sprint quedó a cero y la historia comprometida no se entregó. Reevaluación y contingencia abajo. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \underline{\ 2\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkedbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (reevaluación AL ALZA, decisión del autor: tres episodios en cinco sprints de ejecución —S1, S4 y S5— hacen indefendible la probabilidad «baja»; exposición 2 \(\times\) 3 = 6, pasa a crítico y a revisión semanal. Alternativa descartada: mantener P1 tratando cada episodio como excepcional — con la frecuencia observada, mantenerla maquillaría el registro.)
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkedbox\ Sí · \checkbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkedbox\ Resuelto (tercer episodio superado en esta misma revisión, esta vez con re-planificación) · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}
+
+\begin{tabularx}{\textwidth}{|Y|Y|Y|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}X|}{\textbf{Medida de contingencia}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación (del NO)}} \\
+\hline
+Pausa formal + re-planificación del calendario (+ cambio de convocatoria en el extremo). & \checkedbox\ Sí, y esta vez NO en su versión mínima: el parón se llevó el sprint entero, así que hay re-planificación real de F1 — US-06 (5 SP) pasa a ser el único compromiso de S6 (24--30/08) y US-07 (2 SP) queda condicional «solo si sobra capacidad» (el patrón de US-03 en S2); lo que no se entregue abre F2 en S7 (21-09). Las fechas de fases, las pausas y la convocatoria no se tocan: la holgura del calendario absorbe la desviación, que quedará documentada en el previsto-frente-a-real del cap.~13 al cierre de F1.\newline \checkbox\ No & — \\
+\hline
+\end{tabularx}
+
+Reflexión sobre el funcionamiento de la contingencia:
+la reflexión de S4 anticipó este modo de fallo por escrito —«si el parón hubiera llegado el lunes, el sprint habría quedado a cero» y «si los episodios se encadenan en S5--S6, tocará la conversación honesta»— y ambas cosas ocurrieron: el análisis de riesgos predijo su propio siguiente episodio.
+El patrón «historia entregada el lunes» ni pudo intentarse (el parón precedió al planning); lo que sí funcionó es la mecánica de flujo: la historia no entregada rueda con el backlog en vez de perderse, y el coste queda acotado (en el peor caso, 2 SP de F1 —US-07— se desplazan al arranque de F2).
+La lección estructural es la reevaluación: en periodo de verano con trabajo, los parones de R10 no son excepcionales sino frecuentes, y el riesgo pasa a vigilarse cada semana como crítico.
+
+\bigline
+
+\section{Reflexión desde el último seguimiento}
+
+\textbf{¿Ha ocurrido algo reseñable desde el último seguimiento?} \checkedbox\ Sí · \checkbox\ No
+
+La primera semana enteramente en blanco del proyecto: 0 sesiones, 0 horas, 0 SP, sin planning del lunes, sin entradas de diario y con la retrospectiva desplazada de domingo a lunes.
+Tercer episodio de R10 en cinco sprints de ejecución, que fuerza su reevaluación al alza (pasa a crítico) y una re-planificación real de F1: US-06 se convierte en el compromiso de S6 y US-07 queda condicional, con F1 cerrando el 30-08 con lo que se haya entregado.
+El calendario global (fases, pausas, 16/05/2027 como cierre orientativo y la defensa) no se toca: la holgura absorbe la desviación.
+
+\Needspace*{6\baselineskip}
+\textbf{Nuevos riesgos identificados} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|C{0.8cm}|C{0.8cm}|C{1cm}|C{2.4cm}|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Descripción}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{P}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{I}} &
+\multicolumn{1}{C{1cm}|}{\textbf{Exp.}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Severidad}} \\
+\hline
+— & — & — & — & — & — \\
+\hline
+\end{tabularx}
+
+\textbf{¿Afecta algo a los objetivos o al alcance (cap.~3 de la memoria)?} \checkbox\ Sí · \checkedbox\ No
+
+\textbf{Justificación:} el alcance y los objetivos no cambian (los 138 SP comprometidos y la fecha orientativa de cierre siguen intactos); la desviación es de flujo dentro de F1 —en el peor caso, US-07 se desplaza al arranque de F2— y la absorbe la holgura declarada del calendario (\(\approx\)24~\%).
+
+\textbf{Otros eventos relevantes:} durante la semana se ejecutó en segundo plano una auditoría de coherencia de la memoria completa delegada en la IA (19-08), sin sesión de trabajo del autor y sin cambios en el repositorio; su informe (77 hallazgos verificados: 6 altos, 38 medios, 33 bajos) queda como material de trabajo local y sus hallazgos se procesan fallo a fallo con el autor a partir de hoy.
+
+\end{document}
