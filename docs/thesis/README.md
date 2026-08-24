@@ -12,7 +12,7 @@ thesis/
 │   ├── metadata.tex      ← VARIABLES GLOBALES: título, autor, director, curso...
 │   ├── packages.tex      ← paquetes (babel trilingüe, biblatex-APA, acronym...)
 │   ├── macros.tex        ← comandos propios (\bukit, \eng{}, \todonote{})
-│   └── style.tex         ← formato/diseño (pendiente; requisitos anotados dentro)
+│   └── style.tex         ← formato/diseño según la guía de estilo (aplicado el 16-07-2026)
 ├── frontmatter/          ← preliminares, en el orden de la guía:
 │   ├── titlepage.tex     ← portada según plantilla del centro (logos TODO)
 │   ├── abstract.tex      ← resumen trilingüe (ES/EU/EN) + palabras clave
@@ -21,7 +21,7 @@ thesis/
 │   └── acknowledgements.tex
 ├── chapters/             ← un archivo por capítulo (índice oficial EIB, 1-15):
 │   ├── 01-introduccion.tex            09-diseno.tex
-│   ├── 02-contexto.tex                10-planificacion_temporal-estimacion_esfuerzo.tex
+│   ├── 02-contexto.tex                10-tareas-fases-procedimientos.tex
 │   ├── 03-objetivos-alcance.tex       11-calculos-algoritmos.tex
 │   ├── 04-beneficios-ods.tex          12-analisis-resultados.tex
 │   ├── 05-estado-del-arte.tex         13-gantt-tfg.tex
@@ -61,5 +61,5 @@ thesis/
 
 Implementado en [config/style.tex](config/style.tex): Carlito con `[sfdefault]` (clon métrico libre de Calibri; alternativa XeLaTeX/LuaLaTeX descartada por romper la cadena pdflatex+biber verificada), márgenes 2,5 cm (`geometry`), interlineado sencillo + 6 pt entre párrafos sin sangría (`parskip`), títulos según la guía con `titlesec` (capítulo MAYÚSCULA 14 pt negrita; 1er nivel MAYÚSCULA 12 pt negrita; 2º minúscula 12 pt negrita; 3º minúscula 12 pt cursiva; numeración con punto: 1., 1.1., 1.1.1.), doble cara (`twoside` en `main.tex`, cuerpo a 11 pt).
 Detalles no obvios: Carlito no tiene versalitas (se sustituyen por redonda vía `.fd` + `\DeclareFontShape`; por eso `\bukit` pasó de versalitas a mayúsculas), y los títulos largos van en `\raggedright` para no desbordar línea.
-Pendiente para la fase de diseño: solo los logos de identidad visual UPV/EHU en la portada.
+Pendiente para la fase de diseño en la portada: los logos de identidad visual UPV/EHU, la foto representativa opcional y los iconos de sostenibilidad (TODO en `titlepage.tex`).
 La fuente literal de estos requisitos es [../referencias/guia-estilo-TFG.md](../referencias/guia-estilo-TFG.md) (apartados a y b).

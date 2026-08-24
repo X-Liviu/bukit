@@ -48,7 +48,7 @@ Si no, justificar y decidir si se mantiene/modifica/elimina.
 \hline
 R1 & Toda idea nueva entra por el backlog. & \checkedbox\ Sí (R14 y sus mecanismos entraron por el registro de riesgos, no como alcance; US-05 siguió el orden).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
-R2 & Medir velocidad y recalibrar en cada cierre. & \checkedbox\ Sí (cuarta medición: 3 SP; primera semana bajo la equivalencia recalibrada de 2,0, que la realidad confirma).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+R2 & Medir velocidad y recalibrar en cada cierre. & \checkedbox\ Sí (cuarta medición: 3 SP; la velocidad coincidió con el plan re-basado, pero con el 28~\% de las horas la semana no aporta evidencia sobre la equivalencia de 2,0 h/SP).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
 R3 & Diario al cierre de cada sesión; memoria con hueco. & \checkedbox\ Sí (diario del lunes el mismo día; la memoria no tuvo cambios pendientes esta semana).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
@@ -157,9 +157,11 @@ Para no alargar el documento sin señal, los riesgos \textbf{sin novedad y sin o
 \hline
 R1 & 0 — nada entró fuera del backlog; el sprint no ganó puntos. & Sin novedad \\
 \hline
-R2 & Indicador (3 primeros sprints) ya evaluado en S3; cuarta medición: 3 SP, la esperada con 2,0 h/SP — primera evidencia a favor de la recalibración. & Sin novedad \\
+R2 & Indicador (3 primeros sprints) ya evaluado en S3; cuarta medición: 3 SP, la esperada con el plan re-basado — pero con el 28~\% de las horas la semana no valida aún la equivalencia de 2,0 (el esfuerzo real volvió a quedar por debajo): validación pendiente de semanas con horas normales. & Sin novedad \\
 \hline
 R3 & 0 — diario del lunes el mismo día; ningún capítulo pendiente de trabajo cerrado. & Sin novedad \\
+\hline
+R4 & 0 — sin afirmaciones externas nuevas esta semana; ningún todonote nuevo sin registrar. & Sin novedad \\
 \hline
 R5 & 0 — decisiones de US-05 explicadas en el diario con alternativas; revisión adversarial con criterio (hallazgos aplicados Y refutados). & Sin novedad \\
 \hline
@@ -213,7 +215,7 @@ Horas <70~\% de las declaradas dos semanas consecutivas sin causa puntual identi
 \hline
 \end{tabularx}
 
-\textbf{Nueva probabilidad (1–3):} \underline{\ 1\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkedbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio: dos episodios en siete sprints, ambos absorbidos; la evaluación se confirma)
+\textbf{Nueva probabilidad (1–3):} \underline{\ 1\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkedbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio: dos episodios en cinco sprints —S0--S4—, ambos absorbidos; la evaluación se confirma)
 
 \textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
 
@@ -272,7 +274,7 @@ Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructural
 \hline
 \textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
 \hline
-Historia con autenticación, autorización o datos personales cerrada sin casos de abuso, o vulnerabilidad alta sin resolver en el sprint. & 0 & 0 — la única historia del sprint (US-05, autenticación pura) cerró con 11 casos de abuso; la auditoría de dependencias pasó en verde en todos los pushes y PRs de la semana. & \checkbox\ Sí\quad \checkedbox\ No & La mitigación es ya observable: Dependabot generó dos tandas de PRs (5 abiertos, todos con la CI en verde), pendientes de triaje — los parche/menores pueden fusionarse; los mayores (globals 15\(\to\)17, @types/node 22\(\to\)26) piden revisión porque el proyecto fija Node por Volta. \\
+Historia con autenticación, autorización o datos personales cerrada sin casos de abuso, o vulnerabilidad alta sin resolver en el sprint. & 0 & 0 — la única historia del sprint (US-05, autenticación pura) cerró con 11 casos de abuso; la auditoría de dependencias pasó en verde en todos los pushes y PRs de la semana. & \checkbox\ Sí\quad \checkedbox\ No & La mitigación es ya observable: Dependabot generó dos tandas de PRs (6 abiertos —5 de npm y 1 de Actions—, todos con la CI en verde), pendientes de triaje — los parche/menores pueden fusionarse; los mayores (globals 15\(\to\)17, @types/node 22\(\to\)26) piden revisión porque el proyecto fija Node por Volta. \\
 \hline
 \end{tabularx}
 

@@ -3,8 +3,9 @@
 % Documento independiente de la memoria: la v0 es el cap. 7 y no se toca
 % (línea base); cada versión nueva es un documento completo (ver README.md).
 % REGLA DE CONTENIDO: las tablas reproducen LITERALMENTE las de la v2
-% (03-08-2026), salvo el único cambio que documenta el seguimiento de S3
-% (R8: materializado y resuelto). Diferencias de forma respecto al capítulo:
+% (03-08-2026), salvo los dos cambios que documenta la NOTA (R8:
+% materializado y resuelto, del seguimiento de S3; R14: riesgo nuevo
+% incorporado en la revisión extendida). Diferencias de forma respecto al capítulo:
 % sin \ref (se escribe el número de capítulo) y sin \ac (el acrónimo
 % directamente), porque este documento compila solo.
 % Diseño heredado del plan de riesgos de Gestión de Proyectos del autor,
@@ -53,8 +54,8 @@ Escalas de valoración (matriz probabilidad--impacto del cap.~7):
   \item \textbf{Estado:} situación del riesgo tras la última revisión; los estados posibles (cap.~7 de la memoria) son identificado, sin novedad, activo, materializado, resuelto y cerrado.
 \end{itemize}
 
-% Contenido literal de la tabla de la v2, con el único cambio de la NOTA
-% (R8: estado Resuelto). \footnotesize como en la v0. Anchos para 16 cm:
+% Contenido de la v2 más la fila nueva R14 y el estado Resuelto de R8
+% (los dos cambios de la NOTA). \footnotesize como en la v0. Anchos para 16 cm:
 % 12,15 cm de columnas p{} + ~0,8 cm de las tres columnas c
 % + separadores/filetes con \tabcolsep en 4 pt.
 {\footnotesize
@@ -112,7 +113,7 @@ R14 & \textbf{Verificación de seguridad insuficiente.} El objetivo de seguridad
 
 \section{Plan de respuesta ante riesgos}
 
-% Contenido literal de la tabla de la v2, sin cambios en esta versión.
+% Contenido de la v2 más la fila nueva R14 (cambio de la NOTA).
 % \small como en la v0. Anchos del .tex de referencia: 0,8 + 6,9 + 6,9 cm
 % + separadores = 15,9 cm, dentro de los 16 cm de texto.
 {\small
@@ -147,7 +148,7 @@ R6 & Antes de comprometer historias que dependan de una tecnología desconocida,
 
 R7 & Minimización desde el diseño, ya decidida en las reglas de producto, el alcance y los requisitos (capítulos 2, 3 y 5): la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\ \hline
 
-R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los sprints restantes al nivel observado; recortar primero lo opcional. \\ \hline
+R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los \eng{sprints} restantes al nivel observado; recortar primero lo opcional. \\ \hline
 
 R9 & Todas las integraciones externas se declaran objetivos secundarios o se desarrollan contra versiones simuladas que funcionan sin el servicio real, de forma que el núcleo del producto nunca dependa de ellas; se eligen proveedores con capa gratuita suficiente para un uso académico. & Sustituir el servicio por una versión simulada o por una alternativa gratuita equivalente, y documentar la integración real como línea futura. \\ \hline
 

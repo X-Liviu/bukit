@@ -73,13 +73,26 @@ La propuesta dejó abierta la elección entre NestJS y «Express bien estructura
 NestJS ofrece una arquitectura completa y opinada —módulos, inyección de dependencias, decoradores— \parencite{nestjs-docs}; Express es minimalista y deja la estructura en manos del proyecto \parencite{express-docs}.
 Esa diferencia basta para sostener la elección.
 El valor académico de este \eng{backend} está justamente en lo hecho a mano —autenticación con \ac{JWT} y rotación de los \eng{tokens} de refresco, doble capa de limitación de peticiones, manejo de errores centralizado: patrones que el autor ya domina de TrackBites, precisamente sobre Express—, y NestJS los entregaría envueltos en las abstracciones del marco, restando demostración y sumando su propia curva de aprendizaje a la del resto de la pila (riesgo R6, capítulo \ref{ch:riesgos}).
+
 \section{Pruebas de la \acs{API} y registro de sucesos}
 \label{sec:alt-pruebas-registro}
 
 Dos decisiones de menor calado acompañan al servidor, ambas con alternativa heredada de TrackBites o de su ecosistema.
 Las pruebas de integración de la \ac{API} se escriben con Vitest \parencite{vitest-docs} y Supertest, frente al precedente de TrackBites (Jest con Supertest).
-Dos razones cierran la elección: un único ejecutor de pruebas para todo el \eng{monorepo} (los paquetes compartidos ya prueban con Vitest) y el hecho de que la \ac{API} se escribe como módulos ECMAScript, un terreno donde Jest exige una configuración frágil.
-El registro de sucesos se resuelve con pino \parencite{pino-docs} y su \eng{middleware} pino-http, frente a winston: pino produce de forma nativa registro estructurado en \ac{JSON} con niveles de gravedad, su \eng{middleware} \ac{HTTP} asigna un identificador a cada petición para seguirla en los registros, y su rendimiento es mejor.
+Dos razones cierran la elección: un único ejecutor de pruebas para todo el \eng{monorepo} (los paquetes compartidos ya prueban con Vitest) y el hecho de que la \ac{API} se escribe como módulos ECMAScript, un terreno donde el soporte de Jest sigue declarado experimental por su propia documentación y exige una configuración frágil \parencite{jest-docs}.
+El registro de sucesos se resuelve con pino \parencite{pino-docs} y su \eng{middleware} pino-http, frente a winston: pino produce de forma nativa registro estructurado en \ac{JSON} con niveles de gravedad, su \eng{middleware} \ac{HTTP} asigna un identificador a cada petición para seguirla en los registros, y su rendimiento es mejor según las comparativas de su propia documentación.
+
+\section{Autenticación: firma de \eng{tokens} y hash de contraseñas}
+\label{sec:alt-autenticacion}
+
+La autenticación con \ac{JWT} añade dos elecciones de biblioteca, ambas cerradas con el criterio transversal del capítulo: saltar solo donde el salto aporta.
+
+Para firmar y verificar los \eng{tokens} compitieron jsonwebtoken \parencite{jsonwebtoken-docs}, la biblioteca que el autor ya domina de TrackBites, y jose \parencite{jose-docs}, más moderna: cero dependencias, módulos ECMAScript nativos y mantenimiento muy activo.
+Se elige jsonwebtoken: la \ac{API} ya dominada pesa más que las virtudes de jose en una pieza de seguridad que hay que poder defender ante el tribunal (riesgo R5), y su coste —una decena de dependencias transitivas— se asume como conocido y estable.
+La misma historia fijó dos decisiones de diseño con su alternativa: las vidas de los \eng{tokens} quedan en 15 minutos el de acceso y 30 días el de refresco —frente a la pareja 1 hora / 7 días, descartada porque un acceso corto reduce la ventana de uso de un \eng{token} robado y el refresco mensual se apoya en la rotación—, y ambos viajan en el cuerpo de la respuesta —frente a la \eng{cookie} \texttt{httpOnly}, descartada porque partiría en dos caminos el cliente \ac{HTTP} compartido que web y móvil consumen por igual—.
+
+Para el hash de las contraseñas se adopta bcryptjs \parencite{bcryptjs-docs}, la implementación del algoritmo bcrypt en JavaScript puro y compatible con la nativa, frente al paquete bcrypt nativo: este exige compilar código C++ en cada entorno, una fricción evitable (riesgo R13) en una cadena que instala dependencias en Windows, en Linux y dentro de una imagen Docker basada en Alpine.
+El coste asumido es de rendimiento —en torno a un segundo de cálculo con las 12 rondas configuradas—, aceptable en un flujo de alta e inicio de sesión y rebajado en las pruebas mediante configuración.
 
 \section{La alternativa global: Supabase}
 \label{sec:alt-supabase}
@@ -147,7 +160,7 @@ El vídeo —objetivo secundario desde el 16/07/2026— irá a un servicio gesti
 \paragraph{Notificaciones y anuncios.}
 Los recordatorios de metas llegarán por notificaciones \eng{push} (Expo Push o Firebase Cloud Messaging, abierto).
 La publicidad no se programa desde cero: el producto prevé una red de anuncios existente (AdMob en móvil; AdSense o Ad Manager en web, abierto) más una tabla propia de publicaciones patrocinadas que la ordenación del \eng{feed} inyecta.
-Dentro de este \ac{TFG} solo se implementa la tabla propia de patrocinados: la integración de la red comercial queda fuera del alcance (capítulo \ref{ch:objetivos}).
+Dentro de este \ac{TFG} solo la tabla propia de patrocinados entra en el alcance, como objetivo secundario (capítulo \ref{ch:objetivos}): la integración de la red comercial queda fuera.
 
 \section{Entrega: de la integración continua heredada al despliegue continuo}
 \label{sec:alt-entrega}
@@ -202,6 +215,10 @@ La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, fr
   Pruebas de la \acs{API} & Vitest + Supertest & Jest + Supertest (TrackBites) & Decidida \\
   \addlinespace
   Registro de sucesos & pino + pino-http & winston & Decidida \\
+  \addlinespace
+  Firma y verificación de \acs{JWT} & jsonwebtoken & jose & Decidida \\
+  \addlinespace
+  Hash de contraseñas & bcryptjs (12 rondas) & bcrypt nativo & Decidida \\
   \addlinespace
   Plataforma \eng{backend} & \eng{Backend} propio (Node + Prisma + PostgreSQL) & Supabase como plataforma integral & Decidida \\
   \addlinespace

@@ -21,6 +21,10 @@ Se elige una escala de tres niveles, y no una más fina de cinco, porque con un 
 \begin{table}[htbp]
   \centering
   \small
+  % Título encima de la tabla, como en las longtable: posición unificada en
+  % toda la memoria (revisión del 24-08-2026).
+  \caption{Matriz de exposición y severidad (probabilidad $\times$ impacto).}
+  \label{tab:matriz-riesgos}
   \begin{tabular}{lccc}
     \toprule
     & \multicolumn{3}{c}{\textbf{Probabilidad}} \\
@@ -32,8 +36,6 @@ Se elige una escala de tres niveles, y no una más fina de cinco, porque con un 
     \textbf{Bajo (1)}  & 1 — Moderado & 2 — Moderado & 3 — Significativo \\
     \bottomrule
   \end{tabular}
-  \caption{Matriz de exposición y severidad (probabilidad $\times$ impacto).}
-  \label{tab:matriz-riesgos}
 \end{table}
 
 La severidad determina la cadencia mínima de revisión de cada riesgo (sección \ref{sec:riesgos-seguimiento}), de modo que el esfuerzo de seguimiento sea proporcional a la amenaza.
@@ -83,7 +85,7 @@ Este plan inicial no se reescribe: cuando el seguimiento (sección \ref{sec:ries
   \addlinespace
   R5 & \textbf{Dependencia acrítica de la \ac{IA} generativa.} El desarrollo asistido por \ac{IA} es parte del método de trabajo; el riesgo es integrar código o texto generado sin la comprensión necesaria para defenderlo ante el tribunal, o con defectos de calidad o seguridad que una lectura superficial no detecta. & 2 & 3 & 6 & Crít. & Al redactar el diario, una decisión o un bloque integrados esa sesión no pueden explicarse sin recurrir de nuevo a la herramienta, o una revisión encuentra código integrado sin revisar ni probar. & — \\
   \addlinespace
-  R6 & \textbf{Curva de aprendizaje de la pila tecnológica.} PostGIS, pgvector, Prisma, la mensajería y las actualizaciones en tiempo real, las colas de trabajos en segundo plano y las notificaciones \eng{push} son territorio nuevo para el autor: buena parte del servidor se aprende sobre la marcha, con potencial de consumir días en un problema imprevisto. & 3 & 2 & 6 & Crít. & Una historia o una investigación previa consumen el doble de su tiempo previsto sin resolución a la vista. & - \\
+  R6 & \textbf{Curva de aprendizaje de la pila tecnológica.} PostGIS, pgvector, Prisma, la mensajería y las actualizaciones en tiempo real, las colas de trabajos en segundo plano y las notificaciones \eng{push} son territorio nuevo para el autor: buena parte del servidor se aprende sobre la marcha, con potencial de consumir días en un problema imprevisto. & 3 & 2 & 6 & Crít. & Una historia o una investigación previa consumen el doble de su tiempo previsto sin resolución a la vista. & — \\
   \addlinespace
   R7 & \textbf{Incumplimiento del \acs{RGPD} en el diseño.} El producto maneja ubicación de personas, verificación de identidad con documento y la regla de mayoría de edad: datos especialmente delicados. El reglamento es además estricto y transversal: casi cada función del producto toca datos personales, sobre todo al diseñar el modelo de datos, de modo que la ocasión de error se repite durante todo el desarrollo. & 2 & 3 & 6 & Crít. & Una entidad del modelo de datos incorpora un dato personal sin finalidad declarada, o un requisito exige almacenar la imagen del documento de identidad. & El modelo de datos completo pasa la revisión de minimización: cada dato personal con finalidad declarada y ningún documento de identidad almacenado. \\
   \addlinespace
@@ -97,7 +99,7 @@ Este plan inicial no se reescribe: cuando el seguimiento (sección \ref{sec:ries
   \addlinespace
   R12 & \textbf{Ciclos de revisión con el tutor.} La memoria depende de revisiones externas: una respuesta que se demora o una revisión que obliga a rehacer un capítulo dado por cerrado retrasan el cierre. La relación previa con el tutor y el cauce de comunicación ya establecido mantienen la probabilidad baja. & 1 & 2 & 2 & Mod. & Una consulta o un capítulo enviado a revisión acumula más de dos semanas sin respuesta, o una revisión devuelve cambios estructurales sobre un capítulo dado por cerrado. & El borrador completo de la memoria pasa una revisión del tutor sin cambios estructurales. \\
   \addlinespace
-  R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & - \\
+  R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & — \\
 \end{longtable}
 \endgroup
 
@@ -142,7 +144,7 @@ El papel de disparador de una revisión inmediata lo cumple el indicador clave d
   \addlinespace
   R7 & Minimización desde el diseño, ya decidida en las reglas de producto, el alcance y los requisitos (capítulos \ref{ch:contexto}, \ref{ch:objetivos} y \ref{ch:estado-del-arte}): la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\
   \addlinespace
-  R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva) & Rebajar la capacidad declarada de los sprints restantes al nivel observado; recortar primero lo opcional. \\
+  R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los \eng{sprints} restantes al nivel observado; recortar primero lo opcional. \\
   \addlinespace
   R9 & Todas las integraciones externas se declaran objetivos secundarios o se desarrollan contra versiones simuladas que funcionan sin el servicio real, de forma que el núcleo del producto nunca dependa de ellas; se eligen proveedores con capa gratuita suficiente para un uso académico. & Sustituir el servicio por una versión simulada o por una alternativa gratuita equivalente, y documentar la integración real como línea futura. \\
   \addlinespace
@@ -207,20 +209,22 @@ La tabla \ref{tab:seguimiento-riesgos} registra cada cambio junto con la versió
 \begin{table}[htbp]
   \centering
   \footnotesize
+  % Título encima de la tabla, como en las longtable: posición unificada en
+  % toda la memoria (revisión del 24-08-2026).
+  \caption{Registro de seguimiento de riesgos (solo cambios; cada revisión completa consta en su documento de seguimiento).}
+  \label{tab:seguimiento-riesgos}
   \begin{tabular}{@{}llclc>{\raggedright\arraybackslash}p{45mm}@{}}
     \toprule
     \textbf{Fecha} & \textbf{Sprint} & \textbf{Riesgo} & \textbf{Estado} & \textbf{Plan} & \textbf{Acción / decisión} \\
     \midrule
     16/07/2026 & S0 & Todos & Identificado & v0 & Identificación inicial y plan de respuesta (v0 enmendada y re-fechada a 17/07/2026 durante S0). \\
-    26/07/2026 & S1 & R10 & Resuelto & v1 & Materializado en S1 ($\sim$9 días sin actividad); contingencia mínima aplicada (re-encaje dentro del sprint), sin impacto en el camino crítico. \\
+    26/07/2026 & S1 & R10 & Resuelto & v1 & Materializado en S1 (8 días sin actividad); contingencia mínima aplicada (re-encaje dentro del \eng{sprint}), sin impacto en el camino crítico. \\
     26/07/2026 & S1 & R4 & Identificado & v1 & Mitigación ajustada: eliminado el límite de extensión de la memoria por decisión del autor. \\
     03/08/2026 & S2 & R4 & Identificado & v2 & Indicador clave redefinido: la señal pasa a ser la afirmación sin cita que no se corrige en la misma sesión que la detecta; P, I y severidad reevaluados sin cambio. \\
     09/08/2026 & S3 & R8 & Resuelto & v3 & Materializado (tres \eng{sprints} bajo el 70\,\% de horas por causa laboral estructural); contingencia aplicada: capacidad de S4--S6 re-basada a 6 h/semana, sin recorte de alcance. \\
-    10/08/2026 & S4 & R14 & Identificado & v3 & Riesgo nuevo (verificación de seguridad insuficiente, P2 $\times$ I2, significativo), incorporado a la v3 en la revisión extendida de S3; mitigación activada: auditoría de dependencias en la CI, Dependabot y casos de abuso exigidos por la Definición de Hecho. \\
+    10/08/2026 & S3 & R14 & Identificado & v3 & Riesgo nuevo (verificación de seguridad insuficiente, P2 $\times$ I2, significativo), incorporado a la v3 en la revisión extendida de S3; mitigación activada: auditoría de dependencias en la integración continua, Dependabot y casos de abuso exigidos por la Definición de Hecho. \\
     16/08/2026 & S4 & R10 & Resuelto & v4 & Segundo episodio materializado (5 días sin actividad por causa sobrevenida); contingencia mínima como en S1, sin coste de calendario: la historia del \eng{sprint} se había entregado antes del parón. \\
     24/08/2026 & S5 & R10 & Resuelto & v5 & Tercer episodio materializado (semana de S5 completa sin actividad, 7 días); probabilidad reevaluada al alza (P2 $\times$ I3 = 6, pasa a crítico con revisión semanal); contingencia de re-planificación: US-06 pasa a S6 y US-07 queda condicional, rodando al arranque de F2 si no se entrega — fases y fechas globales intactas. \\
     \bottomrule
   \end{tabular}
-  \caption{Registro de seguimiento de riesgos (solo cambios; cada revisión completa consta en su documento de seguimiento).}
-  \label{tab:seguimiento-riesgos}
 \end{table}

@@ -17,7 +17,7 @@ La coherencia entre ambos capítulos es deliberada: las fases (F0 a F4) y las do
 \label{sec:gantt-previsto}
 
 El trabajo comenzó el 12/07/2026 con la creación del repositorio, y la semana del 14 al 19 de julio constituye el \eng{sprint} de planificación S0 (fase F0), en el que se elaboran los objetivos, el plan de riesgos y la planificación que aquí se representa.
-La figura \ref{fig:gantt-tfg-previsto} recoge el cronograma previsto completo, del arranque a la defensa; conviene leerla junto a dos decisiones ya justificadas.
+La figura \ref{fig:gantt-tfg-previsto} recoge el cronograma previsto completo, de la planificación (F0) a la defensa; conviene leerla junto a dos decisiones ya justificadas.
 Primera: en coherencia con la metodología del capítulo \ref{ch:tareas}, el detalle fino (qué historia se aborda cada semana) vive en el \eng{backlog} y no en este diagrama, que solo compromete fases e hitos; un Gantt de tareas individuales sería precisión falsa en un alcance emergente.
 Segunda: el diagrama representa explícitamente las dos pausas planificadas (los traslados de ida y vuelta de la estancia Erasmus) y el margen entre el cierre del desarrollo y el depósito, en lugar de esconderlos.
 
@@ -55,7 +55,7 @@ Segunda: el diagrama representa explícitamente las dos pausas planificadas (los
       \gantttitle{jul}{31} \\
       \ganttbar{F0 Planificación (S0)}{2026-07-14}{2026-07-19} \\
       \ganttgroup{Ejecución (S1--S39)}{2026-07-20}{2027-05-16} \\
-      \ganttbar{F1 Fundaciones de la API}{2026-07-20}{2026-08-30} \\
+      \ganttbar{F1 Fundaciones de la \acs{API}}{2026-07-20}{2026-08-30} \\
       \ganttbar[bar/.append style={fill=black!8, draw=black!40}]{Pausa: traslado al Erasmus}{2026-08-31}{2026-09-20} \\
       \ganttbar{F2 Cliente web, listas y publicaciones}{2026-09-21}{2027-01-24} \\
       \ganttbar[bar/.append style={fill=black!8, draw=black!40}]{Pausa: regreso a Bilbao}{2027-01-25}{2027-01-31} \\
@@ -79,6 +79,10 @@ La tabla \ref{tab:hitos-tfg} fija los hitos de control del proyecto.
   \centering
   \small
   \setlength{\tabcolsep}{4pt}
+  % Título encima de la tabla, como en las longtable: posición unificada en
+  % toda la memoria (revisión del 24-08-2026).
+  \caption{Hitos del \acs{TFG}.}
+  \label{tab:hitos-tfg}
   \begin{tabular}{ll}
     \toprule
     \textbf{Hito} & \textbf{Fecha prevista} \\
@@ -86,15 +90,13 @@ La tabla \ref{tab:hitos-tfg} fija los hitos de control del proyecto.
     Inicio del proyecto (repositorio y diario)            & 12/07/2026 \\
     Cierre de F0 — plan inicial completo                  & 19/07/2026 \\
     Inicio de la ejecución (S1)                           & 20/07/2026 \\
-    Cierre de F1 — fundaciones de la API                  & 30/08/2026 \\
+    Cierre de F1 — fundaciones de la \acs{API}            & 30/08/2026 \\
     Cierre de F2 — cliente web, listas y publicaciones    & 24/01/\thesisYear \\
     Cierre de F3 — núcleo social y diferenciadores        & 28/03/\thesisYear \\
     Cierre de F4 — fin del desarrollo (producto y memoria) & 16/05/\thesisYear \\
     Depósito y defensa                                    & junio--julio de \thesisYear{} (septiembre de reserva) \\
     \bottomrule
   \end{tabular}
-  \caption{Hitos del \acs{TFG}.}
-  \label{tab:hitos-tfg}
 \end{table}
 
 \section{Escenarios de disponibilidad: el plan como techo, no como suelo}
@@ -105,7 +107,7 @@ La mayor incógnita del calendario es la carga real de la estancia Erasmus: se p
 Planificar sobre ese mejor caso sería apostar el \ac{TFG} a una hipótesis que no se puede verificar hasta estar allí; planificar sobre el peor caso razonable garantiza que incluso él termina el trabajo antes del depósito.
 
 La consecuencia práctica es que las fechas de este capítulo son un techo del escenario prudente, no un suelo: si la disponibilidad real supera la hipótesis, la recalibración semanal de la velocidad (capítulo \ref{ch:tareas}) adelanta los hitos de forma natural, sin cambiar de método ni de plan.
-El orden de magnitud del posible adelanto es grande: tras el verano quedan unos 117 puntos de trabajo comprometido (unas 234 horas nominales con la equivalencia recalibrada), de modo que una estancia que dejara 20--25 horas semanales reales —frente a las 5 declaradas— situaría el cierre completo del desarrollo entre diciembre de 2026 y enero de \thesisYear, con meses de sobra para revisar la memoria con calma.
+El orden de magnitud del posible adelanto es grande: tras el verano quedan unos 125 puntos de trabajo comprometido (unas 250 horas nominales con la equivalencia recalibrada), de modo que una estancia que dejara 20--25 horas semanales reales —frente a las 5 declaradas— situaría el cierre completo del desarrollo entre diciembre de 2026 y enero de \thesisYear, con meses de sobra para revisar la memoria con calma.
 Ese escenario no se promete: se registra aquí para que el seguimiento (sección \ref{sec:gantt-real}) pueda comparar la realidad contra ambos extremos, y para dejar claro que cualquier desviación positiva de capacidad se traduce en adelanto de hitos, no en ampliación del alcance (la entrada de prioridades deseables u opcionales sigue condicionada a la velocidad, sección \ref{sec:fases-tension}).
 En el sentido contrario vigila el riesgo R8 (capacidad real por debajo incluso de lo declarado, capítulo \ref{ch:riesgos}): entre ambos, el plan queda acotado por arriba y por abajo.
 

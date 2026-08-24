@@ -64,6 +64,10 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
 \begin{table}[htbp]
   \centering
   \small
+  % Título encima de la tabla, como en las longtable: posición unificada en
+  % toda la memoria (revisión del 24-08-2026); igual en el resto de tablas.
+  \caption{Elementos del método híbrido y su adaptación al contexto unipersonal.}
+  \label{tab:metodologia-elementos}
   \begin{tabular}{p{3.4cm}p{1.6cm}p{8.2cm}}
     \toprule
     \textbf{Elemento} & \textbf{Origen} & \textbf{Adaptación a una persona} \\
@@ -79,8 +83,6 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
   \end{tabular}
-  \caption{Elementos del método híbrido y su adaptación al contexto unipersonal.}
-  \label{tab:metodologia-elementos}
 \end{table}
 
 La duración de una semana por \eng{sprint} (frente a las dos semanas empleadas en aquella experiencia previa en equipo) se justifica por tres razones.
@@ -138,6 +140,8 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
 \begin{table}[htbp]
   \centering
   \small
+  \caption{Épicas del \eng{Product Backlog} inicial, con estimación gruesa y fase prevista.}
+  \label{tab:backlog-epicas}
   \begin{tabular}{clccc}
     \toprule
     \textbf{Id} & \textbf{Épica} & \textbf{Prioridad} & \textbf{Puntos} & \textbf{Fase} \\
@@ -151,7 +155,7 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     EP07 & Perfil y verificación de identidad               & Imprescindible & 8  & F3 \\
     EP08 & \eng{Feed} personalizado y buscador              & Imprescindible & 13 & F4 \\
     EP09 & Mapa social                                      & Imprescindible & 10 & F3 \\
-    EP10 & Afinidad entre personas usuarias                 & Deseable       & 8  & --- \\
+    EP10 & Afinidad entre personas usuarias                 & Imprescindible & 8  & F3 \\
     EP11 & Mensajería y notificaciones                      & Imprescindible & 13 & F3 \\
     EP12 & Pruebas \acs{E2E} y despliegue continuo          & Imprescindible & 8  & F4 \\
     EP13 & \acs{IA} de estimación de plazos                 & Opcional       & 8  & --- \\
@@ -161,8 +165,6 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     EP17 & Publicaciones patrocinadas simuladas             & Opcional       & 5  & --- \\
     \bottomrule
   \end{tabular}
-  \caption{Épicas del \eng{Product Backlog} inicial, con estimación gruesa y fase prevista.}
-  \label{tab:backlog-epicas}
 \end{table}
 
 Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas y no se someten a la escala de historias de la sección \ref{sec:estimacion}: anticipan la suma de los puntos de las historias que cada épica contendrá, y solo estas últimas se estiman con la escala declarada.
@@ -172,6 +174,8 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fund
 \begin{table}[htbp]
   \centering
   \small
+  \caption{Desglose en historias de las épicas de fundaciones EP01--EP03, 29 puntos.}
+  \label{tab:backlog-f1}
   \begin{tabular}{clcc}
     \toprule
     \textbf{Id} & \textbf{Historia (resumen)} & \textbf{Épica} & \textbf{Puntos} \\
@@ -188,8 +192,6 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fund
     US-10 & Pantallas de registro e inicio de sesión                  & EP03 & 2 \\
     \bottomrule
   \end{tabular}
-  \caption{Desglose en historias de las épicas de fundaciones EP01--EP03, 29 puntos.}
-  \label{tab:backlog-f1}
 \end{table}
 
 En la tabla \ref{tab:backlog-f1} cada historia aparece resumida en una línea, pero antes de entrar en un \eng{sprint} toda historia se desarrolla hasta un nivel de detalle que la hace verificable.
@@ -216,6 +218,8 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
   \centering
   \small
   \setlength{\tabcolsep}{4pt}
+  \caption{Fases del desarrollo con su capacidad estimada (la épica transversal EP15 se reparte entre todas).}
+  \label{tab:fases}
   \begin{tabular}{clllc}
     \toprule
     \textbf{Fase} & \textbf{Contenido} & \textbf{Sprints} & \textbf{Fechas} & \textbf{Horas} \\
@@ -229,8 +233,6 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
     F4  & Cierre de producto y memoria: EP08, EP12          & S33--S39 & 29/03 -- 16/05/\thesisYear & 105 \\
     \bottomrule
   \end{tabular}
-  \caption{Fases del desarrollo con su capacidad estimada (la épica transversal EP15 se reparte entre todas).}
-  \label{tab:fases}
 \end{table}
 
 La capacidad declarada refleja la disponibilidad real esperada de cada periodo: el verano se planificó con 10 horas semanales condicionadas por los compromisos laborales, y la realidad de tres \eng{sprints} la re-basó a 6 desde S4 (09/08/2026, contingencia del riesgo R8: la carga laboral resultó estructural, no puntual); unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
@@ -240,6 +242,8 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 \begin{table}[htbp]
   \centering
   \small
+  \caption{Calendario de \eng{sprints} de F0 y F1 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
+  \label{tab:sprints}
   \begin{tabular}{cllc}
     \toprule
     \textbf{Sprint} & \textbf{Fechas} & \textbf{Tema orientativo} & \textbf{Horas} \\
@@ -253,15 +257,14 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
     S6 & 24/08 -- 30/08 & Limitación de peticiones; \emph{cierre de F1}              & 6 \\
     \bottomrule
   \end{tabular}
-  \caption{Calendario de \eng{sprints} de F0 y F1 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
-  \label{tab:sprints}
 \end{table}
 
 \subsection{Encaje del plan y margen declarado}
 \label{sec:fases-tension}
 
-El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) suma 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
-Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (363 horas), los 138 puntos comprometidos suponen unas 276 horas — una holgura nominal en torno al 24\,\%.
+El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
+El inventario comprometido vigente suma 146 puntos: los 138 iniciales más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida.
+Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (363 horas), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 20\,\%.
 La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
 La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 

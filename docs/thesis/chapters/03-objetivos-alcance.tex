@@ -11,7 +11,7 @@ Los objetivos de este \ac{TFG} se formulan siguiendo el marco \ac{SMART}, es dec
 Se opta por este marco frente a una enumeración informal de intenciones porque convierte cada objetivo en un criterio verificable: al cierre del trabajo puede comprobarse de forma objetiva si se ha cumplido o no.
 
 El horizonte temporal común a todos los objetivos es la defensa del trabajo en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva.
-El desarrollo se extiende a lo largo del curso 2026--2027 con dedicación variable por periodos, condicionada por las circunstancias personales declaradas en el apartado \ref{sec:contexto-marco}, con una dedicación de referencia de 360 horas, correspondiente a los 12 créditos \ac{ECTS} del \ac{TFG} \parencite{rd-1125-2003}.
+El desarrollo se extiende a lo largo del curso \thesisCourse{} con dedicación variable por periodos, condicionada por las circunstancias personales y la dedicación académica de referencia declaradas en el apartado \ref{sec:contexto-marco}.
 La planificación detallada de tareas, fechas e hitos se recoge en los capítulos \ref{ch:tareas} y \ref{ch:gantt-tfg}.
 
 Los objetivos se organizan en dos bloques: los \emph{técnicos y de producto}, que describen qué debe existir y funcionar al terminar, y los \emph{de gestión y académicos}, que describen cómo debe ejecutarse y documentarse el trabajo.
@@ -30,7 +30,7 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
         Implementar con Express y Prisma una \ac{API} \ac{REST} sobre una única base de datos PostgreSQL que resuelva el grafo social (integridad relacional), el mapa (consultas geoespaciales por radio con PostGIS) y la afinidad entre personas usuarias (búsqueda por similitud vectorial con pgvector).
         Medible: el 100\,\% de los flujos núcleo del producto (cuentas, listas y metas, publicaciones, seguimiento, mensajería, mapa y notificaciones) está expuesto por la \ac{API} y cubierto por pruebas de integración antes del cierre del periodo de ejecución.
   \item \textbf{Autenticación y seguridad desde el diseño.}
-        Proteger la \ac{API} con autenticación \ac{JWT} con rotación de \eng{refresh tokens}, contraseñas cifradas con Bcrypt, doble capa de limitación de peticiones y manejo centralizado de errores.
+        Proteger la \ac{API} con autenticación \ac{JWT} con rotación de \eng{refresh tokens}, contraseñas almacenadas únicamente como hash bcrypt, doble capa de limitación de peticiones y manejo centralizado de errores.
         Medible: el 100\,\% de los \eng{endpoints} privados exige un token válido, y los casos de abuso básicos (credenciales inválidas, exceso de peticiones) quedan cubiertos por pruebas automatizadas.
   \item \textbf{Cliente web completo.}
         Desarrollar con React y Vite una \ac{SPA} que implemente las cuatro pestañas del producto: inicio con \eng{feed} personalizado, listas, mensajes con mapa y notificaciones, y perfil.
@@ -83,7 +83,7 @@ El trabajo se considerará un éxito si, a su cierre, se cumplen de manera binar
 
 \begin{enumerate}
   \item \textbf{Producto funcional desplegado.}
-        Una persona usuaria puede registrarse, crear una lista con metas y plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat, usar el mapa y recibir notificaciones, sin errores bloqueantes y sobre el despliegue de producción.
+        Una persona usuaria puede registrarse, crear una lista con metas, cada una con su plazo, publicar un progreso desde su lista, seguir a otras personas, consultar su \eng{feed}, conversar por chat, usar el mapa y recibir notificaciones, sin errores bloqueantes y sobre el despliegue de producción.
   \item \textbf{Arquitectura compartida demostrada.}
         Los tipos y la validación viven una única vez en los paquetes compartidos y ninguna aplicación duplica esquemas.
   \item \textbf{Calidad automatizada.}

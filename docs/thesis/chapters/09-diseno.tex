@@ -16,7 +16,7 @@ Este capítulo recoge el diseño del sistema conforme a su método de construcci
 \section{Modelo de datos}
 \label{sec:diseno-modelo}
 
-El modelo vive en un único esquema declarativo del que se derivan tanto las migraciones versionadas de la base de datos como el cliente tipado que consume la \ac{API}: una sola fuente de verdad, el mismo principio que rige la validación compartida (capítulo \ref{ch:alternativas}).
+El modelo vive en un único esquema declarativo del que se derivan tanto las migraciones versionadas de la base de datos como el cliente de acceso a datos tipado que utiliza la \ac{API}: una sola fuente de verdad, el mismo principio que rige la validación compartida (capítulo \ref{ch:alternativas}).
 Antes de escribirse, cada entidad pasa una revisión de minimización de datos (riesgo R7, capítulo \ref{ch:riesgos}): cada dato personal debe tener una finalidad declarada, y lo que hoy no la tiene no se almacena.
 
 \subsection{Usuario}
@@ -24,16 +24,16 @@ Antes de escribirse, cada entidad pasa una revisión de minimización de datos (
 
 La primera entidad es la cuenta de usuario: identificador, email, hash de la contraseña, nombre de usuario, nivel y fechas de creación y actualización.
 
-El identificador es un UUID, por dos razones: no es enumerable (nadie puede recorrer los perfiles incrementando un número ni deducir el volumen de cuentas del sistema) y es un tipo nativo de PostgreSQL.
+El identificador es un \ac{UUID}, por dos razones: no es enumerable (nadie puede recorrer los perfiles incrementando un número ni deducir el volumen de cuentas del sistema) y es un tipo nativo de PostgreSQL.
 Se descartaron el entero autoincremental —más compacto y rápido en las uniones, pero enumerable— y el identificador textual por defecto de la capa de acceso a datos (cuid), que se almacena como texto sin tipo nativo.
 El criterio queda fijado para el resto de entidades del modelo.
-Con la misma vocación de criterio general se fijan, tras la revisión de la entidad: los nombres de la base de datos en minúsculas con guion bajo (hay consultas SQL crudas comprometidas para el mapa y la afinidad, y los identificadores con mayúsculas exigirían comillas exactas en cada una), las fechas siempre con zona horaria (los plazos de las metas y las caducidades del producto no pueden depender de la zona horaria de la sesión del servidor), las longitudes máximas respaldadas también en la columna como defensa en profundidad, y los identificadores generados igualmente en la base de datos, no solo en el cliente.
-\todonote{Decidir el criterio de baja de cuenta y de borrado en cascada al diseñar la primera relación (listas).}
+Con la misma vocación de criterio general se fijan, tras la revisión de la entidad: los nombres de la base de datos en minúsculas con guion bajo (hay consultas \acs{SQL} crudas comprometidas para el mapa y la afinidad, y los identificadores con mayúsculas exigirían comillas exactas en cada una), las fechas siempre con zona horaria (los plazos de las metas y las caducidades del producto no pueden depender de la zona horaria de la sesión del servidor), las longitudes máximas respaldadas también en la columna como defensa en profundidad, y los identificadores generados igualmente en la base de datos, no solo en el cliente.
+\todonote{Decidir el criterio de baja de cuenta y de borrado en cascada al diseñar la primera relación (la entidad de los \eng{tokens} de refresco, US-06).}
 
 El email y el nombre de usuario son únicos, y ambos se normalizan a minúsculas en el esquema de validación compartido antes de llegar a la base de datos: dos grafías del mismo email o del mismo nombre son la misma identidad.
 Esa normalización vive una única vez en la capa de validación compartida, por la que pasa toda escritura (capítulo \ref{ch:alternativas}); se descartó duplicarla en la base de datos con un índice funcional, que la herramienta de migraciones no sabe expresar de forma declarativa y quedaría desincronizado del esquema.
 El nombre de usuario existe desde el alta, y no en una edición posterior del perfil, porque el perfil es central en el producto (capítulo \ref{ch:contexto}): cada cuenta nace con su identidad pública.
-De la contraseña se guarda únicamente el hash (bcrypt); la contraseña en claro no se persiste ni se registra jamás, y la forma pública de la respuesta se valida contra el contrato compartido, de modo que el hash no puede salir por accidente.
+De la contraseña se guarda únicamente el hash bcrypt, calculado con la biblioteca bcryptjs (capítulo \ref{ch:alternativas}); la contraseña en claro no se persiste ni se registra jamás, y la forma pública de la respuesta se valida contra el contrato compartido, de modo que el hash no puede salir por accidente.
 El nivel de usuario (normal o TOP) es un enumerado con normal por defecto y sin ningún punto de la \ac{API} que lo modifique: la admisión TOP llega por un proceso externo (capítulo \ref{ch:contexto}).
 
 La revisión de minimización de la entidad concluye sin hallazgos: no se almacenan teléfono, fecha de nacimiento ni ubicación, y los datos de la verificación de identidad llegarán con su módulo, reducidos al estado y a la clave de referencia del proveedor (capítulo \ref{ch:alternativas}).

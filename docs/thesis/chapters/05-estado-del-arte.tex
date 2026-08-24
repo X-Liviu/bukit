@@ -1,6 +1,10 @@
 % =========================================================================
-% Capítulo 5 — Descripción de requerimientos y análisis del estado del arte
+% Capítulo 5 — Análisis del estado del arte y descripción de requerimientos
 % (si procede — para BUKIT procede)
+% El índice oficial enuncia «Descripción de requerimientos y/o Análisis del
+% estado del arte»; el título invierte el orden porque el contenido presenta
+% primero el estado del arte y deriva de él los requisitos (decisión del
+% autor, 24-08-2026; el «y/o» del índice no fija el orden del compuesto).
 % Estado del arte: dos familias de productos (redes de contenido y
 % herramientas de propósito), el hueco que BUKIT ocupa, y los requisitos
 % funcionales y no funcionales numerados (RF/RNF) para trazabilidad.
@@ -47,6 +51,10 @@ La tabla \ref{tab:comparativa-estado-arte} resume la comparación sobre los tres
 \begin{table}[htbp]
   \centering
   \small
+  % Título encima de la tabla, como en las longtable: posición unificada en
+  % toda la memoria (revisión del 24-08-2026).
+  \caption{Comparativa del estado del arte sobre los tres pilares del producto.}
+  \label{tab:comparativa-estado-arte}
   \begin{tabular}{lcccl}
     \toprule
     \textbf{Producto} & \textbf{Metas con plazo} & \textbf{Comunidad y descubrimiento} & \textbf{Recompensa al avance} & \textbf{Ámbito} \\
@@ -61,8 +69,6 @@ La tabla \ref{tab:comparativa-estado-arte} resume la comparación sobre los tres
     \bukit     & Sí      & Sí      & Sí      & General \\
     \bottomrule
   \end{tabular}
-  \caption{Comparativa del estado del arte sobre los tres pilares del producto.}
-  \label{tab:comparativa-estado-arte}
 \end{table}
 
 La lectura de la tabla es el argumento del producto: ningún competidor generalista combina las tres columnas, y los dos que las combinan parcialmente lo hacen encerrados en un nicho.
@@ -100,24 +106,25 @@ Cada requisito lleva la prioridad del vocabulario del plan (capítulo \ref{ch:ta
   \endlastfoot
   RF-01 & Registro de cuentas e inicio de sesión. & Imprescindible \\
   RF-02 & Dos tipos de usuario (normal y TOP) con distinta ponderación en el \eng{feed}; el alta TOP llega por un proceso externo de admisión. & Imprescindible \\
-  RF-03 & Creación, consulta, edición y eliminación de listas de metas, cada lista con al menos una meta y cada meta con su fecha límite; una meta completada fuera de plazo queda marcada con su tiempo de retraso. & Imprescindible \\
+  RF-03 & Creación, consulta, edición y eliminación de listas de metas, cada lista con al menos una meta y cada meta con su fecha límite; una meta vencida sin cumplir queda como no lograda y su lista sigue contando para el límite; si se completa más tarde, queda marcada como completada con su tiempo de retraso. & Imprescindible \\
   RF-04 & Límite de tres listas en curso por cuenta en el plan gratuito: las completadas no computan, liberan su hueco y su borrado es irreversible. & Imprescindible \\
   RF-05 & Recordatorios de los plazos de las metas. & Imprescindible \\
   RF-06 & Publicaciones de progreso y de meta completada, creables únicamente desde listas propias. & Imprescindible \\
   RF-07 & \eng{Feed} personalizado en mosaico y segundo \eng{feed} exclusivo de seguidos, conmutables entre sí. & Imprescindible \\
   RF-08 & Buscador global de perfiles, publicaciones y listas. & Imprescindible \\
   RF-09 & Mensajería privada entre personas usuarias, con entrega en tiempo real. & Imprescindible \\
-  RF-10 & Notificaciones de la actividad relevante (recordatorios, mensajes, interacciones). & Imprescindible \\
+  RF-10 & Notificaciones de la actividad relevante (recordatorios, mensajes y nuevos seguimientos, RF-21). & Imprescindible \\
   RF-11 & Mapa de seguidos mutuos, con ubicación aproximada y lugares de metas cumplidas. & Imprescindible \\
   RF-12 & Mapa de descubrimiento de personas afines por país, radio o mundo. & Imprescindible \\
   RF-13 & Perfil con un máximo de cinco publicaciones libres e historias ilimitadas. & Imprescindible \\
   RF-14 & Caducidad de las publicaciones del perfil a los 60 días salvo acción expresa de mantenerlas, conservando siempre visible la última; historias con caducidad de 24 horas, con destacadas y consulta privada. & Imprescindible \\
-  RF-15 & Verificación de identidad que desbloquea publicar desde el perfil y aparecer en el descubrimiento. & Imprescindible \\
+  RF-15 & Verificación de identidad que desbloquea publicar desde el perfil y el uso del mapa de descubrimiento (incluida la aparición en él). & Imprescindible \\
   RF-16 & Mayoría de edad verificada como condición para el mapa de descubrimiento. & Imprescindible \\
-  RF-17 & Sugerencias de personas afines a partir de metas e intereses. & Deseable \\
+  RF-17 & Sugerencias de personas afines a partir de metas e intereses. & Imprescindible \\
   RF-18 & Estimación de plazos realistas por meta asistida por \ac{IA}, ejecutada en segundo plano y dirigida por eventos. & Opcional \\
   RF-19 & Subida y reproducción de vídeo, delegadas en un servicio gestionado; los vídeos de motivación del \eng{feed} son exclusivos de los usuarios TOP. & Opcional \\
   RF-20 & Publicaciones patrocinadas propias, servidas desde una tabla del sistema e intercaladas en el \eng{feed} por la ordenación. & Opcional \\
+  RF-21 & Seguimiento entre personas usuarias: seguir y dejar de seguir, como base del \eng{feed} de seguidos (RF-07) y de los seguidos mutuos del mapa (RF-11). & Imprescindible \\
 \end{longtable}
 \endgroup
 
@@ -146,7 +153,7 @@ Cada requisito lleva la prioridad del vocabulario del plan (capítulo \ref{ch:ta
   \endlastfoot
   RNF-01 & Arquitectura \ac{SPA} más \ac{API} \ac{REST} en tres niveles, con la lógica común (tipos, validación, cliente \acs{HTTP}) compartida entre web y móvil desde paquetes comunes. \\
   RNF-02 & Una única base de datos PostgreSQL que cubra el grafo social (relacional), el mapa (PostGIS) y la afinidad (pgvector). \\
-  RNF-03 & Seguridad: autenticación \ac{JWT} con rotación de los \eng{tokens} de refresco, contraseñas cifradas, doble capa de limitación de peticiones y manejo centralizado de errores. \\
+  RNF-03 & Seguridad: autenticación \ac{JWT} con rotación de los \eng{tokens} de refresco, contraseñas almacenadas únicamente como hash (bcrypt), doble capa de limitación de peticiones y manejo centralizado de errores. \\
   RNF-04 & Protección de datos (\acs{RGPD}): minimización, ubicación siempre aproximada y con consentimiento, datos en región europea y prohibición de almacenar el documento de identidad. \\
   RNF-05 & Entrega en tiempo real de mensajes y notificaciones, sin recargar la aplicación. \\
   RNF-06 & Calidad verificable: pruebas unitarias, de integración y \ac{E2E}, con integración continua de fallo rápido y despliegue automático. \\

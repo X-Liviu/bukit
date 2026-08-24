@@ -33,7 +33,7 @@
 \textbf{NOTA — cambios respecto a la v1} (26-07-2026):
 \begin{enumerate}
   \item \textbf{R4 (incumplimiento de la normativa de la memoria)}: se redefine el indicador clave, de «una revisión de capítulo encuentra una afirmación no original sin su cita» a «una revisión de capítulo encuentra una afirmación no original sin su cita \emph{y esta no queda corregida en la misma sesión que la detecta}».
-  Motivo: en las dos primeras revisiones (S1 y S2) el literal anterior se cumplió por detecciones corregidas en la propia sesión — así medía el funcionamiento de la revisión, no la señal del riesgo; la señal real es la afirmación sin cita que sobrevive a la sesión que la detecta.
+  Motivo: el literal anterior medía el funcionamiento de la revisión, no la señal del riesgo, y las dos primeras revisiones lo leyeron de forma dispar — en S2 se dio por cumplido (detecciones corregidas en la propia sesión) y en S1 el seguimiento ya lo interpretó como «sin resolver» (valor real «0 sin resolver» y casilla marcada como no cumplido, pese a las 4 afirmaciones detectadas y corregidas al momento); la redefinición fija por escrito la lectura de S1 y elimina esa disparidad: la señal real es la afirmación sin cita que sobrevive a la sesión que la detecta.
   P, I y severidad reevaluados en el seguimiento de S2 sin cambios (P2 \(\times\) I3, crítico).
   \item El resto de riesgos: sin cambios (revisión de S2 en \path{../seguimiento-riesgos/2026-08-03-S2.tex}).
 \end{enumerate}
@@ -144,7 +144,7 @@ R6 & Antes de comprometer historias que dependan de una tecnología desconocida,
 
 R7 & Minimización desde el diseño, ya decidida en las reglas de producto, el alcance y los requisitos (capítulos 2, 3 y 5): la verificación se delega en un proveedor externo guardando solo el estado y una clave de referencia (\eng{token}), la ubicación se difumina y exige consentimiento, y los datos residen en región europea. & Recortar o desactivar la función afectada (por ejemplo, el mapa de descubrimiento) hasta rediseñarla conforme al reglamento. \\ \hline
 
-R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los sprints restantes al nivel observado; recortar primero lo opcional. \\ \hline
+R8 & Horas reales por sesión en el diario; cada retrospectiva las compara con las declaradas; calendario con holgura hasta la defensa (septiembre como reserva). & Rebajar la capacidad declarada de los \eng{sprints} restantes al nivel observado; recortar primero lo opcional. \\ \hline
 
 R9 & Todas las integraciones externas se declaran objetivos secundarios o se desarrollan contra versiones simuladas que funcionan sin el servicio real, de forma que el núcleo del producto nunca dependa de ellas; se eligen proveedores con capa gratuita suficiente para un uso académico. & Sustituir el servicio por una versión simulada o por una alternativa gratuita equivalente, y documentar la integración real como línea futura. \\ \hline
 

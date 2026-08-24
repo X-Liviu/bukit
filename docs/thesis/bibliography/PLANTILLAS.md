@@ -52,8 +52,34 @@ Copiar la que toque a `references.bib` y rellenar. La "clave" (primer campo) es 
 }
 ```
 
+**Informe / norma / texto legal (tipo usado por iso-31000, rd-1125-2003, rgpd-2016-679, onu-agenda2030):**
+
+```bibtex
+@report{clave-informe,
+  author      = {{Nombre del organismo}},
+  title       = {Título del informe o de la norma},
+  institution = {Organismo que lo publica},
+  year        = {2003},
+  url         = {https://www.boe.es/...},
+}
+```
+
+**Capítulo de libro editado (tipo usado por brickman-campbell):**
+
+```bibtex
+@incollection{clave-capitulo,
+  author    = {Apellido, Nombre},
+  title     = {Título del capítulo},
+  editor    = {Apellido, Nombre},
+  booktitle = {Título del libro},
+  publisher = {Editorial},
+  year      = {1971},
+  pages     = {287--302},
+}
+```
+
 Notas APA:
 
 - Autores corporativos entre dobles llaves: `{{Prisma Data, Inc.}}` (evita que se interprete como "Nombre Apellido").
-- `urldate` es la fecha de consulta — obligatoria en recursos web según APA.
+- `urldate` es la fecha de consulta — obligatoria en recursos web según APA. Excepción: la legislación y las normas con `url` estable de fuente oficial (BOE, EUR-Lex, ONU) no la llevan — APA solo pide fecha de consulta para contenido que puede cambiar.
 - Hasta 20 autores se listan todos (`and` entre cada uno); biblatex-apa aplica las reglas de "et al." automáticamente al citar.
