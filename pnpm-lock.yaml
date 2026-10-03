@@ -21,8 +21,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(eslint@9.17.0(jiti@2.7.0))
       globals:
-        specifier: 15.14.0
-        version: 15.14.0
+        specifier: 17.12.0
+        version: 17.12.0
       prettier:
         specifier: 3.9.9
         version: 3.9.9
@@ -1042,8 +1042,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.14.0:
-    resolution: {integrity: sha512-OkToC372DtlQeje9/zHIo5CT8lRP/FUgEOKBEhU4e0abL7J7CD24fD9ohiLN5hagG/kWCYj4K5oaxxtj2Z0Dig==}
+  globals@17.12.0:
+    resolution: {integrity: sha512-cezEd/DTyyht9cvSSURyygXPfy04GtWO/5e6ZPvH7fCtjKz9PYOmuawphw1Ctd1f6C+5JypXfGD7ahNMXvevBA==}
     engines: {node: '>=18'}
 
   gopd@1.2.0:
@@ -2706,7 +2706,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.14.0: {}
+  globals@17.12.0: {}
 
   gopd@1.2.0: {}
 
