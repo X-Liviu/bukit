@@ -19,7 +19,7 @@ El servidor (\texttt{apps/api}) es una \ac{API} \ac{REST} propia con Express sob
 Los tres paquetes compartidos son el corazón de la arquitectura: \texttt{packages/core} contiene los esquemas Zod que son la única fuente de tipos y de validación para todo el sistema; \texttt{packages/api-client}, el cliente \ac{HTTP} tipado que consumen web y móvil; y \texttt{packages/ui-core}, la lógica de estado de interfaz sin componentes visuales, que cada plataforma viste con los suyos.
 
 Los datos viven en una única base PostgreSQL con PostGIS para el mapa y pgvector para la afinidad, de modo que el grafo social, el mapa y la afinidad comparten motor, integridad y copia de seguridad; el porqué de cada elección frente a sus alternativas es materia del capítulo \ref{ch:alternativas}.
-En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción está prevista Neon, en región europea conforme al criterio de residencia del dato derivado del \ac{RGPD} \parencite{rgpd-2016-679}.
+En desarrollo, pruebas e integración continua la base corre en Docker con una imagen propia; en producción, en Neon, en región europea conforme al criterio de residencia del dato derivado del \ac{RGPD} \parencite{rgpd-2016-679}.
 \todonote{Añadir figura de la arquitectura general (\eng{monorepo}, apps, paquetes, base de datos y servicios externos) en la fase de diseño.}
 
 \section{Servicios externos: el núcleo nunca depende de ellos}
@@ -36,6 +36,7 @@ La primera prueba automatizada real cubre los esquemas compartidos de usuario: l
 El segundo incremento siguió el mismo criterio de cimientos primero: el esqueleto de la \ac{API} incorporó el manejo centralizado de errores y el registro de sucesos antes que ninguna función de negocio.
 Toda respuesta de error cumple desde entonces un único contrato, definido junto al resto de la validación en \texttt{packages/core}, que nunca filtra detalles internos al cliente; y un registro estructurado anota cada petición y cada fallo con su nivel de gravedad, censurando las credenciales antes de escribirlas para que los diarios de ejecución no puedan convertirse en una fuga de datos.
 El despliegue continuo cierra el ciclo: todo cambio que pasa el \eng{pipeline} llega solo a producción, sobre los destinos cuyo análisis se recoge en el capítulo \ref{ch:alternativas}.
+Antes de cada despliegue, la propia cadena aplica a la base de producción las migraciones pendientes del esquema, de modo que el código nuevo nunca llega antes que el esquema que necesita.
 Esta prioridad no es un capricho: con las comprobaciones automáticas en pie desde el principio, ninguna historia posterior puede darse por cerrada sin pasar por ellas, que es exactamente el criterio de cierre definido en el capítulo \ref{ch:tareas}.
 
 \section{El método de construcción}

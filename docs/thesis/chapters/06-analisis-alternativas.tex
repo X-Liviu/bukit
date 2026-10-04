@@ -173,6 +173,8 @@ El peaje asumido de esa capa gratuita es que el servicio se duerme tras 15 minut
 Se descartaron Railway —tras su periodo de prueba, el plan gratuito queda en 1~\$ de crédito mensual, insuficiente para una \ac{API} siempre encendida, y además rechaza los despliegues gratuitos en las horas de mayor carga \parencite{railway-pricing}— y Fly.io, sin capa gratuita para las cuentas nuevas desde octubre de 2024 \parencite{flyio-pricing}.
 Los destinos restantes se eligen al abordar cada despliegue: la web, entre Vercel y Cloudflare Pages; la aplicación móvil, por la cadena de Expo.
 La base de datos es la excepción: su destino ya está decidido en Neon (sección \ref{sec:alt-bd}).
+Las migraciones del esquema de la base de producción las aplica la propia cadena de integración continua, como paso posterior a las pruebas y anterior al despliegue: como Render solo despliega con todas las comprobaciones en verde, el esquema queda siempre al día antes de que llegue el código que lo usa.
+Se descartaron la orden previa al despliegue que ofrece Render, disponible solo en sus planes de pago \parencite{render-deploys}, y aplicar las migraciones al arrancar el servicio, que metería la herramienta de migraciones en la imagen y sumaría segundos a cada arranque en frío.
 El criterio para cerrar los abiertos vuelve a ser el mismo: capa gratuita suficiente para un uso académico.
 
 \section{Resumen del análisis}

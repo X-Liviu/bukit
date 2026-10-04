@@ -76,9 +76,9 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
     Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por sprint. \\
     Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido semanal es una proyección. \\
     Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la redacción de la memoria; nunca dos historias de producto a medias. \\
-    Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos cada lunes: fijar capacidad y seleccionar del \eng{backlog}. \\
+    Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos cada lunes: fijar capacidad, seleccionar del \eng{backlog} y anotar la lista de trabajo de la semana en la entrada del diario de ese día. \\
     \eng{Daily} & Scrum & Sustituida por el procedimiento ya vigente de abrir cada sesión releyendo la última entrada del diario de desarrollo. \\
-    \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}). \\
+    \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}) y, cada quince días, entrega de la versión vigente al tutor (sección \ref{sec:metodologia-tutor}). \\
     Retrospectiva & Scrum & Sección fija de la entrada del diario al cierre del \eng{sprint}, que incluye la revisión de riesgos (capítulo \ref{ch:riesgos}). \\
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
@@ -90,13 +90,31 @@ Primera: la realimentación de velocidad llega al doble de frecuencia justo cuan
 Segunda: el grano semanal permite modular la capacidad de cada periodo (verano con trabajo, estancia Erasmus, posibles prácticas de empresa) sin tocar el método: cambia la capacidad, no el ritmo.
 Tercera: el argumento clásico contra los \eng{sprints} cortos, el coste proporcional de las ceremonias, desaparece en solitario, donde todas las ceremonias juntas cuestan menos de una hora semanal.
 
-\subsection{Herramienta de gestión}
+\subsection{Herramienta de gestión y su evolución}
 \label{sec:metodologia-herramienta}
 
-La gestión del \eng{backlog} y del tablero se realiza con GitHub Projects, con las historias como \eng{issues} (las fichas de trabajo de GitHub), los puntos y la épica de pertenencia (el bloque de funcionalidad que la agrupa; sección \ref{sec:backlog}) como etiquetas, y las fases como hitos (\eng{milestones}).
-El tablero tiene cuatro columnas (\eng{Backlog}, Preparado, En curso con límite de \acs{WIP} 2, y Hecho).
-Al ser parte de GitHub, el tablero vive junto al repositorio y enlaza cada historia con los cambios de código que la implementan (\eng{commits} y \eng{pull requests}), lo que genera trazabilidad historia--código sin esfuerzo adicional: evidencia gratuita para esta memoria.
-El tablero es la herramienta operativa del día a día; esta memoria conserva las instantáneas relevantes (el \eng{backlog} inicial aquí, el estado final y las desviaciones en los capítulos \ref{ch:resultados} y \ref{ch:gantt-tfg}).
+El método arrancó con un tablero Kanban en GitHub Projects.
+Cada historia era una ficha de trabajo de GitHub (\eng{issue}), con sus puntos y su épica de pertenencia (el bloque de funcionalidad que la agrupa; sección \ref{sec:backlog}) como etiquetas, y cada fase era un hito (\eng{milestone}).
+El tablero tenía cuatro columnas (\eng{Backlog}, Preparado, En curso con límite de \acs{WIP} 2, y Hecho), y cada cambio de código cerraba la ficha de su historia, enlazando historia y código.
+
+Ese tablero se usó durante toda la fase F1 y se abandonó al retomar el trabajo tras la pausa del traslado (03/10/2026), junto con las fichas y los hitos, por tres motivos que la propia fase dejó a la vista.
+Primero, era innecesario: en un proyecto de una sola persona duplicaba lo que ya registraban el diario de desarrollo y este capítulo, de modo que no aportaba información nueva.
+Segundo, metía ruido en la planificación: el trabajo real de cada semana quedaba repartido entre el tablero, el diario y la memoria, y mover fichas no informaba de nada que el diario no dijera ya.
+Tercero, suponía una carga de trabajo extra sin retorno, justo en el recurso que la fase demostró más escaso: las horas disponibles (capítulo \ref{ch:gantt-tfg}).
+
+Desde entonces, el \eng{backlog} vive en este capítulo (tablas \ref{tab:backlog-epicas} y \ref{tab:backlog-f1}), la planificación de cada lunes se anota como lista de trabajo de la semana en la entrada del diario de ese día, y el límite de una sola historia de producto en curso se mantiene como regla, ya sin tablero que lo visualice.
+La trazabilidad entre historias y código se conserva por otra vía: cada cambio de código nombra la historia que implementa, y el diario la registra.
+Las fichas y los hitos de F1 se conservan cerrados en el repositorio, como evidencia de esa primera etapa del método.
+Esta memoria conserva las instantáneas relevantes de la planificación: el \eng{backlog} inicial aquí, y el estado final y las desviaciones en los capítulos \ref{ch:resultados} y \ref{ch:gantt-tfg}.
+
+\subsection{Revisión periódica con el tutor}
+\label{sec:metodologia-tutor}
+
+Al retomar el trabajo, el método incorpora una revisión externa periódica: los días 1 y 15 de cada mes, el autor envía al tutor la versión vigente de la memoria con un resumen de los cambios y novedades desde el envío anterior.
+La primera entrega coincidió con la reanudación del trabajo, el 05/10/2026, y la segunda se fijó para el 15/10/2026, de modo que la cadencia quincenal arranca ese mismo mes.
+La cadencia cumple dos funciones.
+La primera es dar a la revisión del avance el destinatario que en solitario le faltaba (sección \ref{sec:metodologia-alternativas}): alguien externo que valora el progreso y propone mejoras mientras aún pueden incorporarse.
+La segunda es ejercer una disciplina indirecta: un compromiso fijo cada dos semanas sostiene un ritmo de trabajo constante, que es precisamente lo que faltó en la fase F1.
 
 \section{Estimación del esfuerzo}
 \label{sec:estimacion}
@@ -108,7 +126,7 @@ Al no existir equipo, no procede la estimación por votación simultánea del eq
 La historia es además la única unidad que recibe puntos, una decisión que conviene justificar porque se aparta a sabiendas de la práctica que el autor conoció en el proyecto en equipo ya mencionado (sección \ref{sec:metodologia-alternativas}), donde cada historia se desglosaba en tareas y cada tarea recibía su propia estimación en puntos.
 Ese segundo nivel de estimación cumple en un equipo una función concreta: repartir el trabajo de una misma historia entre varias personas, equilibrar la carga de cada miembro y hacer visible el avance individual dentro de la iteración.
 En un proyecto de una sola persona esa función desaparece por completo —no hay trabajo que repartir ni cargas que equilibrar—, y de la doble estimación solo quedarían los costes: un trámite añadido en cada historia y, sobre todo, el riesgo de contar el mismo trabajo dos veces y distorsionar la velocidad, la única telemetría con la que este plan se recalibra.
-Las tareas, en cambio, sí se conservan cuando ayudan: al ejecutar una historia, sus subtareas técnicas se anotan como lista de comprobación dentro de su propia ficha del tablero, como guía de ejecución y rastro del avance, pero sin puntos propios.
+Las tareas, en cambio, sí se conservan cuando ayudan: al ejecutar una historia, sus subtareas técnicas se anotan como lista de comprobación en la planificación semanal del diario de desarrollo (durante F1, dentro de la ficha de la historia en el tablero; sección \ref{sec:metodologia-herramienta}), como guía de ejecución y rastro del avance, pero sin puntos propios.
 
 Como hipótesis inicial de equivalencia se toman unas 2,7 horas por punto, de modo que la velocidad esperada de cada \eng{sprint} se deriva de su capacidad declarada (por ejemplo, unos 4 puntos en un \eng{sprint} de verano de 10 horas).
 Esta equivalencia sirve únicamente para el encaje macro del plan; a partir del tercer \eng{sprint} la manda la velocidad real medida, y la hipótesis se recalibra en cada retrospectiva (riesgo R2).
@@ -209,10 +227,16 @@ Sus 5 puntos tampoco añaden trabajo nuevo al inventario: forman parte de los 13
 \section{Fases y cronograma del desarrollo}
 \label{sec:fases}
 
-El periodo de ejecución se organiza en cuatro fases que agrupan 39 \eng{sprints} semanales (lunes--domingo), del 20/07/2026 al 16/05/\thesisYear, precedidas por una fase de planificación (F0, con un único \eng{sprint} S0, del 14 al 19 de julio de 2026) en la que se elaboran los objetivos, el plan de riesgos y este plan: la planificación inicial que la metodología elegida toma prestada del enfoque tradicional.
+El periodo de ejecución se organiza en cuatro fases que agrupan 37 \eng{sprints} semanales (lunes--domingo), del 20/07/2026 al 16/05/\thesisYear, precedidas por una fase de planificación (F0, con un único \eng{sprint} S0, del 14 al 19 de julio de 2026) en la que se elaboran los objetivos, el plan de riesgos y este plan: la planificación inicial que la metodología elegida toma prestada del enfoque tradicional.
 El calendario incorpora además dos pausas planificadas sin \eng{sprints}, correspondientes a los traslados de ida y vuelta de la estancia Erasmus: planificar semanas de capacidad cero no aporta información y solo introduciría ruido en la medida de velocidad.
 Cada fase cierra con un incremento demostrable, que actúa como hito de control.
 Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— son una base orientativa del plan, no un compromiso inamovible: fijan el encaje macro y los hitos de control, y cualquier re-base que las circunstancias exijan queda documentada con su motivo en este capítulo y reflejada en los capítulos \ref{ch:objetivos} y \ref{ch:gantt-tfg}.
+
+Durante la ejecución, el calendario se re-basó una vez, el 03/10/2026.
+F1 cerró en su fecha prevista (30/08/2026) con 14 de sus 21 puntos entregados, y las dos historias de EP02 que quedaron pendientes (US-06 y US-07) pasaron al inicio de F2.
+La primera pausa, prevista hasta el 20/09/2026, se amplió hasta el 04/10/2026 porque el traslado y la instalación en la estancia Erasmus se alargaron más de lo previsto.
+En consecuencia, F2 arrancó el 05/10/2026 con dieciséis \eng{sprints} en lugar de dieciocho (80 horas en lugar de 90), la numeración de los \eng{sprints} posteriores se desplazó dos posiciones y la fecha de cierre del desarrollo se mantuvo.
+El balance de F1 frente a lo previsto se recoge en el capítulo \ref{ch:gantt-tfg}.
 
 \begin{table}[htbp]
   \centering
@@ -226,11 +250,11 @@ Estas fechas —incluida la de cierre del desarrollo, el 16/05/\thesisYear— so
     \midrule
     F0  & Planificación: objetivos, riesgos, metodología    & S0       & 14/07 -- 19/07/2026 & $\sim$20 \\
     F1  & Fundaciones de la \acs{API}: EP01, EP02           & S1--S6   & 20/07 -- 30/08/2026 & 48 \\
-    --- & Pausa: viajes y traslado a la estancia Erasmus    & ---      & 31/08 -- 20/09/2026 & 0 \\
-    F2  & Cliente web, listas y publicaciones: EP03--EP05   & S7--S24  & 21/09/2026 -- 24/01/\thesisYear & 90 \\
+    --- & Pausa: traslado e instalación en la estancia Erasmus & --- & 31/08 -- 04/10/2026 & 0 \\
+    F2  & Cliente web, listas y publicaciones: EP03--EP05   & S7--S22  & 05/10/2026 -- 24/01/\thesisYear & 80 \\
     --- & Pausa: regreso e instalación en Bilbao            & ---      & 25/01 -- 31/01/\thesisYear & 0 \\
-    F3  & Núcleo social y diferenciadores: EP06, EP07, EP09, EP11 & S25--S32 & 01/02 -- 28/03/\thesisYear & 120 \\
-    F4  & Cierre de producto y memoria: EP08, EP12          & S33--S39 & 29/03 -- 16/05/\thesisYear & 105 \\
+    F3  & Núcleo social y diferenciadores: EP06, EP07, EP09--EP11 & S23--S30 & 01/02 -- 28/03/\thesisYear & 120 \\
+    F4  & Cierre de producto y memoria: EP08, EP12          & S31--S37 & 29/03 -- 16/05/\thesisYear & 105 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -264,7 +288,7 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 
 El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
 El inventario comprometido vigente suma 146 puntos: los 138 iniciales más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida.
-Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (363 horas), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 20\,\%.
+Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (353 horas tras las re-bases de F1 y de la primera pausa), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 17\,\%.
 La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
 La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 

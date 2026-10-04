@@ -12,7 +12,8 @@ thesis/
 │   ├── metadata.tex      ← VARIABLES GLOBALES: título, autor, director, curso...
 │   ├── packages.tex      ← paquetes (babel trilingüe, biblatex-APA, acronym...)
 │   ├── macros.tex        ← comandos propios (\bukit, \eng{}, \todonote{})
-│   └── style.tex         ← formato/diseño según la guía de estilo (aplicado el 16-07-2026)
+│   ├── style.tex         ← formato/diseño según la guía de estilo (aplicado el 16-07-2026)
+│   └── riesgos-preamble.tex ← preámbulo compartido de los documentos de riesgos
 ├── frontmatter/          ← preliminares, en el orden de la guía:
 │   ├── titlepage.tex     ← portada según plantilla del centro (logos TODO)
 │   ├── abstract.tex      ← resumen trilingüe (ES/EU/EN) + palabras clave
@@ -35,6 +36,8 @@ thesis/
 ├── figures/              ← imágenes (graphicspath apunta aquí); logos/ para la portada
 ├── bibliography/
 │   └── references.bib    ← bibliografía BibLaTeX en normas APA
+├── plan-riesgos/         ← versiones completas del plan de riesgos (v1, v2…), documentos sueltos
+├── seguimiento-riesgos/  ← un seguimiento de riesgos por sprint (copiando TEMPLATE.tex)
 └── build/                ← artefactos de compilación (gitignorado, se regenera)
 ```
 
@@ -55,7 +58,7 @@ thesis/
 - **Labels con prefijo**: `ch:` capítulos, `sec:` secciones, `fig:` figuras, `tab:` tablas, `ap:` anexos.
 - **Imágenes**: a `figures/`, en minúsculas con guiones. Doble numeración (Figura 3.2 = capítulo 3, figura 2): automática con `\begin{figure}` + `\caption`.
 - **Datos globales**: nunca escribir título/autor/curso a mano; usar `\thesisTitle`, `\thesisAuthorFormal`... (en `config/metadata.tex`, con los `TODO` pendientes marcados).
-- **Pendientes**: marcar con `\todonote{...}` (rojo en el PDF); antes de entregar, buscar "todonote" y eliminar todos.
+- **Pendientes**: marcar con `\todonote{...}` (rojo en el PDF); antes de entregar, buscar "todonote" y eliminar todos, y revisar también los `% TODO` de `config/metadata.tex` y `frontmatter/titlepage.tex`, que esa búsqueda no encuentra.
 
 ## Formato de la guía de estilo (aplicado el 16-07-2026)
 

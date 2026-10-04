@@ -1,6 +1,7 @@
 # Postgres local para desarrollo, tests y CI.
-# Imagen personalizada (ver docker/postgres/Dockerfile) = PostGIS + pgvector juntos.
-# Producción NO usa esto: irá en Neon (EU). Estas credenciales son solo de dev.
+# Imagen personalizada (ver docker/postgres/Dockerfile) = PostGIS + pgvector juntos,
+# en las mismas versiones que la base de producción (Neon).
+# Producción NO usa esto: vive en Neon (UE). Estas credenciales son solo de dev.
 services:
   db:
     build: ./docker/postgres

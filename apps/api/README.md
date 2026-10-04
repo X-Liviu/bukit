@@ -18,12 +18,16 @@ La comprobación de vida es `GET /health` → `{ "status": "ok" }`.
 
 En local se cargan desde un `.env` en esta carpeta (vía `dotenv`); en Render se definen en el servicio (el Blueprint fija las estáticas).
 
-| Variable   | Obligatoria | Descripción                                                                     |
-| ---------- | ----------- | ------------------------------------------------------------------------------- |
-| `PORT`     | No          | Puerto de escucha. Render la inyecta automáticamente; en local, 3001 de reserva. |
-| `NODE_ENV` | No          | `production` en despliegue (logs JSON puros); `development` en local (pino-pretty). |
+| Variable        | Obligatoria                   | Secreta | Descripción                                                                                                                                                                                                                                                                |
+| --------------- | ----------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`  | Sí (para las rutas con datos) | Sí      | Cadena de conexión de PostgreSQL. En local, el Postgres de Docker (ver `.env.example`). En producción, Neon: el valor vive solo en el panel de Render (`sync: false` en `render.yaml`) y en el secreto `DATABASE_URL_PRODUCCION` de GitHub, que usa el job de migraciones. |
+| `JWT_SECRET`    | En producción                 | Sí      | Secreto de firma de los tokens (mínimo 32 caracteres; uno más corto es un error en cualquier entorno). En local hay uno de desarrollo; en Render lo genera el Blueprint (`generateValue`).                                                                                 |
+| `PORT`          | No                            | No      | Puerto de escucha. Render la inyecta automáticamente; en local, 3001 de reserva.                                                                                                                                                                                           |
+| `NODE_ENV`      | No                            | No      | `production` en despliegue (logs JSON puros); `development` en local (pino-pretty).                                                                                                                                                                                        |
+| `LOG_LEVEL`     | No                            | No      | Nivel del registro de sucesos de pino; por defecto `debug` en desarrollo e `info` en producción.                                                                                                                                                                           |
+| `BCRYPT_ROUNDS` | No                            | No      | Coste del hash de contraseñas; por defecto 12. Las pruebas lo bajan a 4 para ir rápido.                                                                                                                                                                                    |
 
-Ninguna variable es secreta todavía; cuando existan (base de datos, JWT…), se añadirán aquí y como secretos del servicio en Render, nunca al repositorio.
+Los secretos nunca entran en el repositorio: el `.env` y sus variantes (`.env.*`, salvo `.env.example`) están en `.gitignore` y en `.dockerignore`.
 
 ## Despliegue continuo (US-03)
 
@@ -31,4 +35,5 @@ Ninguna variable es secreta todavía; cuando existan (base de datos, JWT…), se
 - **Infraestructura como código**: el servicio se define en el [`render.yaml`](../../render.yaml) de la raíz (Blueprint). Para crearlo la primera vez: Render → New → Blueprint → conectar este repositorio → Apply.
 - **La imagen** se construye con el [`Dockerfile`](./Dockerfile) de esta carpeta, con la raíz del monorepo como contexto. El contenedor ejecuta la API con `tsx` porque los paquetes compartidos se consumen sin compilar (decisión del esqueleto, comentada en el propio Dockerfile).
 - **Despliegue solo con la CI en verde**: `autoDeployTrigger: checksPass` — Render espera a los checks de GitHub Actions del commit y no despliega si alguno falla o si no hay checks.
+- **Base de datos de producción: Neon** (región Fráncfort, PostgreSQL 16.15 con PostGIS 3.3.10 y pgvector 0.8.0, las mismas versiones que la imagen local de `docker/postgres`). Las migraciones las aplica la CI (job `migraciones`, solo en los push a `main` y después de las pruebas), de modo que la base ya está migrada cuando Render despliega el código nuevo. Las migraciones ya aplicadas no se editan nunca: todo cambio de esquema va en una migración nueva.
 - **Peaje del plan gratuito**: el servicio se duerme tras 15 min sin tráfico y despierta con la primera petición (~1 min de arranque en frío).

@@ -20,3 +20,7 @@ docker
 *.log
 .env
 **/.env
+# Variantes del .env (p. ej. .env.production, con la cadena de conexión de
+# producción) tampoco viajan nunca en el contexto de construcción.
+**/.env.*
+!**/.env.example

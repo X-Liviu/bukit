@@ -39,31 +39,33 @@ La tabla \ref{tab:gasto-ia} recoge el desglose y distingue en cada fila el gasto
     \midrule
     Julio 2026                  & Planificación y arranque de F1 (alta) & Max & 93~€ (real) \\
     Agosto 2026                 & F1, verano re-basado (media)          & Max & 93~€ (real) \\
-    Septiembre 2026             & Pausa por traslado (mínima)           & Pro & 18~€ \\
-    Octubre 2026 -- enero 2027  & F2, Erasmus (baja)                    & Pro & 4 $\times$ 18 = 72~€ \\
+    Septiembre 2026             & Pausa por traslado (sin actividad)    & --- & 0~€ (real) \\
+    Octubre 2026                & Reanudación de F2, Erasmus (baja)     & Max & 45~€ (real) \\
+    Noviembre 2026 -- enero 2027 & F2, Erasmus (baja)                   & Pro & 3 $\times$ 18 = 54~€ \\
     Febrero -- mayo 2027        & F3--F4, con posibles prácticas (alta) & Max & 4 $\times$ 93 = 372~€ \\
     \midrule
-    \textbf{Total estimado}     &                                       &     & \textbf{648~€} \\
+    \textbf{Total estimado}     &                                       &     & \textbf{657~€} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Tres matices completan la tabla.
+Cuatro matices completan la tabla.
 Primero, la previsión hereda la lectura conservadora del capítulo \ref{ch:gantt-tfg}: si el escenario de mayor disponibilidad adelantara el cierre del desarrollo, los últimos meses de plan Max no llegarían a contratarse y el total bajaría.
 Segundo, los meses de junio y julio de \thesisYear{} (preparación de la defensa) quedan fuera del cómputo: el plan prevé el desarrollo ya cerrado para entonces y la suscripción que se contrate dependerá solo del uso personal que el autor haga de la herramienta en ese momento.
 Tercero, el plan Max de agosto se contrató antes de la re-base de capacidad del 09/08/2026 (contingencia del riesgo R8, capítulos \ref{ch:tareas} y \ref{ch:riesgos}), así que la fila queda registrada como gasto real ya desembolsado aunque, con la dedicación re-basada, el criterio de dimensionamiento habría apuntado al plan Pro: el registro conserva lo que ocurrió, no lo que la regla habría dicho después.
+Cuarto, septiembre no tuvo gasto —la suscripción se canceló durante la pausa del traslado, en la que el proyecto no tuvo actividad—, y en octubre, mes de la reanudación, se contrató de nuevo el plan Max, que ese mes costó 90~€: el autor asumió la mitad y la otra mitad la cubrió un tercero, por lo que la tabla registra como gasto del proyecto los 45~€ que desembolsó el autor.
 
 \subsection{Infraestructura: coste cero}
 \label{sec:gasto-infraestructura}
 
-El resto de servicios que el proyecto necesita opera íntegramente en capas gratuitas: el alojamiento del código, el tablero y la integración continua (GitHub), la base de datos gestionada, el despliegue de la \ac{API} y del cliente web, y la verificación de identidad en modo de pruebas.
+El resto de servicios que el proyecto necesita opera íntegramente en capas gratuitas: el alojamiento del código y la integración continua (GitHub), la base de datos gestionada, el despliegue de la \ac{API} y del cliente web, y la verificación de identidad en modo de pruebas.
 No es una casualidad sino la restricción de coste cero declarada en el capítulo \ref{ch:alternativas}: superar los límites de esas capas gratuitas está identificado como el riesgo R9 en el capítulo \ref{ch:riesgos}, con su plan de respuesta correspondiente.
 
 \section{Costes valorados (no desembolsados)}
 \label{sec:costes-valorados}
 
 Al cierre del proyecto se valorarán las dos partidas que no generan desembolso.
-La primera son las horas de trabajo del autor: se tomarán las horas reales acumuladas en el diario de desarrollo (la referencia prevista son unas 383, capítulo \ref{ch:gantt-tfg}) y se valorarán con una tarifa de mercado justificada en ese momento.
+La primera son las horas de trabajo del autor: se tomarán las horas reales acumuladas en el diario de desarrollo (la referencia prevista son unas 373, capítulo \ref{ch:gantt-tfg}) y se valorarán con una tarifa de mercado justificada en ese momento.
 La segunda es la amortización proporcional del equipo personal (un portátil ya en propiedad) durante los meses del proyecto.
 El cálculo se reserva al cierre: hacerlo antes obligaría a usar las horas previstas en lugar de las reales, contradiciendo el criterio de registro del capítulo.
 \todonote{Completar al cierre: horas reales del diario $\times$ tarifa justificada + amortización del equipo.}
