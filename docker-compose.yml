@@ -5,7 +5,12 @@
 services:
   db:
     build: ./docker/postgres
-    image: bukit-postgres:16
+    # La etiqueta lleva las versiones (10-10-2026): `docker compose up` solo
+    # construye si la etiqueta no existe, así que con una fija (antes
+    # bukit-postgres:16) un cambio del Dockerfile no se notaba y se seguía
+    # usando la imagen vieja sin aviso. Al cambiar versiones en el Dockerfile,
+    # cambiar también esta etiqueta y la de .github/workflows/ci.yml.
+    image: bukit-postgres:16.15-postgis3.3.10-pgvector0.8.0
     container_name: bukit-db
     restart: unless-stopped
     environment:

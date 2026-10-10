@@ -26,7 +26,7 @@ pgvector · Prisma · Docker (dev) / Neon EU (prod).
 
 ## Requisitos
 
-- **Node.js** ≥ 22 (recomendado vía [Volta](https://volta.sh); la versión se fija en `package.json`).
+- **Node.js** ≥ 22. La versión exacta (hoy 24.21.0) se fija en el campo `volta` de `package.json`, que es la que usan la CI y la imagen Docker; [Volta](https://volta.sh) la aplica sola si está instalado y, si no, se instala esa misma versión con el instalador oficial.
 - **pnpm** ≥ 9 (se activa con `corepack enable`, sin instalación aparte).
 - **Docker Desktop** (con WSL2) para la base de datos local.
 
@@ -46,13 +46,14 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 
 ## Scripts (raíz)
 
-| Comando                                               | Qué hace                                      |
-| ----------------------------------------------------- | --------------------------------------------- |
-| `pnpm lint` / `pnpm format`                           | ESLint / Prettier en todo el repo             |
-| `pnpm typecheck`                                      | `tsc --noEmit` en cada paquete                |
-| `pnpm db:up` / `pnpm db:down`                         | arranca / para Postgres (Docker)              |
-| `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos |
-| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                          |
+| Comando                                               | Qué hace                                                                                         |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `pnpm lint` / `pnpm format`                           | ESLint / Prettier en todo el repo                                                                |
+| `pnpm typecheck`                                      | `tsc --noEmit` en cada paquete                                                                   |
+| `pnpm test` / `pnpm test:e2e`                         | Vitest en todos los paquetes (la API necesita el Postgres local levantado) / Playwright en `e2e` |
+| `pnpm db:up` / `pnpm db:down`                         | arranca / para Postgres (Docker)                                                                 |
+| `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos                                                    |
+| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                                                                             |
 
 ## Decisiones de arquitectura tomadas
 
@@ -62,5 +63,8 @@ pnpm db:seed                    # datos de ejemplo (opcional)
    (geo/vector en SQL crudo). Dev en **Docker**, producción en **Neon** (EU, RGPD).
 4. Framework HTTP: **Express 5** estructurado a mano (descartado NestJS: el valor académico
    está en lo hecho a mano; ver cap. 6 de la memoria).
+5. Integración y despliegue continuos: **GitHub Actions** (lint → typecheck → pruebas, imagen
+   Docker en paralelo y migraciones de producción solo en `main`) y **Render** para la API
+   (plan gratuito, Fráncfort, despliega solo con la CI en verde); detalle en `apps/api/README.md`.
 
 Pendiente: scaffolding de `apps/web` y `apps/mobile`.

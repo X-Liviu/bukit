@@ -10,11 +10,11 @@
 # Node no puede cargar. Decisión del esqueleto, revisable si algún día los
 # paquetes compartidos pasan a compilarse.
 #
-# Node fijado a la versión de Volta (24.18.0) y pnpm a la del campo
+# Node fijado a la versión de Volta (24.21.0) y pnpm a la del campo
 # packageManager vía corepack: las mismas versiones en desarrollo, CI e
 # imagen (reproducibilidad, regla del proyecto).
 # =========================================================================
-FROM node:24.18.0-alpine AS deps
+FROM node:24.21.0-alpine AS deps
 RUN corepack enable
 WORKDIR /app
 # Solo los manifiestos: esta capa queda cacheada mientras no cambien las
@@ -36,7 +36,7 @@ RUN pnpm install --frozen-lockfile --prod
 COPY apps/api/prisma apps/api/prisma
 RUN pnpm dlx prisma@6.1.0 generate --schema apps/api/prisma/schema.prisma
 
-FROM node:24.18.0-alpine
+FROM node:24.21.0-alpine
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=deps /app ./

@@ -35,7 +35,8 @@ thesis/
 │   └── c-manuales.tex            ← Anexo III: manuales de usuario/administrador
 ├── figures/              ← imágenes (graphicspath apunta aquí); logos/ para la portada
 ├── bibliography/
-│   └── references.bib    ← bibliografía BibLaTeX en normas APA
+│   ├── references.bib    ← bibliografía BibLaTeX en normas APA
+│   └── PLANTILLAS.md     ← plantillas de entradas por tipo de fuente (nunca comentarios en el .bib)
 ├── plan-riesgos/         ← versiones completas del plan de riesgos (v1, v2…), documentos sueltos
 ├── seguimiento-riesgos/  ← un seguimiento de riesgos por sprint (copiando TEMPLATE.tex)
 └── build/                ← artefactos de compilación (gitignorado, se regenera)
@@ -44,7 +45,8 @@ thesis/
 ## Compilar
 
 - **VSCode (LaTeX Workshop):** guardar `main.tex` (o `Ctrl+Alt+B`). El PDF queda en `build/main.pdf` (`Ctrl+Alt+V` para verlo). La receta por defecto no necesita Perl.
-- **Terminal:** `latexmk` en esta carpeta (o `pnpm docs:pdf` desde la raíz) — requiere Perl instalado.
+- **Terminal sin Perl (el caso del equipo del autor, MiKTeX):** desde esta carpeta, `pdflatex --enable-installer -interaction=nonstopmode -file-line-error -output-directory=build main.tex` → `biber build/main` → dos pases más de `pdflatex`. `latexmk` y `pnpm docs:pdf` **no funcionan** sin Perl.
+- **Verificación tras compilar:** exit 0 y ningún aviso nuevo. Línea base esperada (revisada el 03-10-2026): 4 «ignored error: Infinite glue shrinkage» de longtable (bug conocido e inofensivo, comentado en `config/packages.tex`) y 18 «Package spanish Warning: Replacing ... by faked small caps» de los folios romanos de los preliminares (Carlito no tiene versalitas). Cualquier otro aviso, desborde, cita o referencia rota es nuevo y se corrige.
 - Cada capítulo empieza con un comentario que resume **qué exige la guía/plantilla** en ese apartado.
 
 ## Convenciones
@@ -53,12 +55,17 @@ thesis/
 - **Citas en APA** (exigido por la guía): `\parencite{clave}` → "(Williams, 1995)"; `\textcite{clave}` → "Williams (1995)". Las referencias van en [bibliography/references.bib](bibliography/references.bib).
 - **Toda información de fuente externa se referencia siempre** (datos, afirmaciones, marcos teóricos, definiciones ajenas). La guía lo exige y advierte de que la detección de plagio supone el suspenso directo: ninguna afirmación no original sin su cita.
 - **Acrónimos**: definirlos en [frontmatter/acronyms.tex](frontmatter/acronyms.tex) y usarlos con `\ac{TFG}` (la primera vez imprime la forma completa).
+- **Términos en inglés**: siempre con `\eng{}` (cursiva, definido en `config/macros.tex`), salvo los acrónimos y los nombres propios de productos (React, Render, Neon…). En castellano llano, mejor la paráfrasis que el término (`\eng{sprint}` es la excepción asumida: lo define el cap. 10). En los documentos de riesgos, por convención propia, `sprint` va sin `\eng{}`.
+- **Preliminares omitidos a propósito** (comentado en `main.tex`): el índice de gráficas (III) y, hasta que se decida, los agradecimientos. No es una desviación del índice oficial que haya que corregir.
 - **Una frase por línea** en los `.tex`: los diffs de git quedan limpios.
 - **Paginación dinámica (regla estricta del autor, 26-07-2026)**: prohibidos los saltos de página manuales (`\newpage`, `\clearpage`, `\pagebreak`) para empujar apartados, párrafos o puntos de listas; solo `\chapter` abre página nueva obligatoria. Los encabezados huérfanos ya los evita [config/style.tex](config/style.tex) automáticamente (`needspace` antes de cada nivel de apartado + penalizaciones máximas de viudas/huérfanas): el motor TeX decide el salto solo, y así el flujo no se rompe al editar texto anterior.
 - **Labels con prefijo**: `ch:` capítulos, `sec:` secciones, `fig:` figuras, `tab:` tablas, `ap:` anexos.
 - **Imágenes**: a `figures/`, en minúsculas con guiones. Doble numeración (Figura 3.2 = capítulo 3, figura 2): automática con `\begin{figure}` + `\caption`.
 - **Datos globales**: nunca escribir título/autor/curso a mano; usar `\thesisTitle`, `\thesisAuthorFormal`... (en `config/metadata.tex`, con los `TODO` pendientes marcados).
 - **Pendientes**: marcar con `\todonote{...}` (rojo en el PDF); antes de entregar, buscar "todonote" y eliminar todos, y revisar también los `% TODO` de `config/metadata.tex` y `frontmatter/titlepage.tex`, que esa búsqueda no encuentra.
+- **La memoria es producto final, no cuaderno de trabajo (regla del autor, 27-07-2026)**: nada de andamiaje temporal en la prosa («se describirán cuando se implementen», «pendiente de definir», alusiones al proceso de redacción o al estado del repositorio). Las remisiones son atemporales («se describe en el capítulo X») y lo pendiente va solo en `\todonote`. El contexto de trabajo vive en CLAUDE.md y en el dev-journal, no aquí.
+- **Diagramas: solo UML 2.5 (regla del autor, 04-10-2026)**: el modelo de datos como diagrama de clases (no entidad-relación), la arquitectura como despliegue, componentes o paquetes, los flujos como actividad o secuencia y las funciones como casos de uso. Fuente editable: `../diagramas/bukit.drawio`; las figuras se exportan a `figures/`. Todo cambio del modelo de datos actualiza los diagramas en la misma historia (10-10-2026).
+- **No quitar `es-noshorthands` de babel** (`config/packages.tex`): evita un conflicto real entre babel-spanish y biblatex-apa. No tocar sin volver a probar la compilación.
 
 ## Formato de la guía de estilo (aplicado el 16-07-2026)
 

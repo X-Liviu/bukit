@@ -52,17 +52,21 @@ Copiar la que toque a `references.bib` y rellenar. La "clave" (primer campo) es 
 }
 ```
 
-**Informe / norma / texto legal (tipo usado por iso-31000, rd-1125-2003, rgpd-2016-679, onu-agenda2030):**
+**Informe / norma / texto legal (tipo usado por iso-31000, rd-1125-2003, rgpd-2016-679, onu-agenda2030, rfc-9700):**
 
 ```bibtex
 @report{clave-informe,
   author      = {{Nombre del organismo}},
   title       = {Título del informe o de la norma},
+  type        = {Norma},
+  number      = {ISO 31000:2018},
   institution = {Organismo que lo publica},
   year        = {2003},
   url         = {https://www.boe.es/...},
 }
 ```
+
+`type` y `number` son opcionales: los llevan las normas y los documentos numerados (`type = {Norma}` + `number = {ISO 31000:2018}`; `type = {RFC}` + `number = {9700}`), y biblatex-apa los imprime entre paréntesis tras el título.
 
 **Capítulo de libro editado (tipo usado por brickman-campbell):**
 

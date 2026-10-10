@@ -19,7 +19,7 @@ La \ac{IA} se ha adoptado como un multiplicador que hace abordable ese alcance e
 Documentar ese uso de forma trazable no es un trámite, sino parte del valor del trabajo: convierte el proyecto en un caso de estudio verificable de desarrollo asistido, como se argumenta en el capítulo \ref{ch:beneficios}.
 
 \paragraph{Herramienta elegida.}
-La herramienta principal es Claude Code, el agente de línea de comandos de Anthropic \parencite{claude-code-docs}, utilizado a través del plan de suscripción de Claude --plan Max en los meses de dedicación alta y plan Pro en los de dedicación baja--.
+La herramienta principal es Claude Code, el agente de línea de comandos de Anthropic \parencite{claude-code-docs}, utilizado a través del plan de suscripción de Claude, que se dimensiona mes a mes según la dedicación prevista --plan Max o plan Pro--, con las excepciones que detalla el capítulo \ref{ch:presupuesto}.
 Se eligió frente a otras opciones por trabajar con acceso directo al repositorio en lugar de copiar y pegar fragmentos: opera sobre el conjunto del proyecto, edita los archivos y ejecuta las comprobaciones de calidad por sí mismo.
 Eso permite \emph{diseñar} el modo de trabajo --con reglas de proyecto persistentes, comandos propios y tareas repartidas entre varios agentes-- y no solo consultar un asistente.
 Se descartaron un asistente de chat convencional, que carece de ese contexto del repositorio y obliga al trasiego manual de código, y las herramientas de autocompletado, útiles para sugerir líneas sueltas pero no para planificar ni sostener una decisión.
@@ -29,6 +29,7 @@ El coste de la suscripción es el único gasto directo del proyecto y su desglos
 El uso principal ha sido la redacción de esta memoria: escribirla de forma correcta, rápida e iterativa, con un formato coherente y sin pérdidas entre sesiones.
 En segundo lugar, la asistencia en la programación del producto, siempre con el autor decidiendo el diseño: el modelo de datos, por ejemplo, se acuerda entidad por entidad y la herramienta no lo amplía por iniciativa propia.
 Y, de forma auxiliar, la generación y el mantenimiento de material de apoyo --tablas, figuras, renumeraciones de referencias e inventarios de decisiones-- y de un grafo del código que la herramienta consulta antes de leerlo en bruto.
+Por último, como parte del método, una revisión semanal automática de la coherencia entre la documentación, la memoria y el código (capítulo \ref{ch:tareas}, sección \ref{sec:metodologia-coherencia}): varios agentes comparan en paralelo todas las fuentes del proyecto y dejan un informe con los desfases que a mano pasarían desapercibidos, mientras la decisión de corregirlos sigue en manos del autor.
 
 \paragraph{Cómo se trabaja con ella.}
 El método se apoya en un conjunto de reglas de proyecto persistentes que actúan como única fuente de verdad y que la herramienta lee al empezar cada sesión, de modo que las decisiones ya tomadas prevalecen y no se reabren sin motivo.
@@ -38,7 +39,7 @@ La automatización se acompaña de garantías: comandos propios para las tareas 
 
 \paragraph{Fortalezas, limitaciones y responsabilidad.}
 Las fortalezas observadas son la velocidad y la capacidad de iteración en la redacción, la automatización con garantías de las tareas repetitivas y el reparto de las tareas tediosas entre varios agentes.
-Las limitaciones también son reales: la herramienta puede introducir errores o atribuciones y citas poco fiables, existe el riesgo de una dependencia acrítica que lleve a integrar algo sin comprenderlo, y su uso tiene un coste económico.
+Las limitaciones también son reales: la herramienta puede introducir errores o atribuciones y citas poco fiables, existe el riesgo de una dependencia acrítica que lleve a integrar algo sin comprenderlo, y su uso tiene un coste económico y de cuota que obliga a dimensionar cada procedimiento: la revisión semanal de coherencia, por ejemplo, tuvo que rehacerse a una escala sostenible tras un primer diseño que movilizaba cientos de agentes en cada ejecución.
 Cada una de esas limitaciones tiene su salvaguarda documentada, y ninguna se deja al azar: toda fuente se verifica contra el original y las citas se auditan antes del depósito (riesgo R4, capítulo \ref{ch:riesgos}), nada se da por bueno sin poder explicarlo y defenderlo sin la herramienta ante el tribunal (riesgo R5), y el coste se declara y se dimensiona en el capítulo \ref{ch:presupuesto}.
 En última instancia la \ac{IA} asiste, pero la autoría, las decisiones y la responsabilidad del trabajo son del autor.
 

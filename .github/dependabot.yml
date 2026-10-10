@@ -11,7 +11,12 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
   - package-ecosystem: github-actions
-    directory: /
+    # También la acción compuesta (10-10-2026): con solo la raíz, Dependabot
+    # no veía setup-node ni pnpm/action-setup, que viven en ella y se
+    # quedaron tres versiones mayores por detrás.
+    directories:
+      - /
+      - /.github/actions/setup
     schedule:
       interval: weekly
     open-pull-requests-limit: 3

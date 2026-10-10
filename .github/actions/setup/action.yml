@@ -6,19 +6,19 @@
 # sitio en lugar de en cada job.
 # =========================================================================
 name: Preparar Node + pnpm
-description: pnpm (packageManager) + Node 24.18.0 + pnpm install --frozen-lockfile con caché del store
+description: pnpm (packageManager) + Node 24.21.0 + pnpm install --frozen-lockfile con caché del store
 
 runs:
   using: composite
   steps:
     # Lee la versión de pnpm del campo packageManager de package.json,
     # la misma que fija corepack en local (reproducibilidad).
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@v6
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v7
       with:
         # La misma versión que fija Volta en package.json y la imagen Docker.
-        node-version: "24.18.0"
+        node-version: "24.21.0"
         cache: pnpm
 
     # frozen-lockfile: la CI nunca resuelve versiones nuevas; instala

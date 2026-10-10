@@ -81,7 +81,7 @@
   ],
   "latex-workshop.latex.recipes": [
     {
-      "name": "pdflatex × 2 + biber (sin Perl)",
+      "name": "pdflatex + biber + pdflatex × 2 (sin Perl)",
       "tools": ["pdflatex", "biber", "pdflatex", "pdflatex"]
     },
     { "name": "latexmk (requiere Perl)", "tools": ["latexmk"] }

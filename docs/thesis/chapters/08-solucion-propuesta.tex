@@ -37,6 +37,7 @@ El segundo incremento siguió el mismo criterio de cimientos primero: el esquele
 Toda respuesta de error cumple desde entonces un único contrato, definido junto al resto de la validación en \texttt{packages/core}, que nunca filtra detalles internos al cliente; y un registro estructurado anota cada petición y cada fallo con su nivel de gravedad, censurando las credenciales antes de escribirlas para que los diarios de ejecución no puedan convertirse en una fuga de datos.
 El despliegue continuo cierra el ciclo: todo cambio que pasa el \eng{pipeline} llega solo a producción, sobre los destinos cuyo análisis se recoge en el capítulo \ref{ch:alternativas}.
 Antes de cada despliegue, la propia cadena aplica a la base de producción las migraciones pendientes del esquema, de modo que el código nuevo nunca llega antes que el esquema que necesita.
+La contrapartida es que, mientras se completa el despliegue, el código anterior sigue atendiendo peticiones sobre el esquema ya migrado, así que cada migración ha de ser compatible con la versión previa: primero se amplía el esquema, y lo que deja de usarse se retira en un despliegue posterior.
 Esta prioridad no es un capricho: con las comprobaciones automáticas en pie desde el principio, ninguna historia posterior puede darse por cerrada sin pasar por ellas, que es exactamente el criterio de cierre definido en el capítulo \ref{ch:tareas}.
 
 \section{El método de construcción}

@@ -59,7 +59,7 @@ Se descarta como método único porque carece de cadencia: sin iteraciones no ha
 \label{sec:metodologia-decision}
 
 Se adopta un híbrido de la familia Scrumban \parencite{ladas-scrumban, kniberg-scrumban}: la estructura y la telemetría de Scrum que sobreviven al contexto unipersonal, sobre una mecánica de flujo Kanban que absorbe la variabilidad.
-La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con qué adaptación.
+La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco, con qué adaptación y qué añade el método por su cuenta.
 
 \begin{table}[htbp]
   \centering
@@ -80,6 +80,7 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco y con
     \eng{Daily} & Scrum & Sustituida por el procedimiento ya vigente de abrir cada sesión releyendo la última entrada del diario de desarrollo. \\
     \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}) y, cada quince días, entrega de la versión vigente al tutor (sección \ref{sec:metodologia-tutor}). \\
     Retrospectiva & Scrum & Sección fija de la entrada del diario al cierre del \eng{sprint}, que incluye la revisión de riesgos (capítulo \ref{ch:riesgos}). \\
+    Revisión de coherencia & Propio & Al cierre de cada \eng{sprint}, revisión automática de la coherencia entre la documentación, la memoria y el código; el autor decide el lunes qué se corrige (sección \ref{sec:metodologia-coherencia}). \\
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
   \end{tabular}
@@ -115,6 +116,26 @@ La primera entrega coincidió con la reanudación del trabajo, el 05/10/2026, y 
 La cadencia cumple dos funciones.
 La primera es dar a la revisión del avance el destinatario que en solitario le faltaba (sección \ref{sec:metodologia-alternativas}): alguien externo que valora el progreso y propone mejoras mientras aún pueden incorporarse.
 La segunda es ejercer una disciplina indirecta: un compromiso fijo cada dos semanas sostiene un ritmo de trabajo constante, que es precisamente lo que faltó en la fase F1.
+
+\subsection{Revisión semanal de la coherencia documental}
+\label{sec:metodologia-coherencia}
+
+Un proyecto documentado con este nivel de detalle acumula muchas fuentes que cuentan lo mismo desde ángulos distintos: las reglas de trabajo persistentes, el diario de desarrollo, la documentación del repositorio, los diagramas, los documentos de riesgos, los comentarios del código y esta misma memoria.
+Con cada decisión nueva alguna de ellas se queda atrás, y el desfase no se nota hasta que alguien lo encuentra por casualidad: una versión que ya no es la instalada, una regla que un documento da por vigente y otro por superada, una cifra que no coincide entre dos capítulos.
+Por eso, desde el cierre del séptimo \eng{sprint}, el final de cada \eng{sprint} incluye una revisión automática de la coherencia entre todas esas fuentes y con el código real.
+
+La revisión la hace un procedimiento asistido por \ac{IA}, preparado como un comando propio que se lanza el domingo por la noche y trabaja sin supervisión.
+Primero reúne los hechos objetivos del repositorio con pequeños programas que no usan \ac{IA}: versiones instaladas, estado de la integración continua y del despliegue, fechas y \eng{sprints} calculados, y citas y acrónimos de la memoria.
+Después reparte la comparación entre seis agentes que trabajan en paralelo, cada uno dedicado a una dimensión: tecnologías y modelo de datos; arquitectura y documentación del repositorio; producto y método; riesgos y presupuesto; la propia memoria; y el diario de desarrollo junto con la privacidad y los comentarios del código.
+Cada contradicción grave pasa además por un agente que intenta refutarla releyendo las fuentes, para no dar por buenos los falsos positivos.
+El resultado es un informe fechado con cada contradicción, la fuente que prevalece según unas reglas de precedencia escritas y la corrección propuesta.
+El procedimiento no modifica nada: en la planificación del lunes siguiente, el autor decide qué correcciones se aplican y resuelve las que exigen una decisión de contenido.
+
+La escala del procedimiento se acotó a propósito.
+Un primer diseño, con quince dimensiones y un agente verificador por cada hallazgo, podía movilizar varios cientos de agentes en cada ejecución: un coste razonable para una auditoría puntual, pero insostenible para una práctica semanal sobre un plan de suscripción con límites de uso.
+Se rehízo con seis dimensiones, una única verificación agrupada de los hallazgos graves y modelos más ligeros en las comprobaciones mecánicas, de modo que cada ejecución emplea menos de diez agentes.
+
+La práctica refuerza la mitigación del riesgo R3, la memoria relegada frente al desarrollo (capítulo \ref{ch:riesgos}): sustituye las puestas al día concentradas, como la que exigió la reanudación tras la primera pausa, por una comprobación continua de coste acotado.
 
 \section{Estimación del esfuerzo}
 \label{sec:estimacion}
@@ -289,6 +310,7 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
 El inventario comprometido vigente suma 146 puntos: los 138 iniciales más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida.
 Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (353 horas tras las re-bases de F1 y de la primera pausa), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 17\,\%.
+Esa cifra corresponde al plan completo; tras el cierre de F1, que consumió sus 48 horas entregando 14 de sus 21 puntos, la holgura útil se mide sobre lo que queda: los 132 puntos pendientes suponen unas 264 horas frente a las 305 de capacidad de F2 a F4, es decir, una holgura en torno al 13\,\%.
 La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
 La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 

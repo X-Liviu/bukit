@@ -28,9 +28,16 @@ on:
   pull_request:
 
 # En una PR, un push nuevo cancela la ejecución anterior: solo interesa el
-# estado del último commit. En main NO se cancela (04-10-2026): desde que la
-# CI aplica las migraciones de producción (job migraciones), cortar una
-# ejecución podría dejar una migración a medias; las de main esperan turno.
+# estado del último commit. En main NO se cancela la ejecución en curso
+# (04-10-2026): desde que la CI aplica las migraciones de producción (job
+# migraciones), cortarla podría dejar una migración a medias. Ojo: GitHub solo
+# mantiene UNA ejecución en espera por grupo; si se acumulan varios push a
+# main, las intermedias en espera se cancelan y solo corre la más reciente.
+# Es aceptable: migrate deploy aplica de una vez todas las migraciones
+# pendientes y Render despliega el commit más reciente con sus checks en verde.
+# Alternativa descartada (10-10-2026): cancelar en main y aislar solo el job
+# de migraciones en su propio grupo; la cancelación del workflow completo
+# podría cortarlo igualmente y complicaría el orden de los despliegues.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -84,13 +91,14 @@ jobs:
       # producción (04-10-2026): varios minutos en frío. Se construye con la
       # caché de capas de GitHub Actions, así que solo se recompila cuando
       # cambia su Dockerfile; docker compose encuentra después la imagen ya
-      # construida (mismo nombre) y no la rehace.
+      # construida (misma etiqueta que en docker-compose.yml, que lleva las
+      # versiones) y no la rehace.
       - uses: docker/setup-buildx-action@v4
       - name: Imagen de Postgres (con caché entre ejecuciones)
         uses: docker/build-push-action@v7
         with:
           context: docker/postgres
-          tags: bukit-postgres:16
+          tags: bukit-postgres:16.15-postgis3.3.10-pgvector0.8.0
           load: true
           cache-from: type=gha,scope=bukit-postgres
           cache-to: type=gha,mode=max,scope=bukit-postgres
@@ -138,14 +146,22 @@ jobs:
     needs: [pruebas, docker]
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      # La URL de Neon vive como secreto del repositorio, nunca en el código.
-      DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCCION }}
+    # La URL de Neon vive como secreto del repositorio, nunca en el código, y
+    # solo se entrega a los dos pasos que la usan (10-10-2026): definida para
+    # todo el job, también la veía `pnpm install`, que ejecuta los scripts de
+    # instalación de las dependencias; una dependencia comprometida podría
+    # leerla y enviarla fuera.
     steps:
+      # Sin secreto, fallo explícito y antes de instalar nada: un despliegue
+      # sin base migrada sería el «sano a medias» de siempre (/health en verde,
+      # cada registro en 500).
+      - name: Comprobar que existe el secreto de producción
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCCION }}
+        run: test -n "$DATABASE_URL" || { echo "::error::Falta el secreto DATABASE_URL_PRODUCCION"; exit 1; }
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      # Sin secreto, fallo explícito: un despliegue sin base migrada sería el
-      # «sano a medias» de siempre (/health en verde, cada registro en 500).
-      - name: Comprobar que existe el secreto de producción
-        run: test -n "$DATABASE_URL" || { echo "::error::Falta el secreto DATABASE_URL_PRODUCCION"; exit 1; }
-      - run: pnpm --filter @bukit/api db:deploy
+      - name: Aplicar las migraciones en Neon
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCCION }}
+        run: pnpm --filter @bukit/api db:deploy
