@@ -16,8 +16,8 @@ process.env.BCRYPT_ROUNDS = "4";
 const app = createApp();
 const prisma = getPrisma();
 
-const altaValida = {
-  email: "persona@ejemplo.com",
+const validSignup = {
+  email: "persona@example.com",
   username: "persona.ejemplo",
   password: "contraseña-larga",
 };
@@ -33,14 +33,14 @@ afterAll(async () => {
 
 describe("POST /auth/register", () => {
   it("da de alta una cuenta y devuelve el contrato público sin el hash", async () => {
-    const res = await request(app).post("/auth/register").send(altaValida);
+    const res = await request(app).post("/auth/register").send(validSignup);
 
     expect(res.status).toBe(201);
     // La forma de la respuesta se valida contra el MISMO contrato compartido
     // que produce la ruta: una sola fuente de verdad también en el test.
     expect(ownUserSchema.safeParse(res.body.user).success).toBe(true);
     expect(res.body.user).toMatchObject({
-      email: "persona@ejemplo.com",
+      email: "persona@example.com",
       username: "persona.ejemplo",
       tier: "NORMAL",
     });
@@ -48,21 +48,21 @@ describe("POST /auth/register", () => {
   });
 
   it("cifra la contraseña con bcrypt y jamás la guarda en claro", async () => {
-    await request(app).post("/auth/register").send(altaValida);
+    await request(app).post("/auth/register").send(validSignup);
 
-    const guardado = await prisma.user.findUniqueOrThrow({
-      where: { email: altaValida.email },
+    const stored = await prisma.user.findUniqueOrThrow({
+      where: { email: validSignup.email },
     });
-    expect(guardado.passwordHash).not.toBe(altaValida.password);
-    expect(guardado.passwordHash.startsWith("$2")).toBe(true);
-    await expect(bcrypt.compare(altaValida.password, guardado.passwordHash)).resolves.toBe(true);
+    expect(stored.passwordHash).not.toBe(validSignup.password);
+    expect(stored.passwordHash.startsWith("$2")).toBe(true);
+    await expect(bcrypt.compare(validSignup.password, stored.passwordHash)).resolves.toBe(true);
   });
 
   it("normaliza email y username: la unicidad no distingue mayúsculas", async () => {
-    await request(app).post("/auth/register").send(altaValida);
+    await request(app).post("/auth/register").send(validSignup);
 
     const res = await request(app).post("/auth/register").send({
-      email: "  PERSONA@Ejemplo.com ",
+      email: "  PERSONA@Example.com ",
       username: "otra.persona",
       password: "contraseña-larga",
     });
@@ -73,11 +73,11 @@ describe("POST /auth/register", () => {
   });
 
   it("responde 409 con mensaje propio si el username ya está en uso", async () => {
-    await request(app).post("/auth/register").send(altaValida);
+    await request(app).post("/auth/register").send(validSignup);
 
     const res = await request(app).post("/auth/register").send({
-      email: "distinta@ejemplo.com",
-      username: altaValida.username,
+      email: "distinta@example.com",
+      username: validSignup.username,
       password: "contraseña-larga",
     });
 

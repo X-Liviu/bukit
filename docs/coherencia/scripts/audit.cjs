@@ -10,21 +10,21 @@ process.stdin.on("end", () => {
     j = JSON.parse(s);
   } catch {
     console.log(
-      JSON.stringify({ error: "la entrada no es JSON de pnpm audit", inicio: s.slice(0, 200) }),
+      JSON.stringify({ error: "la entrada no es JSON de pnpm audit", head: s.slice(0, 200) }),
     );
     return;
   }
-  const avisos = Object.values(j.advisories || {}).map((v) => ({
-    paquete: v.module_name,
-    severidad: v.severity,
-    vulnerables: v.vulnerable_versions,
-    parcheadas: v.patched_versions,
-    titulo: v.title,
-    rutas: (v.findings || []).flatMap((f) => f.paths || []).slice(0, 3),
+  const advisoryList = Object.values(j.advisories || {}).map((v) => ({
+    pkg: v.module_name,
+    level: v.severity,
+    vulnerable: v.vulnerable_versions,
+    patched: v.patched_versions,
+    summary: v.title,
+    dependencyPaths: (v.findings || []).flatMap((f) => f.paths || []).slice(0, 3),
   }));
   console.log(
     JSON.stringify(
-      { porSeveridad: j.metadata ? j.metadata.vulnerabilities : null, avisos },
+      { bySeverity: j.metadata ? j.metadata.vulnerabilities : null, advisoryList },
       null,
       1,
     ),

@@ -13,15 +13,15 @@ process.env.BCRYPT_ROUNDS = "4";
 const app = createApp();
 const prisma = getPrisma();
 
-const cuenta = {
-  email: "persona@ejemplo.com",
+const account = {
+  email: "persona@example.com",
   username: "persona.ejemplo",
   password: "contraseña-larga",
 };
 
 /** Alta previa: el login se prueba contra una cuenta creada por la propia API. */
-async function registrar(): Promise<void> {
-  await request(app).post("/auth/register").send(cuenta).expect(201);
+async function register(): Promise<void> {
+  await request(app).post("/auth/register").send(account).expect(201);
 }
 
 beforeEach(async () => {
@@ -34,11 +34,11 @@ afterAll(async () => {
 
 describe("POST /auth/login", () => {
   it("devuelve el par de tokens y el usuario con credenciales correctas", async () => {
-    await registrar();
+    await register();
 
     const res = await request(app)
       .post("/auth/login")
-      .send({ email: cuenta.email, password: cuenta.password });
+      .send({ email: account.email, password: account.password });
 
     expect(res.status).toBe(200);
     // La respuesta se valida contra el contrato compartido, igual que el alta.
@@ -48,38 +48,38 @@ describe("POST /auth/login", () => {
   });
 
   it("emite tokens firmados, con el usuario dentro y vidas distintas", async () => {
-    await registrar();
+    await register();
     const res = await request(app)
       .post("/auth/login")
-      .send({ email: cuenta.email, password: cuenta.password });
+      .send({ email: account.email, password: account.password });
 
-    const acceso = jwt.verify(res.body.tokens.accessToken, config.jwt.secret) as jwt.JwtPayload;
-    const refresco = jwt.verify(res.body.tokens.refreshToken, config.jwt.secret) as jwt.JwtPayload;
+    const access = jwt.verify(res.body.tokens.accessToken, config.jwt.secret) as jwt.JwtPayload;
+    const refresh = jwt.verify(res.body.tokens.refreshToken, config.jwt.secret) as jwt.JwtPayload;
 
-    expect(acceso.sub).toBe(res.body.user.id);
-    expect(acceso.typ).toBe("access");
-    expect(refresco.typ).toBe("refresh");
+    expect(access.sub).toBe(res.body.user.id);
+    expect(access.typ).toBe("access");
+    expect(refresh.typ).toBe("refresh");
     // El de refresco vive mucho más que el de acceso (15 min frente a 30 días).
-    expect((refresco.exp ?? 0) - (acceso.exp ?? 0)).toBeGreaterThan(0);
+    expect((refresh.exp ?? 0) - (access.exp ?? 0)).toBeGreaterThan(0);
   });
 
   // ── Casos de abuso (Definición de Hecho ampliada, riesgo R14) ────────────
   it("no distingue entre email inexistente y contraseña incorrecta", async () => {
-    await registrar();
+    await register();
 
-    const inexistente = await request(app)
+    const unknownEmail = await request(app)
       .post("/auth/login")
-      .send({ email: "nadie@ejemplo.com", password: cuenta.password });
-    const incorrecta = await request(app)
+      .send({ email: "nadie@example.com", password: account.password });
+    const wrongPassword = await request(app)
       .post("/auth/login")
-      .send({ email: cuenta.email, password: "otra-contraseña" });
+      .send({ email: account.email, password: "otra-contraseña" });
 
-    expect(inexistente.status).toBe(401);
-    expect(incorrecta.status).toBe(401);
+    expect(unknownEmail.status).toBe(401);
+    expect(wrongPassword.status).toBe(401);
     // Misma respuesta exacta: el login no debe servir para averiguar qué
     // emails están registrados.
-    expect(inexistente.body).toEqual(incorrecta.body);
-    expect(apiErrorSchema.safeParse(inexistente.body).success).toBe(true);
+    expect(unknownEmail.body).toEqual(wrongPassword.body);
+    expect(apiErrorSchema.safeParse(unknownEmail.body).success).toBe(true);
   });
 
   it("rechaza el login sin credenciales con el contrato de error", async () => {
@@ -91,10 +91,10 @@ describe("POST /auth/login", () => {
 
 describe("GET /auth/me (ruta privada)", () => {
   async function login(): Promise<{ accessToken: string; refreshToken: string }> {
-    await registrar();
+    await register();
     const res = await request(app)
       .post("/auth/login")
-      .send({ email: cuenta.email, password: cuenta.password });
+      .send({ email: account.email, password: account.password });
     return res.body.tokens;
   }
 
@@ -103,15 +103,15 @@ describe("GET /auth/me (ruta privada)", () => {
     const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body.user.email).toBe(cuenta.email);
+    expect(res.body.user.email).toBe(account.email);
   });
 
   // ── Casos de abuso (Definición de Hecho ampliada, riesgo R14) ────────────
   it("rechaza sin cabecera, con esquema erróneo o con token vacío", async () => {
     await login();
-    for (const cabecera of [undefined, "Bearer", "Basic abc", "abc"]) {
+    for (const header of [undefined, "Bearer", "Basic abc", "abc"]) {
       const req = request(app).get("/auth/me");
-      if (cabecera) req.set("Authorization", cabecera);
+      if (header) req.set("Authorization", header);
       const res = await req;
       expect(res.status).toBe(401);
       expect(apiErrorSchema.safeParse(res.body).success).toBe(true);
@@ -121,11 +121,11 @@ describe("GET /auth/me (ruta privada)", () => {
   it("rechaza un token con firma ajena (falsificado)", async () => {
     const { accessToken } = await login();
     const payload = jwt.decode(accessToken) as jwt.JwtPayload;
-    const falsificado = jwt.sign({ sub: payload.sub, typ: "access" }, "otro-secreto-cualquiera", {
+    const forged = jwt.sign({ sub: payload.sub, typ: "access" }, "otro-secreto-cualquiera", {
       issuer: config.jwt.issuer,
     });
 
-    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${falsificado}`);
+    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${forged}`);
     expect(res.status).toBe(401);
   });
 
@@ -139,12 +139,12 @@ describe("GET /auth/me (ruta privada)", () => {
   it("rechaza un token caducado", async () => {
     const { accessToken } = await login();
     const payload = jwt.decode(accessToken) as jwt.JwtPayload;
-    const caducado = jwt.sign({ sub: payload.sub, typ: "access" }, config.jwt.secret, {
+    const expired = jwt.sign({ sub: payload.sub, typ: "access" }, config.jwt.secret, {
       issuer: config.jwt.issuer,
       expiresIn: -10,
     });
 
-    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${caducado}`);
+    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${expired}`);
     expect(res.status).toBe(401);
   });
 
@@ -160,12 +160,12 @@ describe("GET /auth/me (ruta privada)", () => {
     const { accessToken } = await login();
     const payload = jwt.decode(accessToken) as jwt.JwtPayload;
     // Token sin firma: la verificación fija HS256, así que no puede colarse.
-    const sinFirma = jwt.sign({ sub: payload.sub, typ: "access" }, "", {
+    const unsigned = jwt.sign({ sub: payload.sub, typ: "access" }, "", {
       algorithm: "none",
       issuer: config.jwt.issuer,
     });
 
-    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${sinFirma}`);
+    const res = await request(app).get("/auth/me").set("Authorization", `Bearer ${unsigned}`);
     expect(res.status).toBe(401);
   });
 });

@@ -33,6 +33,6 @@ services:
       # Base de datos de producción (Neon, región UE; 04-10-2026). sync: false =
       # el valor se introduce a mano en el panel de Render y nunca vive en el
       # repositorio. Las migraciones NO las aplica Render: las aplica la CI
-      # antes de cada despliegue (job migraciones de ci.yml).
+      # antes de cada despliegue (job migrate de ci.yml).
       - key: DATABASE_URL
         sync: false

@@ -67,10 +67,10 @@ authRouter.post("/auth/register", async (req, res) => {
 // que un hash de longitud incorrecta hace que bcryptjs devuelva false al
 // instante, y la igualación de tiempos no igualaba nada — 0 ms frente a
 // ~250 ms delataban qué emails existen).
-let hashDeReferencia: string | undefined;
-async function hashReferencia(): Promise<string> {
-  hashDeReferencia ??= await bcrypt.hash("contraseña-de-referencia", bcryptRounds());
-  return hashDeReferencia;
+let referenceHash: string | undefined;
+async function getReferenceHash(): Promise<string> {
+  referenceHash ??= await bcrypt.hash("contraseña-de-referencia", bcryptRounds());
+  return referenceHash;
 }
 
 // Inicio de sesión (US-05, RNF-03): credenciales correctas → par de tokens.
@@ -84,11 +84,11 @@ authRouter.post("/auth/login", async (req, res) => {
   // misma respuesta, y ambas vías pagan una comparación bcrypt completa: ni el
   // cuerpo ni la latencia deben delatar qué emails están dados de alta
   // (enumeración de usuarios).
-  const correcta = await bcrypt.compare(
+  const passwordMatches = await bcrypt.compare(
     input.password,
-    user?.passwordHash ?? (await hashReferencia()),
+    user?.passwordHash ?? (await getReferenceHash()),
   );
-  if (!user || !correcta) {
+  if (!user || !passwordMatches) {
     throw unauthorized("Email o contraseña incorrectos.");
   }
 

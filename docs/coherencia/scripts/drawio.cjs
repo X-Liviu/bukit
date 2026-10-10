@@ -21,20 +21,20 @@ const d1 = (s) =>
 const dec = (s) => d1(d1(s));
 
 for (const m of xml.matchAll(/<diagram\b([^>]*)>([\s\S]*?)<\/diagram>/g)) {
-  const nombre = (m[1].match(/\bname="([^"]*)"/) || [])[1] || "?";
-  let cuerpo = m[2];
-  if (!cuerpo.includes("<mxGraphModel")) {
+  const name = (m[1].match(/\bname="([^"]*)"/) || [])[1] || "?";
+  let body = m[2];
+  if (!body.includes("<mxGraphModel")) {
     try {
-      cuerpo = decodeURIComponent(
-        zlib.inflateRawSync(Buffer.from(cuerpo.trim(), "base64")).toString("utf8"),
+      body = decodeURIComponent(
+        zlib.inflateRawSync(Buffer.from(body.trim(), "base64")).toString("utf8"),
       );
     } catch {
-      console.log(`## ${dec(nombre)}\n(página comprimida que no se pudo descomprimir)`);
+      console.log(`## ${dec(name)}\n(página comprimida que no se pudo descomprimir)`);
       continue;
     }
   }
-  console.log(`## ${dec(nombre)}`);
-  for (const v of cuerpo.matchAll(/\bvalue="([^"]*)"/g)) {
+  console.log(`## ${dec(name)}`);
+  for (const v of body.matchAll(/\bvalue="([^"]*)"/g)) {
     const t = dec(v[1])
       .replace(/<br\s*\/?>/gi, " | ")
       .replace(/<[^>]+>/g, "")

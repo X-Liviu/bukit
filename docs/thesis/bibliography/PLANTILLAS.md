@@ -9,7 +9,7 @@ Copiar la que toque a `references.bib` y rellenar. La "clave" (primer campo) es 
   author  = {{Nombre de la organización}},
   title   = {Título de la página},
   year    = {2026},
-  url     = {https://ejemplo.com},
+  url     = {https://example.com},
   urldate = {2026-07-12},
 }
 ```

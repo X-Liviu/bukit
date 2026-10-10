@@ -3,20 +3,20 @@
 // specifiers del lockfile frente a los package.json, versiones de Node fijadas en cada sitio,
 // acciones de la CI, imagen de Postgres y etiquetas, y las herramientas instaladas en el
 // equipo (lo que falle o no esté se marca como «no disponible», no es un error).
-// Uso: node docs/coherencia/scripts/versiones.cjs   (desde la raíz del repositorio)
+// Uso: node docs/coherencia/scripts/versions.cjs   (desde la raíz del repositorio)
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { execSync } = require("child_process");
 
-const leer = (p) => (fs.existsSync(p) ? fs.readFileSync(p, "utf8") : null);
-const leerJson = (p) => {
-  const t = leer(p);
+const readText = (p) => (fs.existsSync(p) ? fs.readFileSync(p, "utf8") : null);
+const readJson = (p) => {
+  const t = readText(p);
   return t ? JSON.parse(t) : null;
 };
 
 // 1. package.json de cada paquete del workspace.
-const paquetes = [
+const packageFiles = [
   "package.json",
   "apps/api/package.json",
   "packages/core/package.json",
@@ -24,11 +24,11 @@ const paquetes = [
   "packages/ui-core/package.json",
   "e2e/package.json",
 ];
-const porPaquete = {};
-for (const p of paquetes) {
-  const j = leerJson(p);
+const byPackage = {};
+for (const p of packageFiles) {
+  const j = readJson(p);
   if (!j) continue;
-  porPaquete[p] = {
+  byPackage[p] = {
     name: j.name,
     packageManager: j.packageManager,
     engines: j.engines,
@@ -37,34 +37,34 @@ for (const p of paquetes) {
     devDependencies: j.devDependencies || {},
   };
 }
-const porDependencia = {};
-for (const [p, j] of Object.entries(porPaquete)) {
+const byDependency = {};
+for (const [p, j] of Object.entries(byPackage)) {
   for (const [d, v] of Object.entries({ ...j.dependencies, ...j.devDependencies })) {
-    (porDependencia[d] = porDependencia[d] || {})[p] = v;
+    (byDependency[d] = byDependency[d] || {})[p] = v;
   }
 }
-const compartidasConVersionesDistintas = Object.entries(porDependencia)
+const sharedWithDifferentVersions = Object.entries(byDependency)
   .filter(
     ([, m]) =>
       Object.keys(m).length > 1 &&
       new Set(Object.values(m).filter((v) => !v.startsWith("workspace:"))).size > 1,
   )
-  .map(([d, m]) => ({ dependencia: d, versiones: m }));
+  .map(([d, m]) => ({ dependency: d, versions: m }));
 
 // 2. Specifiers de la sección importers del lockfile (sin librería YAML: indentación fija de pnpm).
-const lock = leer("pnpm-lock.yaml") || "";
+const lock = readText("pnpm-lock.yaml") || "";
 const importers = {};
 {
-  let enImporters = false;
+  let inImporters = false;
   let importer = null;
   let dep = null;
   for (const l of lock.split("\n")) {
     if (/^importers:/.test(l)) {
-      enImporters = true;
+      inImporters = true;
       continue;
     }
-    if (enImporters && /^[^\s]/.test(l)) enImporters = false;
-    if (!enImporters) continue;
+    if (inImporters && /^[^\s]/.test(l)) inImporters = false;
+    if (!inImporters) continue;
     let m;
     if ((m = /^ {2}([^\s].*):$/.exec(l))) importer = m[1].replace(/^'|'$/g, "");
     else if ((m = /^ {6}([^\s].*):$/.exec(l))) dep = m[1].replace(/^'|'$/g, "");
@@ -73,69 +73,69 @@ const importers = {};
     }
   }
 }
-const rutaImporter = (p) => (p === "package.json" ? "." : path.dirname(p));
-const lockDesincronizado = [];
-for (const [p, j] of Object.entries(porPaquete)) {
-  const esperado = { ...j.dependencies, ...j.devDependencies };
-  const enLock = importers[rutaImporter(p)] || {};
-  for (const [d, v] of Object.entries(esperado)) {
-    if (enLock[d] !== v)
-      lockDesincronizado.push({
-        paquete: p,
-        dependencia: d,
+const importerPath = (p) => (p === "package.json" ? "." : path.dirname(p));
+const lockOutOfSync = [];
+for (const [p, j] of Object.entries(byPackage)) {
+  const expected = { ...j.dependencies, ...j.devDependencies };
+  const inLock = importers[importerPath(p)] || {};
+  for (const [d, v] of Object.entries(expected)) {
+    if (inLock[d] !== v)
+      lockOutOfSync.push({
+        pkg: p,
+        dependency: d,
         packageJson: v,
-        lockfile: enLock[d] || "ausente",
+        lockfile: inLock[d] || "ausente",
       });
   }
-  for (const d of Object.keys(enLock))
-    if (!(d in esperado))
-      lockDesincronizado.push({
-        paquete: p,
-        dependencia: d,
+  for (const d of Object.keys(inLock))
+    if (!(d in expected))
+      lockOutOfSync.push({
+        pkg: p,
+        dependency: d,
         packageJson: "ausente",
-        lockfile: enLock[d],
+        lockfile: inLock[d],
       });
 }
 
 // 3. Node fijado en cada sitio y acciones de la CI.
-const buscar = (p, re) => {
-  const t = leer(p);
+const findAll = (p, re) => {
+  const t = readText(p);
   return t ? [...t.matchAll(re)].map((m) => m[1]) : [];
 };
 const node = {
   "package.json (volta)":
-    porPaquete["package.json"] && porPaquete["package.json"].volta
-      ? porPaquete["package.json"].volta.node
+    byPackage["package.json"] && byPackage["package.json"].volta
+      ? byPackage["package.json"].volta.node
       : null,
   "package.json (engines)":
-    porPaquete["package.json"] && porPaquete["package.json"].engines
-      ? porPaquete["package.json"].engines.node
+    byPackage["package.json"] && byPackage["package.json"].engines
+      ? byPackage["package.json"].engines.node
       : null,
-  ".nvmrc": (leer(".nvmrc") || "").trim() || null,
-  ".github/actions/setup/action.yml": buscar(
+  ".nvmrc": (readText(".nvmrc") || "").trim() || null,
+  ".github/actions/setup/action.yml": findAll(
     ".github/actions/setup/action.yml",
     /node-version:\s*"?([^"\n]+)"?/g,
   ),
-  "apps/api/Dockerfile (FROM)": buscar("apps/api/Dockerfile", /^FROM\s+node:([^\s]+)/gm),
+  "apps/api/Dockerfile (FROM)": findAll("apps/api/Dockerfile", /^FROM\s+node:([^\s]+)/gm),
 };
-const acciones = {
-  ".github/workflows/ci.yml": buscar(".github/workflows/ci.yml", /uses:\s*([^\s]+@[^\s]+)/g),
-  ".github/actions/setup/action.yml": buscar(
+const actions = {
+  ".github/workflows/ci.yml": findAll(".github/workflows/ci.yml", /uses:\s*([^\s]+@[^\s]+)/g),
+  ".github/actions/setup/action.yml": findAll(
     ".github/actions/setup/action.yml",
     /uses:\s*([^\s]+@[^\s]+)/g,
   ),
 };
 const postgres = {
-  "docker/postgres/Dockerfile (FROM)": buscar("docker/postgres/Dockerfile", /^FROM\s+([^\s]+)/gm),
-  "docker/postgres/Dockerfile (ARG)": buscar("docker/postgres/Dockerfile", /^ARG\s+([^\s]+)/gm),
-  "docker-compose.yml (image)": buscar("docker-compose.yml", /^\s*image:\s*([^\s]+)/gm),
-  "ci.yml (tags)": buscar(".github/workflows/ci.yml", /^\s*tags:\s*([^\s]+)/gm),
+  "docker/postgres/Dockerfile (FROM)": findAll("docker/postgres/Dockerfile", /^FROM\s+([^\s]+)/gm),
+  "docker/postgres/Dockerfile (ARG)": findAll("docker/postgres/Dockerfile", /^ARG\s+([^\s]+)/gm),
+  "docker-compose.yml (image)": findAll("docker-compose.yml", /^\s*image:\s*([^\s]+)/gm),
+  "ci.yml (tags)": findAll(".github/workflows/ci.yml", /^\s*tags:\s*([^\s]+)/gm),
 };
 
 // 4. Herramientas de la máquina (primera línea de salida; errores → «no disponible»).
-const ordenes = {
+const commands = {
   node: "node --version",
-  "node (ruta)": process.platform === "win32" ? "where node" : "which -a node",
+  "node (path)": process.platform === "win32" ? "where node" : "which -a node",
   volta: "volta --version",
   pnpm: "pnpm --version",
   git: "git --version",
@@ -146,10 +146,10 @@ const ordenes = {
   biber: "biber --version",
   graphify: "graphify --version",
 };
-const maquina = {};
-for (const [k, cmd] of Object.entries(ordenes)) {
+const machine = {};
+for (const [k, cmd] of Object.entries(commands)) {
   try {
-    maquina[k] = execSync(cmd, {
+    machine[k] = execSync(cmd, {
       encoding: "utf8",
       stdio: ["ignore", "pipe", "ignore"],
       timeout: 20000,
@@ -157,27 +157,27 @@ for (const [k, cmd] of Object.entries(ordenes)) {
       .split(/\r?\n/)[0]
       .trim();
   } catch {
-    maquina[k] = "no disponible";
+    machine[k] = "no disponible";
   }
 }
-const hookPostCommit = leer(".git/hooks/post-commit");
-maquina["git hook post-commit con graphify"] = hookPostCommit
+const hookPostCommit = readText(".git/hooks/post-commit");
+machine["git post-commit hook with graphify"] = hookPostCommit
   ? /graphify/.test(hookPostCommit)
   : false;
-maquina["~/.local/bin/graphify.cmd"] = fs.existsSync(
+machine["~/.local/bin/graphify.cmd"] = fs.existsSync(
   path.join(os.homedir(), ".local", "bin", "graphify.cmd"),
 );
 
 console.log(
   JSON.stringify(
     {
-      porPaquete,
-      compartidasConVersionesDistintas,
-      lockDesincronizado,
+      byPackage,
+      sharedWithDifferentVersions,
+      lockOutOfSync,
       node,
-      acciones,
+      actions,
       postgres,
-      maquina,
+      machine,
     },
     null,
     1,

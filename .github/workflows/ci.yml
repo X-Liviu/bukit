@@ -2,7 +2,7 @@
 # Integración continua del monorepo (US-01; jobs separados desde el
 # 06-08-2026, cerrando el pendiente anotado el 27-07).
 # Estrategia de fallo rápido del cap. 10, ahora por jobs: lint (barrera
-# estática barata) → typecheck → pruebas, y la build de la imagen Docker
+# estática barata) → typecheck → test, y la build de la imagen Docker
 # de la API en paralelo desde que lint aprueba (no depende de tipos ni
 # pruebas). Las E2E (Playwright) entrarán como última barrera cuando haya
 # aplicación que arrancar.
@@ -30,7 +30,7 @@ on:
 # En una PR, un push nuevo cancela la ejecución anterior: solo interesa el
 # estado del último commit. En main NO se cancela la ejecución en curso
 # (04-10-2026): desde que la CI aplica las migraciones de producción (job
-# migraciones), cortarla podría dejar una migración a medias. Ojo: GitHub solo
+# migrate), cortarla podría dejar una migración a medias. Ojo: GitHub solo
 # mantiene UNA ejecución en espera por grupo; si se acumulan varios push a
 # main, las intermedias en espera se cancelan y solo corre la más reciente.
 # Es aceptable: migrate deploy aplica de una vez todas las migraciones
@@ -74,7 +74,7 @@ jobs:
       - run: pnpm --filter @bukit/api prisma:generate
       - run: pnpm typecheck
 
-  pruebas:
+  test:
     needs: typecheck
     runs-on: ubuntu-latest
     # 20 y no 10: la primera construcción de la imagen de Postgres (sin caché)
@@ -111,7 +111,7 @@ jobs:
 
   docker:
     # Solo la barrera estática como puerta: así el Dockerfile se valida en
-    # paralelo a typecheck/pruebas sin quemar minutos si lint ya falló.
+    # paralelo a typecheck/test sin quemar minutos si lint ya falló.
     needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -133,7 +133,7 @@ jobs:
           docker logs bukit-api-ci
           exit 1
 
-  migraciones:
+  migrate:
     # Migraciones de la base de PRODUCCIÓN (Neon), 04-10-2026. Solo en los
     # push a main y después de las pruebas y de la imagen: como Render
     # despliega únicamente con TODOS los checks en verde (checksPass), la base
@@ -143,7 +143,7 @@ jobs:
     # contenedor (meter el CLI de Prisma en la imagen y sumar segundos a cada
     # arranque en frío del plan gratuito, que se duerme cada 15 min).
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [pruebas, docker]
+    needs: [test, docker]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     # La URL de Neon vive como secreto del repositorio, nunca en el código, y

@@ -15,7 +15,7 @@ import { issueTokenPair, verifyToken } from "./tokens.js";
 // Todos los fallos salen con el mismo 401 y el mismo mensaje, igual que en
 // verifyToken: distinguir «caducado», «anulado» o «reutilizado» hacia fuera
 // solo orienta a quien prueba tokens robados.
-const MENSAJE = "Token inválido o caducado.";
+const INVALID_TOKEN_MESSAGE = "Token inválido o caducado.";
 
 /** Huella SHA-256 (hex, 64 caracteres) con la que se guarda y se busca el token. */
 export function hashToken(token: string): string {
@@ -25,15 +25,15 @@ export function hashToken(token: string): string {
 // La caducidad guardada es EXACTAMENTE la del JWT recién firmado: así una fila
 // solo se purga cuando su token ya lo rechaza la propia verificación (exp), y
 // borrarla no abre ningún hueco en la detección de reutilización.
-function caducidad(refreshToken: string): Date {
+function expiryOf(refreshToken: string): Date {
   const { exp } = jwt.decode(refreshToken) as { exp: number };
   return new Date(exp * 1000);
 }
 
-async function anularFamilia(familyId: string, ahora: Date): Promise<void> {
+async function revokeFamily(familyId: string, now: Date): Promise<void> {
   await getPrisma().refreshToken.updateMany({
     where: { familyId, revokedAt: null },
-    data: { revokedAt: ahora },
+    data: { revokedAt: now },
   });
 }
 
@@ -56,7 +56,7 @@ export async function startSession(userId: string): Promise<TokenPair> {
         userId,
         familyId: randomUUID(),
         tokenHash: hashToken(tokens.refreshToken),
-        expiresAt: caducidad(tokens.refreshToken),
+        expiresAt: expiryOf(tokens.refreshToken),
       },
     }),
   ]);
@@ -72,48 +72,51 @@ export async function rotateSession(refreshToken: string): Promise<TokenPair> {
   // Firma, emisor, caducidad y tipo: un token de acceso no sirve para renovar.
   const { sub } = verifyToken(refreshToken, "refresh");
   const prisma = getPrisma();
-  const actual = await prisma.refreshToken.findUnique({
+  const current = await prisma.refreshToken.findUnique({
     where: { tokenHash: hashToken(refreshToken) },
   });
   // Sin fila: token nunca emitido por esta base (o cuenta borrada, cuyas
   // sesiones se fueron en cascada). La comprobación del usuario es defensa en
   // profundidad: la huella ya identifica un único token.
-  if (!actual || actual.userId !== sub) throw unauthorized(MENSAJE);
+  if (!current || current.userId !== sub) throw unauthorized(INVALID_TOKEN_MESSAGE);
 
-  const ahora = new Date();
-  if (actual.revokedAt) {
+  const now = new Date();
+  if (current.revokedAt) {
     // Anulado por una rotación (tiene sucesor) = reutilización. Anulado por un
     // cierre de sesión (sin sucesor): su familia ya está cerrada.
-    if (actual.replacedById) await anularFamilia(actual.familyId, ahora);
-    throw unauthorized(MENSAJE);
+    if (current.replacedById) await revokeFamily(current.familyId, now);
+    throw unauthorized(INVALID_TOKEN_MESSAGE);
   }
-  if (actual.expiresAt <= ahora) throw unauthorized(MENSAJE);
+  if (current.expiresAt <= now) throw unauthorized(INVALID_TOKEN_MESSAGE);
 
-  const tokens = issueTokenPair(actual.userId);
-  const rotado = await prisma.$transaction(async (tx) => {
+  const tokens = issueTokenPair(current.userId);
+  const rotated = await prisma.$transaction(async (tx) => {
     // Anulación CONDICIONAL: si otra petición rotó este mismo token entre la
     // lectura y aquí, Postgres reevalúa el WHERE tras su commit y no actualiza
     // nada. Dos usos simultáneos del mismo token son indistinguibles de un
     // robo, así que se tratan como tal (se anula la familia, abajo).
     const { count } = await tx.refreshToken.updateMany({
-      where: { id: actual.id, revokedAt: null },
-      data: { revokedAt: ahora },
+      where: { id: current.id, revokedAt: null },
+      data: { revokedAt: now },
     });
     if (count !== 1) return false;
-    const nuevo = await tx.refreshToken.create({
+    const successor = await tx.refreshToken.create({
       data: {
-        userId: actual.userId,
-        familyId: actual.familyId,
+        userId: current.userId,
+        familyId: current.familyId,
         tokenHash: hashToken(tokens.refreshToken),
-        expiresAt: caducidad(tokens.refreshToken),
+        expiresAt: expiryOf(tokens.refreshToken),
       },
     });
-    await tx.refreshToken.update({ where: { id: actual.id }, data: { replacedById: nuevo.id } });
+    await tx.refreshToken.update({
+      where: { id: current.id },
+      data: { replacedById: successor.id },
+    });
     return true;
   });
-  if (!rotado) {
-    await anularFamilia(actual.familyId, ahora);
-    throw unauthorized(MENSAJE);
+  if (!rotated) {
+    await revokeFamily(current.familyId, now);
+    throw unauthorized(INVALID_TOKEN_MESSAGE);
   }
   return tokens;
 }
@@ -125,9 +128,9 @@ export async function rotateSession(refreshToken: string): Promise<TokenPair> {
  */
 export async function endSession(refreshToken: string): Promise<void> {
   verifyToken(refreshToken, "refresh");
-  const actual = await getPrisma().refreshToken.findUnique({
+  const current = await getPrisma().refreshToken.findUnique({
     where: { tokenHash: hashToken(refreshToken) },
     select: { familyId: true },
   });
-  if (actual) await anularFamilia(actual.familyId, new Date());
+  if (current) await revokeFamily(current.familyId, new Date());
 }

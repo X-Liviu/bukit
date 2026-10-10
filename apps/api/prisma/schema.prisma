@@ -100,8 +100,8 @@ model RefreshToken {
   // cuenta y no tienen valor propio; borrar la cuenta (derecho de supresión)
   // se lleva sus sesiones sin limpieza manual.
   user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  replacedBy RefreshToken? @relation("RotacionDeTokens", fields: [replacedById], references: [id], onDelete: SetNull)
-  replaces   RefreshToken? @relation("RotacionDeTokens")
+  replacedBy RefreshToken? @relation("TokenRotation", fields: [replacedById], references: [id], onDelete: SetNull)
+  replaces   RefreshToken? @relation("TokenRotation")
 
   // (userId, expiresAt): la purga de caducados del propio usuario al iniciar
   // sesión (opción A, decisión del autor del 10-10). familyId: anular una

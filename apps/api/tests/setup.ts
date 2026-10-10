@@ -12,7 +12,7 @@ import "dotenv/config";
 // Alternativa descartada: una lista de bases prohibidas (la de Neon); fallaría
 // en abierto ante cualquier base remota nueva, mientras que permitir solo
 // localhost falla en cerrado.
-const HOSTS_LOCALES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 
 const url = process.env.DATABASE_URL;
 if (url) {
@@ -22,7 +22,7 @@ if (url) {
   } catch {
     throw new Error("DATABASE_URL no es una URL válida: las pruebas no se ejecutan.");
   }
-  if (!HOSTS_LOCALES.has(host)) {
+  if (!LOCAL_HOSTS.has(host)) {
     // El mensaje no incluye la cadena ni el host: podría ser la de producción
     // y acabar en un registro de la CI.
     throw new Error(
