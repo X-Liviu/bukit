@@ -1,34 +1,35 @@
 # Diagramas y mapa del proyecto
 
-`bukit.drawio` se abre directamente con draw.io (escritorio: **Archivo → Abrir**). **Todos los diagramas siguen la notación UML 2.5**, regla del autor desde el 04-10-2026 (ver CLAUDE.md §2.4): el modelo de datos se dibuja como diagrama de clases, no como entidad-relación. Cada página trae una nota «Cómo se lee» con la notación que usa. Tiene cinco páginas (pestañas abajo):
+`bukit.drawio` se abre directamente con draw.io (escritorio: **Archivo → Abrir**). **Todos los diagramas siguen la notación UML 2.5**, regla del autor desde el 04-10-2026 (ver CLAUDE.md §2.4): el modelo de datos se dibuja como diagrama de clases, no como entidad-relación. Cada página trae una nota «Cómo se lee» con la notación que usa. **Todo cambio del modelo de datos actualiza estos diagramas en la misma historia** (regla del autor desde el 10-10-2026): el de clases y las demás vistas que expliquen la arquitectura afectada. Tiene seis páginas (pestañas abajo):
 
-1. **Clases: modelo de datos (hoy)** — la única clase del modelo, `User` (tabla `users`), con su enumeración `UserTier`. Las tablas que crean solas las herramientas (Prisma y PostGIS) van en una nota, porque no forman parte del modelo.
-2. **Clases: propuesta US-06** — `RefreshToken` (tabla `refresh_tokens`), en composición con `User` (1 a 0..*) y con la autoasociación `reemplazadoPor` (0..1). Está pendiente del OK del autor.
-3. **Despliegue** — nodos, entornos de ejecución y artefactos: portátil (Node.js + Docker), GitHub (repositorio + Actions), Render y Neon, con las rutas de comunicación y su protocolo.
-4. **Actividad: de un push a producción** — el flujo de la CI/CD por calles (autor, GitHub Actions y Render): bifurcación y unión de los jobs en paralelo y decisiones (falla, PR o push a `main`).
-5. **Paquetes: monorepo** — `apps` y `packages` con sus dependencias «use». El color indica qué paquete tiene código, cuál es esqueleto y cuál está vacío.
+1. **Clases: modelo de datos** — `User` (tabla `users`) con su enumeración `UserTier`, y `RefreshToken` (tabla `refresh_tokens`, US-06) en composición con `User` (1 a 0..*) y con la autoasociación `replacedBy`/`replaces` (0..1). Notas con la correspondencia en la base (cascada, índices) y las tablas que crean solas las herramientas, que no forman parte del modelo.
+2. **Secuencia: iniciar y cerrar sesión** — dos interacciones (`sd`) entre cliente, API y PostgreSQL: el inicio de sesión guarda la huella del token en una familia nueva y borra los caducados del usuario; el cierre de sesión anula la familia (fragmento `opt`).
+3. **Secuencia: renovar la sesión** — la rotación del token de refresco con sus alternativas (`alt`): renovación normal, carrera entre dos renovaciones simultáneas, reutilización de un token ya renovado (posible robo) y rechazos.
+4. **Despliegue** — nodos, entornos de ejecución y artefactos: portátil (Node.js + Docker), GitHub (repositorio + Actions), Render y Neon, con las rutas de comunicación y su protocolo.
+5. **Actividad: de un push a producción** — el flujo de la CI/CD por calles (autor, GitHub Actions y Render): bifurcación y unión de los jobs en paralelo y decisiones (falla, PR o push a `main`).
+6. **Paquetes: monorepo** — `apps` y `packages` con sus dependencias «use». El color indica qué paquete tiene código, cuál es esqueleto y cuál está vacío.
 
-Generado el 04-10-2026 a partir del estado real del repositorio y de la base local. Desde ahora, **el `.drawio` es la fuente**: se refina a mano en draw.io. Para la memoria, se exporta la página que haga falta a PDF o PNG en `docs/thesis/figures/`.
+Generado el 04-10-2026 a partir del estado real del repositorio y de la base local; actualizado el 10-10-2026 con la US-06 (páginas 1 a 3) y Node 24.21 (página 4). **El `.drawio` es la fuente**: se refina a mano en draw.io. Para la memoria, se exporta la página que haga falta a PDF o PNG en `docs/thesis/figures/`.
 
 ## Librerías y herramientas: qué es cada una y para qué sirve
 
-Versiones exactas a 04-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.json`).
+Versiones exactas a 10-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.json`).
 
 ### La API (`apps/api`), lo que se ejecuta en producción
 
-| Paquete          | Versión | Para qué sirve                                                                                                       |
-| ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| `express`        | 5.2.1   | El servidor HTTP: define las rutas (`/health`, `/auth/...`) y los _middlewares_.                                     |
-| `@prisma/client` | 6.1.0   | El cliente generado desde `schema.prisma` para leer y escribir en PostgreSQL sin SQL a mano.                         |
-| `zod`            | 3.24.1  | En la API, reconoce los errores de validación y los convierte en un 400 (los esquemas viven en `packages/core`).     |
-| `@bukit/core`    | propio  | Los esquemas Zod y tipos compartidos: valida el registro y el inicio de sesión y da forma a los errores.             |
-| `bcryptjs`       | 3.0.3   | Hace el hash bcrypt de la contraseña (12 rondas, configurable con `BCRYPT_ROUNDS`) y la comprueba al iniciar sesión. |
-| `jsonwebtoken`   | 9.0.3   | Firma y verifica los tokens JWT (HS256): acceso de 15 min y refresco de 30 días.                                     |
-| `pino`           | 10.3.1  | El registro de sucesos (_logs_) en JSON, tapando secretos (cabecera `Authorization`, cookies…).                      |
-| `pino-http`      | 11.0.0  | Registra cada petición HTTP que llega (ruta, código, tiempo).                                                        |
-| `cors`           | 2.8.6   | Permite que un navegador de otro dominio (la futura web) llame a la API; hoy abierto a cualquier origen.             |
-| `dotenv`         | 17.4.2  | Carga el `.env` en local (`DATABASE_URL`, `PORT`); en producción las variables las pone Render.                      |
-| `tsx`            | 4.19.2  | Ejecuta TypeScript sin compilar: así arranca la API en local (`pnpm dev`) y en el contenedor de Render.              |
+| Paquete          | Versión | Para qué sirve                                                                                                                                                      |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `express`        | 5.2.1   | El servidor HTTP: define las rutas (`/health`, `/auth/...`) y los _middlewares_.                                                                                    |
+| `@prisma/client` | 6.1.0   | El cliente generado desde `schema.prisma` para leer y escribir en PostgreSQL sin SQL a mano.                                                                        |
+| `zod`            | 3.24.1  | En la API, reconoce los errores de validación y los convierte en un 400 (los esquemas viven en `packages/core`).                                                    |
+| `@bukit/core`    | propio  | Los esquemas Zod y tipos compartidos: valida el registro, el inicio de sesión y las peticiones de renovar o cerrar sesión, y da forma a los errores.                |
+| `bcryptjs`       | 3.0.3   | Hace el hash bcrypt de la contraseña (12 rondas, configurable con `BCRYPT_ROUNDS`) y la comprueba al iniciar sesión.                                                |
+| `jsonwebtoken`   | 9.0.3   | Firma y verifica los tokens JWT (HS256): acceso de 15 min y refresco de 30 días. Desde la US-06, el de refresco se guarda por su huella SHA-256 y rota en cada uso. |
+| `pino`           | 10.3.1  | El registro de sucesos (_logs_) en JSON, tapando secretos (cabecera `Authorization`, cookies…).                                                                     |
+| `pino-http`      | 11.0.0  | Registra cada petición HTTP que llega (ruta, código, tiempo).                                                                                                       |
+| `cors`           | 2.8.6   | Permite que un navegador de otro dominio (la futura web) llame a la API; hoy abierto a cualquier origen.                                                            |
+| `dotenv`         | 17.4.2  | Carga el `.env` en local (`DATABASE_URL`, `PORT`); en producción las variables las pone Render.                                                                     |
+| `tsx`            | 4.23.15 | Ejecuta TypeScript sin compilar: así arranca la API en local (`pnpm dev`) y en el contenedor de Render.                                                             |
 
 ### Desarrollo y pruebas de la API
 
@@ -47,7 +48,7 @@ Versiones exactas a 04-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | `packages/core`       | con código | `zod` 3.24.1: esquemas de usuario, inicio de sesión, listas y metas y errores de la API. Pruebas con `vitest`. |
 | `packages/api-client` | esqueleto  | Futuro cliente HTTP tipado para web y móvil. Declara `@bukit/core`, pero aún no lo usa.                        |
 | `packages/ui-core`    | esqueleto  | Futura lógica de interfaz compartida. Declara `@bukit/core`, pero aún no lo usa.                               |
-| `e2e`                 | esqueleto  | `@playwright/test` 1.49.1 para pruebas en navegador cuando exista la web; hoy su único test está desactivado.  |
+| `e2e`                 | esqueleto  | `@playwright/test` 1.63.0 para pruebas en navegador cuando exista la web; hoy su único test está desactivado.  |
 
 ### Calidad de código (raíz del monorepo)
 
@@ -66,14 +67,14 @@ Versiones exactas a 04-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 
 | Herramienta                                   | Versión                                                                          | Para qué sirve                                                                                                   |
 | --------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Node.js                                       | 24.18.0 (fijado con Volta)                                                       | Ejecuta la API, las pruebas y todas las herramientas JavaScript.                                                 |
+| Node.js                                       | 24.21.0 (fijado con Volta)                                                       | Ejecuta la API, las pruebas y todas las herramientas JavaScript.                                                 |
 | pnpm (vía Corepack)                           | 9.15.0                                                                           | Instala dependencias, enlaza los paquetes del monorepo y lanza los scripts.                                      |
 | Docker Desktop + Docker Compose               | 29.6.1 / 5.3.0                                                                   | Levanta la base de datos local y construye la imagen de la API.                                                  |
 | Imagen propia de Postgres (`docker/postgres`) | PostgreSQL 16.15 + PostGIS 3.3.10 + pgvector 0.8.0                               | La base local y la de la CI, con las mismas versiones que producción (Neon).                                     |
 | PostGIS                                       | 3.3.10                                                                           | Extensión geográfica para el futuro mapa (búsqueda por cercanía). Instalada, aún sin uso.                        |
 | pgvector                                      | 0.8.0                                                                            | Extensión para comparar _embeddings_ en la futura afinidad entre personas. Instalada, aún sin uso.               |
 | GitHub Actions                                | —                                                                                | La CI: `lint` (+ `pnpm audit`) → `typecheck` → `pruebas`, `docker` en paralelo y `migraciones` (solo en `main`). |
-| Acciones de la CI                             | checkout v7, setup-node v4, pnpm/action-setup v4, setup-buildx v4, build-push v7 | Descargar el código, preparar Node y pnpm y construir la imagen de Postgres con caché.                           |
+| Acciones de la CI                             | checkout v7, setup-node v7, pnpm/action-setup v6, setup-buildx v4, build-push v7 | Descargar el código, preparar Node y pnpm y construir la imagen de Postgres con caché.                           |
 | Dependabot                                    | —                                                                                | Propone cada semana PRs de actualización (npm, máx. 5 abiertas; acciones de GitHub, máx. 3).                     |
 | Render                                        | plan gratuito, Fráncfort                                                         | Aloja la API en producción; solo despliega con todos los checks de la CI en verde.                               |
 | Neon                                          | PostgreSQL 16.15, Fráncfort                                                      | La base de datos de producción.                                                                                  |

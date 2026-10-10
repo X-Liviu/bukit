@@ -8,8 +8,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   // Extensiones ya decididas (son infraestructura, no modelo de datos): mapa + afinidad.
   extensions = [postgis, vector]
 }
@@ -63,5 +63,50 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
+  refreshTokens RefreshToken[]
+
   @@map("users")
+}
+
+// Token de refresco persistido (US-06; diseño propuesto el 16-08 y el 04-10,
+// aprobado por el autor el 10-10-2026). Hasta la US-05 el refresco era un JWT
+// sin estado: válido 30 días y sin forma de anularlo. Guardarlo permite
+// rotarlo en cada uso, cerrar sesión de verdad y detectar robos.
+// Finalidad de cada dato: tokenHash = reconocer el token presentado (solo su
+// huella SHA-256: un volcado de la base no regala sesiones; SHA-256 y no
+// bcrypt porque el token ya es largo y aleatorio, no hay nada que «estirar»);
+// familyId = agrupar un inicio de sesión con todas sus renovaciones, para
+// que ante una reutilización se anule SOLO esa sesión (decisión del autor del
+// 10-10: las demás sesiones del usuario, en otros dispositivos, siguen
+// vivas); expiresAt = caducidad, igual a la del JWT; revokedAt = anulación
+// sin borrar (la fila anulada es la prueba de una reutilización);
+// replacedById = qué token lo sustituyó al rotar.
+// Minimización (R7): sin IP, dispositivo ni navegador; ninguna función
+// comprometida los necesita.
+// Alternativas descartadas: anular todas las sesiones del usuario ante una
+// reutilización (expulsa también a sus dispositivos legítimos) y una entidad
+// Session aparte (más normalizada, pero una tabla sin función propia hoy).
+model RefreshToken {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String    @map("user_id") @db.Uuid
+  familyId     String    @map("family_id") @db.Uuid
+  tokenHash    String    @unique @map("token_hash") @db.VarChar(64)
+  expiresAt    DateTime  @map("expires_at") @db.Timestamptz(3)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  revokedAt    DateTime? @map("revoked_at") @db.Timestamptz(3)
+  replacedById String?   @unique @map("replaced_by_id") @db.Uuid
+
+  // Borrado en cascada (criterio del cap. 9): las sesiones dependen de su
+  // cuenta y no tienen valor propio; borrar la cuenta (derecho de supresión)
+  // se lleva sus sesiones sin limpieza manual.
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  replacedBy RefreshToken? @relation("RotacionDeTokens", fields: [replacedById], references: [id], onDelete: SetNull)
+  replaces   RefreshToken? @relation("RotacionDeTokens")
+
+  // (userId, expiresAt): la purga de caducados del propio usuario al iniciar
+  // sesión (opción A, decisión del autor del 10-10). familyId: anular una
+  // sesión entera ante una reutilización o un cierre de sesión.
+  @@index([userId, expiresAt])
+  @@index([familyId])
+  @@map("refresh_tokens")
 }

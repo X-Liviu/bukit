@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import jwt from "jsonwebtoken";
 import type { TokenPair } from "@bukit/core";
 
@@ -18,11 +19,16 @@ export interface TokenPayload {
   typ: TokenType;
 }
 
+// jwtid (jti) aleatorio en cada token (US-06): desde que el refresco se guarda
+// por su huella, dos tokens idénticos chocarían con la unicidad de token_hash.
+// Sin él, dos inicios de sesión del mismo usuario en el mismo segundo (iat y
+// exp tienen resolución de segundos) producirían exactamente el mismo token.
 function sign(sub: string, typ: TokenType, expiresIn: number): string {
   return jwt.sign({ sub, typ }, config.jwt.secret, {
     algorithm: "HS256",
     expiresIn,
     issuer: config.jwt.issuer,
+    jwtid: randomUUID(),
   });
 }
 

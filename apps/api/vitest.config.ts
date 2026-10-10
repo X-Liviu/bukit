@@ -12,5 +12,8 @@ export default defineConfig({
     // más rápido, pero añade infraestructura de pruebas que hoy no compensa
     // con suites de segundos.
     fileParallelism: false,
+    // Se ejecuta antes de cada fichero de prueba: aborta si DATABASE_URL no es
+    // local (ver tests/setup.ts), para que las pruebas nunca vacíen producción.
+    setupFiles: ["./tests/setup.ts"],
   },
 });

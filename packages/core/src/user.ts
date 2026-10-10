@@ -90,3 +90,25 @@ export const loginResponseSchema = z.object({
   tokens: tokenPairSchema,
 });
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
+
+/**
+ * Cuerpo de las peticiones que presentan un token de refresco (US-06): renovar
+ * la sesión y cerrarla. El tope de longitud es defensa en profundidad: un JWT
+ * de la API mide unos cientos de caracteres, y nada obliga a hashear o
+ * verificar un texto de megas.
+ */
+export const refreshTokenRequestSchema = z.object({
+  refreshToken: z.string().min(1).max(2048),
+});
+export type RefreshTokenRequest = z.infer<typeof refreshTokenRequestSchema>;
+
+/**
+ * Respuesta de la renovación (US-06): un par NUEVO. El token de refresco
+ * presentado queda anulado en ese momento (rotación), así que el cliente debe
+ * sustituir los dos y no volver a usar el anterior: hacerlo se trata como un
+ * posible robo y cierra la sesión.
+ */
+export const refreshResponseSchema = z.object({
+  tokens: tokenPairSchema,
+});
+export type RefreshResponse = z.infer<typeof refreshResponseSchema>;

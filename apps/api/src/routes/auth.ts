@@ -1,11 +1,16 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { Prisma } from "@prisma/client";
-import { loginSchema, ownUserSchema, registerUserSchema } from "@bukit/core";
+import {
+  loginSchema,
+  ownUserSchema,
+  refreshTokenRequestSchema,
+  registerUserSchema,
+} from "@bukit/core";
 
 import { getPrisma } from "../prisma.js";
 import { conflict, unauthorized } from "../errors.js";
-import { issueTokenPair } from "../utils/tokens.js";
+import { endSession, rotateSession, startSession } from "../utils/sessions.js";
 import { requireAuth } from "../middleware/require-auth.js";
 
 // Coste del hash bcrypt: 12 rondas por defecto (producción), configurable por
@@ -79,15 +84,37 @@ authRouter.post("/auth/login", async (req, res) => {
   // misma respuesta, y ambas vías pagan una comparación bcrypt completa: ni el
   // cuerpo ni la latencia deben delatar qué emails están dados de alta
   // (enumeración de usuarios).
-  const correcta = await bcrypt.compare(input.password, user?.passwordHash ?? (await hashReferencia()));
+  const correcta = await bcrypt.compare(
+    input.password,
+    user?.passwordHash ?? (await hashReferencia()),
+  );
   if (!user || !correcta) {
     throw unauthorized("Email o contraseña incorrectos.");
   }
 
   res.json({
     user: ownUserSchema.parse(user),
-    tokens: issueTokenPair(user.id),
+    // Desde la US-06 el inicio de sesión abre una sesión persistida: guarda
+    // la huella del token de refresco para poder rotarlo y anularlo.
+    tokens: await startSession(user.id),
   });
+});
+
+// Renovación de la sesión (US-06): par nuevo a cambio del token de refresco,
+// que queda anulado (rotación). Sin requireAuth: la credencial es el propio
+// token de refresco, y el de acceso puede haber caducado ya, que es justo
+// cuando el cliente necesita renovar.
+authRouter.post("/auth/refresh", async (req, res) => {
+  const { refreshToken } = refreshTokenRequestSchema.parse(req.body);
+  res.json({ tokens: await rotateSession(refreshToken) });
+});
+
+// Cierre de sesión (US-06): anula la sesión del token presentado. 204 también
+// si ya estaba cerrada (idempotente).
+authRouter.post("/auth/logout", async (req, res) => {
+  const { refreshToken } = refreshTokenRequestSchema.parse(req.body);
+  await endSession(refreshToken);
+  res.status(204).end();
 });
 
 // Sesión actual: primera ruta privada del sistema y prueba viva de que el

@@ -11,7 +11,7 @@
 \label{ch:diseno}
 
 Este capítulo recoge el diseño del sistema conforme a su método de construcción (capítulo \ref{ch:solucion}): el modelo de datos se presenta entidad a entidad, en el orden en que cada una se acuerda y se implementa, con su porqué y las alternativas descartadas.
-\todonote{Pendientes: figura de la arquitectura, componentes de las aplicaciones y contratos de la API, conforme avance el desarrollo.}
+\todonote{Pendientes: figura de la arquitectura, componentes de las aplicaciones y contratos de la API, conforme avance el desarrollo; y las figuras UML del modelo de datos y de las secuencias de sesión, ya dibujadas, cuando se decida con el tutor si van en este capítulo o en el Anexo II.}
 
 \section{Modelo de datos}
 \label{sec:diseno-modelo}
@@ -28,7 +28,6 @@ El identificador es un \ac{UUID}, por dos razones: no es enumerable (nadie puede
 Se descartaron el entero autoincremental —más compacto y rápido en las uniones, pero enumerable— y el identificador textual por defecto de la capa de acceso a datos (cuid), que se almacena como texto sin tipo nativo.
 El criterio queda fijado para el resto de entidades del modelo.
 Con la misma vocación de criterio general se fijan, tras la revisión de la entidad: los nombres de la base de datos en minúsculas con guion bajo (hay consultas \acs{SQL} crudas comprometidas para el mapa y la afinidad, y los identificadores con mayúsculas exigirían comillas exactas en cada una), las fechas siempre con zona horaria (los plazos de las metas y las caducidades del producto no pueden depender de la zona horaria de la sesión del servidor), las longitudes máximas respaldadas también en la columna como defensa en profundidad, y los identificadores generados igualmente en la base de datos, no solo en el cliente.
-\todonote{Decidir el criterio de baja de cuenta y de borrado en cascada al diseñar la primera relación (la entidad de los \eng{tokens} de refresco, US-06).}
 
 El email y el nombre de usuario son únicos, y ambos se normalizan a minúsculas en el esquema de validación compartido antes de llegar a la base de datos: dos grafías del mismo email o del mismo nombre son la misma identidad.
 Esa normalización vive una única vez en la capa de validación compartida, por la que pasa toda escritura (capítulo \ref{ch:alternativas}); se descartó duplicarla en la base de datos con un índice funcional, que la herramienta de migraciones no sabe expresar de forma declarativa y quedaría desincronizado del esquema.
@@ -37,3 +36,35 @@ De la contraseña se guarda únicamente el hash bcrypt, calculado con la bibliot
 El nivel de usuario (normal o TOP) es un enumerado con normal por defecto y sin ningún punto de la \ac{API} que lo modifique: la admisión TOP llega por un proceso externo (capítulo \ref{ch:contexto}).
 
 La revisión de minimización de la entidad concluye sin hallazgos: no se almacenan teléfono, fecha de nacimiento ni ubicación, y los datos de la verificación de identidad llegarán con su módulo, reducidos al estado y a la clave de referencia del proveedor (capítulo \ref{ch:alternativas}).
+
+\subsection{Sesiones: los \eng{tokens} de refresco}
+\label{sec:diseno-sesiones}
+
+La segunda entidad guarda los \eng{tokens} de refresco que emite el inicio de sesión.
+Hasta entonces, el \eng{token} de refresco era autosuficiente: valía durante sus treinta días sin que el sistema pudiera anularlo, de modo que no existía un cierre de sesión real ni forma de reaccionar ante un robo.
+Guardar cada \eng{token} emitido permite tres cosas: rotarlo en cada uso, cerrar una sesión de verdad y detectar cuándo alguien presenta una copia.
+
+Cada \eng{token} se guarda con su identificador, su usuario, la sesión a la que pertenece, su huella, su fecha de caducidad, la de creación, la de anulación si la hay y el \eng{token} que lo sustituyó al renovarse.
+Del \eng{token} solo se guarda su huella SHA-256, nunca el propio \eng{token}: un volcado de la base de datos no entregaría ninguna sesión utilizable.
+La huella es SHA-256 y no bcrypt, a diferencia de las contraseñas, porque el \eng{token} ya es una cadena larga y aleatoria: bcrypt es lento a propósito para dificultar que se adivinen contraseñas débiles, y aquí no hay nada débil que proteger, mientras que la renovación sí debe ser rápida.
+La caducidad guardada es exactamente la del propio \eng{token}, de modo que una fila caducada corresponde siempre a un \eng{token} que la verificación ya rechaza por sí sola.
+
+La renovación sigue la rotación con detección de reutilización que recomienda la práctica de seguridad vigente para este tipo de \eng{tokens} \parencite[apartado~4.14]{rfc-9700}: cada renovación anula el \eng{token} presentado y entrega uno nuevo, enlazado con el anterior.
+Si llega un \eng{token} ya renovado, alguien conserva una copia: el cliente legítimo o un atacante, sin que el sistema pueda saber cuál.
+La respuesta es anular la sesión a la que pertenece, con el coste asumido de que el cliente legítimo tenga que volver a iniciar sesión.
+Para acotar ese alcance, cada \eng{token} lleva un identificador de sesión que comparten un inicio de sesión y todas sus renovaciones: ante una reutilización se anula solo esa sesión, y las del mismo usuario en otros dispositivos siguen vivas.
+Se descartaron anular todas las sesiones del usuario, más simple pero que expulsa también a sus dispositivos legítimos, y una entidad de sesión independiente, más normalizada pero que añadía una tabla sin otra función por ahora.
+Dos renovaciones simultáneas con el mismo \eng{token} son indistinguibles de un robo y se tratan igual: la anulación del \eng{token} es condicional dentro de una transacción, de modo que solo una de las dos puede completarse.
+Todos los rechazos devuelven la misma respuesta, sin distinguir si el \eng{token} caducó, se cerró o se reutilizó, porque esa distinción solo orientaría a quien prueba \eng{tokens} robados.
+Cerrar sesión anula la sesión entera del \eng{token} presentado y responde igual aunque ya estuviera cerrada.
+
+Los \eng{tokens} caducados se borran al iniciar sesión, solo los del propio usuario: no hace falta ninguna pieza nueva y el coste es una consulta por índice.
+Se descartaron la purga de toda la tabla en cada inicio de sesión, que añadía una escritura global a la ruta más usada; una tarea programada, que exigía otro proceso con acceso a la base de producción; y no borrarlos, que acumulaba datos personales sin finalidad.
+
+Esta entidad introduce la primera relación del modelo, y con ella el criterio de borrado: los datos que dependen de otra entidad y no tienen valor propio se borran en cascada con ella, decidiéndolo relación a relación.
+Las sesiones cumplen ese criterio, así que borrar una cuenta, en ejercicio del derecho de supresión del \ac{RGPD}, se lleva sus sesiones sin ninguna limpieza manual.
+Se descartó impedir el borrado mientras existan sesiones y limpiarlas aparte, que complicaba la baja de una cuenta sin aportar nada.
+Las relaciones con valor social, como las publicaciones o los seguimientos, decidirán su propio criterio cuando lleguen.
+
+La revisión de minimización de la entidad concluye sin hallazgos: no se guardan la dirección IP, el dispositivo ni el navegador desde los que se inicia sesión.
+Serían útiles para una pantalla de sesiones activas, pero ninguna función comprometida los necesita, y son datos personales.
