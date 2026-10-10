@@ -24,6 +24,19 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
 
+  // Scripts auxiliares de /coherencia (10-10-2026): CommonJS sobre Node, sin TypeScript,
+  // para que el comando los ejecute con `node` sin compilar ni instalar nada.
+  {
+    files: ["docs/coherencia/scripts/**/*.cjs"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "commonjs",
+      globals: { ...globals.node },
+    },
+    // Son CommonJS a propósito (el package.json de la raíz es "type": "module"): require() es lo correcto.
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
+
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
