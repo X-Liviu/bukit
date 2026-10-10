@@ -15,7 +15,12 @@ const isDev = config.nodeEnv === "development";
 // login truncado acabarían en claro en los logs). Exportada aparte para poder
 // probarla con un pino de prueba, porque el logger real va apagado en test.
 export const redactOptions = {
-  paths: ["req.headers.authorization", "req.headers.cookie", 'res.headers["set-cookie"]', "err.body"],
+  paths: [
+    "req.headers.authorization",
+    "req.headers.cookie",
+    'res.headers["set-cookie"]',
+    "err.body",
+  ],
   censor: "[REDACTED]",
 };
 
@@ -23,5 +28,7 @@ export const logger = pino({
   level: process.env.LOG_LEVEL ?? (isDev ? "debug" : "info"),
   enabled: config.nodeEnv !== "test",
   redact: redactOptions,
-  ...(isDev ? { transport: { target: "pino-pretty", options: { translateTime: "HH:MM:ss" } } } : {}),
+  ...(isDev
+    ? { transport: { target: "pino-pretty", options: { translateTime: "HH:MM:ss" } } }
+    : {}),
 });

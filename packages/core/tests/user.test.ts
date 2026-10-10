@@ -46,11 +46,13 @@ describe("registerUserSchema", () => {
 
   it("rechaza usernames fuera del alfabeto o de la longitud permitidos", () => {
     for (const username of ["ab", "con espacios", "conÑ", "a".repeat(31), "email@no"]) {
-      expect(registerUserSchema.safeParse({
-        email: "persona@ejemplo.com",
-        username,
-        password: "contraseña-larga",
-      }).success).toBe(false);
+      expect(
+        registerUserSchema.safeParse({
+          email: "persona@ejemplo.com",
+          username,
+          password: "contraseña-larga",
+        }).success,
+      ).toBe(false);
     }
   });
 
@@ -66,11 +68,13 @@ describe("registerUserSchema", () => {
 
   it("acota el email al tope del estándar (254)", () => {
     const local = "a".repeat(250);
-    expect(registerUserSchema.safeParse({
-      email: `${local}@x.com`,
-      username: "persona",
-      password: "contraseña-larga",
-    }).success).toBe(false);
+    expect(
+      registerUserSchema.safeParse({
+        email: `${local}@x.com`,
+        username: "persona",
+        password: "contraseña-larga",
+      }).success,
+    ).toBe(false);
   });
 });
 

@@ -1,2 +1,6 @@
-﻿# Forzar que todos los archivos de texto se gestionen con saltos de línea LF (para .txt de momento)
-*.txt text=auto eol=lf
+# Saltos de línea LF en todos los archivos de texto (10-10-2026). Prettier
+# exige LF (endOfLine: lf) y, con core.autocrlf=true en Windows, Git dejaba
+# la copia de trabajo en CRLF: `prettier --check` fallaba en archivos sin
+# ningún cambio real. El repositorio ya guarda LF; text=auto deja intactos
+# los binarios (imágenes, PDF). Antes solo cubría *.txt, y con un BOM delante.
+* text=auto eol=lf

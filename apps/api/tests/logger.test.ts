@@ -9,11 +9,14 @@ import { redactOptions } from "../src/logger";
 describe("redacción del logger", () => {
   it("censura authorization, cookie y el cuerpo crudo que adjunta http-errors", () => {
     const lines: string[] = [];
-    const testLogger = pino({ redact: redactOptions }, {
-      write: (line: string) => {
-        lines.push(line);
+    const testLogger = pino(
+      { redact: redactOptions },
+      {
+        write: (line: string) => {
+          lines.push(line);
+        },
       },
-    });
+    );
 
     testLogger.info(
       {

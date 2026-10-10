@@ -29,10 +29,22 @@ function isClientHttpError(err: unknown): err is ClientHttpError {
 // Tipos conocidos de body-parser → código estable y mensaje propio: nunca se
 // reenvía el mensaje crudo de la librería (inglés y con detalle interno).
 const FRAMEWORK_ERRORS: Record<string, ApiError["error"]> = {
-  "entity.parse.failed": { code: "BAD_REQUEST", message: "El cuerpo de la petición no es JSON válido." },
-  "entity.too.large": { code: "PAYLOAD_TOO_LARGE", message: "El cuerpo de la petición supera el tamaño máximo." },
-  "charset.unsupported": { code: "UNSUPPORTED_MEDIA_TYPE", message: "El juego de caracteres de la petición no está soportado." },
-  "encoding.unsupported": { code: "UNSUPPORTED_MEDIA_TYPE", message: "La codificación de la petición no está soportada." },
+  "entity.parse.failed": {
+    code: "BAD_REQUEST",
+    message: "El cuerpo de la petición no es JSON válido.",
+  },
+  "entity.too.large": {
+    code: "PAYLOAD_TOO_LARGE",
+    message: "El cuerpo de la petición supera el tamaño máximo.",
+  },
+  "charset.unsupported": {
+    code: "UNSUPPORTED_MEDIA_TYPE",
+    message: "El juego de caracteres de la petición no está soportado.",
+  },
+  "encoding.unsupported": {
+    code: "UNSUPPORTED_MEDIA_TYPE",
+    message: "La codificación de la petición no está soportada.",
+  },
 };
 
 /**
@@ -90,6 +102,8 @@ export function errorHandler(err: unknown, _req: Request, res: Response, next: N
 
   // Resto: error no controlado. Stack completo al registro, genérico al cliente.
   logger.error({ err }, "error no controlado");
-  const body: ApiError = { error: { code: "INTERNAL_ERROR", message: "Error interno del servidor." } };
+  const body: ApiError = {
+    error: { code: "INTERNAL_ERROR", message: "Error interno del servidor." },
+  };
   res.status(500).json(body);
 }
