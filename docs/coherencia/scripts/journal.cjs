@@ -2,7 +2,7 @@
 // día de la semana escrito y calculado, sprint y fase, secciones presentes, horas
 // registradas, decisiones y casillas; sumas de horas por sprint y fase; y anomalías
 // (día de la semana equivocado, saltos en la numeración, entradas de más de 7 días
-// con las horas sin rellenar).
+// con las horas sin rellenar, entradas que pasan del límite de extensión).
 // Uso: node docs/coherencia/scripts/journal.cjs [--today=YYYY-MM-DD] [docs/dev-journal]
 const fs = require("fs");
 const path = require("path");
@@ -19,6 +19,11 @@ if (!today) {
   today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 const DAY_MS = 864e5;
+// Límite de extensión del README del diario (regla del autor del 11-10-2026):
+// 10 minutos de lectura como máximo. Se cuenta como `wc -w` y solo desde esa
+// fecha: las entradas anteriores son históricas y no se reescriben.
+const MAX_WORDS = 1800;
+const MAX_WORDS_SINCE = "2026-10-11";
 const daysSince = (f) => Math.round((Date.parse(today) - Date.parse(f)) / DAY_MS);
 
 const entries = [];
@@ -81,6 +86,7 @@ for (const fileName of fileNames) {
       pending: (text.match(/- \[ \]/g) || []).length,
     },
     hoursLineCount: lines.filter((l) => /\*\*Horas invertidas:\*\*/.test(l)).length,
+    words: text.split(/\s+/).filter(Boolean).length,
   });
 }
 
@@ -107,6 +113,8 @@ for (const e of entries) {
     anomalies.push(`${e.file}: entrada de lunes sin «Planificación de la semana»`);
   if (e.computedWeekday === "domingo" && !e.retrospective && e.date >= "2026-10-05")
     anomalies.push(`${e.file}: entrada de domingo sin «Retrospectiva»`);
+  if (e.words > MAX_WORDS && e.date >= MAX_WORDS_SINCE)
+    anomalies.push(`${e.file}: ${e.words} palabras, por encima del límite de ${MAX_WORDS}`);
 }
 const sumBy = (sortKey) => {
   const acc = {};

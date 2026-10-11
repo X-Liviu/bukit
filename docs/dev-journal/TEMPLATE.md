@@ -1,5 +1,10 @@
 # Día X - Día de la semana, DD-MM-YYYY
 
+<!-- Extensión máxima: 10 minutos de lectura (hasta 1.800 palabras con `wc -w`;
+     reglas en el README). Una línea por hecho, decisiones en una viñeta con la
+     alternativa descartada, nada repetido de la planificación y sin secciones
+     vacías: se quitan las que no aplican. -->
+
 ## Planificación de la semana (Sx, Fy, DD-MM → DD-MM)
 
 <!-- Solo en la entrada del LUNES; si ese día no hay sesión, en la primera

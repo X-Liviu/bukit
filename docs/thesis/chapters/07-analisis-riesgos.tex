@@ -206,17 +206,30 @@ La alternativa de actualizar este capítulo \emph{in situ} se descarta porque de
 
 La tabla \ref{tab:seguimiento-riesgos} registra cada cambio junto con la versión del plan que lo recoge, sembrada con la evaluación inicial.
 
-\begin{table}[htbp]
-  \centering
-  \footnotesize
-  % Título encima de la tabla, como en las longtable: posición unificada en
-  % toda la memoria (revisión del 24-08-2026).
-  \caption{Registro de seguimiento de riesgos (solo cambios; cada revisión completa consta en su documento de seguimiento).}
-  \label{tab:seguimiento-riesgos}
-  \begin{tabular}{@{}llclc>{\raggedright\arraybackslash}p{45mm}@{}}
+% longtable desde el 11-10-2026: la tabla crece en cada seguimiento y, como
+% flotante de una pieza, dejó de caber en una página; así se parte sola entre
+% páginas, sin saltos manuales. Columna de acción a todo el ancho del texto
+% para que cada fila ocupe menos alto.
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}llclc>{\raggedright\arraybackslash}p{85mm}@{}}
+    \caption{Registro de seguimiento de riesgos (solo cambios; cada revisión completa consta en su documento de seguimiento).}
+    \label{tab:seguimiento-riesgos}\\
     \toprule
     \textbf{Fecha} & \textbf{Sprint} & \textbf{Riesgo} & \textbf{Estado} & \textbf{Plan} & \textbf{Acción / decisión} \\
     \midrule
+    \endfirsthead
+    \multicolumn{6}{c}{\emph{\tablename~\thetable{} — continuación de la página anterior}}\\
+    \toprule
+    \textbf{Fecha} & \textbf{Sprint} & \textbf{Riesgo} & \textbf{Estado} & \textbf{Plan} & \textbf{Acción / decisión} \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{6}{r@{}}{\emph{Continúa en la página siguiente…}}\\
+    \endfoot
+    \bottomrule
+    \endlastfoot
     16/07/2026 & S0 & Todos & Identificado & v0 & Identificación inicial y plan de respuesta (v0 enmendada y re-fechada a 17/07/2026 durante S0). \\
     26/07/2026 & S1 & R10 & Resuelto & v1 & Materializado en S1 (8 días sin actividad); contingencia mínima aplicada (re-encaje dentro del \eng{sprint}), sin impacto en el camino crítico. \\
     26/07/2026 & S1 & R4 & Identificado & v1 & Mitigación ajustada: eliminado el límite de extensión de la memoria por decisión del autor. \\
@@ -225,6 +238,11 @@ La tabla \ref{tab:seguimiento-riesgos} registra cada cambio junto con la versió
     10/08/2026 & S3 & R14 & Identificado & v3 & Riesgo nuevo (verificación de seguridad insuficiente, P2 $\times$ I2, significativo), incorporado a la v3 en la revisión extendida de S3; mitigación activada: auditoría de dependencias en la integración continua, Dependabot y casos de abuso exigidos por la Definición de Hecho. \\
     16/08/2026 & S4 & R10 & Resuelto & v4 & Segundo episodio materializado (5 días sin actividad por causa sobrevenida); contingencia mínima como en S1, sin coste de calendario: la historia del \eng{sprint} se había entregado antes del parón. \\
     24/08/2026 & S5 & R10 & Resuelto & v5 & Tercer episodio materializado (semana de S5 completa sin actividad, 7 días); probabilidad reevaluada al alza (P2 $\times$ I3 = 6, pasa a crítico con revisión semanal); contingencia de re-planificación: US-06 pasa a S6 y US-07 queda condicional, rodando al arranque de F2 si no se entrega — fases y fechas globales intactas. \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+    11/10/2026 & S7 & R10 & Resuelto & v6 & Cuarto episodio materializado: parón del 24/08 al 04/10/2026 (el \eng{sprint} S6 sin actividad y la pausa del traslado, alargada dos semanas); contingencia completa: parón formal el 30/08 y re-base del calendario el 03/10 (F2 pasa de 18 a 16 \eng{sprints} y de 90 a 80 h, sin recorte de alcance); P se mantiene en 2. \\
+    11/10/2026 & S7 & R13 & Resuelto & v6 & Materializado el 03/10/2026: la integración continua se rompió cuando el repositorio de paquetes de PostgreSQL retiró los de Debian 11, base de la imagen de PostGIS; contingencia: imagen propia con las versiones de producción y receta documentada. \\
+    11/10/2026 & S7 & R3 & Identificado & v6 & Mitigación ampliada: auditoría semanal de la coherencia documental asistida por \ac{IA} (sección \ref{sec:metodologia-coherencia}). \\
+    11/10/2026 & S7 & R12 & Identificado & v6 & Mitigación ampliada: entrega quincenal de la versión vigente de la memoria al tutor (días 1 y 15 de cada mes), con un resumen de cambios. \\
+    11/10/2026 & S7 & R14 & Identificado & v6 & Mitigación ajustada: triaje semanal de Dependabot y alertas de seguridad activadas; indicador precisado (vulnerabilidades de producción, dentro del \eng{sprint}; de desarrollo, al cierre del siguiente). \\
+    11/10/2026 & S7 & R15 & Identificado & v6 & Riesgo nuevo (cuota y coste de la \ac{IA} de desarrollo, P2 $\times$ I2, significativo), identificado cuando el primer diseño de la auditoría semanal amenazó con agotar la cuota de la herramienta. \\
+\end{longtable}
+\endgroup
