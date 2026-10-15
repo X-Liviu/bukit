@@ -5,13 +5,15 @@
 // lee el nombre del modelo y el tipo de agente de cada respuesta, nunca su
 // contenido.
 //
-// Lo ejecuta el autor en una sesión normal, no el propio comando: el perfil
-// .claude/coherencia.settings.json deniega leer ~/.claude a propósito.
+// No lo ejecuta la auditoría (el perfil .claude/coherencia.settings.json deniega
+// leer ~/.claude a propósito), sino el paso 1 de /coherencia aplicar, en una
+// sesión normal.
 //
 // Uso: node docs/coherencia/scripts/models.cjs [--session=<id>] [--allow=claude-haiku-5-5,claude-sonnet-5-5]
-// Sin --session toma la sesión más reciente en la que el autor escribió
-// /coherencia. Sale con código 1 si alguna respuesta vino de un modelo que no
-// está en --allow, y con código 2 si no encuentra la sesión.
+// Sin --session toma la sesión más reciente en la que el autor lanzó la
+// auditoría (/coherencia sin «aplicar»). Sale con código 1 si alguna respuesta
+// vino de un modelo que no está en --allow, y con código 2 si no encuentra la
+// sesión.
 
 const fs = require("fs");
 const os = require("os");
@@ -19,6 +21,15 @@ const path = require("path");
 
 const NEWLINE = String.fromCharCode(10);
 const COMMAND_MARKER = "<command-name>/coherencia</command-name>";
+const ARGS_PATTERN = /<command-args>([^<]*)<\/command-args>/;
+
+// `/coherencia aplicar` no audita: si su sesión contara, el paso 1 del modo
+// aplicar, que ejecuta este script sin --session, se elegiría a sí mismo.
+function isAudit(text) {
+  if (!text.includes(COMMAND_MARKER)) return false;
+  const args = ARGS_PATTERN.exec(text);
+  return !args || args[1].trim().split(" ")[0] !== "aplicar";
+}
 
 // Un fallo de uso (sesión inexistente, carpeta sin registros) se explica en una
 // línea, sin la traza de Node.
@@ -67,10 +78,10 @@ function readEntries(file) {
 function invokedCommand(entry) {
   if (entry.type !== "user" || !entry.message) return false;
   const { content } = entry.message;
-  if (typeof content === "string") return content.includes(COMMAND_MARKER);
+  if (typeof content === "string") return isAudit(content);
   return (
     Array.isArray(content) &&
-    content.some((block) => block.type === "text" && String(block.text).includes(COMMAND_MARKER))
+    content.some((block) => block.type === "text" && isAudit(String(block.text)))
   );
 }
 

@@ -4,7 +4,7 @@
 > Claude Code debe aplicar esta guía **a rajatabla** en todo lo relativo a la memoria (`docs/thesis/`).
 > Alteraciones respecto al original: (1) se han retirado los números de página del PDF que partían frases; el texto no se ha corregido ni parafraseado (se conservan sus erratas). (2) El apartado «a. Extensión» queda **EXCLUIDO** de la norma aplicable a este TFG por decisión del autor (26-07-2026): la memoria no se somete a límite de páginas.
 >
-> Dónde se operativiza cada bloque: extensión y formato → `docs/thesis/config/style.tex` (aplicado el 16-07-2026; el bloque de extensión queda excluido por decisión del autor); citas APA → `biblatex-apa` en `config/packages.tex` + plantillas en `bibliography/PLANTILLAS.md`; obligación de citar toda fuente externa → CLAUDE.md §2.4 y `docs/thesis/README.md`.
+> Dónde se operativiza cada bloque: extensión y formato → `docs/thesis/config/style.tex` (aplicado el 16-07-2026; el bloque de extensión queda excluido por decisión del autor); citas APA → `biblatex-apa` en `config/packages.tex` + plantillas en `bibliography/PLANTILLAS.md`; obligación de citar toda fuente externa → CLAUDE.md («Memoria del TFG») y `docs/thesis/README.md`.
 
 ## GUÍA DE ESTILO DEL TFG
 

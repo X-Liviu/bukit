@@ -2,7 +2,7 @@
 
 App nativa iOS/Android: **React Native + Expo + TypeScript** (EAS build, OTA, push).
 Versión **parcial y objetivo secundario** del TFG (pantallas núcleo contra la API real; ver
-CLAUDE.md §1.4.2 y el cap. 3 de la memoria).
+CLAUDE.md («Arquitectura») y el cap. 3 de la memoria).
 
 > Placeholder. Se scaffolda con la herramienta oficial cuando llegue su épica:
 >

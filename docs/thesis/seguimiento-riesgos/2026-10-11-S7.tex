@@ -2,7 +2,7 @@
 % Seguimiento de riesgos — 11-10-2026 (S7, primer sprint de F2).
 % Primer seguimiento del calendario nuevo (re-base del 03-10-2026) y el
 % primero desde el del 24-08 (S5): el de S6 se aplazó el 30-08 y no se
-% reconstruyó al reanudar (decisión del autor del 04-10), y la pausa no tiene
+% reconstruyó al reanudar (decisión del autor del 03-10), y la pausa no tiene
 % sprints. Revisión COMPLETA: críticos (semanal); significativos (R8 en su
 % fecha; R9, R11 y R14 con retraso, les tocaba en S6); moderados adelantados
 % desde S8 (R12 suma una medida y el indicador de R13 saltó el 03-10).
@@ -33,7 +33,7 @@ Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada
 Riesgos revisados — revisión completa del registro, la primera desde el seguimiento del 24-08 (S5):
 \textbf{R1--R7 y R10 por cadencia} (críticos, semanal);
 \textbf{R8 por cadencia} (significativo; su última revisión fue en S5, por vigilancia expresa);
-\textbf{R9, R11 y R14 por cadencia, con retraso} (significativos: les tocaba en S6, cuyo seguimiento se aplazó el 30-08 y no se reconstruyó al reanudar, por decisión del autor del 04-10);
+\textbf{R9, R11 y R14 por cadencia, con retraso} (significativos: les tocaba en S6, cuyo seguimiento se aplazó el 30-08 y no se reconstruyó al reanudar, por decisión del autor del 03-10);
 y \textbf{R12 y R13 adelantados desde S8} (moderados): R12 porque se le añade una medida y R13 por disparador observado el 03-10.
 Próximas revisiones por cadencia: significativos (incluido el nuevo R15) en S9 y moderados en S11.
 
@@ -108,11 +108,11 @@ R9 & Objetivos secundarios o versiones simuladas; capas gratuitas. & \checkedbox
 \hline
 R11 & Todo en git con remoto y subidas frecuentes. & \checkedbox\ Sí (cada sesión se subió al remoto al cerrarla).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
-R14 & Auditoría de dependencias en la CI + alertas y parches de Dependabot + casos de abuso en la Definición de Hecho. & \checkedbox\ Sí, salvo dos huecos (auditoría en cada push; casos de abuso en la US-06).\newline \checkbox\ No & Dependabot dejó de proponer parches del 16-08 al 03-10 (se detiene con cinco PRs abiertas), y las alertas de seguridad que el plan daba por activas no lo estuvieron hasta el 11-10. & \checkbox\ Mantener\newline \checkedbox\ Modificar\newline \checkbox\ Eliminar \\
+R14 & Auditoría de dependencias en la CI + alertas y parches de Dependabot + casos de abuso en la Definición de Hecho. & \checkedbox\ Sí (auditoría en cada push; casos de abuso en la US-06), salvo dos huecos de Dependabot (ver justificación).\newline \checkbox\ No & Dependabot dejó de proponer parches del 16-08 al 03-10 (se detiene con cinco PRs abiertas), y las alertas de seguridad que el plan daba por activas no lo estuvieron hasta el 11-10. & \checkbox\ Mantener\newline \checkedbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
 \end{tabularx}
 
-\Needspace*{16\baselineskip}
+\Needspace*{24\baselineskip}
 \underline{\textbf{Riesgos moderados (R12 y R13, adelantados desde S8)}}
 
 \begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
@@ -123,7 +123,7 @@ R14 & Auditoría de dependencias en la CI + alertas y parches de Dependabot + ca
 \multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
 \multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
 \hline
-R12 & Capítulos a revisión conforme se cierran; plazo orientativo por envío. & \checkedbox\ Sí: el 05-10 se envió al tutor la memoria completa vigente, primera de las entregas quincenales decididas el 04-10.\newline \checkbox\ No & — & \checkedbox\ Mantener (y se añade una medida nueva, abajo)\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+R12 & Capítulos a revisión conforme se cierran; plazo orientativo por envío. & \checkedbox\ Sí: el 05-10 se envió al tutor la memoria completa vigente, primera de las entregas quincenales decididas el 03-10.\newline \checkbox\ No & — & \checkedbox\ Mantener (y se añade una medida nueva, abajo)\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
 R13 & Cada solución como receta reproducible al resolverla. & \checkedbox\ Sí (receta para cambiar la imagen de Postgres sin borrar los datos, en CLAUDE.md §1.3; las fricciones menores del 10-10, con su regla en el diario y en \texttt{.gitattributes}).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
@@ -143,7 +143,7 @@ R14 & Auditoría de dependencias en cada push, alertas y parches de Dependabot y
 \hline
 \end{tabularx}
 
-\Needspace*{8\baselineskip}
+\Needspace*{18\baselineskip}
 \underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
 
 \begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
@@ -154,7 +154,7 @@ R14 & Auditoría de dependencias en cada push, alertas y parches de Dependabot y
 \hline
 R3 & Auditoría semanal de la coherencia documental asistida por IA (comando \texttt{/coherencia}): cada domingo contrasta la memoria con el resto de la documentación y con el código, y el informe se tría en la planificación del lunes. & Decisión del autor del 10-10-2026: un capítulo desfasado se detecta en la semana en que se desfasa, en lugar de acumularse hasta el cierre. \\
 \hline
-R12 & Entrega quincenal al tutor (días 1 y 15 de cada mes; en octubre de 2026, 05-10 y 15-10) de la versión vigente de la memoria, con un resumen de los cambios desde el envío anterior. & Decisión del autor del 04-10-2026: la revisión pasa a ser continua, de modo que un cambio estructural aparece pronto y no al final; además impone un ritmo de redacción. \\
+R12 & Entrega quincenal al tutor (días 1 y 15 de cada mes; en octubre de 2026, 05-10 y 15-10) de la versión vigente de la memoria, con un resumen de los cambios desde el envío anterior. & Decisión del autor del 03-10-2026: la revisión pasa a ser continua, de modo que un cambio estructural aparece pronto y no al final; además impone un ritmo de redacción. \\
 \hline
 R15 & Medidas del riesgo nuevo (ver «Nuevos riesgos identificados»). & Riesgo identificado en este seguimiento. \\
 \hline
@@ -196,7 +196,7 @@ R11 & 0 — cada sesión se subió al remoto al cerrarla; sin anomalías del equ
 \end{tabularx}
 
 % ------------------ R10 ------------------
-\Needspace*{12\baselineskip}
+\Needspace*{30\baselineskip}
 \subsection*{Riesgo: \markfield{R10 — Indisponibilidad prolongada del autor}}
 
 \textbf{Indicadores (clave y de resolución)}
@@ -209,7 +209,7 @@ R11 & 0 — cada sesión se subió al remoto al cerrarla; sin anomalías del equ
 \hline
 \end{tabularx}
 
-\textbf{Nueva probabilidad (1–3):} \underline{\ 2\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkedbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio, por decisión del autor: las dos causas, el final del trabajo de verano y el traslado, ya pasaron, y la rutina de F2 está asentada; sigue con revisión semanal)
+\textbf{Nueva probabilidad (1–3):} \underline{\ 2\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 3\ } · \textbf{Nueva severidad:} \checkedbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio, por decisión del autor: las dos causas, el final del trabajo de verano y el traslado, ya pasaron; sigue con revisión semanal)
 
 \textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
 
@@ -217,6 +217,7 @@ R11 & 0 — cada sesión se subió al remoto al cerrarla; sin anomalías del equ
 
 \textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkedbox\ Resuelto (contingencia ya aplicada) · \checkbox\ Cerrado
 
+\Needspace*{14\baselineskip}
 \textbf{Plan de contingencia (solo si se ha materializado)}
 
 \begin{tabularx}{\textwidth}{|Y|Y|Y|}
@@ -235,7 +236,7 @@ La documentación continua permitió retomar en un fin de semana de puesta al d�
 Lección: los traslados de la estancia Erasmus son el punto débil del calendario; el de vuelta (pausa del 25-01 al 31-01) conviene planificarlo con la misma holgura.
 
 % ------------------ R12 ------------------
-\Needspace*{12\baselineskip}
+\Needspace*{27\baselineskip}
 \subsection*{Riesgo: \markfield{R12 — Ciclos de revisión con el tutor} (adelantado desde S8)}
 
 \textbf{Indicadores (clave y de resolución)}
@@ -260,7 +261,7 @@ Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructural
 Se añade una medida de mitigación (ver «Nuevas medidas»).
 
 % ------------------ R13 ------------------
-\Needspace*{12\baselineskip}
+\Needspace*{36\baselineskip}
 \subsection*{Riesgo: \markfield{R13 — Fricción imprevista de la cadena de herramientas} (por disparador)}
 
 \textbf{Indicadores (clave y de resolución)}
@@ -281,6 +282,7 @@ Más de una hora de una misma sesión perdida en un problema de entorno ajeno al
 
 \textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkedbox\ Resuelto · \checkbox\ Cerrado
 
+\Needspace*{16\baselineskip}
 \textbf{Plan de contingencia (solo si se ha materializado)}
 
 \begin{tabularx}{\textwidth}{|Y|Y|Y|}
@@ -298,7 +300,7 @@ el arreglo de fondo se aprovechó para igualar las versiones de PostGIS y pgvect
 El origen no fue Windows, sino el ciclo de vida de una imagen de terceros: depender de etiquetas que siguen a una distribución sin soporte es una fragilidad que ahora documenta la receta.
 
 % ------------------ R14 ------------------
-\Needspace*{12\baselineskip}
+\Needspace*{33\baselineskip}
 \subsection*{Riesgo: \markfield{R14 — Verificación de seguridad insuficiente}}
 
 \textbf{Indicadores (clave y de resolución)}
@@ -322,6 +324,7 @@ Historia con autenticación, autorización o datos personales cerrada sin casos 
 \textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
 La medida de mitigación y el indicador cambian (ver «Cambios realizados»).
 
+\Needspace*{10\baselineskip}
 \bigline
 
 \section{Reflexión desde el último seguimiento}
@@ -358,6 +361,6 @@ Origen: el primer diseño de la auditoría semanal de coherencia podía lanzar c
 
 \textbf{Justificación:} el nuevo calendario recorta F2 de 18 a 16 sprints y de 90 a 80~h sin recortar alcance y mantiene el fin del desarrollo el 16-05-2027; F2 suma 41 SP frente a una capacidad de 40, diferencia que absorbe la holgura (decisión del autor del 10-10).
 
-\textbf{Otros eventos relevantes:} triajes de Dependabot del 03-10, el 10-10 y el 11-10, tras siete semanas parado por el tope de cinco PRs abiertas: diez PRs fusionadas, cada una con su CI en verde, y cuatro versiones mayores aplazadas, las de Prisma 7 y Zod 4 (sin aporte para las historias) y las de \texttt{@types/node} 25 y 26 (producción corre Node 24); primera entrega quincenal al tutor el 05-10; los modelos de la auditoría semanal, fijados por configuración y comprobados.
+\textbf{Otros eventos relevantes:} triajes de Dependabot del 03-10, el 10-10 y el 11-10, tras siete semanas parado por el tope de cinco PRs abiertas: diez PRs fusionadas (la \#16 y la \#18, el 03-10, sin esperar a su CI por un fallo del script de fusión, y la \#23, el 10-10, con los checks de una base antigua; las cuatro del 11-10, con su CI en verde sobre el \texttt{main} actualizado) y cuatro versiones mayores aplazadas, las de Prisma 7 y Zod 4 (sin aporte para las historias) y las de \texttt{@types/node} 25 y 26 (producción corre Node 24); primera entrega quincenal al tutor el 05-10; los modelos de la auditoría semanal, fijados por configuración y comprobados.
 
 \end{document}

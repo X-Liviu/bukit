@@ -3,7 +3,7 @@
 Registro diario del TFG. Cumple tres funciones:
 
 1. **Retomar el hilo**: cada sesión empieza leyendo la última entrada (es la «daily» del método).
-2. **Planificar y seguir el sprint**: desde el 03-10-2026 sustituye al tablero Kanban de GitHub Projects (decisión del autor; el tablero, las issues #1–#10 y los milestones F1–F4 quedan cerrados como evidencia de F1). La planificación de la semana es una lista de casillas en la entrada del lunes, la retrospectiva va en la del domingo, y la trazabilidad entre historias y código, en el mensaje de cada commit (`US-06: …`). No se crean issues, tableros ni milestones.
+2. **Planificar y seguir el sprint**: desde el 03-10-2026 sustituye al tablero Kanban de GitHub Projects (decisión del autor; el tablero, las issues #1–#10 y los milestones F1–F4 quedan cerrados como evidencia de F1). La planificación de la semana es una lista de casillas en la entrada del día en que se hace, la retrospectiva va en la del domingo, y la trazabilidad entre historias y código, en el mensaje de cada commit (`US-06: …`). No se crean issues, tableros ni milestones.
 3. **Materia prima para la memoria**: las horas, los problemas y las decisiones reales alimentan los capítulos 10 y 13.
 
 ## Extensión: diez minutos de lectura como máximo
@@ -25,12 +25,12 @@ Cómo se consigue:
 
 - **Un archivo por sesión**, `DD-MM-YYYY.md` (formato fijado al inicio; el explorador los ordena por día y no por fecha, así que la cronología se sigue por la cabecera «Día N» o por el `git log`). Cabecera: `# Día N - Día de la semana, DD-MM-YYYY`, con N consecutivo.
 - Si un día hay dos sesiones muy distintas, vale `DD-MM-YYYY-b.md`, cuya cabecera repite el número: `# Día N (sesión b) - Día de la semana, DD-MM-YYYY`.
-- Se escribe con el comando `/journal` **antes de cerrar la sesión**, a partir de [`TEMPLATE.md`](TEMPLATE.md). La excepción es la planificación, que se escribe **al empezar** la sesión del lunes.
+- Se escribe con el comando `/journal` **antes de cerrar la sesión**, a partir de [`TEMPLATE.md`](TEMPLATE.md). La excepción es la planificación, que se escribe **al empezar** la sesión en que se hace.
 - **Secciones de las ceremonias** (rigen desde el 05-10-2026; formato fijado el 10-10-2026 en la plantilla):
-  - **«Planificación de la semana»**, en la entrada del lunes: capacidad en horas, historias en el orden del backlog del cap. 10 con sus subtareas como casillas (solo puntúan las historias), otras tareas, el triaje del informe de `/coherencia` del domingo y las decisiones. Las casillas se marcan `[x]` durante la semana, hasta el domingo.
+  - **«Planificación de la semana»**, una vez por semana, en la entrada del día en que se hace: normalmente el lunes, pero vale cualquier día de la semana y no cuenta como retraso (regla del autor del 15-10-2026). Recoge capacidad en horas, historias en el orden del backlog del cap. 10 con sus subtareas como casillas (solo puntúan las historias), otras tareas (entre ellas, aplicar el informe de `/coherencia` del domingo con `/coherencia aplicar`) y las decisiones. Las casillas se marcan `[x]` durante la semana, hasta el domingo.
   - **«Retrospectiva (Sx)»**, en la entrada del domingo: previsto frente a real en horas y puntos, equivalencia horas/punto, qué fue bien, qué no y qué cambia. La sigue **«Revisión de riesgos»**, que enlaza el seguimiento fechado de `docs/thesis/seguimiento-riesgos/`.
-  - Sin sesión ese día, la planificación va en la primera entrada de la semana y la retrospectiva en la primera de la semana siguiente, antes de su planificación y con el número del sprint que cierra. El resto de entradas no llevan estas secciones.
-- **Las entradas pasadas no se reescriben**: son históricas. Solo se tocan para marcar `[x]` en la planificación de la semana en curso, para corregir un error objetivo de forma (día de la semana, «Día N», un enlace) dejando constancia en la entrada del día, o para retirar un dato personal (regla de privacidad de CLAUDE.md §2.2).
+  - Si el domingo no hay sesión, la retrospectiva va en la primera entrada de la semana siguiente, antes de su planificación y con el número del sprint que cierra. El resto de entradas no llevan estas secciones.
+- **Las entradas pasadas no se reescriben**: son históricas. Solo se tocan para marcar `[x]` en la planificación de la semana en curso, para corregir un error objetivo de forma (día de la semana, «Día N», un enlace) dejando constancia en la entrada del día, o para retirar un dato personal (regla de privacidad de CLAUDE.md, «Nunca»).
 - **Horas invertidas**: una sola línea, al final; la rellena el autor, y en una entrada reciente puede hacerlo a posteriori.
 - Ser concreto: «configurado ESLint autofix al guardar» sí; «tocado config» no.
 - Las **decisiones** son la parte más valiosa: anotar siempre la alternativa descartada y el porqué.

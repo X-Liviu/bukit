@@ -20,7 +20,7 @@ const account = {
   password: "contraseña-larga",
 };
 
-/** Alta + inicio de sesión: cada llamada a iniciarSesion abre una sesión (familia) nueva. */
+/** Alta + inicio de sesión: cada llamada a login abre una sesión (familia) nueva. */
 async function register(): Promise<void> {
   await request(app).post("/auth/register").send(account).expect(201);
 }

@@ -5,8 +5,9 @@ import { z } from "zod";
  * (decisión del autor, 28-07-2026: la lista solo agrupa; recordatorios e IA
  * trabajan meta a meta).
  * El plan gratuito admite un máximo de 3 listas EN CURSO (decisión del autor,
- * 03-08-2026: completar una lista libera su hueco); regla de negocio a aplicar
- * en el back cuando llegue su épica (EP04).
+ * 03-08-2026: completar una lista libera su hueco; 15-10-2026: borrar una en
+ * curso también lo libera, y una lista completada no se reabre); regla de
+ * negocio a aplicar en el back cuando llegue su épica (EP04).
  */
 export const FREE_PLAN_MAX_ACTIVE_LISTS = 3;
 

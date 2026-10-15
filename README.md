@@ -1,4 +1,4 @@
-# BUKIT (FASE DE DESARROLLO: IGNORAR!!!!!!!!!!!!!!!!)
+# BUKIT
 
 [![CI](https://github.com/X-Liviu/bukit/actions/workflows/ci.yml/badge.svg)](https://github.com/X-Liviu/bukit/actions/workflows/ci.yml)
 

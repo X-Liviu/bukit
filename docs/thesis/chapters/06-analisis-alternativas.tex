@@ -82,7 +82,7 @@ Las pruebas de integración de la \ac{API} se escriben con Vitest \parencite{vit
 Dos razones cierran la elección: un único ejecutor de pruebas para todo el \eng{monorepo} (los paquetes compartidos ya prueban con Vitest) y el hecho de que la \ac{API} se escribe como módulos ECMAScript, un terreno donde el soporte de Jest sigue declarado experimental por su propia documentación y exige una configuración frágil \parencite{jest-docs}.
 El registro de sucesos se resuelve con pino \parencite{pino-docs} y su \eng{middleware} pino-http, frente a winston: pino produce de forma nativa registro estructurado en \ac{JSON} con niveles de gravedad, su \eng{middleware} \ac{HTTP} asigna un identificador a cada petición para seguirla en los registros, y su rendimiento es mejor según las comparativas de su propia documentación.
 
-\section{Autenticación: firma de \eng{tokens} y hash de contraseñas}
+\section{Autenticación: firma de \eng{tokens} y \eng{hash} de contraseñas}
 \label{sec:alt-autenticacion}
 
 La autenticación con \ac{JWT} añade dos elecciones de biblioteca, ambas cerradas con el criterio transversal del capítulo: saltar solo donde el salto aporta.
@@ -91,7 +91,7 @@ Para firmar y verificar los \eng{tokens} compitieron jsonwebtoken \parencite{jso
 Se elige jsonwebtoken: la \ac{API} ya dominada pesa más que las virtudes de jose en una pieza de seguridad que hay que poder defender ante el tribunal (riesgo R5), y su coste —una decena de dependencias transitivas— se asume como conocido y estable.
 La misma historia fijó dos decisiones de diseño con su alternativa: las vidas de los \eng{tokens} quedan en 15 minutos el de acceso y 30 días el de refresco —frente a la pareja 1 hora / 7 días, descartada porque un acceso corto reduce la ventana de uso de un \eng{token} robado y el refresco mensual se apoya en la rotación—, y ambos viajan en el cuerpo de la respuesta —frente a la \eng{cookie} \texttt{httpOnly}, descartada porque partiría en dos caminos el cliente \ac{HTTP} compartido que web y móvil consumen por igual—.
 
-Para el hash de las contraseñas se adopta bcryptjs \parencite{bcryptjs-docs}, la implementación del algoritmo bcrypt en JavaScript puro y compatible con la nativa, frente al paquete bcrypt nativo: este exige compilar código C++ en cada entorno, una fricción evitable (riesgo R13) en una cadena que instala dependencias en Windows, en Linux y dentro de una imagen Docker basada en Alpine.
+Para el \eng{hash} de las contraseñas se adopta bcryptjs \parencite{bcryptjs-docs}, la implementación del algoritmo bcrypt en JavaScript puro y compatible con la nativa, frente al paquete bcrypt nativo: este exige compilar código C++ en cada entorno, una fricción evitable (riesgo R13) en una cadena que instala dependencias en Windows, en Linux y dentro de una imagen Docker basada en Alpine.
 El coste asumido es de rendimiento —en torno a un segundo de cálculo con las 12 rondas configuradas—, aceptable en un flujo de alta e inicio de sesión y rebajado en las pruebas mediante configuración.
 
 \section{La alternativa global: Supabase}

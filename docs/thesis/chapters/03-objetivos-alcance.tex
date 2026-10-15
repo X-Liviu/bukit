@@ -26,12 +26,12 @@ Diseñar, desarrollar y desplegar \bukit, una red social orientada a ayudar a cu
 \label{sec:objetivos-tecnicos}
 
 \begin{itemize}
-  \item \textbf{Backend único para las tres necesidades del producto.}
+  \item \textbf{\eng{Backend} único para las tres necesidades del producto.}
         Implementar con Express y Prisma una \ac{API} \ac{REST} sobre una única base de datos PostgreSQL que resuelva el grafo social (integridad relacional), el mapa (consultas geoespaciales por radio con PostGIS) y la afinidad entre personas usuarias (búsqueda por similitud vectorial con pgvector).
         Medible: el 100\,\% de los flujos núcleo del producto (cuentas, listas y metas, publicaciones, seguimiento, mensajería, mapa y notificaciones) está expuesto por la \ac{API} y cubierto por pruebas de integración antes del cierre del periodo de ejecución.
   \item \textbf{Autenticación y seguridad desde el diseño.}
-        Proteger la \ac{API} con autenticación \ac{JWT} con rotación de \eng{refresh tokens}, contraseñas almacenadas únicamente como hash bcrypt, doble capa de limitación de peticiones y manejo centralizado de errores.
-        Medible: el 100\,\% de los \eng{endpoints} privados exige un token válido, y los casos de abuso básicos (credenciales inválidas, exceso de peticiones) quedan cubiertos por pruebas automatizadas.
+        Proteger la \ac{API} con autenticación \ac{JWT} con rotación de \eng{refresh tokens}, contraseñas almacenadas únicamente como \eng{hash} bcrypt, doble capa de limitación de peticiones y manejo centralizado de errores.
+        Medible: el 100\,\% de los \eng{endpoints} privados exige un \eng{token} válido, y los casos de abuso básicos (credenciales inválidas, exceso de peticiones) quedan cubiertos por pruebas automatizadas.
   \item \textbf{Cliente web completo.}
         Desarrollar con React y Vite una \ac{SPA} que implemente las cuatro pestañas del producto: inicio con \eng{feed} personalizado, listas, mensajes con mapa y notificaciones, y perfil.
         Medible: una persona usuaria puede completar de principio a fin los flujos núcleo desde el navegador, sin errores bloqueantes, antes del cierre del periodo de ejecución.
@@ -103,7 +103,7 @@ Delimitar el alcance es tan importante como enumerar los objetivos: fija qué se
 \label{sec:alcance-dentro}
 
 Para garantizar la viabilidad del trabajo, el desarrollo se limita a los siguientes módulos, que siguen la estructura de pestañas del producto (capítulo \ref{ch:contexto}), precedidos por la gestión de usuarios y cerrados por la infraestructura transversal.
-Cada módulo recoge las reglas de producto de ese mismo capítulo y se formaliza en los requisitos RF-01--RF-20 del capítulo \ref{ch:estado-del-arte}:
+Cada módulo recoge las reglas de producto de ese mismo capítulo y se formaliza en los requisitos RF-01--RF-21 del capítulo \ref{ch:estado-del-arte}:
 
 \begin{itemize}
   \item \textbf{Usuarios, roles y verificación.}

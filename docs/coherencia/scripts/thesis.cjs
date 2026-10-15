@@ -56,7 +56,10 @@ for (const f of walk(root)) {
   const isProse = /\/(chapters|frontmatter|appendices)\//.test(r);
   lines.forEach((orig, i) => {
     const n = i + 1;
-    if (/^\s*%\s*TODO/.test(orig)) todoComments.push(`${r}:${n}: ${orig.trim().slice(0, 140)}`);
+    // También el «% TODO» al final de una línea (config/metadata.tex los usa así), salvo el «\%»
+    // escapado; las plantillas quedan fuera, porque sus TODO son huecos a propósito.
+    if (!/TEMPLATE\.tex$/.test(r) && /(^|[^\\])%\s*TODO/.test(orig))
+      todoComments.push(`${r}:${n}: ${orig.trim().slice(0, 140)}`);
     const l = stripComment(orig);
     if (!l.trim()) return;
     let m;

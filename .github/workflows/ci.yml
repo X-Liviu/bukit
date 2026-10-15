@@ -157,11 +157,11 @@ jobs:
       # cada registro en 500).
       - name: Comprobar que existe el secreto de producción
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCCION }}
-        run: test -n "$DATABASE_URL" || { echo "::error::Falta el secreto DATABASE_URL_PRODUCCION"; exit 1; }
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
+        run: test -n "$DATABASE_URL" || { echo "::error::Falta el secreto DATABASE_URL_PRODUCTION"; exit 1; }
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - name: Aplicar las migraciones en Neon
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCCION }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
         run: pnpm --filter @bukit/api db:deploy

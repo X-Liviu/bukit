@@ -2,7 +2,8 @@
 // día de la semana escrito y calculado, sprint y fase, secciones presentes, horas
 // registradas, decisiones y casillas; sumas de horas por sprint y fase; y anomalías
 // (día de la semana equivocado, saltos en la numeración, entradas de más de 7 días
-// con las horas sin rellenar, entradas que pasan del límite de extensión).
+// con las horas sin rellenar, entradas que pasan del límite de extensión y sprints
+// cerrados sin planificación en ninguna entrada).
 // Uso: node docs/coherencia/scripts/journal.cjs [--today=YYYY-MM-DD] [docs/dev-journal]
 const fs = require("fs");
 const path = require("path");
@@ -109,12 +110,23 @@ for (const e of entries) {
     anomalies.push(`${e.file}: horas sin rellenar (${e.hoursText || "sin línea"})`);
   if (e.hoursLineCount !== 1)
     anomalies.push(`${e.file}: ${e.hoursLineCount} líneas de «Horas invertidas»`);
-  if (e.computedWeekday === "lunes" && !e.planning && e.date >= "2026-10-05")
-    anomalies.push(`${e.file}: entrada de lunes sin «Planificación de la semana»`);
   if (e.computedWeekday === "domingo" && !e.retrospective && e.date >= "2026-10-05")
     anomalies.push(`${e.file}: entrada de domingo sin «Retrospectiva»`);
   if (e.words > MAX_WORDS && e.date >= MAX_WORDS_SINCE)
     anomalies.push(`${e.file}: ${e.words} palabras, por encima del límite de ${MAX_WORDS}`);
+}
+// La planificación vale cualquier día de la semana (regla del autor del 15-10-2026):
+// solo se avisa cuando un sprint ya cerrado no la tiene en ninguna de sus entradas.
+const sprintPlanning = new Map();
+for (const e of entries) {
+  if (e.date < "2026-10-05" || !/^S[0-9]+$/.test(e.sprint || "")) continue;
+  const s = sprintPlanning.get(e.sprint) || { planned: false, end: info(e.date).sprintEnd };
+  s.planned = s.planned || e.planning;
+  sprintPlanning.set(e.sprint, s);
+}
+for (const [sprint, s] of sprintPlanning) {
+  if (!s.planned && s.end && s.end < today)
+    anomalies.push(`${sprint}: sprint cerrado sin «Planificación de la semana» en ninguna entrada`);
 }
 const sumBy = (sortKey) => {
   const acc = {};

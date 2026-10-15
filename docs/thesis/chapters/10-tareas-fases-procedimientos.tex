@@ -73,14 +73,14 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco, con 
     \textbf{Elemento} & \textbf{Origen} & \textbf{Adaptación a una persona} \\
     \midrule
     \eng{Product Backlog} & Scrum & Historias de usuario agrupadas en épicas clasificadas por prioridad en cuatro niveles (imprescindible, deseable, opcional, excluida; sección \ref{sec:backlog}); toda idea nueva entra por aquí (control del alcance, R1). \\
-    Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por sprint. \\
+    Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por \eng{sprint}. \\
     Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido semanal es una proyección. \\
     Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la redacción de la memoria; nunca dos historias de producto a medias. \\
-    Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos cada lunes: fijar capacidad, seleccionar del \eng{backlog} y anotar la lista de trabajo de la semana en la entrada del diario de ese día. \\
+    Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos una vez por semana, normalmente el lunes, aunque sirve cualquier día: fijar capacidad, seleccionar del \eng{backlog} y anotar la lista de trabajo de la semana en la entrada del diario de ese día. \\
     \eng{Daily} & Scrum & Sustituida por el procedimiento ya vigente de abrir cada sesión releyendo la última entrada del diario de desarrollo. \\
-    \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}) y, cada quince días, entrega de la versión vigente al tutor (sección \ref{sec:metodologia-tutor}). \\
+    \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}). \\
     Retrospectiva & Scrum & Sección fija de la entrada del diario al cierre del \eng{sprint}, que incluye la revisión de riesgos (capítulo \ref{ch:riesgos}). \\
-    Revisión de coherencia & Propio & Al cierre de cada \eng{sprint}, revisión automática de la coherencia entre la documentación, la memoria y el código; el autor decide el lunes qué se corrige (sección \ref{sec:metodologia-coherencia}). \\
+    Revisión de coherencia & Propio & Al cierre de cada \eng{sprint}, revisión automática de la coherencia entre la documentación, la memoria y el código; sus correcciones se aplican la semana siguiente (sección \ref{sec:metodologia-coherencia}). \\
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
   \end{tabular}
@@ -103,19 +103,10 @@ Primero, era innecesario: en un proyecto de una sola persona duplicaba lo que ya
 Segundo, metía ruido en la planificación: el trabajo real de cada semana quedaba repartido entre el tablero, el diario y la memoria, y mover fichas no informaba de nada que el diario no dijera ya.
 Tercero, suponía una carga de trabajo extra sin retorno, justo en el recurso que la fase demostró más escaso: las horas disponibles (capítulo \ref{ch:gantt-tfg}).
 
-Desde entonces, el \eng{backlog} vive en este capítulo (tablas \ref{tab:backlog-epicas} y \ref{tab:backlog-f1}), la planificación de cada lunes se anota como lista de trabajo de la semana en la entrada del diario de ese día, y el límite de una sola historia de producto en curso se mantiene como regla, ya sin tablero que lo visualice.
+Desde entonces, el \eng{backlog} vive en este capítulo (tablas \ref{tab:backlog-epicas} y \ref{tab:backlog-f1}), la planificación semanal se anota como lista de trabajo en la entrada del diario del día en que se hace, y el límite de una sola historia de producto en curso se mantiene como regla, ya sin tablero que lo visualice.
 La trazabilidad entre historias y código se conserva por otra vía: cada cambio de código nombra la historia que implementa, y el diario la registra.
 Las fichas y los hitos de F1 se conservan cerrados en el repositorio, como evidencia de esa primera etapa del método.
 Esta memoria conserva las instantáneas relevantes de la planificación: el \eng{backlog} inicial aquí, y el estado final y las desviaciones en los capítulos \ref{ch:resultados} y \ref{ch:gantt-tfg}.
-
-\subsection{Revisión periódica con el tutor}
-\label{sec:metodologia-tutor}
-
-Al retomar el trabajo, el método incorpora una revisión externa periódica: los días 1 y 15 de cada mes, el autor envía al tutor la versión vigente de la memoria con un resumen de los cambios y novedades desde el envío anterior.
-La primera entrega coincidió con la reanudación del trabajo, el 05/10/2026, y la segunda se fijó para el 15/10/2026, de modo que la cadencia quincenal arranca ese mismo mes.
-La cadencia cumple dos funciones.
-La primera es dar a la revisión del avance el destinatario que en solitario le faltaba (sección \ref{sec:metodologia-alternativas}): alguien externo que valora el progreso y propone mejoras mientras aún pueden incorporarse.
-La segunda es ejercer una disciplina indirecta: un compromiso fijo cada dos semanas sostiene un ritmo de trabajo constante, que es precisamente lo que faltó en la fase F1.
 
 \subsection{Revisión semanal de la coherencia documental}
 \label{sec:metodologia-coherencia}
@@ -127,9 +118,9 @@ Por eso, desde el cierre del séptimo \eng{sprint}, el final de cada \eng{sprint
 La revisión la hace un procedimiento asistido por \ac{IA}, preparado como un comando propio que se lanza el domingo por la noche y trabaja sin supervisión.
 Primero reúne los hechos objetivos del repositorio con pequeños programas que no usan \ac{IA}: versiones instaladas, estado de la integración continua y del despliegue, fechas y \eng{sprints} calculados, y citas y acrónimos de la memoria.
 Después reparte la comparación entre seis agentes que trabajan en paralelo, cada uno dedicado a una dimensión: tecnologías y modelo de datos; arquitectura y documentación del repositorio; producto y método; riesgos y presupuesto; la propia memoria; y el diario de desarrollo junto con la privacidad y los comentarios del código.
-Cada contradicción grave pasa además por un agente que intenta refutarla releyendo las fuentes, para no dar por buenos los falsos positivos.
+Las contradicciones graves pasan además, agrupadas, por un único agente que intenta refutarlas releyendo las fuentes, para no dar por buenos los falsos positivos.
 El resultado es un informe fechado con cada contradicción, la fuente que prevalece según unas reglas de precedencia escritas y la corrección propuesta.
-El procedimiento no modifica nada: en la planificación del lunes siguiente, el autor decide qué correcciones se aplican y resuelve las que exigen una decisión de contenido.
+El procedimiento no modifica nada por sí mismo: su informe es la entrada de una sesión posterior en la que el asistente aplica las correcciones, y el autor solo resuelve las que exigen una decisión de contenido.
 
 La escala del procedimiento se acotó a propósito.
 Un primer diseño, con quince dimensiones y un agente verificador por cada hallazgo, podía movilizar varios cientos de agentes en cada ejecución: un coste razonable para una auditoría puntual, pero insostenible para una práctica semanal sobre un plan de suscripción con límites de uso.
@@ -186,7 +177,7 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     \textbf{Id} & \textbf{Épica} & \textbf{Prioridad} & \textbf{Puntos} & \textbf{Fase} \\
     \midrule
     EP01 & Fundaciones técnicas e integración continua      & Imprescindible & 8  & F1 \\
-    EP02 & Cuentas y autenticación                          & Imprescindible & 13 & F1 \\
+    EP02 & Cuentas y autenticación                          & Imprescindible & 13 & F1--F2 \\
     EP03 & Andamiaje del cliente web y sesión               & Imprescindible & 8  & F2 \\
     EP04 & Listas y metas                                   & Imprescindible & 13 & F2 \\
     EP05 & Publicaciones ligadas a listas                   & Imprescindible & 13 & F2 \\
@@ -208,18 +199,18 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
 
 Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas y no se someten a la escala de historias de la sección \ref{sec:estimacion}: anticipan la suma de los puntos de las historias que cada épica contendrá, y solo estas últimas se estiman con la escala declarada.
 Siguiendo la elaboración progresiva propia de los métodos ágiles, solo se detallan en historias las épicas de la fase inminente, y el resto se refina justo antes de abordarse, con el conocimiento acumulado hasta entonces.
-La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y EP02 forman la fase F1, y EP03 abre la F2.
+La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y las dos primeras historias de EP02 (US-04 y US-05) forman la fase F1; las dos últimas (US-06 y US-07) pasaron a F2, que continúa con EP03.
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption{Desglose en historias de las épicas de fundaciones EP01--EP03, 29 puntos.}
+  \caption{Desglose en historias de las épicas de F1 y F2 (EP01--EP05), 55 puntos.}
   \label{tab:backlog-f1}
   \begin{tabular}{clcc}
     \toprule
     \textbf{Id} & \textbf{Historia (resumen)} & \textbf{Épica} & \textbf{Puntos} \\
     \midrule
-    US-01 & Cadena de integración continua: lint, tipos y pruebas     & EP01 & 3 \\
+    US-01 & Cadena de integración continua: análisis estático, tipos y pruebas     & EP01 & 3 \\
     US-02 & Manejo centralizado de errores y registro de sucesos      & EP01 & 3 \\
     US-03 & Despliegue del esqueleto de la \acs{API}                  & EP01 & 2 \\
     US-04 & Modelo de datos de usuario y registro de cuentas          & EP02 & 3 \\
@@ -229,21 +220,28 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fund
     US-08 & Andamiaje web con enrutado de las cuatro pestañas         & EP03 & 3 \\
     US-09 & Cliente \acs{API} tipado y gestión de sesión en la web    & EP03 & 3 \\
     US-10 & Pantallas de registro e inicio de sesión                  & EP03 & 2 \\
+    US-11 & Crear y consultar listas de metas, con el límite de tres en curso & EP04 & 5 \\
+    US-12 & Editar listas y metas, y borrar listas                    & EP04 & 3 \\
+    US-13 & Completar metas y listas, con el retraso registrado        & EP04 & 3 \\
+    US-14 & Metas vencidas y estado de metas y listas en la web       & EP04 & 2 \\
+    US-15 & Publicación del progreso de una lista propia              & EP05 & 5 \\
+    US-16 & Publicación de una meta completada                        & EP05 & 3 \\
+    US-17 & Imagen en las publicaciones, sin metadatos de ubicación   & EP05 & 3 \\
+    US-18 & Edición y borrado de las publicaciones propias            & EP05 & 2 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 En la tabla \ref{tab:backlog-f1} cada historia aparece resumida en una línea, pero antes de entrar en un \eng{sprint} toda historia se desarrolla hasta un nivel de detalle que la hace verificable.
-Como muestra de ese nivel se desarrolla completa la que sería la primera historia de EP04, continuando la numeración de la tabla:
+Como muestra de ese nivel se desarrolla completa la primera historia de EP04:
 
 \begin{quote}
   \textbf{US-11 (EP04, 5 puntos).}
-  Como persona usuaria registrada, quiero crear una lista de metas, cada una con su fecha límite, para convertir mis deseos en compromisos medibles.
+  Como persona usuaria registrada, quiero crear listas de metas, cada una con su fecha límite, y consultarlas, para convertir mis deseos en compromisos medibles.
   \emph{Criterios de aceptación:} (1) una cuenta gratuita no puede superar las tres listas en curso y el exceso se rechaza con un error explícito; (2) la validación vive una sola vez en el paquete compartido y la usan tanto la \ac{API} como el cliente web; (3) toda lista exige al menos una meta y cada meta una fecha límite; (4) el flujo queda cubierto por pruebas de integración.
 \end{quote}
 
-Este desarrollo es una anticipación puramente ilustrativa, no el refinamiento de EP04, que se hará en su momento como el de cualquier otra épica.
-Sus 5 puntos tampoco añaden trabajo nuevo al inventario: forman parte de los 13 estimados en grueso para EP04 en la tabla \ref{tab:backlog-epicas}.
+Las ocho historias de EP04 y EP05 suman los 26 puntos estimados en grueso para ambas épicas en la tabla \ref{tab:backlog-epicas}.
 
 \section{Fases y cronograma del desarrollo}
 \label{sec:fases}
@@ -267,31 +265,31 @@ El balance de F1 frente a lo previsto se recoge en el capítulo \ref{ch:gantt-tf
   \label{tab:fases}
   \begin{tabular}{clllc}
     \toprule
-    \textbf{Fase} & \textbf{Contenido} & \textbf{Sprints} & \textbf{Fechas} & \textbf{Horas} \\
+    \textbf{Fase} & \textbf{Contenido} & \textbf{\eng{Sprints}} & \textbf{Fechas} & \textbf{Horas} \\
     \midrule
     F0  & Planificación: objetivos, riesgos, metodología    & S0       & 14/07 -- 19/07/2026 & $\sim$20 \\
     F1  & Fundaciones de la \acs{API}: EP01, EP02           & S1--S6   & 20/07 -- 30/08/2026 & 48 \\
     --- & Pausa: traslado e instalación en la estancia Erasmus & --- & 31/08 -- 04/10/2026 & 0 \\
-    F2  & Cliente web, listas y publicaciones: EP03--EP05   & S7--S22  & 05/10/2026 -- 24/01/\thesisYear & 80 \\
-    --- & Pausa: regreso e instalación en Bilbao            & ---      & 25/01 -- 31/01/\thesisYear & 0 \\
+    F2  & Cliente web, listas y publicaciones: EP02--EP05 & S7--S22  & 05/10/2026 -- 24/01/\thesisYear & 80 \\
+    --- & Pausa: regreso de la estancia Erasmus            & ---      & 25/01 -- 31/01/\thesisYear & 0 \\
     F3  & Núcleo social y diferenciadores: EP06, EP07, EP09--EP11 & S23--S30 & 01/02 -- 28/03/\thesisYear & 120 \\
     F4  & Cierre de producto y memoria: EP08, EP12          & S31--S37 & 29/03 -- 16/05/\thesisYear & 105 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-La capacidad declarada refleja la disponibilidad real esperada de cada periodo: el verano se planificó con 10 horas semanales condicionadas por los compromisos laborales, y la realidad de tres \eng{sprints} la re-basó a 6 desde S4 (09/08/2026, contingencia del riesgo R8: la carga laboral resultó estructural, no puntual); unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación de lunes y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
+La capacidad declarada refleja la disponibilidad real esperada de cada periodo: el verano se planificó con 10 horas semanales condicionadas por los compromisos laborales, y la realidad de tres \eng{sprints} la re-basó a 6 desde S4 (09/08/2026, contingencia del riesgo R8: la carga laboral resultó estructural, no puntual); unas 5 horas semanales de promedio durante la estancia Erasmus, donde las semanas de viaje se declaran a cero en su planificación semanal y la mecánica de flujo las absorbe sin ningún compromiso roto; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
 Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R8, con las horas registradas en el diario como evidencia.
-Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación de lunes con el conocimiento acumulado hasta entonces.
+Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación semanal con el conocimiento acumulado hasta entonces.
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption{Calendario de \eng{sprints} de F0 y F1 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
+  \caption{Calendario de \eng{sprints} de F0 a F2 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
   \label{tab:sprints}
   \begin{tabular}{cllc}
     \toprule
-    \textbf{Sprint} & \textbf{Fechas} & \textbf{Tema orientativo} & \textbf{Horas} \\
+    \textbf{\eng{Sprint}} & \textbf{Fechas} & \textbf{Tema orientativo} & \textbf{Horas} \\
     \midrule
     S0 & 14/07 -- 19/07 & Planificación: objetivos, riesgos, metodología y este plan & $\sim$20 \\
     S1 & 20/07 -- 26/07 & Integración continua mínima (EP01)                         & 10 \\
@@ -300,6 +298,14 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
     S4 & 10/08 -- 16/08 & Inicio de sesión con \eng{tokens} de acceso y refresco (EP02) & 6 \\
     S5 & 17/08 -- 23/08 & Rotación y revocación de \eng{tokens} (EP02)               & 6 \\
     S6 & 24/08 -- 30/08 & Limitación de peticiones; \emph{cierre de F1}              & 6 \\
+    \midrule
+    S7 & 05/10 -- 11/10 & Rotación y revocación de \eng{tokens} (EP02)               & 5 \\
+    S8 & 12/10 -- 18/10 & Limitación de peticiones (EP02)                           & 5 \\
+    S9 & 19/10 -- 25/10 & Andamiaje web con las cuatro pestañas (EP03)              & 5 \\
+    S10 & 26/10 -- 01/11 & Cliente \acs{API} tipado y sesión en la web (EP03)       & 5 \\
+    S11 & 02/11 -- 08/11 & Registro e inicio de sesión en la web (EP03)            & 5 \\
+    S12--S16 & 09/11 -- 13/12 & Listas y metas (EP04)                              & 25 \\
+    S17--S22 & 14/12 -- 24/01 & Publicaciones ligadas a listas (EP05); \emph{cierre de F2} & 30 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -310,7 +316,7 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
 El inventario comprometido vigente suma 146 puntos: los 138 iniciales más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida.
 Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (353 horas tras las re-bases de F1 y de la primera pausa), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 17\,\%.
-Esa cifra corresponde al plan completo; tras el cierre de F1, que consumió sus 48 horas entregando 14 de sus 21 puntos, la holgura útil se mide sobre lo que queda: los 132 puntos pendientes suponen unas 264 horas frente a las 305 de capacidad de F2 a F4, es decir, una holgura en torno al 13\,\%.
+Esa cifra corresponde al plan completo; tras el cierre de F1 (48 horas previstas, unas 17 trabajadas y 14 de sus 21 puntos entregados), la holgura útil se mide sobre lo que queda: los 132 puntos pendientes suponen unas 264 horas frente a las 305 de capacidad de F2 a F4, es decir, una holgura en torno al 13\,\%.
 La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
 La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 

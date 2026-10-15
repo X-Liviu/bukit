@@ -72,7 +72,7 @@ La tabla \ref{tab:comparativa-estado-arte} resume la comparación sobre los tres
 \end{table}
 
 La lectura de la tabla es el argumento del producto: ningún competidor generalista combina las tres columnas, y los dos que las combinan parcialmente lo hacen encerrados en un nicho.
-\bukit ocupa esa celda vacía: la unidad social no es el contenido sino el objetivo (la lista con plazo), el descubrimiento busca personas con metas afines —incluida la dimensión geográfica del mapa— y la visibilidad del \eng{feed} premia el progreso.
+\bukit ocupa esa celda vacía: la unidad social no es el contenido sino el objetivo (la meta con plazo, agrupada en una lista), el descubrimiento busca personas con metas afines —incluida la dimensión geográfica del mapa— y la visibilidad del \eng{feed} premia el progreso.
 El riesgo simétrico de esa posición también se declara: generalizar lo que Strava y Goodreads logran en nichos es precisamente la apuesta no validada del producto, y de ahí que el alcance comprometido del \ac{TFG} (capítulo \ref{ch:objetivos}) sea construir y verificar el sistema, no demostrar su tracción de mercado.
 
 \section{Descripción de requerimientos}
@@ -106,8 +106,8 @@ Cada requisito lleva la prioridad del vocabulario del plan (capítulo \ref{ch:ta
   \endlastfoot
   RF-01 & Registro de cuentas e inicio de sesión. & Imprescindible \\
   RF-02 & Dos tipos de usuario (normal y TOP) con distinta ponderación en el \eng{feed}; el alta TOP llega por un proceso externo de admisión. & Imprescindible \\
-  RF-03 & Creación, consulta, edición y eliminación de listas de metas, cada lista con al menos una meta y cada meta con su fecha límite; una meta vencida sin cumplir queda como no lograda y su lista sigue contando para el límite; si se completa más tarde, queda marcada como completada con su tiempo de retraso. & Imprescindible \\
-  RF-04 & Límite de tres listas en curso por cuenta en el plan gratuito: las completadas no computan, liberan su hueco y su borrado es irreversible. & Imprescindible \\
+  RF-03 & Creación, consulta, edición y eliminación de listas de metas, cada lista con al menos una meta y cada meta con su fecha límite; una meta vencida sin cumplir queda como no lograda y su lista sigue contando para el límite; si se completa más tarde, queda marcada como completada con su tiempo de retraso; una meta completada puede desmarcarse mientras su lista siga en curso. & Imprescindible \\
+  RF-04 & Límite de tres listas en curso por cuenta en el plan gratuito: las completadas no computan y no se reabren, borrar una lista en curso libera su hueco y todo borrado es irreversible. & Imprescindible \\
   RF-05 & Recordatorios de los plazos de las metas. & Imprescindible \\
   RF-06 & Publicaciones de progreso y de meta completada, creables únicamente desde listas propias. & Imprescindible \\
   RF-07 & \eng{Feed} personalizado en mosaico y segundo \eng{feed} exclusivo de seguidos, conmutables entre sí. & Imprescindible \\
@@ -153,7 +153,7 @@ Cada requisito lleva la prioridad del vocabulario del plan (capítulo \ref{ch:ta
   \endlastfoot
   RNF-01 & Arquitectura \ac{SPA} más \ac{API} \ac{REST} en tres niveles, con la lógica común (tipos, validación, cliente \acs{HTTP}) compartida entre web y móvil desde paquetes comunes. \\
   RNF-02 & Una única base de datos PostgreSQL que cubra el grafo social (relacional), el mapa (PostGIS) y la afinidad (pgvector). \\
-  RNF-03 & Seguridad: autenticación \ac{JWT} con rotación de los \eng{tokens} de refresco, contraseñas almacenadas únicamente como hash (bcrypt), doble capa de limitación de peticiones y manejo centralizado de errores. \\
+  RNF-03 & Seguridad: autenticación \ac{JWT} con rotación de los \eng{tokens} de refresco, contraseñas almacenadas únicamente como \eng{hash} (bcrypt), doble capa de limitación de peticiones y manejo centralizado de errores. \\
   RNF-04 & Protección de datos (\acs{RGPD}): minimización, ubicación siempre aproximada y con consentimiento, datos en región europea y prohibición de almacenar el documento de identidad. \\
   RNF-05 & Entrega en tiempo real de mensajes y notificaciones, sin recargar la aplicación. \\
   RNF-06 & Calidad verificable: pruebas unitarias, de integración y \ac{E2E}, con integración continua de fallo rápido y despliegue automático. \\

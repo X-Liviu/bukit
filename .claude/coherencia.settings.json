@@ -13,7 +13,6 @@
       "Read",
       "Glob",
       "Grep",
-      "Skill",
       "Write(./docs/coherencia/*.md)",
       "Edit(./docs/coherencia/*.md)",
       "Write(//C:/Users/Liviu/AppData/Local/Temp/claude/**)",
@@ -24,7 +23,8 @@
       "Bash(git fetch:*)",
       "Bash(git ls-files:*)",
       "Bash(git rev-parse:*)",
-      "Bash(git branch:*)",
+      "Bash(git branch -r:*)",
+      "Bash(git branch --show-current:*)",
       "Bash(git grep:*)",
       "Bash(git show:*)",
       "Bash(git check-ignore:*)",
@@ -71,12 +71,9 @@
       "Bash(cat C:/Users/Liviu/AppData/Local/Temp/claude/:*)",
       "Bash(cat /c/Users/Liviu/AppData/Local/Temp/claude/:*)",
       "Bash(cd:*)",
-      "Bash(which:*)",
       "Bash(test:*)",
-      "Bash(timeout:*)",
       "Bash(xargs:*)",
-      "Bash(file:*)",
-      "Bash(curl -fsS --max-time:*)"
+      "Bash(file:*)"
     ],
     "deny": [
       "Read(./**/.env)",
@@ -173,7 +170,17 @@
       "Edit(./package.json)",
       "Edit(./pnpm-lock.yaml)",
       "Edit(./render.yaml)",
-      "Edit(./docker-compose.yml)"
+      "Edit(./docker-compose.yml)",
+      "Bash(git branch -d:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git branch -m:*)",
+      "Bash(git branch -M:*)",
+      "Bash(git branch --delete:*)",
+      "Bash(git branch -r -d:*)",
+      "Bash(git branch -r -D:*)",
+      "Bash(git branch -r --delete:*)",
+      "Bash(git branch -rd:*)",
+      "Bash(git branch -rD:*)"
     ]
   }
 }

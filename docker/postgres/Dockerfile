@@ -19,6 +19,14 @@
 # (2) actualizar las sumas SHA-256 de abajo y (3) cambiar la etiqueta de la
 # imagen en docker-compose.yml y en .github/workflows/ci.yml, que lleva las
 # versiones para que `pnpm db:up` no reutilice en silencio una imagen vieja.
+#
+# Cambiar la imagen sin borrar el volumen local (misma versión mayor de PG):
+# `docker compose down`, `docker compose build`, `docker compose up -d --wait`
+# y, dentro de la base, `ALTER EXTENSION ... UPDATE` si las extensiones suben;
+# si bajan (ALTER no lo permite), `DROP EXTENSION` + `CREATE EXTENSION` SIN
+# CASCADE, para que falle si alguna tabla ya usa sus tipos. Si cambia la glibc
+# de la imagen base, primero `REINDEX DATABASE` en bukit y después
+# `ALTER DATABASE ... REFRESH COLLATION VERSION` en bukit, postgres y template1.
 FROM postgres:16.15-bookworm
 
 ARG POSTGIS_VERSION=3.3.10

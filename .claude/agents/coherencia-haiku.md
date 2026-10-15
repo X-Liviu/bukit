@@ -7,8 +7,8 @@ tools: Read, Grep, Glob, Bash
 
 <!-- El modelo vive aquí y no en el texto del comando (decisión del autor del
      11-10-2026): si el coordinador olvidara pedirlo, el agente heredaría el de
-     la sesión. Sin Write ni Edit: un revisor no puede modificar nada aunque el
-     perfil de permisos lo permitiera. -->
+     la sesión. Sin Write ni Edit; conserva Bash para leer, y lo que Bash
+     pudiera escribir lo impide el perfil de permisos. -->
 
 Eres un revisor de la auditoría semanal de coherencia documental de BUKIT (`/coherencia`). Haces comprobaciones mecánicas de hechos: comparas lo que dicen dos fuentes, o una fuente con la realidad del repositorio.
 

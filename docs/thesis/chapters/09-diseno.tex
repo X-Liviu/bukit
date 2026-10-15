@@ -22,7 +22,7 @@ Antes de escribirse, cada entidad pasa una revisión de minimización de datos (
 \subsection{Usuario}
 \label{sec:diseno-usuario}
 
-La primera entidad es la cuenta de usuario: identificador, email, hash de la contraseña, nombre de usuario, nivel y fechas de creación y actualización.
+La primera entidad es la cuenta de usuario: identificador, email, \eng{hash} de la contraseña, nombre de usuario, nivel y fechas de creación y actualización.
 
 El identificador es un \ac{UUID}, por dos razones: no es enumerable (nadie puede recorrer los perfiles incrementando un número ni deducir el volumen de cuentas del sistema) y es un tipo nativo de PostgreSQL.
 Se descartaron el entero autoincremental —más compacto y rápido en las uniones, pero enumerable— y el identificador textual por defecto de la capa de acceso a datos (cuid), que se almacena como texto sin tipo nativo.
@@ -32,10 +32,10 @@ Con la misma vocación de criterio general se fijan, tras la revisión de la ent
 El email y el nombre de usuario son únicos, y ambos se normalizan a minúsculas en el esquema de validación compartido antes de llegar a la base de datos: dos grafías del mismo email o del mismo nombre son la misma identidad.
 Esa normalización vive una única vez en la capa de validación compartida, por la que pasa toda escritura (capítulo \ref{ch:alternativas}); se descartó duplicarla en la base de datos con un índice funcional, que la herramienta de migraciones no sabe expresar de forma declarativa y quedaría desincronizado del esquema.
 El nombre de usuario existe desde el alta, y no en una edición posterior del perfil, porque el perfil es central en el producto (capítulo \ref{ch:contexto}): cada cuenta nace con su identidad pública.
-De la contraseña se guarda únicamente el hash bcrypt, calculado con la biblioteca bcryptjs (capítulo \ref{ch:alternativas}); la contraseña en claro no se persiste ni se registra jamás, y la forma pública de la respuesta se valida contra el contrato compartido, de modo que el hash no puede salir por accidente.
+De la contraseña se guarda únicamente el \eng{hash} bcrypt, calculado con la biblioteca bcryptjs (capítulo \ref{ch:alternativas}); la contraseña en claro no se persiste ni se registra jamás, y la forma pública de la respuesta se valida contra el contrato compartido, de modo que el \eng{hash} no puede salir por accidente.
 El nivel de usuario (normal o TOP) es un enumerado con normal por defecto y sin ningún punto de la \ac{API} que lo modifique: la admisión TOP llega por un proceso externo (capítulo \ref{ch:contexto}).
 
-La revisión de minimización de la entidad concluye sin hallazgos: no se almacenan teléfono, fecha de nacimiento ni ubicación, y los datos de la verificación de identidad llegarán con su módulo, reducidos al estado y a la clave de referencia del proveedor (capítulo \ref{ch:alternativas}).
+La revisión de minimización de la entidad concluye sin hallazgos: no se almacenan teléfono, fecha de nacimiento, ubicación ni datos de la verificación de identidad, que el diseño limita al estado y a la clave de referencia del proveedor (capítulo \ref{ch:alternativas}).
 
 \subsection{Sesiones: los \eng{tokens} de refresco}
 \label{sec:diseno-sesiones}
@@ -53,7 +53,7 @@ La renovación sigue la rotación con detección de reutilización que recomiend
 Si llega un \eng{token} ya renovado, alguien conserva una copia: el cliente legítimo o un atacante, sin que el sistema pueda saber cuál.
 La respuesta es anular la sesión a la que pertenece, con el coste asumido de que el cliente legítimo tenga que volver a iniciar sesión.
 Para acotar ese alcance, cada \eng{token} lleva un identificador de sesión que comparten un inicio de sesión y todas sus renovaciones: ante una reutilización se anula solo esa sesión, y las del mismo usuario en otros dispositivos siguen vivas.
-Se descartaron anular todas las sesiones del usuario, más simple pero que expulsa también a sus dispositivos legítimos, y una entidad de sesión independiente, más normalizada pero que añadía una tabla sin otra función por ahora.
+Se descartaron anular todas las sesiones del usuario, más simple pero que expulsa también a sus dispositivos legítimos, y una entidad de sesión independiente, más normalizada pero que añadía una tabla sin otra función.
 Dos renovaciones simultáneas con el mismo \eng{token} son indistinguibles de un robo y se tratan igual: la anulación del \eng{token} es condicional dentro de una transacción, de modo que solo una de las dos puede completarse.
 Todos los rechazos devuelven la misma respuesta, sin distinguir si el \eng{token} caducó, se cerró o se reutilizó, porque esa distinción solo orientaría a quien prueba \eng{tokens} robados.
 Cerrar sesión anula la sesión entera del \eng{token} presentado y responde igual aunque ya estuviera cerrada.
@@ -64,7 +64,7 @@ Se descartaron la purga de toda la tabla en cada inicio de sesión, que añadía
 Esta entidad introduce la primera relación del modelo, y con ella el criterio de borrado: los datos que dependen de otra entidad y no tienen valor propio se borran en cascada con ella, decidiéndolo relación a relación.
 Las sesiones cumplen ese criterio, así que borrar una cuenta, en ejercicio del derecho de supresión del \ac{RGPD}, se lleva sus sesiones sin ninguna limpieza manual.
 Se descartó impedir el borrado mientras existan sesiones y limpiarlas aparte, que complicaba la baja de una cuenta sin aportar nada.
-Las relaciones con valor social, como las publicaciones o los seguimientos, decidirán su propio criterio cuando lleguen.
+Las relaciones con valor social, como las publicaciones o los seguimientos, tienen valor propio y su borrado se decide aparte, relación a relación.
 
 La revisión de minimización de la entidad concluye sin hallazgos: no se guardan la dirección IP, el dispositivo ni el navegador desde los que se inicia sesión.
 Serían útiles para una pantalla de sesiones activas, pero ninguna función comprometida los necesita, y son datos personales.
