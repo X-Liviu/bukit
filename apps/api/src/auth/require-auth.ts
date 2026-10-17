@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 
-import { verifyToken } from "../utils/tokens.js";
-import { unauthorized } from "../errors.js";
+import { verifyToken } from "./tokens.js";
+import { unauthorized } from "../http/errors.js";
 
 // Guardia de las rutas privadas (US-05, RNF-03): sin token de acceso válido no
 // se entra. Se aplica ruta a ruta —no de forma global— para que abrir una ruta

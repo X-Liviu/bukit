@@ -4,8 +4,9 @@
 // cierra la conexión al terminar.
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
 import { registerUserSchema } from "@bukit/core";
+
+import { hashPassword } from "../src/auth/passwords.js";
 
 const prisma = new PrismaClient();
 
@@ -25,7 +26,8 @@ async function main(): Promise<void> {
     create: {
       email: input.email,
       username: input.username,
-      passwordHash: await bcrypt.hash(input.password, 12),
+      // El mismo hash que la API, con el coste de BCRYPT_ROUNDS.
+      passwordHash: await hashPassword(input.password),
     },
   });
   console.log(`[seed] Usuario de ejemplo listo: ${demo.username} <${demo.email}>`);

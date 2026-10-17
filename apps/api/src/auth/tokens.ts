@@ -2,8 +2,8 @@ import { randomUUID } from "node:crypto";
 import jwt from "jsonwebtoken";
 import type { TokenPair } from "@bukit/core";
 
-import { config } from "./config.js";
-import { unauthorized } from "../errors.js";
+import { config } from "../config.js";
+import { invalidToken } from "../http/errors.js";
 
 // Emisión y verificación de los tokens de sesión (US-05).
 // Firma simétrica HS256: la API es el único emisor y el único verificador, así
@@ -59,7 +59,7 @@ export function verifyToken(token: string, expected: TokenType): TokenPayload {
       issuer: config.jwt.issuer,
     });
   } catch {
-    throw unauthorized("Token inválido o caducado.");
+    throw invalidToken();
   }
 
   if (
@@ -68,7 +68,7 @@ export function verifyToken(token: string, expected: TokenType): TokenPayload {
     typeof (decoded as Record<string, unknown>).sub !== "string" ||
     (decoded as Record<string, unknown>).typ !== expected
   ) {
-    throw unauthorized("Token inválido o caducado.");
+    throw invalidToken();
   }
 
   const payload = decoded as Record<string, unknown>;

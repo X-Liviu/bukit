@@ -2,16 +2,14 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vites
 import request from "supertest";
 import { apiErrorSchema } from "@bukit/core";
 
-import { createApp } from "../src/app.js";
-import { getPrisma } from "../src/prisma.js";
+import { account, registerAccount } from "../helpers.js";
+import { createApp } from "../../src/app.js";
+import { getPrisma } from "../../src/platform/prisma.js";
 
 // Casos de abuso de la doble capa de limitación de peticiones (US-07). Se
 // prueban los umbrales reales (20 por origen y 5 por cuenta y origen cada
 // 15 min) con una app nueva por caso, que trae contadores nuevos. Las IP son de
 // los rangos reservados para documentación (RFC 5737 y RFC 3849).
-
-// Coste bcrypt bajo SOLO en pruebas (la ruta lo lee por petición).
-process.env.BCRYPT_ROUNDS = "4";
 
 const prisma = getPrisma();
 let app = createApp();
@@ -20,23 +18,11 @@ const A = "203.0.113.10";
 const B = "198.51.100.20";
 const REGISTRAR = "192.0.2.1";
 
-const account = {
-  email: "persona@example.com",
-  username: "persona.ejemplo",
-  password: "contraseña-larga",
-};
-
 const login = (ip: string, email: string, password = "contraseña-mala") =>
   request(app).post("/auth/login").set("CF-Connecting-IP", ip).send({ email, password });
 
 /** Alta de la cuenta desde un origen propio, para no gastar el cupo de A ni de B. */
-async function register(): Promise<void> {
-  await request(app)
-    .post("/auth/register")
-    .set("CF-Connecting-IP", REGISTRAR)
-    .send(account)
-    .expect(201);
-}
+const register = () => registerAccount(app, REGISTRAR);
 
 /** n inicios de sesión fallidos desde ip, cada uno con un email distinto (no toca la capa 2). */
 async function exhaustOrigin(ip: string, n = 20): Promise<void> {
@@ -144,16 +130,21 @@ describe("capa 1: por origen, en el alta y el inicio de sesión", () => {
     await login("2001:db8:0:100::1", "otra@example.com").expect(401);
   });
 
-  it("/health y la renovación de sesión no se limitan", async () => {
+  it("/health y las rutas de sesión no se limitan", async () => {
     await exhaustOrigin(A);
     await login(A, "otra@example.com").expect(429);
 
+    // Con el cupo agotado, ninguna responde 429: van fuera del router de
+    // credenciales (y antes que él), así que la capa 1 no las cuenta.
     await request(app).get("/health").set("CF-Connecting-IP", A).expect(200);
-    await request(app)
-      .post("/auth/refresh")
-      .set("CF-Connecting-IP", A)
-      .send({ refreshToken: "token-falso" })
-      .expect(401);
+    for (const path of ["/auth/refresh", "/auth/logout"]) {
+      await request(app)
+        .post(path)
+        .set("CF-Connecting-IP", A)
+        .send({ refreshToken: "token-falso" })
+        .expect(401);
+    }
+    await request(app).get("/auth/me").set("CF-Connecting-IP", A).expect(401);
   });
 
   it("el navegador puede leer Retry-After (CORS)", async () => {

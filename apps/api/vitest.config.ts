@@ -15,5 +15,8 @@ export default defineConfig({
     // Se ejecuta antes de cada fichero de prueba: aborta si DATABASE_URL no es
     // local (ver tests/setup.ts), para que las pruebas nunca vacíen producción.
     setupFiles: ["./tests/setup.ts"],
+    // Coste bcrypt bajo SOLO en pruebas: a 12 rondas, bcryptjs pagaría ~1 s de
+    // CPU por cada alta. Aquí llega antes que cualquier import de la API.
+    env: { BCRYPT_ROUNDS: "4" },
   },
 });

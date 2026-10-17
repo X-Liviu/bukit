@@ -3,12 +3,9 @@ import request from "supertest";
 import bcrypt from "bcryptjs";
 import { apiErrorSchema, ownUserSchema } from "@bukit/core";
 
-import { createApp } from "../src/app.js";
-import { getPrisma } from "../src/prisma.js";
-
-// Coste bcrypt bajo SOLO en pruebas (la ruta lo lee por petición): a 12 rondas,
-// bcryptjs pagaría ~1 s de CPU por cada alta de esta suite.
-process.env.BCRYPT_ROUNDS = "4";
+import { account } from "../helpers.js";
+import { createApp } from "../../src/app.js";
+import { getPrisma } from "../../src/platform/prisma.js";
 
 // Pruebas de INTEGRACIÓN del alta (US-04): contra el Postgres real de
 // desarrollo (docker compose en local; el mismo compose en la CI), nunca
@@ -17,12 +14,6 @@ process.env.BCRYPT_ROUNDS = "4";
 // limitación de peticiones, y una sola por fichero los acumularía entre casos.
 let app = createApp();
 const prisma = getPrisma();
-
-const validSignup = {
-  email: "persona@example.com",
-  username: "persona.ejemplo",
-  password: "contraseña-larga",
-};
 
 beforeEach(async () => {
   // Aislamiento entre casos: la tabla empieza vacía en cada test.
@@ -36,11 +27,12 @@ afterAll(async () => {
 
 describe("POST /auth/register", () => {
   it("da de alta una cuenta y devuelve el contrato público sin el hash", async () => {
-    const res = await request(app).post("/auth/register").send(validSignup);
+    const res = await request(app).post("/auth/register").send(account);
 
     expect(res.status).toBe(201);
     // La forma de la respuesta se valida contra el MISMO contrato compartido
-    // que produce la ruta: una sola fuente de verdad también en el test.
+    // con el que la produce el servicio: una sola fuente de verdad también en
+    // el test.
     expect(ownUserSchema.safeParse(res.body.user).success).toBe(true);
     expect(res.body.user).toMatchObject({
       email: "persona@example.com",
@@ -51,18 +43,18 @@ describe("POST /auth/register", () => {
   });
 
   it("cifra la contraseña con bcrypt y jamás la guarda en claro", async () => {
-    await request(app).post("/auth/register").send(validSignup);
+    await request(app).post("/auth/register").send(account);
 
     const stored = await prisma.user.findUniqueOrThrow({
-      where: { email: validSignup.email },
+      where: { email: account.email },
     });
-    expect(stored.passwordHash).not.toBe(validSignup.password);
+    expect(stored.passwordHash).not.toBe(account.password);
     expect(stored.passwordHash.startsWith("$2")).toBe(true);
-    await expect(bcrypt.compare(validSignup.password, stored.passwordHash)).resolves.toBe(true);
+    await expect(bcrypt.compare(account.password, stored.passwordHash)).resolves.toBe(true);
   });
 
   it("normaliza email y username: la unicidad no distingue mayúsculas", async () => {
-    await request(app).post("/auth/register").send(validSignup);
+    await request(app).post("/auth/register").send(account);
 
     const res = await request(app).post("/auth/register").send({
       email: "  PERSONA@Example.com ",
@@ -76,11 +68,11 @@ describe("POST /auth/register", () => {
   });
 
   it("responde 409 con mensaje propio si el username ya está en uso", async () => {
-    await request(app).post("/auth/register").send(validSignup);
+    await request(app).post("/auth/register").send(account);
 
     const res = await request(app).post("/auth/register").send({
       email: "distinta@example.com",
-      username: validSignup.username,
+      username: account.username,
       password: "contraseña-larga",
     });
 

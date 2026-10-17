@@ -1,6 +1,6 @@
-import { config } from "./utils/config.js";
+import { config } from "./config.js";
 import { createApp } from "./app.js";
-import { logger } from "./logger.js";
+import { logger } from "./platform/logger.js";
 
 // Punto de entrada: arranca el servidor HTTP.
 createApp().listen(config.port, () => {

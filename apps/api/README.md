@@ -16,6 +16,26 @@ La comprobación de vida es `GET /health` → `{ "status": "ok" }`.
 
 Las pruebas son de integración contra un Postgres real: necesitan `pnpm db:up` (desde la raíz) y el esquema migrado. Vacían tablas en su `beforeEach`, así que **se niegan a ejecutarse si `DATABASE_URL` no apunta a `localhost`** (guarda en `tests/setup.ts`, añadida el 10-10-2026 al existir ya la base de producción).
 
+## Estructura del código
+
+Organizada por funcionalidad: cada una vive en su carpeta, con sus rutas, su servicio y sus piezas propias.
+
+```
+src/
+  app.ts, index.ts, config.ts   factoría de la app, arranque y configuración de entorno
+  platform/                     logger y cliente de Prisma
+  http/                         errores HTTP, manejador final de errores e IP del cliente
+  auth/                         cuentas y sesiones: rutas, servicio, contraseñas, tokens,
+                                sesiones, guardia de acceso y limitación de peticiones
+```
+
+- **Rutas finas**: validan con el esquema compartido de `@bukit/core`, llaman a su servicio y responden. Las reglas del producto viven en los servicios (`*.service.ts` y piezas como `sessions.ts`), que se pueden usar sin pasar por HTTP.
+- **Regla de dependencias**: una funcionalidad puede usar el servicio de otra, nunca sus rutas. Lo común (`config.ts`, `platform/`, `http/`) no importa de ninguna funcionalidad.
+- **Middleware compartido por un grupo de rutas**: se declara una vez en un router intermedio (por ejemplo, la capa 1 de limitación para el alta y el inicio de sesión). Un router intermedio colgado de un prefijo recibe todo lo de ese prefijo que no atendió una ruta anterior, así que las rutas que no deben pasar por él se declaran antes.
+- Los routers se crean con una factoría por app, porque algunos llevan estado (los contadores de los limitadores).
+- El cuerpo JSON se lee una vez, de forma global, en `app.ts`.
+- Las pruebas, en `tests/`, siguen la misma estructura (`tests/auth/`, `tests/http/`, `tests/platform/`), con los ayudantes comunes en `tests/helpers.ts`.
+
 ## Variables de entorno
 
 En local se cargan desde un `.env` en esta carpeta (vía `dotenv`); en Render se definen en el servicio (el Blueprint fija las estáticas).
@@ -34,9 +54,9 @@ Los secretos nunca entran en el repositorio: el `.env` y sus variantes (`.env.*`
 
 ## Limitación de peticiones (US-07)
 
-Doble capa, con `express-rate-limit` y los contadores en memoria (`src/middleware/rate-limit.ts`; umbrales en `src/utils/config.ts`):
+Doble capa, con `express-rate-limit` y los contadores en memoria (`src/auth/rate-limit.ts`; umbrales en `src/config.ts`):
 
-- **Capa 1, por IP**: `POST /auth/register` y `POST /auth/login` comparten 20 peticiones cada 15 min. Cuenta todas y corta antes de parsear el cuerpo, de consultar la base y de bcrypt. `429 TOO_MANY_REQUESTS`.
+- **Capa 1, por IP**: `POST /auth/register` y `POST /auth/login` comparten 20 peticiones cada 15 min, declaradas una vez en su router intermedio de credenciales. Cuenta todas las que traen JSON válido (el mal formado lo rechaza antes, con 400, el lector del cuerpo, que es global) y corta antes de consultar la base y de bcrypt. `429 TOO_MANY_REQUESTS`.
 - **Capa 2, por email normalizado e IP**: `POST /auth/login`, 5 intentos bien formados cada 15 min, contados antes de bcrypt; un acierto pone el contador a cero. Durante el bloqueo ni la contraseña correcta entra, y un email inexistente se trata igual que uno real. `429 TOO_MANY_LOGIN_ATTEMPTS`.
 - Las dos responden con el contrato de errores y `Retry-After` (expuesta por CORS). `/health`, `/auth/refresh`, `/auth/logout` y `/auth/me` no se limitan.
 - **IP real**: de `CF-Connecting-IP`, que Cloudflare sobrescribe en cada petición a Render, solo con `CLIENT_IP_HEADER`. Nunca de `X-Forwarded-For`: su parte izquierda la escribe el cliente. Las IPv6 cuentan por su red /56.

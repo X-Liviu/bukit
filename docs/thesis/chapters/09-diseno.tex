@@ -10,8 +10,23 @@
 \chapter{Diseño de alto nivel}
 \label{ch:diseno}
 
-Este capítulo recoge el diseño del sistema conforme a su método de construcción (capítulo \ref{ch:solucion}): el modelo de datos se presenta entidad a entidad, en el orden en que cada una se acuerda y se implementa, con su porqué y las alternativas descartadas.
-\todonote{Pendientes: figura de la arquitectura, componentes de las aplicaciones y contratos de la API, conforme avance el desarrollo; y las figuras UML del modelo de datos y de las secuencias de sesión, ya dibujadas, cuando se decida con el tutor si van en este capítulo o en el Anexo II.}
+Este capítulo recoge el diseño del sistema conforme a su método de construcción (capítulo \ref{ch:solucion}): la organización del código de la \ac{API}; el modelo de datos, que se presenta entidad a entidad, en el orden en que cada una se acuerda y se implementa, con su porqué y las alternativas descartadas; y la limitación de peticiones.
+\todonote{Pendientes: figura de la arquitectura, componentes de las aplicaciones web y móvil y contratos de la API, conforme avance el desarrollo; y las figuras UML del modelo de datos y de las secuencias de sesión, ya dibujadas, cuando se decida con el tutor si van en este capítulo o en el Anexo II.}
+
+\section{Organización del código de la \acs{API}}
+\label{sec:diseno-organizacion}
+
+El código de la \ac{API} se organiza por funcionalidad: cada una, como la autenticación, tiene su propia carpeta con sus rutas, su servicio y sus piezas propias, y lo que comparten todas —la configuración, el registro de sucesos, el cliente de la base de datos y los errores \ac{HTTP} con su traducción— vive aparte.
+Dos reglas mantienen ese reparto.
+La primera: lo común no depende de ninguna funcionalidad, y una funcionalidad puede usar el servicio de otra, pero nunca sus rutas; el \eng{feed}, por ejemplo, necesitará las publicaciones y los seguimientos, y el mapa, los seguimientos, la ubicación y la afinidad.
+La segunda: las rutas solo traducen entre \ac{HTTP} y los servicios, es decir, validan la entrada con el esquema compartido, llaman al servicio y responden, de modo que las reglas del producto viven en los servicios y se pueden usar sin pasar por \ac{HTTP}, como hace la carga de datos de ejemplo con el cálculo de las contraseñas.
+
+Se descartó la organización por papel técnico (rutas, \eng{middlewares} y utilidades), la de TrackBites, el proyecto previo del autor.
+Con una sola funcionalidad funciona bien, pero el \eng{backlog} (capítulo \ref{ch:tareas}) reserva trabajo en la \ac{API} a ocho épicas comprometidas más, varias con entradas que no son rutas —la mensajería en tiempo real, los procesos en segundo plano de la afinidad y de los recordatorios, y los avisos del proveedor de verificación—, y con ella cada historia se repartiría entre varias carpetas y las reglas del producto no tendrían un sitio propio.
+
+Dos convenciones completan el diseño.
+Un \eng{middleware} que comparten varias rutas se declara una sola vez en un enrutador intermedio que las agrupa, como la primera capa de limitación de peticiones del alta y del inicio de sesión (sección \ref{sec:diseno-limitacion}), y cada enrutador se crea para cada instancia de la aplicación, porque algunos guardan estado.
+El cuerpo de las peticiones se lee una sola vez para toda la \ac{API}, con el mismo tope de tamaño y el mismo tratamiento de errores en todas sus rutas.
 
 \section{Modelo de datos}
 \label{sec:diseno-modelo}
@@ -76,7 +91,7 @@ El alta y el inicio de sesión son las rutas más caras del sistema, porque cada
 La \ac{API} las protege con dos capas de limitación de peticiones, el patrón que el autor ya aplicó en TrackBites (capítulo \ref{ch:alternativas}), corregido en los puntos débiles que mostró la revisión de aquel código.
 
 La primera capa limita por origen: el alta y el inicio de sesión comparten un cupo de 20 peticiones cada quince minutos por dirección \ac{IP}.
-Cuenta todas las peticiones, también las válidas, porque el coste que protege se paga igual, y actúa antes de leer el cuerpo de la petición, de modo que lo que rechaza no llega ni a la base de datos ni al cálculo bcrypt.
+Cuenta todas las peticiones, también las válidas, porque el coste que protege se paga igual, y actúa antes de consultar la base de datos, de modo que lo que rechaza no llega ni a ella ni al cálculo bcrypt.
 Las direcciones IPv6 cuentan por su red /56, porque quien dispone de una dirección suele disponer de la red entera, y rotar direcciones dentro de ella abriría cupos sin fin.
 
 La segunda capa limita los intentos de inicio de sesión por cuenta y origen: cinco intentos cada quince minutos para cada pareja de email y dirección.

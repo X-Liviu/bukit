@@ -26,6 +26,7 @@ Red social para cumplir metas vitales en compañía, orientada a la acción. Reg
 
 - Web (React + Vite + TanStack Query) y móvil (React Native + Expo, objetivo secundario) comparten lógica en `packages/`: `core` (tipos y esquemas Zod, única fuente de verdad), `api-client` y `ui-core`. Los paquetes se consumen sin compilar. `apps/web` y `apps/mobile` aún no tienen código.
 - API: Express 5 + Prisma 6 sobre un solo PostgreSQL 16 con PostGIS (mapa) y pgvector (afinidad); las consultas geográficas y vectoriales van en SQL crudo.
+- La API se organiza por funcionalidad (`apps/api/src/<funcionalidad>/`, con sus rutas, su servicio y sus piezas); lo común va en `config.ts`, `platform/` y `http/` y no importa de ninguna funcionalidad. Una funcionalidad usa el servicio de otra, nunca sus rutas, y las rutas solo validan, llaman y responden. Detalle en `apps/api/README.md`.
 - Producción: la API en Render, que solo despliega con la CI en verde, y la base en Neon (UE). Las migraciones de producción las aplica la CI (job `migrate`). Detalle en `apps/api/README.md`.
 - La imagen `docker/postgres` de desarrollo y CI lleva **las mismas versiones que Neon**: no cambiarlas sin comprobarlo antes en Neon (receta en el comentario de su Dockerfile).
 - Decidido y aún sin implementar:

@@ -1,11 +1,12 @@
 import { pino } from "pino";
 import { describe, expect, it } from "vitest";
 
-import { redactOptions } from "../src/logger";
+import { redactOptions } from "../../src/platform/logger";
 
 // La redacción es la garantía de que los logs no contienen credenciales
-// (hallazgo de la revisión adversarial del 27-07). Se prueba con un pino
-// propio que escribe en memoria, porque el logger real va apagado en test.
+// (hallazgo de la revisión adversarial del 27-07) ni, desde la US-07, la IP del
+// cliente. Se prueba con un pino propio que escribe en memoria, porque el
+// logger real va apagado en test.
 describe("redacción del logger", () => {
   it("censura authorization, cookie y el cuerpo crudo que adjunta http-errors", () => {
     const lines: string[] = [];

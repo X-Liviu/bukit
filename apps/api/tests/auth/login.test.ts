@@ -3,28 +3,18 @@ import request from "supertest";
 import jwt from "jsonwebtoken";
 import { apiErrorSchema, loginResponseSchema } from "@bukit/core";
 
-import { createApp } from "../src/app.js";
-import { getPrisma } from "../src/prisma.js";
-import { config } from "../src/utils/config.js";
-
-// Coste bcrypt bajo SOLO en pruebas (la ruta lo lee por petición).
-process.env.BCRYPT_ROUNDS = "4";
+import { account, registerAccount } from "../helpers.js";
+import { createApp } from "../../src/app.js";
+import { getPrisma } from "../../src/platform/prisma.js";
+import { config } from "../../src/config.js";
 
 // App nueva en cada caso (beforeEach): desde la US-07 lleva contadores de
 // limitación de peticiones, y una sola por fichero los acumularía entre casos.
 let app = createApp();
 const prisma = getPrisma();
 
-const account = {
-  email: "persona@example.com",
-  username: "persona.ejemplo",
-  password: "contraseña-larga",
-};
-
 /** Alta previa: el login se prueba contra una cuenta creada por la propia API. */
-async function register(): Promise<void> {
-  await request(app).post("/auth/register").send(account).expect(201);
-}
+const register = () => registerAccount(app);
 
 beforeEach(async () => {
   await prisma.user.deleteMany();

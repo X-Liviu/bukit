@@ -2,9 +2,9 @@ import type { NextFunction, Request, Response } from "express";
 import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
-import { badRequest } from "../src/errors";
-import { logger } from "../src/logger";
-import { errorHandler } from "../src/middleware/error-handler";
+import { badRequest } from "../../src/http/errors";
+import { logger } from "../../src/platform/logger";
+import { errorHandler } from "../../src/http/error-handler";
 
 // Pruebas unitarias del manejador final para lo que la integración no puede
 // observar: los NIVELES de registro (criterio 3 de la US-02) y la guarda de

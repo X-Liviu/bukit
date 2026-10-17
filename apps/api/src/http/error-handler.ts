@@ -3,8 +3,8 @@ import { ZodError } from "zod";
 
 import type { ApiError } from "@bukit/core";
 
-import { AppError } from "../errors.js";
-import { logger } from "../logger.js";
+import { AppError, notFound } from "./errors.js";
+import { logger } from "../platform/logger.js";
 
 // Traducción única de errores a HTTP (US-02, RNF-03). El detalle interno
 // (stack, mensajes de librería) se registra en el logger pero nunca viaja
@@ -12,8 +12,8 @@ import { logger } from "../logger.js";
 
 /** 404 uniforme para rutas inexistentes (el de serie de Express es HTML). */
 export function notFoundHandler(_req: Request, res: Response): void {
-  const body: ApiError = { error: { code: "NOT_FOUND", message: "Recurso no encontrado." } };
-  res.status(404).json(body);
+  const error = notFound();
+  res.status(error.status).json(error.toBody());
 }
 
 // Forma de los errores que lanza el propio framework (paquete http-errors,

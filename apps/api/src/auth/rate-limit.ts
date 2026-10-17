@@ -2,10 +2,10 @@ import type { Request, RequestHandler, Response } from "express";
 import { rateLimit, type AugmentedRequest, type Options } from "express-rate-limit";
 import { loginSchema } from "@bukit/core";
 
-import { type AppError, tooManyLoginAttempts, tooManyRequests } from "../errors.js";
-import { logger } from "../logger.js";
-import { clientIpKey } from "../utils/client-ip.js";
-import { config, type ClientIpHeader } from "../utils/config.js";
+import { type AppError, tooManyLoginAttempts, tooManyRequests } from "../http/errors.js";
+import { logger } from "../platform/logger.js";
+import { clientIpKey } from "../http/client-ip.js";
+import { config, type ClientIpHeader } from "../config.js";
 
 // Doble capa de limitación de peticiones (US-07, RNF-03), el patrón de TrackBites
 // corregido. Capa 1: por origen, protege la CPU (bcrypt) y frena el relleno de
@@ -41,10 +41,11 @@ const common = {
 } satisfies Partial<Options>;
 
 /**
- * Capa 1: cupo común de alta e inicio de sesión por origen. Cuenta toda
- * petición, también los aciertos y los errores de validación, porque el coste
- * que protege se paga igual. Se monta antes de parsear el cuerpo: lo que
- * rechaza no llega ni a la base de datos ni a bcrypt.
+ * Capa 1: cupo común de alta e inicio de sesión por origen, montado una vez
+ * para las dos en su router intermedio (auth.routes.ts). Cuenta toda petición
+ * con JSON válido, también los aciertos y los errores de validación, porque el
+ * coste que protege se paga igual; lo que rechaza no llega ni a la base de
+ * datos ni a bcrypt.
  */
 export function createOriginLimiter(header: ClientIpHeader | undefined): RequestHandler {
   return rateLimit({

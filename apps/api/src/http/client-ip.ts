@@ -2,7 +2,7 @@ import { isIP } from "node:net";
 import type { Request } from "express";
 import { ipKeyGenerator } from "express-rate-limit";
 
-import type { ClientIpHeader } from "./config.js";
+import type { ClientIpHeader } from "../config.js";
 
 /**
  * Clave de origen de una petición para la limitación de peticiones (US-07).

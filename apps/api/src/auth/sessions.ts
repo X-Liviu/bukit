@@ -2,20 +2,16 @@ import { createHash, randomUUID } from "node:crypto";
 import jwt from "jsonwebtoken";
 import type { TokenPair } from "@bukit/core";
 
-import { getPrisma } from "../prisma.js";
-import { unauthorized } from "../errors.js";
+import { getPrisma } from "../platform/prisma.js";
+import { invalidToken } from "../http/errors.js";
 import { issueTokenPair, verifyToken } from "./tokens.js";
 
 // Sesiones con tokens de refresco persistidos (US-06): rotación en cada uso,
 // cierre de sesión real y detección de reutilización. Una «familia» es un
 // inicio de sesión con todas sus renovaciones; ante una reutilización se anula
 // SOLO esa familia (decisión del autor del 10-10-2026), no todas las sesiones
-// del usuario.
-
-// Todos los fallos salen con el mismo 401 y el mismo mensaje, igual que en
-// verifyToken: distinguir «caducado», «anulado» o «reutilizado» hacia fuera
-// solo orienta a quien prueba tokens robados.
-const INVALID_TOKEN_MESSAGE = "Token inválido o caducado.";
+// del usuario. Todos los fallos salen con invalidToken(), igual que en
+// verifyToken.
 
 /** Huella SHA-256 (hex, 64 caracteres) con la que se guarda y se busca el token. */
 export function hashToken(token: string): string {
@@ -78,16 +74,16 @@ export async function rotateSession(refreshToken: string): Promise<TokenPair> {
   // Sin fila: token nunca emitido por esta base (o cuenta borrada, cuyas
   // sesiones se fueron en cascada). La comprobación del usuario es defensa en
   // profundidad: la huella ya identifica un único token.
-  if (!current || current.userId !== sub) throw unauthorized(INVALID_TOKEN_MESSAGE);
+  if (!current || current.userId !== sub) throw invalidToken();
 
   const now = new Date();
   if (current.revokedAt) {
     // Anulado por una rotación (tiene sucesor) = reutilización. Anulado por un
     // cierre de sesión (sin sucesor): su familia ya está cerrada.
     if (current.replacedById) await revokeFamily(current.familyId, now);
-    throw unauthorized(INVALID_TOKEN_MESSAGE);
+    throw invalidToken();
   }
-  if (current.expiresAt <= now) throw unauthorized(INVALID_TOKEN_MESSAGE);
+  if (current.expiresAt <= now) throw invalidToken();
 
   const tokens = issueTokenPair(current.userId);
   const rotated = await prisma.$transaction(async (tx) => {
@@ -116,7 +112,7 @@ export async function rotateSession(refreshToken: string): Promise<TokenPair> {
   });
   if (!rotated) {
     await revokeFamily(current.familyId, now);
-    throw unauthorized(INVALID_TOKEN_MESSAGE);
+    throw invalidToken();
   }
   return tokens;
 }

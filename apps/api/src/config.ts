@@ -1,7 +1,8 @@
 import "dotenv/config";
 
-// Configuración de entorno (mismo patrón que utils/config en TrackBites).
-// El import de "dotenv/config" carga el archivo .env como efecto secundario.
+// Configuración de entorno, el único módulo que lee process.env (mismo patrón
+// que el utils/config de TrackBites). El import de "dotenv/config" carga el
+// archivo .env como efecto secundario.
 
 // El secreto de firma de los tokens NO tiene valor por defecto en producción:
 // un secreto de reserva escrito en el código convertiría un despliegue mal
@@ -48,6 +49,16 @@ function clientIpHeader(): ClientIpHeader | undefined {
 export const config = {
   port: Number(process.env.PORT) || 3001,
   nodeEnv: process.env.NODE_ENV ?? "development",
+  /** Nivel del registro de sucesos; sin él, debug en desarrollo e info fuera. */
+  logLevel: process.env.LOG_LEVEL,
+  /**
+   * Coste del hash bcrypt: 12 rondas por defecto (en torno a 1 s de CPU con
+   * bcryptjs, asumible para altas esporádicas). Las pruebas lo bajan a 4
+   * (vitest.config.ts). Getter, como el secreto: se lee en cada uso.
+   */
+  get bcryptRounds(): number {
+    return Number(process.env.BCRYPT_ROUNDS ?? 12);
+  },
   jwt: {
     get secret(): string {
       // Perezoso (getter) por el mismo motivo que el cliente de Prisma: el

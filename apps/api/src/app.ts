@@ -3,17 +3,17 @@ import type { Express } from "express";
 import cors from "cors";
 import { pinoHttp } from "pino-http";
 
-import { logger } from "./logger.js";
-import { errorHandler, notFoundHandler } from "./middleware/error-handler.js";
-import { createLoginLimiter, createOriginLimiter } from "./middleware/rate-limit.js";
-import { authRouter } from "./routes/auth.js";
-import { config } from "./utils/config.js";
+import { logger } from "./platform/logger.js";
+import { errorHandler, notFoundHandler } from "./http/error-handler.js";
+import { createAuthRouter } from "./auth/auth.routes.js";
+import { config } from "./config.js";
 
 // La app Express, sin arrancar el servidor: se construye aparte del listen
 // para poder testearla con Supertest sin abrir un puerto (igual que en
 // TrackBites). Factoría en lugar de instancia única porque las pruebas
 // necesitan inyectar rutas que fallan y estas deben registrarse ANTES de los
-// manejadores finales (404 y errores), que siempre cierran la cadena.
+// manejadores finales (404 y errores), que siempre cierran la cadena; y porque
+// cada app estrena sus contadores de limitación de peticiones (US-07).
 export function createApp(extraRoutes?: (app: Express) => void): Express {
   const app = express();
 
@@ -25,18 +25,12 @@ export function createApp(extraRoutes?: (app: Express) => void): Express {
   app.use(pinoHttp({ logger }));
   // Retry-After expuesta: sin ella, el navegador no deja leerla al cliente web.
   app.use(cors({ exposedHeaders: ["Retry-After"] }));
-
-  // Limitación de peticiones (US-07). Contadores nuevos en cada app, así que
-  // ninguna prueba hereda los de otra. La cabecera se lee una vez: un valor no
-  // admitido impide arrancar.
-  const ipHeader = config.rateLimit.clientIpHeader;
-  if (!ipHeader && config.nodeEnv === "production") {
-    logger.warn(
-      "Sin CLIENT_IP_HEADER: todos los clientes compartirán la IP del proxy y el mismo cupo.",
-    );
-  }
-  // Capa 1, antes de parsear el cuerpo.
-  app.post(["/auth/register", "/auth/login"], createOriginLimiter(ipHeader));
+  // El cuerpo JSON se lee una vez para toda la API, como en TrackBites: solo
+  // actúa si la petición declara application/json, con el mismo tope (100 kB)
+  // y los mismos errores para toda ruta, presente o futura. Alternativa
+  // descartada: leerlo ruta a ruta, que obliga a acordarse en cada una nueva.
+  // El coste asumido es leer el cuerpo antes de que la limitación de
+  // peticiones lo rechace, despreciable frente al bcrypt que esta protege.
   app.use(express.json());
 
   // Comprobación de vida del servicio (sin límite: la usa Render).
@@ -44,11 +38,17 @@ export function createApp(extraRoutes?: (app: Express) => void): Express {
     res.json({ status: "ok" });
   });
 
-  // Capa 2, con el cuerpo ya parseado: necesita el email.
-  app.post("/auth/login", createLoginLimiter(ipHeader));
+  // La cabecera de la IP real se lee una vez: un valor no admitido impide
+  // arrancar, y su ausencia en producción se avisa (US-07).
+  const ipHeader = config.rateLimit.clientIpHeader;
+  if (!ipHeader && config.nodeEnv === "production") {
+    logger.warn(
+      "Sin CLIENT_IP_HEADER: todos los clientes compartirán la IP del proxy y el mismo cupo.",
+    );
+  }
 
-  // Rutas de la API (US-04+).
-  app.use(authRouter);
+  // Rutas de la API (US-04+), creadas por app: llevan sus limitadores dentro.
+  app.use(createAuthRouter(ipHeader));
 
   extraRoutes?.(app);
 
