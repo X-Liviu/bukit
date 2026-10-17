@@ -5,7 +5,9 @@ import { pinoHttp } from "pino-http";
 
 import { logger } from "./logger.js";
 import { errorHandler, notFoundHandler } from "./middleware/error-handler.js";
+import { createLoginLimiter, createOriginLimiter } from "./middleware/rate-limit.js";
 import { authRouter } from "./routes/auth.js";
+import { config } from "./utils/config.js";
 
 // La app Express, sin arrancar el servidor: se construye aparte del listen
 // para poder testearla con Supertest sin abrir un puerto (igual que en
@@ -21,13 +23,29 @@ export function createApp(extraRoutes?: (app: Express) => void): Express {
 
   // Traza cada petición con id propio, método, ruta, estado y duración.
   app.use(pinoHttp({ logger }));
-  app.use(cors());
+  // Retry-After expuesta: sin ella, el navegador no deja leerla al cliente web.
+  app.use(cors({ exposedHeaders: ["Retry-After"] }));
+
+  // Limitación de peticiones (US-07). Contadores nuevos en cada app, así que
+  // ninguna prueba hereda los de otra. La cabecera se lee una vez: un valor no
+  // admitido impide arrancar.
+  const ipHeader = config.rateLimit.clientIpHeader;
+  if (!ipHeader && config.nodeEnv === "production") {
+    logger.warn(
+      "Sin CLIENT_IP_HEADER: todos los clientes compartirán la IP del proxy y el mismo cupo.",
+    );
+  }
+  // Capa 1, antes de parsear el cuerpo.
+  app.post(["/auth/register", "/auth/login"], createOriginLimiter(ipHeader));
   app.use(express.json());
 
-  // Comprobación de vida del servicio.
+  // Comprobación de vida del servicio (sin límite: la usa Render).
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
+
+  // Capa 2, con el cuerpo ya parseado: necesita el email.
+  app.post("/auth/login", createLoginLimiter(ipHeader));
 
   // Rutas de la API (US-04+).
   app.use(authRouter);

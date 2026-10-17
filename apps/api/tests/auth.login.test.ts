@@ -10,7 +10,9 @@ import { config } from "../src/utils/config.js";
 // Coste bcrypt bajo SOLO en pruebas (la ruta lo lee por petición).
 process.env.BCRYPT_ROUNDS = "4";
 
-const app = createApp();
+// App nueva en cada caso (beforeEach): desde la US-07 lleva contadores de
+// limitación de peticiones, y una sola por fichero los acumularía entre casos.
+let app = createApp();
 const prisma = getPrisma();
 
 const account = {
@@ -26,6 +28,7 @@ async function register(): Promise<void> {
 
 beforeEach(async () => {
   await prisma.user.deleteMany();
+  app = createApp();
 });
 
 afterAll(async () => {

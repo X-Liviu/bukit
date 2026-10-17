@@ -32,4 +32,36 @@ describe("redacción del logger", () => {
     expect(output).not.toContain("SECRET-COOKIE");
     expect(output).not.toContain("hunter2");
   });
+
+  it("censura la IP del cliente y las cabeceras de proxy que la llevan (US-07, RGPD)", () => {
+    const lines: string[] = [];
+    const testLogger = pino(
+      { redact: redactOptions },
+      {
+        write: (line: string) => {
+          lines.push(line);
+        },
+      },
+    );
+
+    testLogger.info(
+      {
+        req: {
+          remoteAddress: "203.0.113.10",
+          headers: {
+            "x-forwarded-for": "198.51.100.7, 203.0.113.10",
+            "cf-connecting-ip": "203.0.113.10",
+            "true-client-ip": "203.0.113.10",
+            "x-real-ip": "203.0.113.10",
+          },
+        },
+      },
+      "petición de prueba",
+    );
+
+    const output = lines.join("");
+    expect(output).toContain("[REDACTED]");
+    expect(output).not.toContain("203.0.113.10");
+    expect(output).not.toContain("198.51.100.7");
+  });
 });

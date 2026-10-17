@@ -11,7 +11,9 @@ import { hashToken } from "../src/utils/sessions.js";
 // Coste bcrypt bajo SOLO en pruebas (la ruta lo lee por petición).
 process.env.BCRYPT_ROUNDS = "4";
 
-const app = createApp();
+// App nueva en cada caso (beforeEach): desde la US-07 lleva contadores de
+// limitación de peticiones, y una sola por fichero los acumularía entre casos.
+let app = createApp();
 const prisma = getPrisma();
 
 const account = {
@@ -44,6 +46,7 @@ function findRow(refreshToken: string) {
 beforeEach(async () => {
   // Las sesiones caen en cascada con sus cuentas (onDelete: Cascade).
   await prisma.user.deleteMany();
+  app = createApp();
 });
 
 afterAll(async () => {

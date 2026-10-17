@@ -13,7 +13,9 @@ process.env.BCRYPT_ROUNDS = "4";
 // Pruebas de INTEGRACIÓN del alta (US-04): contra el Postgres real de
 // desarrollo (docker compose en local; el mismo compose en la CI), nunca
 // contra un doble — el criterio de aceptación pide integración de verdad.
-const app = createApp();
+// App nueva en cada caso (beforeEach): desde la US-07 lleva contadores de
+// limitación de peticiones, y una sola por fichero los acumularía entre casos.
+let app = createApp();
 const prisma = getPrisma();
 
 const validSignup = {
@@ -25,6 +27,7 @@ const validSignup = {
 beforeEach(async () => {
   // Aislamiento entre casos: la tabla empieza vacía en cada test.
   await prisma.user.deleteMany();
+  app = createApp();
 });
 
 afterAll(async () => {

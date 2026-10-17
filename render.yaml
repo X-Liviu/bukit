@@ -24,6 +24,12 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # IP real del cliente para la limitación de peticiones (US-07): delante
+      # del servicio están Cloudflare y el balanceador de Render, y Cloudflare
+      # sobrescribe CF-Connecting-IP en cada petición. Sin esta variable, todos
+      # los clientes compartirían la IP del proxy y el mismo cupo.
+      - key: CLIENT_IP_HEADER
+        value: cf-connecting-ip
       # Secreto de firma de los tokens (US-05): Render lo genera aleatorio al
       # aplicar el Blueprint y no vive en el repositorio. Sin él, el proceso
       # arrancaría y /health estaría verde, pero cada login fallaría — el tipo

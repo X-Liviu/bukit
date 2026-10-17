@@ -14,12 +14,20 @@ const isDev = config.nodeEnv === "development";
 // revisión del 27-07: sin esto, el futuro token JWT y hasta contraseñas de un
 // login truncado acabarían en claro en los logs). Exportada aparte para poder
 // probarla con un pino de prueba, porque el logger real va apagado en test.
+// Desde la US-07 tampoco salen la IP del cliente ni las cabeceras de proxy que
+// la llevan: son datos personales (RGPD) y el registro no los necesita; la
+// limitación de peticiones los usa en memoria y no los guarda.
 export const redactOptions = {
   paths: [
     "req.headers.authorization",
     "req.headers.cookie",
     'res.headers["set-cookie"]',
     "err.body",
+    "req.remoteAddress",
+    'req.headers["x-forwarded-for"]',
+    'req.headers["cf-connecting-ip"]',
+    'req.headers["true-client-ip"]',
+    'req.headers["x-real-ip"]',
   ],
   censor: "[REDACTED]",
 };

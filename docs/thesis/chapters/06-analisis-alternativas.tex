@@ -94,6 +94,11 @@ La misma historia fijó dos decisiones de diseño con su alternativa: las vidas 
 Para el \eng{hash} de las contraseñas se adopta bcryptjs \parencite{bcryptjs-docs}, la implementación del algoritmo bcrypt en JavaScript puro y compatible con la nativa, frente al paquete bcrypt nativo: este exige compilar código C++ en cada entorno, una fricción evitable (riesgo R13) en una cadena que instala dependencias en Windows, en Linux y dentro de una imagen Docker basada en Alpine.
 El coste asumido es de rendimiento —en torno a un segundo de cálculo con las 12 rondas configuradas—, aceptable en un flujo de alta e inicio de sesión y rebajado en las pruebas mediante configuración.
 
+La doble capa de limitación de peticiones (capítulo \ref{ch:diseno}, sección \ref{sec:diseno-limitacion}) añade una tercera elección.
+TrackBites combinaba dos bibliotecas: express-rate-limit \parencite{express-rate-limit-docs} para el límite por origen y rate-limiter-flexible \parencite{rate-limiter-flexible-docs} para el de cuenta, con su contador en la base de datos.
+Aquí se usa solo la primera, para las dos capas, con los contadores en memoria.
+Los almacenes en base de datos de la segunda no encajan en esta pila: el de la capa de acceso a datos lee el contador y lo reescribe en dos pasos, de modo que dos intentos simultáneos pueden pisarse, y el de PostgreSQL crea su propia tabla al arrancar, fuera de las migraciones versionadas \parencite{rate-limiter-flexible-docs}.
+
 \section{La alternativa global: Supabase}
 \label{sec:alt-supabase}
 

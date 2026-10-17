@@ -68,3 +68,37 @@ Las relaciones con valor social, como las publicaciones o los seguimientos, tien
 
 La revisión de minimización de la entidad concluye sin hallazgos: no se guardan la dirección IP, el dispositivo ni el navegador desde los que se inicia sesión.
 Serían útiles para una pantalla de sesiones activas, pero ninguna función comprometida los necesita, y son datos personales.
+
+\section{Limitación de peticiones}
+\label{sec:diseno-limitacion}
+
+El alta y el inicio de sesión son las rutas más caras del sistema, porque cada una paga un cálculo bcrypt de en torno a un segundo, y las expuestas a la fuerza bruta: por ellas se prueban contraseñas, se ensayan credenciales robadas en otros servicios y se crean cuentas en masa.
+La \ac{API} las protege con dos capas de limitación de peticiones, el patrón que el autor ya aplicó en TrackBites (capítulo \ref{ch:alternativas}), corregido en los puntos débiles que mostró la revisión de aquel código.
+
+La primera capa limita por origen: el alta y el inicio de sesión comparten un cupo de 20 peticiones cada quince minutos por dirección \ac{IP}.
+Cuenta todas las peticiones, también las válidas, porque el coste que protege se paga igual, y actúa antes de leer el cuerpo de la petición, de modo que lo que rechaza no llega ni a la base de datos ni al cálculo bcrypt.
+Las direcciones IPv6 cuentan por su red /56, porque quien dispone de una dirección suele disponer de la red entera, y rotar direcciones dentro de ella abriría cupos sin fin.
+
+La segunda capa limita los intentos de inicio de sesión por cuenta y origen: cinco intentos cada quince minutos para cada pareja de email y dirección.
+El intento se cuenta antes de buscar al usuario y de comprobar la contraseña, así que una ráfaga de intentos simultáneos no se cuela, y un acierto pone el contador a cero.
+Durante el bloqueo ni la contraseña correcta entra, porque de lo contrario el bloqueo indicaría cuándo se ha acertado, y un email inexistente se trata exactamente igual que uno registrado, de modo que el límite no delata qué cuentas existen.
+El email se normaliza con el mismo esquema compartido que valida el inicio de sesión: dos grafías del mismo email comparten contador.
+
+La clave de la segunda capa es la decisión principal del diseño.
+La práctica de referencia asocia el contador de fallos a la cuenta y no al origen, para frenar los ataques repartidos entre muchas direcciones, y advierte a la vez de que un bloqueo así puede usarse para dejar sin acceso a otras personas \parencite{owasp-authentication}.
+En una red social ese bloqueo malicioso es una forma de acoso, de modo que se elige la pareja de cuenta y origen: nadie puede bloquear una cuenta ajena, con el coste asumido de que un ataque repartido entre muchas direcciones contra una sola cuenta solo queda frenado dirección a dirección.
+Se descartó también contar todos los intentos, aciertos incluidos, como hacía TrackBites, porque una persona que inicia sesión a menudo acabaría bloqueada sin haber fallado.
+
+La dirección del cliente no puede tomarse de la conexión.
+En Render, todo el tráfico atraviesa la red de Cloudflare y los balanceadores del propio servicio antes de llegar a la aplicación, que por eso ve la dirección de un intermediario \parencite{render-ddos}.
+La cabecera que acumula la cadena de intermediarios, \texttt{X-Forwarded-For}, tampoco sirve: Cloudflare añade entradas en lugar de sustituirlas, y la primera la escribe el propio cliente \parencite{render-pocketbase}.
+La dirección se toma de \texttt{CF-Connecting-IP}, que Cloudflare sobrescribe en cada petición \parencite{render-pocketbase}, se activa por configuración solo en producción y se acepta únicamente si su valor es una dirección válida.
+Se descartó confiar en un número fijo de intermediarios, que el proveedor no documenta: si cambiara, o se podría falsificar la dirección o todos los clientes compartirían el mismo cupo.
+
+Los contadores viven en la memoria del proceso.
+El servicio corre en una única instancia, así que esa memoria es el contador global, y las ventanas de quince minutos coinciden con la inactividad tras la que el plan gratuito suspende el servicio, de modo que la suspensión no borra ningún contador vivo.
+Un despliegue sí los pone a cero, una ganancia acotada para un atacante, que además no decide cuándo ocurre.
+Se descartaron una tabla en la base de datos, que convertía cada intento en una escritura y guardaba datos personales, y un almacén compartido en Redis, que solo aporta con varias instancias.
+
+La revisión de minimización concluye sin hallazgos: la dirección y el email solo viven en memoria, como mucho durante una ventana, y el registro de sucesos oculta la dirección y las cabeceras que la llevan, que el sistema no necesita guardar.
+Ambas capas responden con el mismo contrato de errores que el resto de la \ac{API} y con el tiempo de espera, y sus casos de abuso (ráfagas simultáneas, bloqueo de una cuenta ajena, cabeceras falsificadas, variantes del email) quedan cubiertos por pruebas automatizadas (riesgo R14).

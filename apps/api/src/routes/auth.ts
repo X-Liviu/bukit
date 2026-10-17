@@ -74,8 +74,8 @@ async function getReferenceHash(): Promise<string> {
 }
 
 // Inicio de sesión (US-05, RNF-03): credenciales correctas → par de tokens.
-// La limitación de peticiones (fuerza bruta) llega en la US-07, su historia
-// propia del backlog: doble capa de rate limiting.
+// La fuerza bruta la frenan las dos capas de limitación de la US-07, montadas
+// en createApp antes de esta ruta (middleware/rate-limit.ts).
 authRouter.post("/auth/login", async (req, res) => {
   const input = loginSchema.parse(req.body);
   const user = await getPrisma().user.findUnique({ where: { email: input.email } });

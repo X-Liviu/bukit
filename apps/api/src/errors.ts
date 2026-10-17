@@ -43,3 +43,17 @@ export const notFound = (message = "Recurso no encontrado."): AppError =>
   new AppError(404, "NOT_FOUND", message);
 export const conflict = (message: string, details?: ErrorDetails): AppError =>
   new AppError(409, "CONFLICT", message, details);
+// Las dos capas de la US-07 responden con códigos distintos para que el cliente
+// explique bien la espera; ninguno revela si la cuenta existe.
+export const tooManyRequests = (): AppError =>
+  new AppError(
+    429,
+    "TOO_MANY_REQUESTS",
+    "Demasiadas peticiones desde esta conexión. Vuelve a intentarlo más tarde.",
+  );
+export const tooManyLoginAttempts = (): AppError =>
+  new AppError(
+    429,
+    "TOO_MANY_LOGIN_ATTEMPTS",
+    "Demasiados intentos de inicio de sesión. Vuelve a intentarlo más tarde.",
+  );
