@@ -95,7 +95,7 @@ Detalle en el cap. 10 de la memoria y en `docs/dev-journal/README.md`.
 
 ## graphify y entorno Windows
 
-- Los hooks de `.claude/settings.json` obligan a orientarse con `graphify query|explain|path|affected` antes de leer código. `graphify update .` refresca el grafo; los hooks de git ya lo hacen en cada commit.
+- Los hooks de `.claude/settings.json` avisan, sin bloquear nada, de orientarse con `graphify query|explain|path|affected` antes de leer código. `graphify update .` refresca el grafo; los hooks de git ya lo hacen en cada commit.
 - Smart App Control bloquea los `.exe` sin firma, incluidos los que genera pipx: graphify se usa con los envoltorios `~/.local/bin/graphify` y `graphify.cmd`. Si `pipx upgrade` vuelve a generar los `.exe`, apartarlos de nuevo y no desactivar Smart App Control.
 - La herramienta Bash reduce las barras invertidas: los scripts con expresiones regulares y los cambios en LaTeX se escriben con Write o Edit, no en una orden de Bash.
 - El `package.json` raíz es `"type": "module"`: los scripts CommonJS van en `.cjs`.

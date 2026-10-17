@@ -91,7 +91,7 @@ El alta y el inicio de sesión son las rutas más caras del sistema, porque cada
 La \ac{API} las protege con dos capas de limitación de peticiones, el patrón que el autor ya aplicó en TrackBites (capítulo \ref{ch:alternativas}), corregido en los puntos débiles que mostró la revisión de aquel código.
 
 La primera capa limita por origen: el alta y el inicio de sesión comparten un cupo de 20 peticiones cada quince minutos por dirección \ac{IP}.
-Cuenta todas las peticiones, también las válidas, porque el coste que protege se paga igual, y actúa antes de consultar la base de datos, de modo que lo que rechaza no llega ni a ella ni al cálculo bcrypt.
+Cuenta todas las peticiones cuyo cuerpo se puede leer, aciertos incluidos, porque el coste que protege se paga igual, y actúa antes de consultar la base de datos, de modo que lo que rechaza no llega ni a ella ni al cálculo bcrypt.
 Las direcciones IPv6 cuentan por su red /56, porque quien dispone de una dirección suele disponer de la red entera, y rotar direcciones dentro de ella abriría cupos sin fin.
 
 La segunda capa limita los intentos de inicio de sesión por cuenta y origen: cinco intentos cada quince minutos para cada pareja de email y dirección.
