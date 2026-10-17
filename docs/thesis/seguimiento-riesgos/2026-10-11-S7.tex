@@ -37,6 +37,9 @@ Riesgos revisados — revisión completa del registro, la primera desde el segui
 y \textbf{R12 y R13 adelantados desde S8} (moderados): R12 porque se le añade una medida y R13 por disparador observado el 03-10.
 Próximas revisiones por cadencia: significativos (incluido el nuevo R15) en S9 y moderados en S11.
 
+\textbf{Plan emitido a partir de este seguimiento:} versión 6, con apartados \updatesymbol\ rellenados en R3, R10, R12, R13, R14 y R15.\newline
+Archivo: \path{../plan-riesgos/plan-riesgos-v6-11-10-2026.tex}.
+
 Datos del sprint: velocidad de S7 = \textbf{5 SP} (US-06, cerrada el 11-10 tras verificarla en producción); horas reales 6~h (2~h~30 el sábado 10-10 y 3~h~30 el domingo 11-10) frente a las 5~h semanales que el plan asigna de media a F2 (80~h en 16 sprints; la planificación tardía del S7 no fijó otra cifra): 120~\%.
 Sin sesiones de lunes a viernes, salvo la entrega al tutor del 05-10.
 Equivalencia observada: 1,2~h/SP, la misma que en F1; por decisión del autor se mantiene la de planificación, 2,0~h/SP, y se decide en S9 con tres sprints de F2.
@@ -108,7 +111,7 @@ R9 & Objetivos secundarios o versiones simuladas; capas gratuitas. & \checkedbox
 \hline
 R11 & Todo en git con remoto y subidas frecuentes. & \checkedbox\ Sí (cada sesión se subió al remoto al cerrarla).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
-R14 & Auditoría de dependencias en la CI + alertas y parches de Dependabot + casos de abuso en la Definición de Hecho. & \checkedbox\ Sí (auditoría en cada push; casos de abuso en la US-06), salvo dos huecos de Dependabot (ver justificación).\newline \checkbox\ No & Dependabot dejó de proponer parches del 16-08 al 03-10 (se detiene con cinco PRs abiertas), y las alertas de seguridad que el plan daba por activas no lo estuvieron hasta el 11-10. & \checkbox\ Mantener\newline \checkedbox\ Modificar\newline \checkbox\ Eliminar \\
+R14 & Auditoría de dependencias en la CI + alertas y parches de Dependabot + casos de abuso en la Definición de Hecho. & \checkbox\ Sí\newline \checkedbox\ No, en parte: la auditoría de la CI corrió en cada push y la US-06 lleva sus casos de abuso, pero la parte de Dependabot no funcionó. & Dependabot no propuso ningún parche del 16-08 al 03-10: tenía cinco PRs abiertas sin triar, y con ese tope deja de proponer. Las alertas de seguridad, que el plan daba por activas, estuvieron apagadas hasta el 11-10. & \checkbox\ Mantener\newline \checkedbox\ Modificar\newline \checkbox\ Eliminar \\
 \hline
 \end{tabularx}
 
@@ -139,7 +142,7 @@ R13 & Cada solución como receta reproducible al resolverla. & \checkedbox\ Sí 
 \multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
 \multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
 \hline
-R14 & Auditoría de dependencias en cada push, alertas y parches de Dependabot y casos de abuso en la Definición de Hecho. & Se añaden el triaje semanal de las PRs de Dependabot y las alertas de seguridad efectivamente activadas (11-10-2026). El indicador se precisa: vulnerabilidad alta de producción sin resolver dentro del sprint, o de desarrollo sin resolver al cierre del sprint siguiente. & Cierra los dos huecos observados. Las de desarrollo no cortan la CI (la auditoría de la CI es solo de producción), pero tampoco pueden quedarse indefinidamente: hoy son 7 altas, todas por la versión de ESLint. \\
+R14 & Auditoría de dependencias en cada push, alertas y parches de Dependabot y casos de abuso en la Definición de Hecho. & Se añaden el triaje semanal de las PRs de Dependabot y las alertas de seguridad efectivamente activadas (11-10-2026). El indicador se precisa: vulnerabilidad alta de producción sin resolver dentro del sprint, o de desarrollo sin resolver al cierre del sprint siguiente. & Cierra los dos huecos de la tabla anterior. Además, la auditoría de la CI solo mira las dependencias de producción, así que las vulnerabilidades de desarrollo (hoy, 7 altas, todas por la versión de ESLint) no la cortan y no tenían plazo: el indicador precisado se lo pone. \\
 \hline
 \end{tabularx}
 
@@ -245,7 +248,7 @@ Lección: los traslados de la estancia Erasmus son el punto débil del calendari
 \hline
 \textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
 \hline
-Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructurales sobre capítulo cerrado. & 0 & Primera entrega quincenal enviada el 05-10 (memoria completa vigente), sin respuesta a 11-10: 6 días, dentro de plazo. & \checkbox\ Sí\quad \checkedbox\ No & Si el 19-10 sigue sin respuesta, recordatorio al tutor y revisión inmediata de R12. Segunda entrega: jueves 15-10. La consulta del §3.5.2 (pendiente desde el 30-07 y recomendada en el seguimiento de S4) no consta como enviada en el diario después del 30-08: si no fue en el correo del 05-10, entra en la entrega del 15-10. \\
+Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructurales sobre capítulo cerrado. & 0 & Primera entrega quincenal enviada el 05-10 (memoria completa vigente), sin respuesta a 11-10: 6 días, dentro de plazo. & \checkbox\ Sí\quad \checkedbox\ No & Si el 19-10 sigue sin respuesta, recordatorio al tutor y revisión inmediata de R12. Segunda entrega: jueves 15-10. La consulta del §3.5.1 (pendiente desde el 30-07 y recomendada en el seguimiento de S4) no consta como enviada en el diario después del 30-08: si no fue en el correo del 05-10, entra en la entrega del 15-10. \\
 \hline
 \end{tabularx}
 
@@ -309,20 +312,20 @@ El origen no fue Windows, sino el ciclo de vida de una imagen de terceros: depen
 \hline
 \textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
 \hline
-Historia con autenticación, autorización o datos personales cerrada sin casos de abuso, o vulnerabilidad alta sin resolver en el sprint. & 0 & 0 — la US-06 cerró con 15 pruebas nuevas, todos sus casos de abuso (reutilización de un token renovado, renovaciones simultáneas, token de acceso usado para renovar) y verificación en producción. El 10-10 apareció una vulnerabilidad crítica en \texttt{proxy-addr} (vía Express) que puso la CI en rojo; se resolvió ese mismo día. Producción: 0 vulnerabilidades. & \checkbox\ Sí\quad \checkedbox\ No & Desarrollo: 7 altas, 2 moderadas y 1 baja, casi todas por ESLint 9.17 (fuera de la auditoría de la CI, que es de producción). Acción para S8: subir ESLint. Dependabot, al día el 11-10 (cero PRs abiertas). \\
+Historia con autenticación, autorización o datos personales cerrada sin casos de abuso, o vulnerabilidad alta sin resolver en el sprint. & 0 & Casos de abuso: 0 — la US-06 cerró con 15 pruebas nuevas, todos sus casos de abuso (reutilización de un token renovado, renovaciones simultáneas, token de acceso usado para renovar) y verificación en producción. Vulnerabilidades: la crítica de \texttt{proxy-addr} (vía Express) del 10-10 se resolvió ese mismo día y producción cierra el sprint con 0; pero \texttt{pnpm audit} reporta 7 altas de desarrollo (más 2 moderadas y 1 baja), casi todas por ESLint 9.17, sin resolver al cierre del sprint. & \checkedbox\ Sí\quad \checkbox\ No & El indicador salta por las altas de desarrollo: la auditoría de la CI no las mira (solo cubre producción) y por eso llevaban semanas sin plazo. R14 pasa a activo. Acción para S8: subir ESLint, dentro del plazo que fija el indicador precisado (ver «Cambios realizados»). Dependabot, al día el 11-10 (cero PRs abiertas). \\
 \hline
 \end{tabularx}
 
-\textbf{Nueva probabilidad (1–3):} \fieldline{0.8cm} · \textbf{Nuevo impacto (1–3):} \fieldline{0.8cm} · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkbox\ Moderado\ \updatesymbol
+\textbf{Nueva probabilidad (1–3):} \underline{\ 2\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 2\ } · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkedbox\ Significativo · \checkbox\ Moderado\ \updatesymbol\ (sin cambio: las vulnerabilidades están en herramientas de desarrollo que no llegan a producción, el impacto previsto)
 
 \textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
 
 \textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
 
-\textbf{Nuevo estado} (cap.~7): \checkedbox\ Sin novedad · \checkbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+\textbf{Nuevo estado} (cap.~7): \checkbox\ Sin novedad · \checkedbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
 
 \textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable.
-La medida de mitigación y el indicador cambian (ver «Cambios realizados»).
+La medida de mitigación y el indicador cambian (ver «Cambios realizados»); el riesgo queda bajo vigilancia hasta que las vulnerabilidades de desarrollo se resuelvan, con plazo al cierre de S8.
 
 \Needspace*{10\baselineskip}
 \bigline

@@ -2,8 +2,9 @@
 // día de la semana escrito y calculado, sprint y fase, secciones presentes, horas
 // registradas, decisiones y casillas; sumas de horas por sprint y fase; y anomalías
 // (día de la semana equivocado, saltos en la numeración, entradas de más de 7 días
-// con las horas sin rellenar, entradas que pasan del límite de extensión y sprints
-// cerrados sin planificación en ninguna entrada).
+// con las horas sin rellenar, entradas que pasan del límite de extensión, sprints
+// cerrados sin planificación en ninguna entrada y semanas declaradas a cero cuando
+// ya habían empezado).
 // Uso: node docs/coherencia/scripts/journal.cjs [--today=YYYY-MM-DD] [docs/dev-journal]
 const fs = require("fs");
 const path = require("path");
@@ -26,6 +27,11 @@ const DAY_MS = 864e5;
 const MAX_WORDS = 1800;
 const MAX_WORDS_SINCE = "2026-10-11";
 const daysSince = (f) => Math.round((Date.parse(today) - Date.parse(f)) / DAY_MS);
+// Semana a cero (README del diario, regla del autor del 17-10-2026): se declara antes
+// de empezar, con una línea «Sx: semana a cero (0 h)» en la entrada anterior. Ese
+// sprint no lleva planificación ni retrospectiva propias, así que no se avisa de su
+// ausencia; una declaración hecha ya dentro de la semana no vale (es un parón, R10).
+const ZERO_WEEK = /\bS(\d{1,2}):\s*semana a cero/gi;
 
 const entries = [];
 // Orden cronológico real: el nombre es DD-MM-YYYY, así que ordenar por nombre no sirve.
@@ -78,6 +84,7 @@ for (const fileName of fileNames) {
     planning: sections.some((s) => /^Planificación de la semana/i.test(s)),
     retrospective: sections.some((s) => /^Retrospectiva/i.test(s)),
     riskReview: sections.some((s) => /^Revisión de riesgos/i.test(s)),
+    zeroWeeksDeclared: [...text.matchAll(ZERO_WEEK)].map((z) => `S${z[1]}`),
     hours,
     hoursText: hoursLine.trim().slice(0, 80),
     decisions: (text.match(/decisi[óo]n(?:es)? del autor/gi) || []).length,
@@ -92,6 +99,19 @@ for (const fileName of fileNames) {
 }
 
 const anomalies = [];
+// Solo cuentan las semanas a cero declaradas desde un sprint anterior (o desde una
+// pausa); la que se declara desde el propio sprint se avisa y no exime de nada.
+const zeroWeeks = new Set();
+for (const e of entries) {
+  const own = /^S(\d+)$/.exec(e.sprint || "");
+  for (const declared of e.zeroWeeksDeclared) {
+    if (own && Number(own[1]) >= Number(declared.slice(1)))
+      anomalies.push(
+        `${e.file}: ${declared} declarada a cero cuando ya había empezado; cuenta como parón (R10), no como semana a cero`,
+      );
+    else zeroWeeks.add(declared);
+  }
+}
 let previous = null;
 for (const e of entries) {
   if (e.writtenWeekday && e.writtenWeekday.toLowerCase() !== e.computedWeekday) {
@@ -110,18 +130,24 @@ for (const e of entries) {
     anomalies.push(`${e.file}: horas sin rellenar (${e.hoursText || "sin línea"})`);
   if (e.hoursLineCount !== 1)
     anomalies.push(`${e.file}: ${e.hoursLineCount} líneas de «Horas invertidas»`);
-  if (e.computedWeekday === "domingo" && !e.retrospective && e.date >= "2026-10-05")
+  if (
+    e.computedWeekday === "domingo" &&
+    !e.retrospective &&
+    e.date >= "2026-10-05" &&
+    !zeroWeeks.has(e.sprint)
+  )
     anomalies.push(`${e.file}: entrada de domingo sin «Retrospectiva»`);
   if (e.words > MAX_WORDS && e.date >= MAX_WORDS_SINCE)
     anomalies.push(`${e.file}: ${e.words} palabras, por encima del límite de ${MAX_WORDS}`);
 }
 // La planificación vale cualquier día de la semana (regla del autor del 15-10-2026):
-// solo se avisa cuando un sprint ya cerrado no la tiene en ninguna de sus entradas.
+// solo se avisa cuando un sprint ya cerrado no la tiene en ninguna de sus entradas,
+// salvo que se hubiera declarado a cero.
 const sprintPlanning = new Map();
 for (const e of entries) {
   if (e.date < "2026-10-05" || !/^S[0-9]+$/.test(e.sprint || "")) continue;
   const s = sprintPlanning.get(e.sprint) || { planned: false, end: info(e.date).sprintEnd };
-  s.planned = s.planned || e.planning;
+  s.planned = s.planned || e.planning || zeroWeeks.has(e.sprint);
   sprintPlanning.set(e.sprint, s);
 }
 for (const [sprint, s] of sprintPlanning) {
@@ -142,6 +168,7 @@ console.log(
       entries,
       hoursBySprint: sumBy("sprint"),
       hoursByPhase: sumBy("phase"),
+      zeroWeeks: [...zeroWeeks],
       lastEntry: entries.length ? entries[entries.length - 1].file : null,
       anomalies,
     },

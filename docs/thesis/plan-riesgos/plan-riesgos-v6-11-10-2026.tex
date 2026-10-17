@@ -4,8 +4,8 @@
 % Documento independiente de la memoria: la v0 es el cap. 7 y no se toca
 % (línea base); cada versión nueva es un documento completo (ver README.md).
 % REGLA DE CONTENIDO: las tablas reproducen LITERALMENTE las de la v5
-% (24-08-2026), salvo los cambios que documenta la NOTA: estados de R10 y
-% R13, medidas de R3, R12 y R14, indicador de R14 y el riesgo nuevo R15.
+% (24-08-2026), salvo los cambios que documenta la NOTA: estados de R10, R13
+% y R14, medidas de R3, R12 y R14, indicador de R14 y el riesgo nuevo R15.
 % Origen: seguimiento del 11-10-2026 (S7), auditado contra el dev-journal.
 % Diferencias de forma respecto al capítulo: sin \ref (se escribe el número
 % de capítulo) y sin \ac (el acrónimo directamente), porque este documento
@@ -43,7 +43,11 @@
   Estado: \textbf{Resuelto}; probabilidad e impacto, sin cambios.
   \item \textbf{R3 (memoria relegada)}: medida nueva, la auditoría semanal de la coherencia documental asistida por IA (decisión del autor del 10-10-2026).
   \item \textbf{R12 (ciclos de revisión con el tutor)}: medida nueva, la entrega quincenal de la memoria vigente al tutor (decisión del autor del 03-10-2026; primera entrega, el 05-10).
-  \item \textbf{R14 (verificación de seguridad insuficiente)}: medida modificada, con el triaje semanal de las propuestas de Dependabot (que deja de proponer parches con cinco abiertas, como ocurrió del 16-08 al 03-10) y las alertas de seguridad activadas el 11-10-2026; e indicador precisado, para distinguir las vulnerabilidades de producción, que deben resolverse dentro del \eng{sprint}, de las de desarrollo, que no cortan la integración continua pero no pueden pasar del \eng{sprint} siguiente.
+  \item \textbf{R14 (verificación de seguridad insuficiente)}: la revisión de S7 encontró que la parte de Dependabot de la medida no se estaba aplicando: del 16-08 al 03-10 no propuso ningún parche, porque con cinco propuestas abiertas sin triar deja de proponer, y las alertas de seguridad, que el plan daba por activas, estuvieron desactivadas hasta el 11-10-2026.
+  Además, el indicador clave saltó al cierre de S7: siete vulnerabilidades altas en dependencias de desarrollo sin resolver (todas por la versión de ESLint), que la auditoría de la integración continua no mira porque solo cubre las de producción.
+  Medida modificada, con el triaje semanal de las propuestas de Dependabot y las alertas de seguridad activadas; e indicador precisado, para distinguir las vulnerabilidades de producción, que deben resolverse dentro del \eng{sprint}, de las de desarrollo, que no cortan la integración continua pero no pueden pasar del \eng{sprint} siguiente.
+  Probabilidad e impacto, sin cambios.
+  Estado: \textbf{Activo}, con plazo de resolución al cierre de S8.
   \item \textbf{R15, riesgo nuevo: cuota y coste de la IA de desarrollo} (P2 \(\times\) I2 = 4, significativo), identificado cuando el autor advirtió que el primer diseño de la auditoría semanal habría agotado la cuota de la herramienta.
   \item El resto de riesgos: sin cambios (revisión completa de S7, auditada contra el diario de desarrollo, en \path{../seguimiento-riesgos/2026-10-11-S7.tex}).
 \end{enumerate}
@@ -62,7 +66,7 @@ Escalas de valoración (matriz probabilidad--impacto del cap.~7):
 \end{itemize}
 
 % Contenido literal de la tabla de la v5, con los cambios que documenta la
-% NOTA (estados de R10 y R13, indicador de R14 y la fila nueva de R15).
+% NOTA (estados de R10, R13 y R14, indicador de R14 y la fila nueva de R15).
 % \footnotesize como en la v0. Anchos para 16 cm:
 % 12,15 cm de columnas p{} + ~0,8 cm de las tres columnas c
 % + separadores/filetes con \tabcolsep en 4 pt.
@@ -114,7 +118,7 @@ R12 & \textbf{Ciclos de revisión con el tutor.} La memoria depende de revisione
 
 R13 & \textbf{Fricción imprevista de la cadena de herramientas.} Las fricciones ya conocidas del entorno Windows (compilación LaTeX sin Perl, enlaces simbólicos de pnpm) están resueltas y documentadas: son problemas gestionados, no riesgos. El riesgo es que la combinación Windows/Docker/Expo/MiKTeX produzca incompatibilidades nuevas que consuman capacidad sin aportar valor. & 2 & 1 & 2 & Mod. & Más de una hora de una misma sesión perdida en un problema de entorno ajeno al producto y sin receta previa. & — & \textbf{Resuelto} (materializado el 03-10-2026). \\ \hline
 
-R14 & \textbf{Verificación de seguridad insuficiente.} El objetivo de seguridad (capítulo 3) compromete pruebas automatizadas de los casos de abuso, pero sin un mecanismo que lo fuerce historia a historia la cobertura depende de la disciplina manual de cada revisión, y las vulnerabilidades de las dependencias no se vigilaban de forma automática. & 2 & 2 & 4 & Sign. & Una historia que toca autenticación, autorización o datos personales se cierra sin casos de abuso en sus pruebas, o la auditoría de dependencias reporta una vulnerabilidad de severidad alta sin resolver: las de producción, dentro del \eng{sprint}; las de desarrollo, al cierre del \eng{sprint} siguiente. & El medible de seguridad del capítulo 3 se verifica al cierre: casos de abuso automatizados en el 100\,\% de los endpoints privados y auditoría de dependencias en verde. & Identificado. \\ \hline
+R14 & \textbf{Verificación de seguridad insuficiente.} El objetivo de seguridad (capítulo 3) compromete pruebas automatizadas de los casos de abuso, pero sin un mecanismo que lo fuerce historia a historia la cobertura depende de la disciplina manual de cada revisión, y las vulnerabilidades de las dependencias no se vigilaban de forma automática. & 2 & 2 & 4 & Sign. & Una historia que toca autenticación, autorización o datos personales se cierra sin casos de abuso en sus pruebas, o la auditoría de dependencias reporta una vulnerabilidad de severidad alta sin resolver: las de producción, dentro del \eng{sprint}; las de desarrollo, al cierre del \eng{sprint} siguiente. & El medible de seguridad del capítulo 3 se verifica al cierre: casos de abuso automatizados en el 100\,\% de los endpoints privados y auditoría de dependencias en verde. & \textbf{Activo} (indicador saltado el 11-10-2026: siete vulnerabilidades altas de desarrollo sin resolver; plazo, el cierre de S8). \\ \hline
 
 R15 & \textbf{Cuota y coste de la IA de desarrollo.} El método de trabajo depende de una herramienta de IA por suscripción con cuota de uso semanal: agotarla a mitad de \eng{sprint} frena el trabajo asistido, y un cambio de precio o de condiciones afecta al presupuesto (capítulo 14). & 2 & 2 & 4 & Sign. & La cuota semanal se agota antes del cierre del \eng{sprint}, o una tarea recurrente consume bastante más de lo previsto en su diseño. & — & Identificado. \\ \hline
 

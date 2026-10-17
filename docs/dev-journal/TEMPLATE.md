@@ -15,7 +15,7 @@
      van como lista de comprobación, sin puntos (solo puntúan las historias).
      Las casillas se marcan [x] a lo largo de la semana. -->
 
-- **Capacidad declarada:** N h (motivo, si se aparta de la media de la fase)
+- **Capacidad declarada:** N h (motivo, si se aparta de la media de la fase; una semana a cero se declara antes de que empiece, en la entrada anterior, según el README)
 - **Historias** (orden del backlog):
   - [ ] US-xx — título (N SP)
     - [ ] subtarea

@@ -8,7 +8,7 @@ Este archivo es la referencia que usa el comando y la guía para la persona: el 
 
 ## Cómo se usa
 
-**Cuándo.** Cada domingo de sprint (no en las pausas), al terminar la sesión: **después** de `/journal` con la retrospectiva y del seguimiento de riesgos, para que el informe audite el sprint cerrado y no reporte como ausente lo que aún no estaba escrito. Decisión del autor del 10-10-2026; la primera ejecución fue el domingo 11-10-2026. Forma parte del método de trabajo: lo documentan el cap. 10 de la memoria («Revisión semanal de la coherencia documental») y el preliminar «Empleo de IA».
+**Cuándo.** Cada domingo de sprint (no en las pausas ni en una semana declarada a cero, ver el README del diario), al terminar la sesión: **después** de `/journal` con la retrospectiva y del seguimiento de riesgos, para que el informe audite el sprint cerrado y no reporte como ausente lo que aún no estaba escrito. Decisión del autor del 10-10-2026; la primera ejecución fue el domingo 11-10-2026. Forma parte del método de trabajo: lo documentan el cap. 10 de la memoria («Revisión semanal de la coherencia documental») y el preliminar «Empleo de IA».
 
 **Cómo lanzarlo.** Desde Git Bash, en la raíz del repositorio, con Claude ya autenticado y sin otra sesión de Claude abierta sobre el repo:
 
