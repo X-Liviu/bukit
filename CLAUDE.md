@@ -75,7 +75,7 @@ Antes de editar `docs/thesis/`, leer `docs/thesis/README.md` (convenciones compl
 - Es un producto final: nada de andamiaje temporal («pendiente», «por ahora», «se describirá»); lo pendiente se marca solo con `\todonote`.
 - Una frase por línea; términos en inglés con `\eng{}`; acrónimos con `\ac{}`; castellano llano, sin jerga metodológica.
 - Diagramas solo UML 2.5.
-- Tras cualquier cambio, compilar con exit 0 y sin avisos nuevos. Línea base: 4 «Infinite glue shrinkage» y 18 «faked small caps».
+- Tras cualquier cambio, compilar con exit 0 y sin avisos nuevos. Línea base: 5 «Infinite glue shrinkage» y 18 «faked small caps».
 
 ## Método de trabajo
 

@@ -183,6 +183,7 @@ La cadencia mínima de revisión es proporcional a la severidad:
 
 Además de la cadencia fija, cualquier riesgo se revisa de inmediato si se observa su indicador clave o si aparece un riesgo nuevo, sin esperar a la siguiente retrospectiva.
 Este componente dirigido por eventos es coherente con la filosofía general del proyecto (reaccionar a los hechos en lugar de sondear por calendario) y evita que un disparador observado un martes espere hasta el domingo.
+Una semana declarada a cero de antemano (capítulo \ref{ch:tareas}) no cierra ningún \eng{sprint} y no tiene revisión: lo que tocara por cadencia se revisa en la siguiente.
 
 \subsection{Registro de las revisiones}
 \label{sec:riesgos-registro-revisiones}
@@ -195,6 +196,7 @@ En esta memoria, en cambio, el único registro que crece durante el proyecto es 
 Separar ambos registros —los documentos exhaustivos de seguimiento en el repositorio, la tabla de cambios en la memoria— mantiene esta memoria legible (señal) sin perder la trazabilidad fina, que queda versionada junto al resto de la documentación del proyecto.
 
 Cada riesgo está en todo momento en uno de estos estados: \emph{identificado} (consta en el registro sin que su indicador clave haya saltado), \emph{sin novedad} (revisado sin cambios), \emph{activo} (su indicador clave ha saltado y está bajo vigilancia reforzada), \emph{materializado} (ha ocurrido y su contingencia está en marcha), \emph{resuelto} (se materializó y su contingencia ya lo ha superado) y \emph{cerrado} (ha desaparecido del proyecto).
+Un riesgo activo cuyo indicador se despeja sin haberse materializado vuelve a identificado, y el registro anota el episodio.
 En la tabla de cambios (tabla \ref{tab:seguimiento-riesgos}) no aparece nunca «sin novedad»: ese estado solo consta en los documentos de seguimiento, porque no supone un cambio del plan.
 
 \subsection{Versionado del plan de riesgos}
@@ -244,5 +246,12 @@ La tabla \ref{tab:seguimiento-riesgos} registra cada cambio junto con la versió
     11/10/2026 & S7 & R12 & Identificado & v6 & Mitigación ampliada: entrega quincenal de la versión vigente de la memoria al tutor (días 1 y 15 de cada mes), con un resumen de cambios. \\
     11/10/2026 & S7 & R14 & Activo & v6 & Indicador clave saltado: siete vulnerabilidades altas en dependencias de desarrollo sin resolver al cierre del \eng{sprint}, fuera de la auditoría de la integración continua, que solo cubre producción; P e I sin cambio. Mitigación ajustada: triaje semanal de Dependabot y alertas de seguridad activadas; indicador precisado (vulnerabilidades de producción, dentro del \eng{sprint}; de desarrollo, al cierre del siguiente). \\
     11/10/2026 & S7 & R15 & Identificado & v6 & Riesgo nuevo (cuota y coste de la \ac{IA} de desarrollo, P2 $\times$ I2, significativo), identificado cuando el primer diseño de la auditoría semanal amenazó con agotar la cuota de la herramienta. \\
+    18/10/2026 & S8 & R10 & Resuelto & v7 & Indicador y contingencia redefinidos: una semana de \eng{sprint} sin poder trabajar por causa sobrevenida (no declarada a cero de antemano) y, como primer escalón de la contingencia, el modo mínimo (una sesión de al menos 1 h de diario y memoria) antes de la pausa formal; P e I sin cambio. \\
+    18/10/2026 & S8 & R8 & Resuelto & v7 & Mitigación ampliada: las semanas sin disponibilidad conocidas de antemano se declaran a cero antes de empezar y quedan fuera de la comparación de horas. \\
+    18/10/2026 & S8 & R1 & Identificado & v7 & Indicador reescrito («tras la planificación semanal»), porque la planificación vale cualquier día de la semana desde el 15/10/2026. \\
+    18/10/2026 & S8 & R3 & Identificado & v7 & Mitigación ajustada: el informe de la auditoría semanal lo aplica el asistente en la semana siguiente y el autor solo decide. \\
+    18/10/2026 & S8 & R12 & Identificado & v7 & Mitigación ajustada: se retiran la entrega quincenal y el plazo orientativo de respuesta; entregas según la disponibilidad de ambos (acordado con el tutor el 15/10/2026); indicador sin cambio. \\
+    18/10/2026 & S8 & R11 & Identificado & v7 & Indicador clave saltado el 15/10/2026 (tres sesiones consecutivas sin subir los cambios al remoto) y despejado el mismo día; P e I sin cambio. \\
+    18/10/2026 & S8 & R14 & Identificado & v7 & Indicador despejado el 15/10/2026 (ESLint 9.39.5, auditoría de dependencias a cero en producción y desarrollo), dentro del plazo: vuelve de activo a identificado. \\
 \end{longtable}
 \endgroup
