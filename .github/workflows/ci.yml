@@ -4,8 +4,8 @@
 # Estrategia de fallo rápido del cap. 10, ahora por jobs: lint (barrera
 # estática barata) → typecheck → test, y la build de la imagen Docker
 # de la API en paralelo desde que lint aprueba (no depende de tipos ni
-# pruebas). Las E2E (Playwright) entrarán como última barrera cuando haya
-# aplicación que arrancar.
+# pruebas). Las E2E (Playwright) entrarán como última barrera con EP12 (F4);
+# la web existe desde la US-08 y su prueba de humo corre en local.
 #
 # Instalación reutilizada = caché del store de pnpm (setup-node cache:
 # pnpm): cada job instala desde el store cacheado en segundos (solo

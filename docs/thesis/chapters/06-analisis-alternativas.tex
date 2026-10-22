@@ -126,7 +126,13 @@ El cambio está en el estado de servidor.
 En TrackBites la caché de datos remotos se gestionaba a mano con Redux Toolkit, podando el árbol de estado local para evitar recargas; funcionó, pero a costa de mucho código repetitivo de carga, error y caché.
 Para un producto cuyo centro es un \eng{feed} con desplazamiento infinito, esa gestión manual se descarta en favor de TanStack Query, que resuelve de serie la caché, los reintentos, la invalidación y la paginación infinita del estado de servidor \parencite{tanstack-query-docs}.
 La biblioteca de estado global de interfaz (Redux Toolkit con Reselect, en consideración por la experiencia previa) se decide al montar el cliente web, con el primer estado global real como caso de prueba.
-Por el mismo principio, el andamiaje de las aplicaciones web y móvil se genera con sus herramientas oficiales en el momento de abordarlas, de modo que la configuración nace alineada con la versión vigente de cada herramienta.
+Por el mismo principio, el andamiaje de cada aplicación se genera con su herramienta oficial en el momento de abordarla, de modo que la configuración nace alineada con la versión vigente, y se reduce a lo que el proyecto usa: la plantilla de Vite del cliente web traía un analizador estático y una versión de TypeScript distintos de los del repositorio, además de estilos y recursos de muestra, y nada de eso entró.
+
+El enrutado del cliente web se resuelve con React Router \parencite{react-router-docs}, la biblioteca de referencia para una \ac{SPA} con React: las cuatro pestañas del producto son rutas declaradas y anidadas bajo un armazón común, y cada funcionalidad aporta las suyas (capítulo \ref{ch:diseno}).
+Se descartó TanStack Router \parencite{tanstack-router-docs}, de la misma familia que TanStack Query: su ventaja, rutas y parámetros tipados de punta a punta, exige un generador de rutas o un andamiaje mayor, y las rutas con parámetros previstas en el producto (una lista, un perfil) son pocas y simples, insuficientes para justificarlo.
+
+La capa visual del cliente web también se decide al montarlo, en la historia que fija su base (US-19, capítulo \ref{ch:tareas}): una guía de marca mínima, las variables de diseño compartidas en \texttt{packages/ui-core} y, en la propia aplicación web, las bibliotecas de animación y de desplazamiento suave, que dependen del navegador.
+Las candidatas identificadas son GSAP para la animación por línea de tiempo \parencite{gsap-docs} y Lenis para el desplazamiento suave \parencite{lenis-docs}, frente a animar únicamente con las transiciones nativas del navegador y usar su desplazamiento por defecto; el criterio que cierra la decisión es que el movimiento no bloquee la interacción ni penalice el \eng{feed} con desplazamiento infinito (RNF-09).
 
 \section{Cliente móvil: React Native con Expo}
 \label{sec:alt-movil}
@@ -233,7 +239,11 @@ La tabla \ref{tab:resumen-alternativas} condensa el capítulo: qué se elige, fr
   \addlinespace
   Cliente web & React + Vite + TanStack Query & Caché manual con Redux (TrackBites) & Decidida \\
   \addlinespace
+  Enrutado del cliente web & React Router & TanStack Router & Decidida \\
+  \addlinespace
   Estado global de interfaz & Pendiente (Redux Toolkit + Reselect en consideración) & — & Abierta \\
+  \addlinespace
+  Capa visual del cliente web & Pendiente (GSAP y Lenis en consideración) & Transiciones y desplazamiento nativos del navegador & Abierta \\
   \addlinespace
   Cliente móvil & React Native + Expo & Desarrollo nativo por plataforma* & Decidida \\
   \addlinespace

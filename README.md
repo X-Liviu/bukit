@@ -9,7 +9,7 @@ La red social para cumplir tus objetivos. Monorepo del TFG (Grado en Ing. Inform
 ```
 bukit/
 ├── apps/
-│   ├── web/            React + Vite + TS            (placeholder — create-vite)
+│   ├── web/            React + Vite + React Router + TS  (las cuatro pestañas, US-08)
 │   ├── mobile/         React Native + Expo + TS     (placeholder — create-expo)
 │   └── api/            Node + Prisma + TS
 ├── packages/
@@ -21,8 +21,9 @@ bukit/
 └── docker-compose.yml  Postgres local (dev/tests/CI)
 ```
 
-**Stack:** pnpm · TypeScript estricto (paquetes sin compilar/JIT) · PostgreSQL + PostGIS +
-pgvector · Prisma · Docker (dev) / Neon EU (prod).
+**Stack:** pnpm · TypeScript estricto (paquetes sin compilar/JIT) · React + Vite + React Router +
+TanStack Query (web) · Express 5 (API) · PostgreSQL + PostGIS + pgvector · Prisma · Docker (dev) /
+Neon EU (prod).
 
 ## Requisitos
 
@@ -46,14 +47,15 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 
 ## Scripts (raíz)
 
-| Comando                                               | Qué hace                                                                                         |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `pnpm lint` / `pnpm format`                           | ESLint / Prettier en todo el repo                                                                |
-| `pnpm typecheck`                                      | `tsc --noEmit` en cada paquete                                                                   |
-| `pnpm test` / `pnpm test:e2e`                         | Vitest en todos los paquetes (la API necesita el Postgres local levantado) / Playwright en `e2e` |
-| `pnpm db:up` / `pnpm db:down`                         | arranca / para Postgres (Docker)                                                                 |
-| `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos                                                    |
-| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                                                                             |
+| Comando                                               | Qué hace                                                                                                          |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `pnpm lint` / `pnpm format`                           | ESLint / Prettier en todo el repo                                                                                 |
+| `pnpm typecheck`                                      | `tsc --noEmit` en cada paquete                                                                                    |
+| `pnpm test` / `pnpm test:e2e`                         | Vitest en todos los paquetes (la API necesita el Postgres local levantado) / Playwright en `e2e` (arranca la web) |
+| `pnpm web:dev`                                        | servidor de desarrollo de la web en http://localhost:5180 (puerto fijo y estricto)                                |
+| `pnpm db:up` / `pnpm db:down`                         | arranca / para Postgres (Docker)                                                                                  |
+| `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos                                                                     |
+| `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                                                                                              |
 
 ## Decisiones de arquitectura tomadas
 
@@ -66,5 +68,7 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 5. Integración y despliegue continuos: **GitHub Actions** (lint → typecheck → pruebas, imagen
    Docker en paralelo y migraciones de producción solo en `main`) y **Render** para la API
    (plan gratuito, Fráncfort, despliega solo con la CI en verde); detalle en `apps/api/README.md`.
+6. API y web organizadas **por funcionalidad** (una carpeta por funcionalidad o pestaña, lo común
+   aparte y sin depender de ellas); detalle en `apps/api/README.md` y `apps/web/README.md`.
 
-Pendiente: scaffolding de `apps/web` y `apps/mobile`.
+Pendiente: scaffolding de `apps/mobile`.

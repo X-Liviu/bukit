@@ -28,6 +28,16 @@ Dos convenciones completan el diseño.
 Un \eng{middleware} que comparten varias rutas se declara una sola vez en un enrutador intermedio que las agrupa, como la primera capa de limitación de peticiones del alta y del inicio de sesión (sección \ref{sec:diseno-limitacion}), y cada enrutador se crea para cada instancia de la aplicación, porque algunos guardan estado.
 El cuerpo de las peticiones se lee una sola vez para toda la \ac{API}, con el mismo tope de tamaño y el mismo tratamiento de errores en todas sus rutas.
 
+\section{Organización del código del cliente web}
+\label{sec:diseno-organizacion-web}
+
+El cliente web sigue las mismas reglas, trasladadas al navegador: cada pestaña del producto es una funcionalidad con su carpeta, sus rutas y sus páginas, y lo común —el armazón con la barra de pestañas, la página de ruta desconocida y la caché del estado de servidor— vive aparte y no depende de ninguna.
+Cada funcionalidad declara su pestaña y sus rutas, y un único punto de composición las reúne bajo el armazón, como la factoría de la aplicación de la \ac{API} monta los enrutadores de cada funcionalidad; una funcionalidad puede usar los \eng{hooks} de otra, nunca sus páginas ni sus rutas.
+Las páginas solo componen: llaman a los \eng{hooks} de su funcionalidad y pintan, de modo que las reglas del producto quedan en esos \eng{hooks} y en el paquete compartido de lógica de interfaz.
+Lo que guarda estado se crea por instancia y no en el módulo: el enrutador lo crea quien monta la aplicación (el del navegador en el arranque, uno en memoria en las pruebas) y la caché de TanStack Query nace con cada instancia, por la misma razón por la que cada instancia de la \ac{API} estrena sus enrutadores.
+Las pruebas montan la aplicación completa en una ruta y comprueban lo que vería la persona usuaria: la redirección de la raíz al inicio, las cuatro pestañas en su orden, la pestaña activa y la página de ruta desconocida sin salir del armazón.
+Se descartó, como en la \ac{API}, la organización por tipo de pieza (componentes, páginas y \eng{hooks} en carpetas separadas): cada historia de listas y de publicaciones repartiría sus piezas por tres carpetas.
+
 \section{Modelo de datos}
 \label{sec:diseno-modelo}
 

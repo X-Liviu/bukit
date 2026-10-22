@@ -1,7 +1,7 @@
 # Recorta el contexto de build de la imagen de la API: fuera todo lo que la
 # imagen no necesita (node_modules se instalan dentro; docs y placeholders
-# pesan y no viajan). OJO: los package.json de e2e y packages/* SÍ entran
-# (el Dockerfile los copia para validar el lockfile congelado).
+# pesan y no viajan). OJO: los package.json de e2e, packages/* y apps/web SÍ
+# entran (el Dockerfile los copia para validar el lockfile congelado).
 node_modules
 **/node_modules
 **/dist
@@ -12,7 +12,9 @@ node_modules
 .vscode
 docs
 graphify-out
-apps/web
+# De la web solo viaja su manifiesto (US-08): el código y las pruebas, no.
+apps/web/*
+!apps/web/package.json
 apps/mobile
 e2e/tests
 e2e/playwright.config.ts

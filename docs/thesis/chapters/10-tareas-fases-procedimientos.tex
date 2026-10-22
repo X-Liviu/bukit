@@ -178,7 +178,7 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     \midrule
     EP01 & Fundaciones técnicas e integración continua      & Imprescindible & 8  & F1 \\
     EP02 & Cuentas y autenticación                          & Imprescindible & 13 & F1--F2 \\
-    EP03 & Andamiaje del cliente web y sesión               & Imprescindible & 8  & F2 \\
+    EP03 & Andamiaje del cliente web y sesión               & Imprescindible & 11 & F2 \\
     EP04 & Listas y metas                                   & Imprescindible & 13 & F2 \\
     EP05 & Publicaciones ligadas a listas                   & Imprescindible & 13 & F2 \\
     EP06 & Grafo social y \eng{feed} de seguidos            & Imprescindible & 10 & F3 \\
@@ -193,6 +193,7 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
     EP15 & Memoria y gestión del proyecto (transversal)     & Imprescindible & 21 & Todas \\
     EP16 & Subida y reproducción de vídeo (servicio gestionado) & Opcional   & 8  & --- \\
     EP17 & Publicaciones patrocinadas simuladas             & Opcional       & 5  & --- \\
+    EP18 & Pulido visual del cliente web                    & Deseable       & 8  & F2--F4 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -200,11 +201,18 @@ Esta clasificación traduce el alcance del capítulo \ref{ch:objetivos} a una re
 Las estimaciones de la tabla \ref{tab:backlog-epicas} son deliberadamente gruesas y no se someten a la escala de historias de la sección \ref{sec:estimacion}: anticipan la suma de los puntos de las historias que cada épica contendrá, y solo estas últimas se estiman con la escala declarada.
 Siguiendo la elaboración progresiva propia de los métodos ágiles, solo se detallan en historias las épicas de la fase inminente, y el resto se refina justo antes de abordarse, con el conocimiento acumulado hasta entonces.
 La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fundaciones (EP01--EP03), ya refinado: EP01 y las dos primeras historias de EP02 (US-04 y US-05) forman la fase F1; las dos últimas (US-06 y US-07) pasaron a F2, que continúa con EP03.
+EP03 incorporó el 18/10/2026 la historia US-19, que fija la base visual del cliente web justo después del andamiaje (US-08) y antes de construir las pantallas de EP04 y EP05; conserva el siguiente identificador libre, porque los identificadores no se reordenan, y la tabla la lista en su posición del \eng{backlog}.
+
+EP18, añadida el mismo día, es la única épica deseable del \eng{backlog}: el pulido visual del cliente web.
+Decidir cómo debe verse la web es un trabajo continuo que no cabe en una semana ni en una historia: las ideas se anotan en el diario de desarrollo y se concretan en US-19, sin ocupar el límite de trabajo en curso.
+Sus historias de implementación se refinan al cierre de F3 y entran en F4 solo si la velocidad lo permite (sección \ref{sec:fases-tension}); la base técnica de la que dependen (US-19) está comprometida dentro de EP03, porque sin ella no se construyen las pantallas de EP04 y EP05.
+
+La épica transversal EP15 incluye, además de la memoria y la gestión del proyecto, la preparación de la defensa (presentación y ensayo), que arranca en abril de \thesisYear{} (S32) en paralelo con F4 y continúa hasta la convocatoria, dentro de sus 21 puntos (capítulo \ref{ch:gantt-tfg}).
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption{Desglose en historias de las épicas de F1 y F2 (EP01--EP05), 55 puntos.}
+  \caption{Desglose en historias de las épicas de F1 y F2 (EP01--EP05), 58 puntos.}
   \label{tab:backlog-f1}
   \begin{tabular}{clcc}
     \toprule
@@ -218,6 +226,7 @@ La tabla \ref{tab:backlog-f1} recoge el desglose completo de las épicas de fund
     US-06 & Rotación y revocación de los \eng{tokens} de refresco     & EP02 & 5 \\
     US-07 & Doble capa de limitación de peticiones                    & EP02 & 2 \\
     US-08 & Andamiaje web con enrutado de las cuatro pestañas         & EP03 & 3 \\
+    US-19 & Base visual del cliente web: marca, variables de diseño y movimiento & EP03 & 3 \\
     US-09 & Cliente \acs{API} tipado y gestión de sesión en la web    & EP03 & 3 \\
     US-10 & Pantallas de registro e inicio de sesión                  & EP03 & 2 \\
     US-11 & Crear y consultar listas de metas, con el límite de tres en curso & EP04 & 5 \\
@@ -255,13 +264,15 @@ Durante la ejecución, el calendario se re-basó una vez, el 03/10/2026.
 F1 cerró en su fecha prevista (30/08/2026) con 14 de sus 21 puntos entregados, y las dos historias de EP02 que quedaron pendientes (US-06 y US-07) pasaron al inicio de F2.
 La primera pausa, prevista hasta el 20/09/2026, se amplió hasta el 04/10/2026 porque el traslado y la instalación en la estancia Erasmus se alargaron más de lo previsto.
 En consecuencia, F2 arrancó el 05/10/2026 con dieciséis \eng{sprints} en lugar de dieciocho (80 horas en lugar de 90), la numeración de los \eng{sprints} posteriores se desplazó dos posiciones y la fecha de cierre del desarrollo se mantuvo.
+El 18/10/2026 F2 incorporó además la historia US-19 (3 puntos), con lo que proyecta 44 puntos frente a los 40 de su capacidad nominal a 2,0 horas por punto.
+La diferencia se asume sin mover historias si la recalibración de la equivalencia al cierre de S9 lo confirma; si no, la cola de EP05 pasaría al inicio de F3, como hicieron US-06 y US-07 al cierre de F1.
 El balance de F1 frente a lo previsto se recoge en el capítulo \ref{ch:gantt-tfg}.
 
 \begin{table}[htbp]
   \centering
   \small
   \setlength{\tabcolsep}{4pt}
-  \caption{Fases del desarrollo con su capacidad estimada (la épica transversal EP15 se reparte entre todas).}
+  \caption{Fases del desarrollo con su capacidad estimada (la épica transversal EP15 se reparte entre todas; EP18, deseable, entra en F4 solo si la velocidad lo permite).}
   \label{tab:fases}
   \begin{tabular}{clllc}
     \toprule
@@ -305,10 +316,11 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
     S7 & 05/10 -- 11/10 & Rotación y revocación de \eng{tokens} (EP02)               & 5 \\
     S8 & 12/10 -- 18/10 & Limitación de peticiones (EP02)                           & 5 \\
     S9 & 19/10 -- 25/10 & Andamiaje web con las cuatro pestañas (EP03)              & 5 \\
-    S10 & 26/10 -- 01/11 & Cliente \acs{API} tipado y sesión en la web (EP03)       & 5 \\
-    S11 & 02/11 -- 08/11 & Registro e inicio de sesión en la web (EP03)            & 5 \\
-    S12--S16 & 09/11 -- 13/12 & Listas y metas (EP04)                              & 25 \\
-    S17--S22 & 14/12 -- 24/01 & Publicaciones ligadas a listas (EP05); \emph{cierre de F2} & 30 \\
+    S10 & 26/10 -- 01/11 & Base visual del cliente web (EP03)                       & 5 \\
+    S11 & 02/11 -- 08/11 & Cliente \acs{API} tipado y sesión en la web (EP03)       & 5 \\
+    S12 & 09/11 -- 15/11 & Registro e inicio de sesión en la web (EP03)            & 5 \\
+    S13--S17 & 16/11 -- 20/12 & Listas y metas (EP04)                              & 25 \\
+    S18--S22 & 21/12 -- 24/01 & Publicaciones ligadas a listas (EP05); \emph{cierre de F2} & 25 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -316,10 +328,10 @@ Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se de
 \subsection{Encaje del plan y margen declarado}
 \label{sec:fases-tension}
 
-El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria y la parte final de la épica transversal EP15.
-El inventario comprometido vigente suma 146 puntos: los 138 iniciales más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida.
-Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (353 horas tras las re-bases de F1 y de la primera pausa), los 146 puntos comprometidos suponen unas 292 horas — una holgura nominal en torno al 17\,\%.
-Esa cifra corresponde al plan completo; tras el cierre de F1 (48 horas previstas, unas 17 trabajadas y 14 de sus 21 puntos entregados), la holgura útil se mide sobre lo que queda: los 132 puntos pendientes suponen unas 264 horas frente a las 305 de capacidad de F2 a F4, es decir, una holgura en torno al 13\,\%.
+El plan inicial encajaba al límite: el inventario comprometido (prioridad imprescindible) sumaba 138 puntos, y la capacidad nominal original (375 horas, a la hipótesis inicial de 2,7 horas por punto) daba unos 139 — sin holgura interna, con F2 ligeramente sobrecargada y F4 con excedente deliberado, reservado para el cierre de la memoria, la preparación de la defensa y la parte final de la épica transversal EP15.
+El inventario comprometido vigente suma 149 puntos: los 138 iniciales, más EP10 (afinidad), reclasificada de deseable a imprescindible el 24/08/2026 con fase asignada (F3, junto al mapa que la consume) porque el criterio de éxito del mapa de descubrimiento (capítulo \ref{ch:objetivos}) descansa en el cálculo de afinidad de esa épica, y mantenerla fuera del compromiso dejaba un criterio de éxito comprometido colgando de una épica no comprometida, y más los 3 puntos de US-19, añadida a EP03 el 18/10/2026 porque la base visual del cliente web es condición de las pantallas de EP04 y EP05 y no podía quedar en una épica deseable.
+Ese encaje al límite fue la primera observación registrada del riesgo R2, y la primera recalibración con datos reales (cierre de S3) lo transformó: con la equivalencia en 2,0 horas por punto y la capacidad re-basada (353 horas tras las re-bases de F1 y de la primera pausa), los 149 puntos comprometidos suponen unas 298 horas — una holgura nominal en torno al 16\,\%.
+Esa cifra corresponde al plan completo; tras el cierre de F1 (48 horas previstas, unas 17 trabajadas y 14 de sus 21 puntos entregados), la holgura útil se mide sobre lo que queda: los 135 puntos pendientes suponen unas 270 horas frente a las 305 de capacidad de F2 a F4, es decir, una holgura en torno al 11\,\%.
 La holgura se declara con la misma cautela con la que antes se declaró su ausencia: nace de una equivalencia medida solo sobre historias de infraestructura muy asistidas por \ac{IA}, y las épicas de mapa, tiempo real e \ac{IA} pueden devolverla a la realidad.
 La decisión consciente sigue siendo triple: se mantiene el 16/05/\thesisYear{} como fecha objetivo de cierre del desarrollo, el margen real es el tramo desde esa fecha hasta el depósito de la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva (cronograma completo en el capítulo \ref{ch:gantt-tfg}), y las prioridades deseables y opcionales solo entran si la velocidad real consolida esa holgura.
 

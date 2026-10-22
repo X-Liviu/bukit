@@ -19,6 +19,7 @@ const readJson = (p) => {
 const packageFiles = [
   "package.json",
   "apps/api/package.json",
+  "apps/web/package.json",
   "packages/core/package.json",
   "packages/api-client/package.json",
   "packages/ui-core/package.json",

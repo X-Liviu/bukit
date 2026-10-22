@@ -1,7 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// La URL base apuntará a apps/web cuando exista. Configurable por entorno para CI.
-const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:5173";
+// La URL de la web: el puerto propio y estricto que fija apps/web/vite.config.ts.
+// Con E2E_BASE_URL se prueba una web ya desplegada y no se arranca ninguna.
+const externalURL = process.env.E2E_BASE_URL;
+const baseURL = externalURL ?? "http://localhost:5180";
 
 export default defineConfig({
   testDir: "./tests",
@@ -17,10 +19,15 @@ export default defineConfig({
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },
   ],
-  // Cuando exista apps/web, descomenta para que Playwright arranque el server:
-  // webServer: {
-  //   command: "pnpm --filter @bukit/web dev",
-  //   url: baseURL,
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  // Playwright arranca la web (US-08) si no hay ya una sirviendo en baseURL;
+  // en la CI siempre la arranca él. Cuando entren en la CI (EP12), valorar
+  // `vite preview` sobre una build: lo desplegado es el bundle, no el
+  // servidor de desarrollo.
+  webServer: externalURL
+    ? undefined
+    : {
+        command: "pnpm --filter @bukit/web dev",
+        url: baseURL,
+        reuseExistingServer: !process.env.CI,
+      },
 });

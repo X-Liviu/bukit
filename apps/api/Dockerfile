@@ -20,14 +20,18 @@ WORKDIR /app
 # Solo los manifiestos: esta capa queda cacheada mientras no cambien las
 # dependencias. pnpm necesita el manifiesto de TODOS los proyectos del
 # workspace para validar el lockfile congelado, aunque instale solo
-# producción (web y mobile no cuentan: aún no tienen package.json).
+# producción (mobile no cuenta: aún no tiene package.json).
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY apps/api/package.json apps/api/
+COPY apps/web/package.json apps/web/
 COPY packages/core/package.json packages/core/
 COPY packages/api-client/package.json packages/api-client/
 COPY packages/ui-core/package.json packages/ui-core/
 COPY e2e/package.json e2e/
-RUN pnpm install --frozen-lockfile --prod
+# Solo la API y lo que importa (los «...» arrastran @bukit/core): desde que la
+# web tiene manifiesto (US-08), una instalación sin filtro metería en la
+# imagen React y compañía, que la API no usa.
+RUN pnpm install --frozen-lockfile --prod --filter @bukit/api...
 # El cliente Prisma se genera DENTRO de la imagen: así descarga el motor de
 # linux-musl correcto para Alpine (US-04). El CLI de prisma es devDependency y
 # la instalación --prod no lo trae: se usa efímero con dlx, fijado a la misma

@@ -2,6 +2,7 @@
 import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
+import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
 // Config plana (ESLint 9). Una sola config en la raíz para todo el monorepo.
@@ -42,7 +43,6 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: { ...globals.node },
     },
     rules: {
       "no-unused-vars": "off",
@@ -51,6 +51,26 @@ export default tseslint.config(
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
     },
+  },
+
+  // Todo corre sobre Node (API, paquetes, e2e) salvo la web, que corre en el
+  // navegador: cada una con sus globales, para que ESLint marque como no
+  // definido lo que no existe en su entorno (process en la web, window en la API).
+  {
+    files: ["**/*.{ts,tsx}"],
+    ignores: ["apps/web/**"],
+    languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    files: ["apps/web/**/*.{ts,tsx}"],
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  // Reglas de los hooks de React (US-08): solo en la web, que es donde hay
+  // componentes. El conjunto estable (`recommended`), no el experimental
+  // (`recommended-latest`). `files` después del spread, para que mande el nuestro.
+  {
+    ...reactHooks.configs.flat.recommended,
+    files: ["apps/web/**/*.{ts,tsx}"],
   },
 
   prettier,
