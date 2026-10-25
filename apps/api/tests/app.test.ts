@@ -26,7 +26,7 @@ const appWithFailingRoutes = createApp((app) => {
     throw badRequest("La meta es inválida.", [{ path: "goal", message: "obligatorio" }]);
   });
   app.get("/casos/validacion", () => {
-    z.object({ email: z.string().email() }).parse({ email: "no-es-un-email" });
+    z.object({ email: z.email() }).parse({ email: "no-es-un-email" });
   });
 });
 

@@ -21,7 +21,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | -------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `express`            | 5.2.1   | El servidor HTTP: define las rutas (`/health`, `/auth/...`) y los _middlewares_.                                                                                                                          |
 | `@prisma/client`     | 6.1.0   | El cliente generado desde `schema.prisma` para leer y escribir en PostgreSQL sin SQL a mano.                                                                                                              |
-| `zod`                | 3.24.1  | En la API, reconoce los errores de validación y los convierte en un 400 (los esquemas viven en `packages/core`).                                                                                          |
+| `zod`                | 4.6.7   | En la API, reconoce los errores de validación y los convierte en un 400 (los esquemas viven en `packages/core`).                                                                                          |
 | `@bukit/core`        | propio  | Los esquemas Zod y tipos compartidos: valida el registro, el inicio de sesión y las peticiones de renovar o cerrar sesión, y da forma a los errores.                                                      |
 | `bcryptjs`           | 3.0.3   | Hace el hash bcrypt de la contraseña (12 rondas, configurable con `BCRYPT_ROUNDS`) y la comprueba al iniciar sesión.                                                                                      |
 | `jsonwebtoken`       | 9.0.3   | Firma y verifica los tokens JWT (HS256): acceso de 15 min y refresco de 30 días. Desde la US-06, el de refresco se guarda por su huella SHA-256 y rota en cada uso.                                       |
@@ -67,7 +67,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 
 | Pieza                 | Estado     | Contenido                                                                                                                        |
 | --------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `packages/core`       | con código | `zod` 3.24.1: esquemas de usuario, inicio de sesión, listas y metas y errores de la API. Pruebas con `vitest`.                   |
+| `packages/core`       | con código | `zod` 4.6.7: esquemas de usuario, inicio de sesión, listas y metas y errores de la API. Pruebas con `vitest`.                   |
 | `packages/api-client` | esqueleto  | Futuro cliente HTTP tipado para web y móvil. Declara `@bukit/core`, pero aún no lo usa.                                          |
 | `packages/ui-core`    | esqueleto  | Futura lógica de interfaz compartida. Declara `@bukit/core`, pero aún no lo usa.                                                 |
 | `e2e`                 | con código | `@playwright/test` 1.63.0: prueba de humo de la web en navegador (arranca la web en el 5180); los flujos reales llegan con EP12. |

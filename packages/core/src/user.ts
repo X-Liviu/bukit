@@ -13,7 +13,9 @@ export type UserTier = z.infer<typeof userTierSchema>;
  * unicidad en BD es sobre el valor normalizado) y con el tope de longitud del
  * estándar SMTP (RFC 5321, 254): la columna de la BD lo respalda.
  */
-export const emailSchema = z.string().trim().toLowerCase().max(254).email();
+// Primero la normalización y el tope, y después el formato (z.email, el de
+// Zod 4): así «  PERSONA@Example.com » pasa como persona@example.com.
+export const emailSchema = z.string().trim().toLowerCase().max(254).pipe(z.email());
 
 /**
  * Identidad pública del perfil (decisión del autor, 07-08-2026: cada cuenta
@@ -76,7 +78,7 @@ export type TokenPair = z.infer<typeof tokenPairSchema>;
  * reutilizarse para serializar usuarios a terceros.
  */
 export const ownUserSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   email: emailSchema,
   username: usernameSchema,
   tier: userTierSchema,

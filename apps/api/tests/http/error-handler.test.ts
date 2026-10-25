@@ -34,7 +34,7 @@ describe("errorHandler (unitario)", () => {
   it("registra la validación fallida a nivel warn", () => {
     const warn = vi.spyOn(logger, "warn");
     const res = fakeRes();
-    const parsed = z.object({ email: z.string().email() }).safeParse({ email: "x" });
+    const parsed = z.object({ email: z.email() }).safeParse({ email: "x" });
     errorHandler(
       parsed.success ? new Error("el fixture debería fallar") : parsed.error,
       req,
