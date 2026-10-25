@@ -37,7 +37,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | Paquete                                                                    | Versión | Para qué sirve                                                                                                             |
 | -------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `prisma` (CLI)                                                             | 6.1.0   | Genera el cliente, crea y aplica migraciones, abre Prisma Studio y lanza la semilla.                                       |
-| `vitest`                                                                   | 5.0.3   | Ejecuta las pruebas (en la API, `packages/core` y `apps/web`); en la API, archivo a archivo porque comparten la base real. |
+| `vitest`                                                                   | 5.0.5   | Ejecuta las pruebas (en la API, `packages/core` y `apps/web`); en la API, archivo a archivo porque comparten la base real. |
 | `supertest`                                                                | 7.2.2   | Lanza peticiones HTTP contra la app en memoria, sin abrir puerto, para las pruebas de integración.                         |
 | `pino-pretty`                                                              | 13.1.3  | Muestra los _logs_ legibles en la consola en desarrollo (en producción salen en JSON).                                     |
 | `@types/express`, `@types/cors`, `@types/jsonwebtoken`, `@types/supertest` | —       | Tipos de TypeScript de esas librerías (solo los usa el compilador).                                                        |
@@ -56,7 +56,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 
 | Paquete                                          | Versión         | Para qué sirve                                                                                    |
 | ------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------- |
-| `vitest`                                         | 5.0.3           | Ejecuta las pruebas sobre un DOM simulado, con la misma configuración de Vite (`vite.config.ts`). |
+| `vitest`                                         | 5.0.5           | Ejecuta las pruebas sobre un DOM simulado, con la misma configuración de Vite (`vite.config.ts`). |
 | `@testing-library/react`, `@testing-library/dom` | 16.3.3 / 10.4.2 | Renderiza componentes en las pruebas y los consulta como lo haría la persona (roles, textos).     |
 | `@testing-library/user-event`                    | 14.6.8          | Simula pulsaciones y teclado en las pruebas.                                                      |
 | `@testing-library/jest-dom`                      | 7.0.1           | Comparadores del DOM para `expect` (`toBeInTheDocument`, `toHaveAttribute`…).                     |
@@ -67,7 +67,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 
 | Pieza                 | Estado     | Contenido                                                                                                                        |
 | --------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `packages/core`       | con código | `zod` 4.6.7: esquemas de usuario, inicio de sesión, listas y metas y errores de la API. Pruebas con `vitest`.                   |
+| `packages/core`       | con código | `zod` 4.6.7: esquemas de usuario, inicio de sesión, listas y metas y errores de la API. Pruebas con `vitest`.                    |
 | `packages/api-client` | esqueleto  | Futuro cliente HTTP tipado para web y móvil. Declara `@bukit/core`, pero aún no lo usa.                                          |
 | `packages/ui-core`    | esqueleto  | Futura lógica de interfaz compartida. Declara `@bukit/core`, pero aún no lo usa.                                                 |
 | `e2e`                 | con código | `@playwright/test` 1.63.0: prueba de humo de la web en navegador (arranca la web en el 5180); los flujos reales llegan con EP12. |
@@ -77,12 +77,12 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | Paquete                     | Versión | Para qué sirve                                                                                                                |
 | --------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `typescript`                | 5.7.3   | Comprueba los tipos de todo el monorepo (`pnpm typecheck`). La API no se compila: se ejecuta con `tsx`.                       |
-| `eslint`                    | 9.39.5  | Detecta errores y malas prácticas antes de ejecutar nada; es la primera barrera de la CI.                                     |
+| `eslint`                    | 10.13.0 | Detecta errores y malas prácticas antes de ejecutar nada; es la primera barrera de la CI.                                     |
 | `@eslint/js`                | 9.39.5  | Las reglas recomendadas de JavaScript para ESLint.                                                                            |
 | `typescript-eslint`         | 8.71.1  | Hace que ESLint entienda TypeScript y añade reglas propias.                                                                   |
-| `eslint-config-prettier`    | 9.1.0   | Apaga las reglas de ESLint que chocarían con Prettier.                                                                        |
+| `eslint-config-prettier`    | 10.1.8  | Apaga las reglas de ESLint que chocarían con Prettier.                                                                        |
 | `eslint-plugin-react-hooks` | 7.1.1   | Las reglas de los hooks de React, solo en `apps/web`.                                                                         |
-| `globals`                   | 17.12.0 | Las variables globales de Node (API, paquetes, e2e) y del navegador (web), para que ESLint no las marque como «no definidas». |
+| `globals`                   | 17.13.0 | Las variables globales de Node (API, paquetes, e2e) y del navegador (web), para que ESLint no las marque como «no definidas». |
 | `prettier`                  | 3.9.9   | Formatea el código automáticamente con un estilo único.                                                                       |
 | `@types/node`               | 24.19.1 | Tipos de Node (los de la versión 24, la que se ejecuta).                                                                      |
 
