@@ -4,6 +4,9 @@
 // en las pausas 31-08 → 04-10-2026 y 25-01 → 31-01-2027; S7 empieza el 05-10-2026;
 // S23 el 01-02-2027; S31 el 29-03-2027; S37 termina el 16-05-2027. Las fechas
 // anteriores al 14-07-2026 (el «Día 0» del diario) cuentan como «pre-S0», fase F0.
+// Desde el 09-11-2026 el sprint ya no es una semana de calendario sino una tanda de
+// trabajo (cap. 10): para esas fechas se devuelve la fase y `sprint: "tanda"`, y el
+// número lo pone journal.cjs a partir de la última planificación del diario.
 // Todo se calcula en UTC para que el resultado no dependa de la zona horaria del equipo.
 const WEEKDAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 const SEGMENTS = [
@@ -13,6 +16,7 @@ const SEGMENTS = [
   ["2027-03-29", 31, 37, "F4"],
 ];
 const DAY_MS = 864e5;
+const WORK_BLOCKS_SINCE = "2026-11-09";
 
 function normalize(s) {
   const m = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s);
@@ -47,6 +51,7 @@ function info(input) {
   for (const [ini, a, b, phase] of SEGMENTS) {
     const n = Math.floor((t - utc(ini)) / DAY_MS / 7);
     if (n >= 0 && a + n <= b) {
+      if (t >= utc(WORK_BLOCKS_SINCE)) return { date, weekday, sprint: "tanda", phase };
       const start = utc(ini) + n * 7 * DAY_MS;
       return {
         date,
@@ -71,4 +76,4 @@ if (require.main === module) {
   const res = (args.length ? args : [localToday()]).map(info);
   console.log(JSON.stringify(res.length === 1 ? res[0] : res, null, 1));
 }
-module.exports = { info, normalize, localToday };
+module.exports = { info, normalize, localToday, WORK_BLOCKS_SINCE };

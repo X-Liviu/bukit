@@ -5,23 +5,19 @@
      alternativa descartada, nada repetido de la planificación y sin secciones
      vacías: se quitan las que no aplican. -->
 
-## Planificación de la semana (Sx, Fy, DD-MM → DD-MM)
+## Planificación (Sx, Fy)
 
-<!-- Una vez por semana, en la entrada del día en que se planifique
-     (normalmente el lunes; vale cualquier día de la semana). En el resto de
-     entradas, borrar esta sección.
-     Sesión de ~20 min: fijar la capacidad, elegir del backlog del cap. 10 en
-     su orden y anotar aquí la lista de trabajo. Las subtareas de cada historia
-     van como lista de comprobación, sin puntos (solo puntúan las historias).
-     Las casillas se marcan [x] a lo largo de la semana. -->
+<!-- Solo en la entrada del día en que se abre una tanda de trabajo; en el
+     resto, borrar esta sección. La historia que toca según el backlog del
+     cap. 10, con sus subtareas como lista de comprobación (solo puntúan las
+     historias). Las casillas se marcan [x] mientras dure la tanda. -->
 
-- **Capacidad declarada:** N h (motivo, si se aparta de la media de la fase; una semana a cero se declara antes de que empiece, en la entrada anterior, según el README)
-- **Historias** (orden del backlog):
+- **Horas previstas:** N h
+- **Historia** (orden del backlog):
   - [ ] US-xx — título (N SP)
     - [ ] subtarea
-- **Otras tareas:** memoria, mantenimiento…
-- [ ] Aplicar el informe de coherencia del domingo con `/coherencia aplicar` (si no lo hubo, «sin informe» y el motivo).
-- **Decisiones de la planificación** (con la alternativa descartada y el porqué):
+- **Otras tareas:** memoria, triaje de Dependabot y `pnpm audit`…
+- **Decisiones** (con la alternativa descartada y el porqué):
 
 ## Qué he hecho hoy
 
@@ -49,29 +45,25 @@
 
 -
 
-## Retrospectiva (Sx)
+## Control mensual
 
-<!-- Solo en la entrada del DOMINGO, que cierra el sprint; si ese día no hay
-     sesión, en la primera entrada de la semana siguiente, ANTES de su
-     planificación y con el número del sprint que cierra. En el resto de
-     entradas, borrar esta sección. Va seguida de la revisión de riesgos. -->
+<!-- Solo en la PRIMERA entrada de cada mes. En el resto, borrar esta sección.
+     Va seguida de la revisión de riesgos. -->
 
-- **Previsto frente a real:** N h declaradas / N h reales; puntos entregados: N de N
+- **Avance frente al calendario (cap. 13):** puntos entregados acumulados / previstos a esta fecha; retraso en semanas
+- **Horas y puntos del mes:** N h; N SP
 - **Equivalencia horas/punto:** se mantiene en N / se recalibra a N (motivo)
-- **Qué fue bien:**
-- **Qué no:**
-- **Qué cambio para el siguiente sprint:**
+- **Qué cambia:**
 
 ## Revisión de riesgos
 
-<!-- Solo en la entrada que lleva la retrospectiva (misma regla: domingo o, si no
-     hay sesión, la primera entrada de la semana siguiente) o si se observa un disparador.
-     Cadencia (cap. 7 de la memoria): críticos cada sprint; significativos cada 2;
-     moderados cada 4. La revisión se rellena como documento fechado en
+<!-- Solo en la entrada que lleva el control mensual, al cierre de una fase o si
+     se observa un disparador. Vigilados (R1 a R5, R7, R8, R10, R12 y R14), en
+     cada control mensual; gestionados (R6, R9, R11, R13 y R15), al cierre de
+     fase. La revisión se rellena como documento fechado en
      docs/thesis/seguimiento-riesgos/ (copiar su TEMPLATE.tex) y se ENLAZA aquí.
-     "Sin novedad" también se registra (es evidencia de seguimiento). Si se rellena
-     un apartado ⟳: nueva versión del plan (docs/thesis/plan-riesgos/) y fila en la
-     tabla de seguimiento del cap. 7. -->
+     Lo que cambie lleva fila en la tabla del cap. 7; el plan se reemite al
+     cierre de fase o si un riesgo se materializa. -->
 
 -
 

@@ -73,14 +73,14 @@ La tabla \ref{tab:metodologia-elementos} resume qué se toma de cada marco, con 
     \textbf{Elemento} & \textbf{Origen} & \textbf{Adaptación a una persona} \\
     \midrule
     \eng{Product Backlog} & Scrum & Historias de usuario agrupadas en épicas clasificadas por prioridad en cuatro niveles (imprescindible, deseable, opcional, excluida; sección \ref{sec:backlog}); toda idea nueva entra por aquí (control del alcance, R1). \\
-    Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada por \eng{sprint}. \\
-    Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido semanal es una proyección. \\
+    Iteraciones & Scrum & \eng{Sprints} semanales (lunes--domingo) con capacidad variable declarada hasta el 12/11/2026; desde entonces, cada \eng{sprint} es una tanda de trabajo que se abre con su planificación y se cierra con su historia, sin atarse al calendario. \\
+    Naturaleza del compromiso & Kanban & El compromiso es el orden del \eng{backlog} y el límite de \ac{WIP}, no un contrato cerrado de \eng{sprint}; el contenido de cada \eng{sprint} es una proyección. \\
     Límite de \acs{WIP} & Kanban & Máximo 2 elementos en curso: una historia de producto y, como mucho, la redacción de la memoria; nunca dos historias de producto a medias. \\
-    Planificación de \eng{sprint} & Scrum & Sesión individual de unos 20 minutos una vez por semana, normalmente el lunes, aunque sirve cualquier día: fijar capacidad, seleccionar del \eng{backlog} y anotar la lista de trabajo de la semana en la entrada del diario de ese día. \\
+    Planificación de \eng{sprint} & Scrum & Sesión individual breve al abrir cada \eng{sprint}: seleccionar del \eng{backlog} la historia que toca, fijar las horas que se le dedican y anotar la lista de trabajo en la entrada del diario de ese día. \\
     \eng{Daily} & Scrum & Sustituida por el procedimiento ya vigente de abrir cada sesión releyendo la última entrada del diario de desarrollo. \\
     \eng{Review} & Scrum & Verificación del incremento contra los criterios de cierre de cada historia (sección \ref{sec:dod}). \\
-    Retrospectiva & Scrum & Sección fija de la entrada del diario al cierre del \eng{sprint}, que incluye la revisión de riesgos (capítulo \ref{ch:riesgos}). \\
-    Revisión de coherencia & Propio & Al cierre de cada \eng{sprint}, revisión automática de la coherencia entre la documentación, la memoria y el código; sus correcciones se aplican la semana siguiente (sección \ref{sec:metodologia-coherencia}). \\
+    Retrospectiva & Scrum & Control mensual, en la primera sesión de cada mes: avance acumulado frente al calendario de referencia, horas, equivalencia y revisión de riesgos (capítulo \ref{ch:riesgos}); hasta el 25/10/2026 fue una sección del diario al cierre de cada semana. \\
+    Revisión de coherencia & Propio & Revisión automática de la coherencia entre la documentación, la memoria y el código, a demanda y antes de cada cierre de fase (sección \ref{sec:metodologia-coherencia}). \\
     Velocidad & Scrum & Puntos completados por \eng{sprint}; recalibra la estimación de forma continua. \\
     \bottomrule
   \end{tabular}
@@ -90,6 +90,13 @@ La duración de una semana por \eng{sprint} (frente a las dos semanas empleadas 
 Primera: la realimentación de velocidad llega al doble de frecuencia justo cuando más falta hace, en las primeras semanas de la primera estimación en solitario del autor.
 Segunda: el grano semanal permite modular la capacidad de cada periodo (verano con trabajo, estancia Erasmus, posibles prácticas de empresa) sin tocar el método: cambia la capacidad, no el ritmo.
 Tercera: el argumento clásico contra los \eng{sprints} cortos, el coste proporcional de las ceremonias, desaparece en solitario, donde todas las ceremonias juntas cuestan menos de una hora semanal.
+
+Esa tercera razón no resistió la práctica, y el 12/11/2026 el método se simplificó.
+La dedicación real no es uniforme: llega a ráfagas, con semanas enteras para el trabajo y otras, de exámenes o de otros compromisos, sin ninguna sesión.
+Con el \eng{sprint} atado a la semana de calendario, cada semana sin trabajo dejaba una planificación, una retrospectiva, un seguimiento de riesgos y una revisión de coherencia por hacer o por justificar, y el método acababa midiendo la asistencia en lugar del avance.
+Desde esa fecha, el \eng{sprint} es una tanda de trabajo, numerada de forma consecutiva: se abre con su planificación cuando hay tiempo para trabajar y se cierra con su historia.
+Las semanas sin sesiones no se declaran ni se recuperan: el trabajo se acumula en el orden del \eng{backlog}, y el calendario de fases (sección \ref{sec:fases} y capítulo \ref{ch:gantt-tfg}) queda como referencia contra la que un control mensual, en la primera sesión de cada mes, mide el retraso acumulado.
+Se descartó mantener la semana como unidad y declarar a cero las semanas sin disponibilidad, la regla vigente del 17/10 al 12/11/2026, porque obligaba a anticipar cada ausencia y convertía en incidencia la que no se había declarado.
 
 \subsection{Herramienta de gestión y su evolución}
 \label{sec:metodologia-herramienta}
@@ -103,19 +110,19 @@ Primero, era innecesario: en un proyecto de una sola persona duplicaba lo que ya
 Segundo, metía ruido en la planificación: el trabajo real de cada semana quedaba repartido entre el tablero, el diario y la memoria, y mover fichas no informaba de nada que el diario no dijera ya.
 Tercero, suponía una carga de trabajo extra sin retorno, justo en el recurso que la fase demostró más escaso: las horas disponibles (capítulo \ref{ch:gantt-tfg}).
 
-Desde entonces, el \eng{backlog} vive en este capítulo (tablas \ref{tab:backlog-epicas} y \ref{tab:backlog-f1}), la planificación semanal se anota como lista de trabajo en la entrada del diario del día en que se hace, y el límite de una sola historia de producto en curso se mantiene como regla, ya sin tablero que lo visualice.
+Desde entonces, el \eng{backlog} vive en este capítulo (tablas \ref{tab:backlog-epicas} y \ref{tab:backlog-f1}), la planificación de cada \eng{sprint} se anota como lista de trabajo en la entrada del diario del día en que se hace, y el límite de una sola historia de producto en curso se mantiene como regla, ya sin tablero que lo visualice.
 La trazabilidad entre historias y código se conserva por otra vía: cada cambio de código nombra la historia que implementa, y el diario la registra.
 Las fichas y los hitos de F1 se conservan cerrados en el repositorio, como evidencia de esa primera etapa del método.
 Esta memoria conserva las instantáneas relevantes de la planificación: el \eng{backlog} inicial aquí, y el estado final y las desviaciones en los capítulos \ref{ch:resultados} y \ref{ch:gantt-tfg}.
 
-\subsection{Revisión semanal de la coherencia documental}
+\subsection{Revisión de la coherencia documental}
 \label{sec:metodologia-coherencia}
 
 Un proyecto documentado con este nivel de detalle acumula muchas fuentes que cuentan lo mismo desde ángulos distintos: las reglas de trabajo persistentes, el diario de desarrollo, la documentación del repositorio, los diagramas, los documentos de riesgos, los comentarios del código y esta misma memoria.
 Con cada decisión nueva alguna de ellas se queda atrás, y el desfase no se nota hasta que alguien lo encuentra por casualidad: una versión que ya no es la instalada, una regla que un documento da por vigente y otro por superada, una cifra que no coincide entre dos capítulos.
-Por eso, desde el cierre del séptimo \eng{sprint}, el final de cada \eng{sprint} incluye una revisión automática de la coherencia entre todas esas fuentes y con el código real.
+Por eso, desde el cierre del séptimo \eng{sprint}, el método incluye una revisión automática de la coherencia entre todas esas fuentes y con el código real: primero al final de cada semana y, desde el 12/11/2026, a demanda —tras un cambio amplio de la documentación— y antes de cada cierre de fase.
 
-La revisión la hace un procedimiento asistido por \ac{IA}, preparado como un comando propio que se lanza el domingo por la noche y trabaja sin supervisión.
+La revisión la hace un procedimiento asistido por \ac{IA}, preparado como un comando propio que trabaja sin supervisión.
 Primero reúne los hechos objetivos del repositorio con pequeños programas que no usan \ac{IA}: versiones instaladas, estado de la integración continua y del despliegue, fechas y \eng{sprints} calculados, y citas y acrónimos de la memoria.
 Después reparte la comparación entre seis agentes que trabajan en paralelo, cada uno dedicado a una dimensión: tecnologías y modelo de datos; arquitectura y documentación del repositorio; producto y método; riesgos y presupuesto; la propia memoria; y el diario de desarrollo junto con la privacidad y los comentarios del código.
 Las contradicciones graves pasan además, agrupadas, por un único agente que intenta refutarlas releyendo las fuentes, para no dar por buenos los falsos positivos.
@@ -123,10 +130,10 @@ El resultado es un informe fechado con cada contradicción, la fuente que preval
 El procedimiento no modifica nada por sí mismo: su informe es la entrada de una sesión posterior en la que el asistente aplica las correcciones, y el autor solo resuelve las que exigen una decisión de contenido.
 
 La escala del procedimiento se acotó a propósito.
-Un primer diseño, con quince dimensiones y un agente verificador por cada hallazgo, podía movilizar varios cientos de agentes en cada ejecución: un coste razonable para una auditoría puntual, pero insostenible para una práctica semanal sobre un plan de suscripción con límites de uso.
+Un primer diseño, con quince dimensiones y un agente verificador por cada hallazgo, podía movilizar varios cientos de agentes en cada ejecución: un coste razonable para una auditoría puntual, pero insostenible para una práctica recurrente sobre un plan de suscripción con límites de uso.
 Se rehízo con seis dimensiones, una única verificación agrupada de los hallazgos graves y modelos más ligeros en las comprobaciones mecánicas, de modo que cada ejecución emplea menos de diez agentes.
 
-La práctica refuerza la mitigación del riesgo R3, la memoria relegada frente al desarrollo (capítulo \ref{ch:riesgos}): sustituye las puestas al día concentradas, como la que exigió la reanudación tras la primera pausa, por una comprobación continua de coste acotado.
+La práctica refuerza la mitigación del riesgo R3, la memoria relegada frente al desarrollo (capítulo \ref{ch:riesgos}): sustituye las puestas al día concentradas, como la que exigió la reanudación tras la primera pausa, por una comprobación de coste acotado.
 
 \section{Estimación del esfuerzo}
 \label{sec:estimacion}
@@ -265,7 +272,8 @@ F1 cerró en su fecha prevista (30/08/2026) con 14 de sus 21 puntos entregados, 
 La primera pausa, prevista hasta el 20/09/2026, se amplió hasta el 04/10/2026 porque el traslado y la instalación en la estancia Erasmus se alargaron más de lo previsto.
 En consecuencia, F2 arrancó el 05/10/2026 con dieciséis \eng{sprints} en lugar de dieciocho (80 horas en lugar de 90), la numeración de los \eng{sprints} posteriores se desplazó dos posiciones y la fecha de cierre del desarrollo se mantuvo.
 El 18/10/2026 F2 incorporó además la historia US-19 (3 puntos), con lo que proyecta 44 puntos frente a los 40 de su capacidad nominal a 2,0 horas por punto.
-La diferencia se asume sin mover historias si la recalibración de la equivalencia al cierre de S9 lo confirma; si no, la cola de EP05 pasaría al inicio de F3, como hicieron US-06 y US-07 al cierre de F1.
+La diferencia se asume sin mover historias si la recalibración de la equivalencia lo confirma; si no, la cola de EP05 pasaría al inicio de F3, como hicieron US-06 y US-07 al cierre de F1.
+Desde el 12/11/2026 los \eng{sprints} dejan de ser semanas de calendario (sección \ref{sec:metodologia-decision}): las fechas de las fases y el calendario semanal de la tabla \ref{tab:sprints} se conservan como referencia del avance previsto, no como compromiso de trabajar cada semana.
 El balance de F1 frente a lo previsto se recoge en el capítulo \ref{ch:gantt-tfg}.
 
 \begin{table}[htbp]
@@ -290,16 +298,14 @@ El balance de F1 frente a lo previsto se recoge en el capítulo \ref{ch:gantt-tf
 \end{table}
 
 La capacidad declarada refleja la disponibilidad real esperada de cada periodo: el verano se planificó con 10 horas semanales condicionadas por los compromisos laborales, y la realidad de tres \eng{sprints} la re-basó a 6 desde S4 (09/08/2026, contingencia del riesgo R8: la carga laboral resultó estructural, no puntual); unas 5 horas semanales de promedio durante la estancia Erasmus; y unas 15 horas semanales desde febrero, compatibles con las posibles prácticas de empresa.
-Lo que cuenta es el total de horas de cada semana, no el número de días trabajados: una semana que reúne sus horas solo en el fin de semana cumple su capacidad.
-Las semanas sin disponibilidad conocidas de antemano, como las de viaje durante la estancia o un pico de carga laboral, se declaran a cero antes de que empiecen: el \eng{sprint} conserva su número, su trabajo pasa a las semanas siguientes en el orden del \eng{backlog} a costa de la holgura del plan, y la mecánica de flujo las absorbe sin ningún compromiso roto.
-Una semana declarada así no cuenta en la medida de velocidad ni se trata como un parón imprevisto (riesgo R10); una semana que se queda a cero sin haberse declarado antes, sí.
-Que la capacidad real confirme estas hipótesis es exactamente lo que vigila el riesgo R8, con las horas registradas en el diario como evidencia.
-Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación semanal con el conocimiento acumulado hasta entonces.
+Esas cifras son promedios de referencia, no una cuota semanal: desde el 12/11/2026 lo que cuenta es el avance acumulado frente al calendario, y una semana sin sesiones se compensa con otra de dedicación exclusiva, sin declararla ni recuperar sus ceremonias.
+Que el avance real siga al calendario es lo que vigila el riesgo R8 en el control mensual, con las horas y los puntos registrados en el diario como evidencia.
+Siguiendo la misma elaboración progresiva aplicada al \eng{backlog}, solo se detallan los \eng{sprints} de la fase inminente; los de fases posteriores se concretan en su planificación con el conocimiento acumulado hasta entonces.
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption{Calendario de \eng{sprints} de F0 a F2 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}.}
+  \caption{Calendario semanal de F0 a F2 con su capacidad; el tema es una proyección, el compromiso real es el orden del \eng{backlog}, y desde el 12/11/2026 las semanas son solo la referencia del avance previsto.}
   \label{tab:sprints}
   \begin{tabular}{cllc}
     \toprule

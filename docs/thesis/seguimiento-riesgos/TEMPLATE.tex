@@ -8,9 +8,10 @@
 % Compilar DESDE ESTA CARPETA (2 pases, sin biber):
 %   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
 %     -output-directory=build <documento>.tex
-% Recordatorio: si se rellena un apartado con el símbolo ⟳ hay que emitir
-% nueva versión del plan en ../plan-riesgos/, añadir fila en la tabla de
-% seguimiento del cap. 7 y anotarlo en el dev-journal.
+% Recordatorio: lo que se rellene en un apartado con el símbolo ⟳ lleva fila en
+% la tabla de seguimiento del cap. 7 y nota en el dev-journal, y entra en la
+% siguiente versión del plan (cierre de fase, o de inmediato si un riesgo se
+% materializa, cambia su P o su I, o aparece uno nuevo).
 % =========================================================================
 \documentclass[11pt,a4paper]{article}
 
@@ -25,10 +26,9 @@
 
 \textbf{Fecha:} DD-MM-YYYY · \textbf{Sprint:} SN (DD-MM \(\to\) DD-MM-YYYY) · \textbf{Responsable:} \thesisAuthor% TODO: fechas
 
-Regla de revisión: \textbf{críticos} cada sprint; \textbf{significativos} cada 2 sprints; \textbf{moderados} cada 4 sprints; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
-Una semana declarada a cero (cap.~10 de la memoria) no cierra sprint y no tiene seguimiento: lo que tocara por cadencia se revisa en el siguiente.
+Regla de revisión (cap.~7 de la memoria, desde el 12-11-2026): \textbf{vigilados} (R1 a R5, R7, R8, R10, R12 y R14) en cada control mensual; \textbf{gestionados} (R6, R9, R11, R13 y R15) al cierre de cada fase; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
 
-\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, hay que emitir una nueva versión completa del plan de riesgos} en \texttt{../plan-riesgos/} y registrar el cambio en la tabla de seguimiento del cap.~7 de la memoria.
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, el cambio se registra en la tabla de seguimiento del cap.~7 de la memoria y entra en la siguiente versión completa del plan de riesgos} (\texttt{../plan-riesgos/}), que se emite al cierre de cada fase, o de inmediato si un riesgo se materializa, cambia su probabilidad o su impacto, o aparece uno nuevo.
 
 Riesgos revisados: \todonote{listar los que tocan por cadencia y los que entran por disparador observado}.
 

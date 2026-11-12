@@ -46,7 +46,7 @@ thesis/
 
 - **VSCode (LaTeX Workshop):** guardar `main.tex` (o `Ctrl+Alt+B`). El PDF queda en `build/main.pdf` (`Ctrl+Alt+V` para verlo). La receta por defecto no necesita Perl.
 - **Terminal sin Perl (el caso del equipo del autor, MiKTeX):** desde esta carpeta, `pdflatex --enable-installer -interaction=nonstopmode -file-line-error -output-directory=build main.tex` → `biber build/main` → dos pases más de `pdflatex`. `latexmk` y `pnpm docs:pdf` **no funcionan** sin Perl.
-- **Verificación tras compilar:** exit 0 y ningún aviso nuevo. Línea base esperada (revisada el 18-10-2026, cuando la tabla de seguimiento del cap. 7 pasó a ocupar una página más): 5 «ignored error: Infinite glue shrinkage» de longtable (bug conocido e inofensivo, comentado en `config/packages.tex`) y 18 «Package spanish Warning: Replacing ... by faked small caps» de los folios romanos de los preliminares (Carlito no tiene versalitas). Cualquier otro aviso, desborde, cita o referencia rota es nuevo y se corrige.
+- **Verificación tras compilar:** exit 0 y ningún aviso nuevo. Línea base esperada (revisada el 12-11-2026, al crecer otra página la tabla de seguimiento del cap. 7): 6 «ignored error: Infinite glue shrinkage» de longtable (bug conocido e inofensivo, comentado en `config/packages.tex`) y 18 «Package spanish Warning: Replacing ... by faked small caps» de los folios romanos de los preliminares (Carlito no tiene versalitas). Cualquier otro aviso, desborde, cita o referencia rota es nuevo y se corrige.
 - Cada capítulo empieza con un comentario que resume **qué exige la guía/plantilla** en ese apartado.
 
 ## Convenciones

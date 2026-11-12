@@ -8,7 +8,7 @@
 // Uso: node docs/coherencia/scripts/journal.cjs [--today=YYYY-MM-DD] [docs/dev-journal]
 const fs = require("fs");
 const path = require("path");
-const { info } = require("./calendar.cjs");
+const { info, WORK_BLOCKS_SINCE } = require("./calendar.cjs");
 
 let today = null;
 let dir = "docs/dev-journal";
@@ -33,6 +33,10 @@ const daysSince = (f) => Math.round((Date.parse(today) - Date.parse(f)) / DAY_MS
 // ausencia; una declaración hecha ya dentro de la semana no vale (es un parón, R10).
 const ZERO_WEEK = /\bS(\d{1,2}):\s*semana a cero/gi;
 
+// Desde WORK_BLOCKS_SINCE el sprint es una tanda de trabajo: su número sale de la
+// cabecera «Planificación (Sx…)» más reciente del diario, no de la fecha. La primera
+// tanda es el S12 (el S10 se declaró a cero y el S11 no tuvo sesiones).
+let currentBlock = "S12";
 const entries = [];
 // Orden cronológico real: el nombre es DD-MM-YYYY, así que ordenar por nombre no sirve.
 const sortKey = (n) => n.slice(6, 10) + n.slice(3, 5) + n.slice(0, 2) + n;
@@ -52,6 +56,11 @@ for (const fileName of fileNames) {
   const writtenDay =
     (/-\s*([A-Za-zÁÉÍÓÚáéíóú]+),\s*\d{2}-\d{2}-\d{4}/.exec(header) || [])[1] || null;
   const calc = info(date);
+  if (date >= WORK_BLOCKS_SINCE) {
+    const block = /^## Planificación[^\n(]*\((S\d+)/m.exec(text);
+    if (block) currentBlock = block[1];
+    calc.sprint = currentBlock;
+  }
   const sections = lines.filter((l) => /^##\s/.test(l)).map((l) => l.replace(/^##\s+/, "").trim());
   const hoursLine = lines.find((l) => /\*\*Horas invertidas:\*\*/.test(l)) || "";
   const value = hoursLine.replace(/\*\*Horas invertidas:\*\*/, "").trim();
@@ -81,8 +90,9 @@ for (const fileName of fileNames) {
     sprint: calc.sprint,
     phase: calc.phase,
     sections,
-    planning: sections.some((s) => /^Planificación de la semana/i.test(s)),
+    planning: sections.some((s) => /^Planificación/i.test(s)),
     retrospective: sections.some((s) => /^Retrospectiva/i.test(s)),
+    monthlyControl: sections.some((s) => /^Control mensual/i.test(s)),
     riskReview: sections.some((s) => /^Revisión de riesgos/i.test(s)),
     zeroWeeksDeclared: [...text.matchAll(ZERO_WEEK)].map((z) => `S${z[1]}`),
     hours,
@@ -134,6 +144,8 @@ for (const e of entries) {
     e.computedWeekday === "domingo" &&
     !e.retrospective &&
     e.date >= "2026-10-05" &&
+    // Desde el método sin semanas no hay retrospectiva dominical.
+    e.date < WORK_BLOCKS_SINCE &&
     !zeroWeeks.has(e.sprint)
   )
     anomalies.push(`${e.file}: entrada de domingo sin «Retrospectiva»`);
@@ -145,7 +157,8 @@ for (const e of entries) {
 // salvo que se hubiera declarado a cero.
 const sprintPlanning = new Map();
 for (const e of entries) {
-  if (e.date < "2026-10-05" || !/^S[0-9]+$/.test(e.sprint || "")) continue;
+  if (e.date < "2026-10-05" || e.date >= WORK_BLOCKS_SINCE || !/^S[0-9]+$/.test(e.sprint || ""))
+    continue;
   const s = sprintPlanning.get(e.sprint) || { planned: false, end: info(e.date).sprintEnd };
   s.planned = s.planned || e.planning || zeroWeeks.has(e.sprint);
   sprintPlanning.set(e.sprint, s);

@@ -1,10 +1,10 @@
 ---
-description: Auditoría semanal (domingo noche, sin supervisión) de la coherencia entre todos los documentos de contexto, la memoria y el código; deja en docs/coherencia/ un informe que después aplica Claude con «/coherencia aplicar»
+description: Auditoría a demanda (sin supervisión) de la coherencia entre todos los documentos de contexto, la memoria y el código; deja en docs/coherencia/ un informe que después aplica Claude con «/coherencia aplicar»
 argument-hint: "[aplicar | rapido] [claves de lente separadas por espacios]"
 disable-model-invocation: true
 ---
 
-# /coherencia — auditoría semanal de coherencia
+# /coherencia — auditoría de coherencia
 
 Comprueba que **todas las fuentes de información del proyecto digan lo mismo** entre sí y respecto a la realidad del repositorio: CLAUDE.md, los README, COMMANDS.md, las plantillas, los comandos, el dev-journal, los diagramas, los documentos de riesgos, los comentarios de la configuración y del código, y **toda la memoria** (capítulos, preliminares, bibliografía). Deja un informe en `docs/coherencia/` con cada contradicción, desfase o regla incumplida, verificado y con su corrección propuesta. **El autor no lee el informe**: es la entrada de una sesión posterior en la que Claude aplica las correcciones (`/coherencia aplicar`, apartado «Modo aplicar»), así que se escribe para Claude: compacto, con archivo, línea y el cambio exacto.
 
@@ -16,9 +16,9 @@ Vocabulario de este comando: **lente** = una dimensión de revisión con sus fue
 
 Argumentos recibidos: `$ARGUMENTS`
 
-- Vacío: las 6 lentes, con verificación de los hallazgos críticos o altos. Es el modo del domingo.
+- Vacío: las 6 lentes, con verificación de los hallazgos críticos o altos.
 - Claves de lente separadas por espacios (`memoria riesgos-presupuesto`): solo esas lentes, con verificación. Una clave que no exista se ignora y se anota en Incidencias.
-- `rapido` (solo o con claves): sin verificación; el informe va a la carpeta temporal y **no** a `docs/coherencia/`, que es la evidencia semanal.
+- `rapido` (solo o con claves): sin verificación; el informe va a la carpeta temporal y **no** a `docs/coherencia/`, que guarda la evidencia de las auditorías.
 - `aplicar`: no audita; aplica el último informe pendiente de `docs/coherencia/` (apartado «Modo aplicar»). Es el único modo que modifica archivos y pregunta al autor, y se lanza en una sesión normal, no con el perfil de la auditoría. De las reglas de ejecución de abajo, en este modo solo rigen la de buscar con `git grep --untracked` y la de secretos y datos personales.
 
 ## Reglas de ejecución (para ti y para cada agente que lances)
@@ -29,7 +29,7 @@ Argumentos recibidos: `$ARGUMENTS`
 - **Para buscar en el código usa `git grep --untracked`** (archivos versionados y nuevos, respetando `.gitignore`), nunca `grep -r`: un `grep -r` sobre `apps/api` imprimiría `apps/api/.env.production` con la cadena de conexión de producción. Para listar archivos, `git ls-files --cached --others --exclude-standard`.
 - **Secretos y datos personales**: no leas ni imprimas `apps/api/.env*` (salvo `.env.example`), ni las notas de la memoria automática de Claude Code (`~/.claude/…`): el informe se commitea. Si una comprobación encuentra un secreto o un dato personal, en el informe va **archivo, línea y nombre de la variable; nunca el valor**, tampoco en las citas literales de la verificación. `gh api` solo con GET (nunca `-X`, `--method`, `-f`, `-F` ni `--input`).
 - Permitido: lecturas; `git` de solo lectura (`status`, `log`, `diff`, `fetch`, `ls-files`, `rev-parse`, `branch -r`, `branch --show-current`, `grep`, `show`); `gh` de solo lectura (`run list/view`, `pr list/view`, `issue list`, `api` GET); `pnpm audit`; `vitest list`; `prisma validate`; `npm view`; compilar la memoria (solo escribe en `build/`, ignorado por git); `graphify query/explain`.
-- **Fija la fecha, el sprint y el nombre del informe al principio** (Paso 0.A) y úsalos hasta el final: una ejecución que arranca el domingo termina el lunes, y `date`, la fórmula de sprint y `git log --since` darían otra cosa a medianoche.
+- **Fija la fecha, el sprint y el nombre del informe al principio** (Paso 0.A) y úsalos hasta el final: una ejecución que arranca de noche puede terminar al día siguiente, y `date` y `git log --since` darían otra cosa a medianoche.
 - Si algo falla (la compilación, `gh` sin red, un agente que no responde), anótalo en «Incidencias» y sigue. Sin red fallan rápido `gh auth status` (úsalo de detector), `git fetch --quiet origin`, `pnpm audit`, `npm view` y la autoinstalación de paquetes de MiKTeX. El informe se escribe **siempre**, aunque sea parcial. Si el flujo entero se interrumpe (suspensión, reinicio), no hay nada que reanudar: la próxima vez se relanza desde cero — a esta escala (10-20 min) no compensa la complejidad de guardar progreso.
 - Nada necesita Docker ni la base de datos: no la levantes. La versión de Docker Desktop del inventario se da por inverificable si Docker está apagado.
 - Si el hook de graphify te pide consultar el grafo antes de leer código, hazlo (`graphify query "..."`) y continúa; no bloquea nada.
@@ -39,7 +39,7 @@ Argumentos recibidos: `$ARGUMENTS`
 
 Reúne los datos objetivos directamente con Bash: son órdenes deterministas (scripts, `git`, `gh`), no razonamiento, así que no hace falta delegarlas. Redirige cada salida a un archivo en vez de leerla tú (`orden > archivo.txt`, o `comando | node script.cjs > archivo.json`) para no cargar tu propio contexto; comprueba solo el código de salida o las primeras líneas. Al final tendrás `<carpeta temporal>/coherencia/hechos.md`, que es lo único que leerán las lentes.
 
-1. `date +"%F %H:%M"` → hora de inicio. `node <raíz>/docs/coherencia/scripts/calendar.cjs` → día de la semana, sprint, fase y rango del sprint; fíjalos y úsalos el resto de la ejecución. Nombre del informe: `docs/coherencia/YYYY-MM-DD-SN.md` (`S7`…; `pausa` si la fórmula no da sprint); si ya existe uno con ese nombre, añade `-b`. Título interior: el de la plantilla del Paso 4, «Informe de coherencia — DD-MM-YYYY (Sx)».
+1. `date +"%F %H:%M"` → hora de inicio. `node <raíz>/docs/coherencia/scripts/calendar.cjs` → día de la semana y fase; el sprint, desde el 12-11-2026, no sale del calendario sino de la última planificación del diario (campo `sprint` de la última entrada de `journal.cjs`, paso 14). Fíjalos y úsalos el resto de la ejecución. Nombre del informe: `docs/coherencia/YYYY-MM-DD-SN.md` (`S12`…; `pausa` si la fecha cae en una pausa); si ya existe uno con ese nombre, añade `-b`. Título interior: el de la plantilla del Paso 4, «Informe de coherencia — DD-MM-YYYY (Sx)».
 2. `cd <raíz> && git rev-parse --short HEAD`, rama actual, `git status --short` íntegro (el informe audita **los archivos tal y como están en disco**; un hallazgo puede referirse a un cambio sin commit, y la cabecera del informe da su número). `git fetch --quiet origin` (si falla, sin red: anótalo).
 3. `mkdir -p <carpeta temporal>/coherencia`.
 4. **Mapa de fuentes.** `git ls-files --cached --others --exclude-standard | grep -iE "(^|/)(CLAUDE|README|TEMPLATE|COMMANDS|PLANTILLAS)[^/]*[.](md|tex)$|[.]claude/|docs/referencias/|docs/coherencia/"` frente a la tabla de `docs/coherencia/README.md`: archivos sin fila y filas de archivos inexistentes.

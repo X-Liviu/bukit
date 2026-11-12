@@ -76,14 +76,14 @@ Antes de editar `docs/thesis/`, leer `docs/thesis/README.md` (convenciones compl
 - Es un producto final: nada de andamiaje temporal («pendiente», «por ahora», «se describirá»); lo pendiente se marca solo con `\todonote`.
 - Una frase por línea; términos en inglés con `\eng{}`; acrónimos con `\ac{}`; castellano llano, sin jerga metodológica.
 - Diagramas solo UML 2.5.
-- Tras cualquier cambio, compilar con exit 0 y sin avisos nuevos. Línea base: 5 «Infinite glue shrinkage» y 18 «faked small caps».
+- Tras cualquier cambio, compilar con exit 0 y sin avisos nuevos. Línea base: 6 «Infinite glue shrinkage» y 18 «faked small caps».
 
 ## Método de trabajo
 
 Detalle en el cap. 10 de la memoria y en `docs/dev-journal/README.md`.
 
-- Sprints semanales de lunes a domingo, historias en puntos (solo puntúan las historias) y una sola historia de producto en curso, más la memoria. El backlog vive en el cap. 10.
-- **Planificación** una vez por semana, normalmente el lunes, aunque vale cualquier día: va en la entrada del diario de ese día. **Retrospectiva** y seguimiento de riesgos, el domingo (convenciones en los README de `docs/thesis/seguimiento-riesgos/` y `docs/thesis/plan-riesgos/`).
+- El sprint es una **tanda de trabajo**, no una semana: se abre con su planificación en el diario y se cierra con su historia. Historias en puntos (solo puntúan las historias) y una sola historia de producto en curso, más la memoria. El backlog vive en el cap. 10. **Las semanas sin sesiones no se declaran ni se recuperan**; el calendario del cap. 13 es la referencia del avance.
+- **Control mensual** en la primera sesión de cada mes: avance frente al calendario y seguimiento de los riesgos vigilados (R1 a R5, R7, R8, R10, R12 y R14); los gestionados (R6, R9, R11, R13 y R15), al cierre de fase. El plan de riesgos se reemite al cierre de fase o si un riesgo se materializa (convenciones en los README de `docs/thesis/seguimiento-riesgos/` y `docs/thesis/plan-riesgos/`).
 - Cada sesión empieza leyendo la última entrada del diario y termina con `/journal`. Toda decisión se anota con la alternativa descartada y el porqué.
 - Las entradas pasadas del diario no se reescriben, salvo para marcar casillas de la semana en curso, corregir un error de forma o retirar un dato personal.
 

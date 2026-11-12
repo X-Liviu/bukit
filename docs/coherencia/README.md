@@ -1,6 +1,6 @@
-# Coherencia de la documentación: mapa de fuentes, precedencia e informes semanales
+# Coherencia de la documentación: mapa de fuentes, precedencia e informes
 
-El proyecto tiene muchos archivos que explican lo mismo desde distintos ángulos (CLAUDE.md, los README, las plantillas, el diario, la memoria, los comentarios de la configuración y del código). Con el tiempo se desfasan entre sí y respecto al código. Para evitarlo, **cada domingo de sprint, por la noche, se lanza el comando `/coherencia`** (definido en `.claude/commands/coherencia.md`), que compara todas las fuentes entre sí y con la realidad del repositorio con 6 agentes en paralelo (una «lente» cada uno), somete los hallazgos críticos o altos a una pasada de verificación, y deja aquí un informe. **El autor no lee el informe**: en la sesión siguiente se lanza `/coherencia aplicar`, y Claude aplica las correcciones y pregunta solo las decisiones.
+El proyecto tiene muchos archivos que explican lo mismo desde distintos ángulos (CLAUDE.md, los README, las plantillas, el diario, la memoria, los comentarios de la configuración y del código). Con el tiempo se desfasan entre sí y respecto al código. Para evitarlo, **a demanda y antes de cada cierre de fase se lanza el comando `/coherencia`** (definido en `.claude/commands/coherencia.md`), que compara todas las fuentes entre sí y con la realidad del repositorio con 6 agentes en paralelo (una «lente» cada uno), somete los hallazgos críticos o altos a una pasada de verificación, y deja aquí un informe. **El autor no lee el informe**: en la sesión siguiente se lanza `/coherencia aplicar`, y Claude aplica las correcciones y pregunta solo las decisiones.
 
 **Escala deliberadamente contenida** (decisión del autor, 10-10-2026): el primer diseño tenía 15 lentes con un verificador por cada hallazgo y una ronda extra de «huecos», lo que podía disparar el gasto a varios cientos de agentes por ejecución semanal — razonable para una auditoría puntual a fondo, insostenible como tarea recurrente. Se rehízo en 6 lentes, sin verificador por hallazgo (una sola pasada agrupada sobre lo crítico o alto) y sin la ronda de huecos: entre 6 y 8 agentes por ejecución.
 
@@ -8,7 +8,7 @@ Este archivo es la referencia que usa el comando y la guía para la persona: el 
 
 ## Cómo se usa
 
-**Cuándo.** Cada domingo de sprint (no en las pausas ni en una semana declarada a cero, ver el README del diario), al terminar la sesión: **después** de `/journal` con la retrospectiva y del seguimiento de riesgos, para que el informe audite el sprint cerrado y no reporte como ausente lo que aún no estaba escrito. Decisión del autor del 10-10-2026; la primera ejecución fue el domingo 11-10-2026. Forma parte del método de trabajo: lo documentan el cap. 10 de la memoria («Revisión semanal de la coherencia documental») y el preliminar «Empleo de IA».
+**Cuándo.** A demanda (desde el 12-11-2026): tras un cambio amplio de la documentación y antes de cada cierre de fase, **después** de `/journal`, para que el informe audite lo ya escrito. Hasta el 25-10-2026 se lanzaba cada domingo de sprint (decisión del autor del 10-10-2026; primera ejecución, el 11-10-2026); se dejó de hacer semanal al simplificar el método. Lo documentan el cap. 10 de la memoria («Revisión de la coherencia documental») y el preliminar «Empleo de IA».
 
 **Cómo lanzarlo.** Desde Git Bash, en la raíz del repositorio, con Claude ya autenticado y sin otra sesión de Claude abierta sobre el repo:
 
