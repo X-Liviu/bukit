@@ -22,11 +22,10 @@
     "declaration": false,
     "sourceMap": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@bukit/core": ["packages/core/src"],
-      "@bukit/api-client": ["packages/api-client/src"],
-      "@bukit/ui-core": ["packages/ui-core/src"]
+      "@bukit/core": ["./packages/core/src"],
+      "@bukit/api-client": ["./packages/api-client/src"],
+      "@bukit/ui-core": ["./packages/ui-core/src"]
     }
   }
 }

@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // Desde TypeScript 6 los @types no se cargan solos: core usa TextEncoder (global en
+    // Node y en el navegador) y sus pruebas corren en Node, como la API y e2e.
+    "types": ["node"]
+  },
   "include": ["src", "tests"]
 }

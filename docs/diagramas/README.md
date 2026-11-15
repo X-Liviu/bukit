@@ -13,13 +13,13 @@ Generado el 04-10-2026 a partir del estado real del repositorio y de la base loc
 
 ## Librerías y herramientas: qué es cada una y para qué sirve
 
-Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.json`).
+Versiones exactas a 15-11-2026 (las fija el `pnpm-lock.yaml`; ver los `package.json`).
 
 ### La API (`apps/api`), lo que se ejecuta en producción
 
 | Paquete              | Versión | Para qué sirve                                                                                                                                                                                            |
 | -------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `express`            | 5.2.1   | El servidor HTTP: define las rutas (`/health`, `/auth/...`) y los _middlewares_.                                                                                                                          |
+| `express`            | 5.3.0   | El servidor HTTP: define las rutas (`/health`, `/auth/...`) y los _middlewares_.                                                                                                                          |
 | `@prisma/client`     | 6.1.0   | El cliente generado desde `schema.prisma` para leer y escribir en PostgreSQL sin SQL a mano.                                                                                                              |
 | `zod`                | 4.6.7   | En la API, reconoce los errores de validación y los convierte en un 400 (los esquemas viven en `packages/core`).                                                                                          |
 | `@bukit/core`        | propio  | Los esquemas Zod y tipos compartidos: valida el registro, el inicio de sesión y las peticiones de renovar o cerrar sesión, y da forma a los errores.                                                      |
@@ -29,7 +29,7 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | `pino-http`          | 11.0.0  | Registra cada petición HTTP que llega (ruta, código, tiempo).                                                                                                                                             |
 | `express-rate-limit` | 8.7.1   | La doble capa de limitación de peticiones (US-07): 20 peticiones por IP cada 15 min en el alta y el inicio de sesión, y 5 intentos por cuenta e IP en el inicio de sesión, con los contadores en memoria. |
 | `cors`               | 2.8.6   | Permite que un navegador de otro dominio (la web, cuando llame a la API en la US-09) llame a la API; hoy abierto a cualquier origen.                                                                      |
-| `dotenv`             | 18.0.6  | Carga el `.env` en local (`DATABASE_URL`, `PORT`); en producción las variables las pone Render.                                                                                                           |
+| `dotenv`             | 18.0.10 | Carga el `.env` en local (`DATABASE_URL`, `PORT`); en producción las variables las pone Render.                                                                                                           |
 | `tsx`                | 4.23.15 | Ejecuta TypeScript sin compilar: así arranca la API en local (`pnpm dev`) y en el contenedor de Render.                                                                                                   |
 
 ### Desarrollo y pruebas de la API
@@ -48,9 +48,9 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 | ----------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `react`, `react-dom`    | 19.3.1  | La biblioteca de interfaz y su montaje en el navegador.                                                                              |
 | `react-router`          | 8.5.0   | El enrutado (US-08): las cuatro pestañas como rutas anidadas bajo el armazón, la redirección de la raíz y la página «no encontrada». |
-| `@tanstack/react-query` | 5.104.5 | La caché del estado de servidor (consultas, reintentos, paginación infinita); hoy solo su proveedor, sin consultas aún.              |
+| `@tanstack/react-query` | 5.107.1 | La caché del estado de servidor (consultas, reintentos, paginación infinita); hoy solo su proveedor, sin consultas aún.              |
 | `vite`                  | 8.3.5   | Sirve la web en desarrollo (puerto 5180, fijo y estricto) y construye la de producción.                                              |
-| `@vitejs/plugin-react`  | 6.1.2   | Enseña a Vite a compilar JSX y a recargar componentes sin perder su estado.                                                          |
+| `@vitejs/plugin-react`  | 6.3.0   | Enseña a Vite a compilar JSX y a recargar componentes sin perder su estado.                                                          |
 
 ### Desarrollo y pruebas de la web
 
@@ -76,14 +76,14 @@ Versiones exactas a 21-10-2026 (las fija el `pnpm-lock.yaml`; ver los `package.j
 
 | Paquete                     | Versión | Para qué sirve                                                                                                                |
 | --------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `typescript`                | 5.7.3   | Comprueba los tipos de todo el monorepo (`pnpm typecheck`). La API no se compila: se ejecuta con `tsx`.                       |
+| `typescript`                | 6.0.3   | Comprueba los tipos de todo el monorepo (`pnpm typecheck`). La API no se compila: se ejecuta con `tsx`.                       |
 | `eslint`                    | 10.13.0 | Detecta errores y malas prácticas antes de ejecutar nada; es la primera barrera de la CI.                                     |
-| `@eslint/js`                | 9.39.5  | Las reglas recomendadas de JavaScript para ESLint.                                                                            |
+| `@eslint/js`                | 10.0.1  | Las reglas recomendadas de JavaScript para ESLint.                                                                            |
 | `typescript-eslint`         | 8.71.1  | Hace que ESLint entienda TypeScript y añade reglas propias.                                                                   |
 | `eslint-config-prettier`    | 10.1.8  | Apaga las reglas de ESLint que chocarían con Prettier.                                                                        |
 | `eslint-plugin-react-hooks` | 7.1.1   | Las reglas de los hooks de React, solo en `apps/web`.                                                                         |
 | `globals`                   | 17.13.0 | Las variables globales de Node (API, paquetes, e2e) y del navegador (web), para que ESLint no las marque como «no definidas». |
-| `prettier`                  | 3.9.9   | Formatea el código automáticamente con un estilo único.                                                                       |
+| `prettier`                  | 3.9.10  | Formatea el código automáticamente con un estilo único.                                                                       |
 | `@types/node`               | 24.19.1 | Tipos de Node (los de la versión 24, la que se ejecuta).                                                                      |
 
 ### Herramientas y servicios
