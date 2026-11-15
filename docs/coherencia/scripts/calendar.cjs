@@ -4,7 +4,7 @@
 // en las pausas 31-08 → 04-10-2026 y 25-01 → 31-01-2027; S7 empieza el 05-10-2026;
 // S23 el 01-02-2027; S31 el 29-03-2027; S37 termina el 16-05-2027. Las fechas
 // anteriores al 14-07-2026 (el «Día 0» del diario) cuentan como «pre-S0», fase F0.
-// Desde el 09-11-2026 el sprint ya no es una semana de calendario sino una tanda de
+// Desde el lunes 09-11-2026 (la semana en que se decidió, el 12-11-2026) el sprint ya no es una semana de calendario sino una tanda de
 // trabajo (cap. 10): para esas fechas se devuelve la fase y `sprint: "tanda"`, y el
 // número lo pone journal.cjs a partir de la última planificación del diario.
 // Todo se calcula en UTC para que el resultado no dependa de la zona horaria del equipo.

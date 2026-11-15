@@ -5,7 +5,7 @@ import prettier from "eslint-config-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
-// Config plana (ESLint 9). Una sola config en la raíz para todo el monorepo.
+// Config plana. Una sola config en la raíz para todo el monorepo.
 // Prettier NO se ejecuta como regla de ESLint: formatea aparte (`pnpm format`).
 // `eslint-config-prettier` va al final para desactivar reglas que chocan con Prettier.
 export default tseslint.config(

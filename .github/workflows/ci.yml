@@ -1,7 +1,7 @@
 # =========================================================================
 # Integración continua del monorepo (US-01; jobs separados desde el
 # 06-08-2026, cerrando el pendiente anotado el 27-07).
-# Estrategia de fallo rápido del cap. 10, ahora por jobs: lint (barrera
+# Estrategia de fallo rápido de los caps. 3 y 6, ahora por jobs: lint (barrera
 # estática barata) → typecheck → test, y la build de la imagen Docker
 # de la API en paralelo desde que lint aprueba (no depende de tipos ni
 # pruebas). Las E2E (Playwright) entrarán como última barrera con EP12 (F4);

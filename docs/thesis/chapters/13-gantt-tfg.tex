@@ -20,7 +20,7 @@ La coherencia entre ambos capítulos es deliberada: las fases (F0 a F4) y las do
 
 El trabajo comenzó el 12/07/2026 con la creación del repositorio, y la semana del 14 al 19 de julio constituye el \eng{sprint} de planificación S0 (fase F0), en el que se elaboran los objetivos, el plan de riesgos y la planificación que aquí se representa.
 La figura \ref{fig:gantt-tfg-previsto} recoge el cronograma previsto completo, de la planificación (F0) a la defensa; conviene leerla junto a dos decisiones ya justificadas.
-Primera: en coherencia con la metodología del capítulo \ref{ch:tareas}, el detalle fino (qué historia se aborda cada semana) vive en el \eng{backlog} y no en este diagrama, que solo compromete fases e hitos; un Gantt de tareas individuales sería precisión falsa en un alcance emergente.
+Primera: en coherencia con la metodología del capítulo \ref{ch:tareas}, el detalle fino (qué historia se aborda en cada \eng{sprint}) vive en el \eng{backlog} y no en este diagrama, que solo compromete fases e hitos; un Gantt de tareas individuales sería precisión falsa en un alcance emergente.
 Segunda: el diagrama representa explícitamente las dos pausas planificadas (los traslados de ida y vuelta de la estancia Erasmus) y el margen entre el cierre del desarrollo y el depósito, en lugar de esconderlos.
 
 \begin{figure}[htbp]
@@ -69,7 +69,7 @@ Segunda: el diagrama representa explícitamente las dos pausas planificadas (los
       \ganttmilestone{Cierre del desarrollo previsto}{2027-05-16}
     \end{ganttchart}%
   }
-  \caption{Cronograma previsto del \acs{TFG} (las líneas punteadas separan los \eng{sprints} semanales; la defensa se sitúa en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva).}
+  \caption{Cronograma previsto del \acs{TFG} (las líneas punteadas separan las semanas de referencia; la defensa se sitúa en la convocatoria de junio--julio de \thesisYear, con la de septiembre como reserva).}
   \label{fig:gantt-tfg-previsto}
 \end{figure}
 
@@ -111,7 +111,7 @@ Las capacidades declaradas por periodo describen deliberadamente el escenario ra
 La mayor incógnita del calendario es la carga real de la estancia Erasmus: se planifica con 5 horas semanales de promedio porque es la cifra defendible con la información disponible al planificar, pero es perfectamente posible que la estancia deje bastante más tiempo libre del previsto.
 Planificar sobre ese mejor caso sería apostar el \ac{TFG} a una hipótesis que no se puede verificar hasta estar allí; planificar sobre el peor caso razonable garantiza que incluso él termina el trabajo antes del depósito.
 
-La consecuencia práctica es que las fechas de este capítulo son un techo del escenario prudente, no un suelo: si la disponibilidad real supera la hipótesis, la recalibración semanal de la velocidad (capítulo \ref{ch:tareas}) adelanta los hitos de forma natural, sin cambiar de método ni de plan.
+La consecuencia práctica es que las fechas de este capítulo son un techo del escenario prudente, no un suelo: si la disponibilidad real supera la hipótesis, la recalibración de la velocidad en cada control mensual (capítulo \ref{ch:tareas}) adelanta los hitos de forma natural, sin cambiar de método ni de plan.
 El orden de magnitud del posible adelanto es grande: tras el verano quedan unos 135 puntos de trabajo comprometido (unas 270 horas nominales con la equivalencia recalibrada), de modo que una estancia que dejara 20--25 horas semanales reales —frente a las 5 declaradas— situaría el cierre completo del desarrollo entre diciembre de 2026 y enero de \thesisYear, con meses de sobra para revisar la memoria con calma.
 Ese escenario no se promete: se registra aquí para que el seguimiento (sección \ref{sec:gantt-real}) pueda comparar la realidad contra ambos extremos, y para dejar claro que cualquier desviación positiva de capacidad se traduce en adelanto de hitos, no en ampliación del alcance (la entrada de prioridades deseables u opcionales sigue condicionada a la velocidad, sección \ref{sec:fases-tension}).
 En el sentido contrario vigila el riesgo R8 (capacidad real por debajo incluso de lo declarado, capítulo \ref{ch:riesgos}): entre ambos, el plan queda acotado por arriba y por abajo.
@@ -129,7 +129,7 @@ La referencia \ac{ECTS} es una medida académica del tamaño esperado del trabaj
 \section{Seguimiento: previsto frente a real}
 \label{sec:gantt-real}
 
-El cronograma real no se reconstruye de memoria al final: se deriva de los datos que el propio método registra (las horas de cada sesión en el diario, y la velocidad y la retrospectiva de cada cierre de \eng{sprint}).
+El cronograma real no se reconstruye de memoria al final: se deriva de los datos que el propio método registra (las horas de cada sesión en el diario, la velocidad de cada \eng{sprint} y el control mensual).
 Esta sección consolida, al cierre de cada fase, tres datos: sus fechas reales, sus horas reales agregadas del diario y la desviación frente a lo previsto con su causa.
 Presenta además el diagrama de Gantt real superpuesto al previsto y el análisis de las desviaciones, con dos comparaciones comprometidas de antemano: la evolución del encaje al límite entre alcance y capacidad (sección \ref{sec:fases-tension}) y la posición de la realidad entre el escenario conservador planificado y el escenario favorable de la sección \ref{sec:gantt-escenarios}.
 La tabla \ref{tab:previsto-real} consolida las fases ya cerradas.

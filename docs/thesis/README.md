@@ -38,7 +38,7 @@ thesis/
 │   ├── references.bib    ← bibliografía BibLaTeX en normas APA
 │   └── PLANTILLAS.md     ← plantillas de entradas por tipo de fuente (nunca comentarios en el .bib)
 ├── plan-riesgos/         ← versiones completas del plan de riesgos (v1, v2…), documentos sueltos
-├── seguimiento-riesgos/  ← un seguimiento de riesgos por sprint (copiando TEMPLATE.tex)
+├── seguimiento-riesgos/  ← un seguimiento de riesgos por revisión: control mensual, cierre de fase o disparador (copiando TEMPLATE.tex)
 └── build/                ← artefactos de compilación (gitignorado, se regenera)
 ```
 

@@ -27,7 +27,7 @@ const DAY_MS = 864e5;
 const MAX_WORDS = 1800;
 const MAX_WORDS_SINCE = "2026-10-11";
 const daysSince = (f) => Math.round((Date.parse(today) - Date.parse(f)) / DAY_MS);
-// Semana a cero (README del diario, regla del autor del 17-10-2026): se declara antes
+// Semana a cero (regla vigente del 17-10 al 12-11-2026, ya retirada del README del diario; se conserva para las entradas de ese periodo): se declara antes
 // de empezar, con una línea «Sx: semana a cero (0 h)» en la entrada anterior. Ese
 // sprint no lleva planificación ni retrospectiva propias, así que no se avisa de su
 // ausencia; una declaración hecha ya dentro de la semana no vale (es un parón, R10).

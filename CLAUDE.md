@@ -24,7 +24,7 @@ Red social para cumplir metas vitales en compañía, orientada a la acción. Reg
 
 ## Arquitectura
 
-- Web (React + Vite + React Router + TanStack Query) y móvil (React Native + Expo, objetivo secundario) comparten lógica en `packages/`: `core` (tipos y esquemas Zod, única fuente de verdad), `api-client` y `ui-core`. Los paquetes se consumen sin compilar. La web se organiza por funcionalidad como la API, una carpeta por pestaña (detalle en `apps/web/README.md`); `apps/mobile` aún no tiene código.
+- Web (React + Vite + React Router + TanStack Query) y móvil (React Native + Expo, objetivo secundario) comparten lógica en `packages/`: `core` (tipos y esquemas Zod, única fuente de verdad); `api-client` y `ui-core` son esqueletos, todavía sin uso. Los paquetes se consumen sin compilar. La web se organiza por funcionalidad como la API, una carpeta por pestaña (detalle en `apps/web/README.md`); `apps/mobile` aún no tiene código.
 - API: Express 5 + Prisma 6 sobre un solo PostgreSQL 16 con PostGIS (mapa) y pgvector (afinidad); las consultas geográficas y vectoriales van en SQL crudo.
 - La API se organiza por funcionalidad (`apps/api/src/<funcionalidad>/`, con sus rutas, su servicio y sus piezas); lo común va en `config.ts`, `platform/` y `http/` y no importa de ninguna funcionalidad. Una funcionalidad usa el servicio de otra, nunca sus rutas, y las rutas solo validan, llaman y responden. Detalle en `apps/api/README.md`.
 - Producción: la API en Render, que solo despliega con la CI en verde, y la base en Neon (UE). Las migraciones de producción las aplica la CI (job `migrate`). Detalle en `apps/api/README.md`.
@@ -83,9 +83,9 @@ Antes de editar `docs/thesis/`, leer `docs/thesis/README.md` (convenciones compl
 Detalle en el cap. 10 de la memoria y en `docs/dev-journal/README.md`.
 
 - El sprint es una **tanda de trabajo**, no una semana: se abre con su planificación en el diario y se cierra con su historia. Historias en puntos (solo puntúan las historias) y una sola historia de producto en curso, más la memoria. El backlog vive en el cap. 10. **Las semanas sin sesiones no se declaran ni se recuperan**; el calendario del cap. 13 es la referencia del avance.
-- **Control mensual** en la primera sesión de cada mes: avance frente al calendario y seguimiento de los riesgos vigilados (R1 a R5, R7, R8, R10, R12 y R14); los gestionados (R6, R9, R11, R13 y R15), al cierre de fase. El plan de riesgos se reemite al cierre de fase o si un riesgo se materializa (convenciones en los README de `docs/thesis/seguimiento-riesgos/` y `docs/thesis/plan-riesgos/`).
+- **Control mensual** en la primera sesión de cada mes: avance frente al calendario y seguimiento de los riesgos vigilados (R1 a R5, R7, R8, R10, R12 y R14); los gestionados (R6, R9, R11, R13 y R15), al cierre de fase. El plan de riesgos se reemite al cierre de fase, o de inmediato si un riesgo se materializa, cambia su probabilidad o su impacto, o aparece uno nuevo (convenciones en los README de `docs/thesis/seguimiento-riesgos/` y `docs/thesis/plan-riesgos/`).
 - Cada sesión empieza leyendo la última entrada del diario y termina con `/journal`. Toda decisión se anota con la alternativa descartada y el porqué.
-- Las entradas pasadas del diario no se reescriben, salvo para marcar casillas de la semana en curso, corregir un error de forma o retirar un dato personal.
+- Las entradas pasadas del diario no se reescriben, salvo para marcar casillas de la tanda en curso, corregir un error de forma o retirar un dato personal.
 
 ## Comandos propios
 

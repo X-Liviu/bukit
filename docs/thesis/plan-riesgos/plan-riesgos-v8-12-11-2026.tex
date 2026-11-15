@@ -4,7 +4,7 @@
 % (línea base); cada versión nueva es un documento completo (ver README.md).
 % REGLA DE CONTENIDO: las tablas reproducen LITERALMENTE las de la v7
 % (18-10-2026), salvo los cambios que documenta la NOTA: indicadores de R1,
-% R8 y R10, medidas de R3, R8 y R14, contingencias de R8 y R10, estado de
+% R8 y R10, medidas de R3 y R8, contingencias de R8 y R10, estado de
 % R12 y las frecuencias de revisión.
 % Origen: decisión del autor del 12-11-2026 de simplificar el método
 % (dev-journal de ese día); no nace de un seguimiento. El siguiente
@@ -43,7 +43,7 @@
   \item \textbf{R10 (indisponibilidad prolongada del autor)}: el indicador deja de contar semanas y pasa a ser más de un mes seguido sin ninguna sesión de trabajo; desaparecen la semana declarada a cero y el modo mínimo, y la contingencia empieza por una semana de dedicación exclusiva al retomar.
   La semana del 02 al 08-11-2026, sin sesiones por exámenes, habría contado como un quinto episodio con el indicador anterior: no se registra como tal, y es la que motivó el cambio.
   \item \textbf{R8 (capacidad real inferior a la declarada)}: el indicador pasa de las horas de cada semana al avance acumulado frente al calendario de referencia, medido en el control mensual; la contingencia son semanas de dedicación exclusiva y, si no bastan, el recorte de lo opcional y lo deseable.
-  \item \textbf{R1, R3 y R14}: textos ajustados al método sin semanas (la planificación de cada \eng{sprint}; la auditoría de coherencia, a demanda y antes de cada cierre de fase; el triaje y la auditoría de dependencias, al empezar cada \eng{sprint}).
+  \item \textbf{R1 y R3}: textos ajustados al método sin semanas (la planificación de cada \eng{sprint}; la auditoría de coherencia, a demanda y antes de cada cierre de fase).
   \item \textbf{R12 (ciclos de revisión con el tutor)}: estado \textbf{Activo} desde el seguimiento del 25-10-2026 (indicador saltado el 19-10); a 12-11 sigue sin respuesta.
   \item El resto de riesgos: sin cambios. Probabilidad, impacto y severidad, sin cambios en ninguno.
 \end{enumerate}
@@ -127,7 +127,7 @@ R15 & \textbf{Cuota y coste de la IA de desarrollo.} El método de trabajo depen
 \section{Plan de respuesta ante riesgos}
 
 % Contenido literal de la tabla de la v7, con los cambios que documenta la
-% NOTA (medidas de R3, R8 y R14 y contingencias de R8 y R10).
+% NOTA (medidas de R3 y R8 y contingencias de R8 y R10).
 % \small como en la v0. Anchos del .tex de referencia: 0,8 + 6,9 + 6,9 cm
 % + separadores = 15,9 cm, dentro de los 16 cm de texto.
 {\small
@@ -174,7 +174,7 @@ R12 & Enviar los capítulos a revisión conforme se van cerrando, en lugar del b
 
 R13 & Cada solución encontrada se documenta como receta reproducible en el repositorio en el momento de resolverla, para pagar cada problema una sola vez. & Aplicar la alternativa documentada (por ejemplo, el modo alternativo de instalación de dependencias de pnpm) o trasladar el paso conflictivo a la integración continua, que corre en Linux. \\ \hline
 
-R14 & Auditoría automática de dependencias en cada push (corte en severidad alta en la CI) más alertas de seguridad y parches automáticos (Dependabot), con triaje de sus propuestas y auditoría completa al empezar cada \eng{sprint}, porque con cinco abiertas deja de proponer; la Definición de Hecho exige los casos de abuso (pruebas negativas) en toda historia que toque autenticación, autorización o datos personales (capítulo 10). & Auditoría de seguridad dedicada (dependencias y casos de abuso de los endpoints existentes) con corrección antes de cerrar la fase en curso; en el extremo, retirar del despliegue público la función afectada hasta corregirla. \\ \hline
+R14 & Auditoría automática de dependencias en cada push (corte en severidad alta en la CI) más alertas de seguridad y parches automáticos (Dependabot), con triaje semanal de sus propuestas, porque con cinco abiertas deja de proponer; la Definición de Hecho exige los casos de abuso (pruebas negativas) en toda historia que toque autenticación, autorización o datos personales (capítulo 10). & Auditoría de seguridad dedicada (dependencias y casos de abuso de los endpoints existentes) con corrección antes de cerrar la fase en curso; en el extremo, retirar del despliegue público la función afectada hasta corregirla. \\ \hline
 
 R15 & Dimensionar el uso de agentes antes de automatizar una tarea recurrente; fijar por configuración modelos de coste contenido en esas tareas y comprobar después qué modelo respondió; lanzar las tareas pesadas sin supervisión por la noche. & Aplazar al \eng{sprint} siguiente las tareas asistidas no críticas (auditoría, revisiones) y continuar el trabajo de producto sin asistencia; en el extremo, cambiar de plan de suscripción dentro del presupuesto del capítulo 14. \\ \hline
 

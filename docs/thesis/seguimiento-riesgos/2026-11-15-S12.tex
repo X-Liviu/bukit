@@ -1,0 +1,227 @@
+% =========================================================================
+% Seguimiento de riesgos — 15-11-2026 (control mensual de noviembre, tanda
+% S12, F2). Primer seguimiento del método sin semanas (12-11-2026): revisión
+% de los diez riesgos vigilados (R1 a R5, R7, R8, R10, R12 y R14); los cinco
+% gestionados (R6, R9, R11, R13 y R15) se revisan al cierre de F2. Plan
+% vigente: v8 (12-11-2026). Auditado contra el dev-journal (25-10, 12-11 y
+% 15-11) y git. Documento independiente de la memoria; creado copiando
+% TEMPLATE.tex (ver README.md de esta carpeta).
+% Compilar DESDE ESTA CARPETA (2 pases, sin biber):
+%   pdflatex --enable-installer -interaction=nonstopmode -file-line-error
+%     -output-directory=build 2026-11-15-S12.tex
+% =========================================================================
+\documentclass[11pt,a4paper]{article}
+
+\input{../config/riesgos-preamble}
+\hypersetup{pdftitle={Seguimiento de riesgos — 15-11-2026 (control mensual, S12)}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Seguimiento de riesgos — control mensual de noviembre (S12)}\\[6pt]
+\end{center}
+
+\textbf{Fecha:} 15-11-2026 · \textbf{Sprint:} S12 (tanda abierta el 12-11-2026, primera del método sin semanas) · \textbf{Responsable:} \thesisAuthor
+
+Regla de revisión (cap.~7 de la memoria, desde el 12-11-2026): \textbf{vigilados} (R1 a R5, R7, R8, R10, R12 y R14) en cada control mensual; \textbf{gestionados} (R6, R9, R11, R13 y R15) al cierre de cada fase; cualquier riesgo, \textbf{de inmediato}, si se observa su indicador clave.
+
+\textbf{El símbolo \updatesymbol\ indica que, si se rellena ese apartado, el cambio se registra en la tabla de seguimiento del cap.~7 de la memoria y entra en la siguiente versión completa del plan de riesgos} (\texttt{../plan-riesgos/}), que se emite al cierre de cada fase, o de inmediato si un riesgo se materializa, cambia su probabilidad o su impacto, o aparece uno nuevo.
+
+Riesgos revisados:
+\textbf{los diez vigilados} en el control mensual de noviembre, adelantado al 15-11 por decisión del autor (el método nuevo se adoptó el 12-11 y el primer control estaba previsto en diciembre).
+Los gestionados se revisan al cierre de F2.
+Próxima revisión: el control mensual de diciembre, en la primera sesión del mes.
+
+\textbf{Plan emitido a partir de este seguimiento:} ninguno.
+No cambia ninguna probabilidad, impacto, medida ni contingencia; R12 sigue activo, sin cambio de estado.
+
+Datos del mes: desde el último seguimiento (25-10) no se entregó ninguna historia; la tanda S12 se abrió el 12-11 con la US-19, sin empezar.
+Horas registradas: 17~h~50 en octubre (S7 a S9) y, en noviembre, las del 12-11 y el 15-11, dedicadas al cambio de método, la auditoría de coherencia y este control\todonote{añadir las horas de noviembre cuando el autor las registre en el diario}.
+Avance frente al calendario de referencia (cap.~13): F2 lleva entregados 10~SP (US-06, US-07 y US-08) y el calendario preveía 18 a esta fecha (también la US-19, la US-09 y la US-10): unos 8~SP, tres semanas de referencia, por detrás.
+Equivalencia observada en F2: 10~SP en unas 18~h, 1,8~h/SP con la memoria y el método incluidos; se mantiene la de planificación, 2,0~h/SP (decisión del autor de este control).
+
+\bigline
+
+\section{Medidas de mitigación (prevención)}
+
+Para cada medida de los riesgos que tocan revisión en este seguimiento: ¿se está aplicando?
+Si no, justificar y decidir si se mantiene/modifica/elimina.
+
+% Bloques de 3-4 filas (tabularx no parte entre páginas; receta del S2).
+\Needspace*{24\baselineskip}
+\underline{\textbf{Riesgos vigilados (R1--R4)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R1 & Toda idea nueva entra por el backlog. & \checkedbox\ Sí (sin funciones nuevas en el mes; la tanda S12 tomó la siguiente historia del backlog, la US-19).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R2 & Medir velocidad y recalibrar en cada control mensual. & \checkedbox\ Sí (equivalencia de F2 medida en este control: 1,8~h/SP; se mantiene 2,0).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R3 & Diario al cierre de cada sesión; memoria con hueco; auditoría de coherencia a demanda y antes de cada cierre de fase. & \checkedbox\ Sí (los caps.~1, 7, 8, 10, 13 y 14 y el preliminar «Empleo de IA», al día con el cambio de método; auditoría de coherencia lanzada el 12-11 y aplicada el 15-11).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R4 & Citar al escribir; pendientes con nota visible. & \checkedbox\ Sí (sin fuentes nuevas en el mes).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{26\baselineskip}
+\underline{\textbf{Riesgos vigilados (R5, R7, R8 y R10)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R5 & Revisar todo antes de integrar; nada sin comprobaciones. & \checkbox\ Sí\newline \checkedbox\ No, en parte: la lectura de \texttt{apps/web/src} por el autor, acción del S9, sigue pendiente. & No hubo sesiones de producto en el mes; la acción se mantiene antes de la US-19. & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R7 & Minimización desde el diseño (RGPD). & \checkedbox\ Sí (el modelo de datos no cambió; la auditoría de coherencia retiró de la memoria y del diario dos datos privados del autor).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R8 & Horas por sesión en el diario; el control mensual compara el avance con el calendario. & \checkedbox\ Sí (primera comparación en este control: tres semanas de retraso).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R10 & Margen deliberado + documentación continua. & \checkedbox\ Sí (el diario permitió retomar el 12-11 tras diecisiete días sin sesiones).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{20\baselineskip}
+\underline{\textbf{Riesgos vigilados (R12 y R14)}}
+
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|Y|C{2.2cm}|L{2.4cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida de mitigación}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{¿Aplicada?}} &
+\multicolumn{1}{C{2.2cm}|}{\textbf{Justificación (del NO)}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Decisión}} \\
+\hline
+R12 & Capítulos a revisión conforme se cierran; versión vigente cuando haya cambios que merezcan revisión, según la disponibilidad de ambos. & \checkedbox\ Sí (sin entregas forzadas; el trabajo no depende de la revisión).\newline \checkbox\ No & — & \checkedbox\ Mantener (sigue activo: ver ficha)\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+R14 & Auditoría en la CI + Dependabot con triaje semanal y alertas + casos de abuso en la Definición de Hecho. & \checkedbox\ Sí (triaje del 12-11: tres propuestas fusionadas, una cerrada y una aplazada a EP04; \texttt{pnpm audit} sin altas).\newline \checkbox\ No & — & \checkedbox\ Mantener\newline \checkbox\ Modificar\newline \checkbox\ Eliminar \\
+\hline
+\end{tabularx}
+
+\Needspace*{8\baselineskip}
+\underline{\textbf{Cambios realizados en las medidas de mitigación}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Medida original}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Cambio realizado}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & Ninguno en este seguimiento. & — & — \\
+\hline
+\end{tabularx}
+
+\Needspace*{8\baselineskip}
+\underline{\textbf{Nuevas medidas de mitigación a añadir}} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|Y|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Nueva medida}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Justificación}} \\
+\hline
+— & Ninguna en este seguimiento. & — \\
+\hline
+\end{tabularx}
+
+\bigline
+
+\section{Riesgos a revisar en este seguimiento}
+
+Los riesgos \textbf{sin novedad y sin observación relevante} se agrupan en la tabla siguiente (indicador en su valor esperado, sin salto, estado «sin novedad»); el que dejó señal en el periodo (R12) conserva su ficha completa a continuación.
+
+\Needspace*{26\baselineskip}
+\begin{tabularx}{\textwidth}{|C{0.9cm}|Y|C{2.6cm}|}
+\hline
+\multicolumn{1}{|C{0.9cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Indicador: valor real (esperado 0 en todos)}} &
+\multicolumn{1}{C{2.6cm}|}{\textbf{Nuevo estado}} \\
+\hline
+R1 & 0 — ninguna tanda ganó puntos tras su planificación y nada entró fuera del backlog. & Sin novedad \\
+\hline
+R2 & Indicador (tres primeros sprints) ya evaluado en S3. F2: 1,8~h/SP observadas frente a 2,0 de planificación; se mantiene 2,0, porque la web y las épicas de mapa y tiempo real son terreno nuevo. & Sin novedad \\
+\hline
+R3 & 0 — capítulos al día en la sesión del cambio; diario escrito en cada sesión. & Sin novedad \\
+\hline
+R4 & 0 — sin afirmaciones nuevas de fuentes externas. & Sin novedad \\
+\hline
+R5 & Observación: la acción del S9 (leer \texttt{apps/web/src} antes de la US-19) sigue pendiente; el indicador no salta porque no se ha integrado nada nuevo. & Sin novedad \\
+\hline
+R7 & 0 — el modelo de datos no cambió. & Sin novedad \\
+\hline
+R8 & Observación: tres semanas de retraso frente al calendario de referencia, por debajo del mes del indicador. Si la tanda S12 no avanza antes de mediados de diciembre, el indicador saltará en el próximo control. & Sin novedad \\
+\hline
+R10 & 0 — el intervalo más largo sin sesiones fue de diecisiete días (26-10 a 11-11), por debajo del mes del indicador. & Sin novedad \\
+\hline
+R14 & 0 — sin vulnerabilidades altas; una moderada de desarrollo (\texttt{minimatch}, vía ESLint) que no corta la CI. Cuatro propuestas nuevas de Dependabot para el triaje de la semana siguiente. & Sin novedad \\
+\hline
+\end{tabularx}
+
+% ------------------ R12 ------------------
+\Needspace*{30\baselineskip}
+\subsection*{Riesgo: \markfield{R12 — Ciclos de revisión con el tutor} (activo desde S9)}
+
+\textbf{Indicadores (clave y de resolución)}
+
+\begin{tabularx}{\textwidth}{|Z|Z|Z|Z|Z|}
+\hline
+\textbf{Indicador} & \textbf{Valor esperado} & \textbf{Valor real} & \textbf{¿Cumplido?} & \textbf{Acción / observaciones} \\
+\hline
+Consulta/capítulo >2 semanas sin respuesta, o revisión con cambios estructurales sobre capítulo cerrado. & 0 & Sigue cumplido: la entrega del 05-10 lleva cuarenta y un días sin respuesta del tutor. & \checkedbox\ Sí\quad \checkbox\ No & La contingencia sigue en marcha: el trabajo no depende de la revisión. Si en el control de diciembre continúa sin respuesta, se reevalúa la probabilidad, lo que obligaría a reemitir el plan. \\
+\hline
+\end{tabularx}
+
+\textbf{Nueva probabilidad (1–3):} \underline{\ 1\ } · \textbf{Nuevo impacto (1–3):} \underline{\ 2\ } · \textbf{Nueva severidad:} \checkbox\ Crítico · \checkbox\ Significativo · \checkedbox\ Moderado\ \updatesymbol\ (sin cambio)
+
+\textbf{¿Cerrar el riesgo?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{¿Se ha materializado?} \checkbox\ Sí · \checkedbox\ No\ \updatesymbol
+
+\textbf{Nuevo estado} (cap.~7): \checkbox\ Identificado · \checkbox\ Sin novedad · \checkedbox\ Activo · \checkbox\ Materializado · \checkbox\ Resuelto · \checkbox\ Cerrado
+
+\textbf{Plan de contingencia (solo si se ha materializado)}: no aplicable; la demora todavía no retrasa ningún cierre.
+
+\Needspace*{10\baselineskip}
+\bigline
+
+\section{Reflexión desde el último seguimiento}
+
+\textbf{¿Ha ocurrido algo reseñable desde el último seguimiento?} \checkedbox\ Sí · \checkbox\ No
+
+Tres semanas desde el seguimiento del S9.
+Del 26-10 al 11-11 no hubo sesiones, por exámenes y otros compromisos, y el 12-11 el método se simplificó: el \eng{sprint} pasó a ser una tanda de trabajo, el seguimiento semanal se sustituyó por este control mensual y el plan se reemitió como versión 8.
+La auditoría de coherencia del 12-11 encontró los restos del método anterior en la memoria y en las instrucciones, dos datos privados y un perfil de permisos demasiado amplio; todo quedó corregido el 15-11.
+
+\Needspace*{6\baselineskip}
+\textbf{Nuevos riesgos identificados} \updatesymbol
+
+\begin{tabularx}{\textwidth}{|C{1.4cm}|Y|C{0.8cm}|C{0.8cm}|C{1cm}|C{2.4cm}|}
+\hline
+\multicolumn{1}{|C{1.4cm}|}{\textbf{Id}} &
+\multicolumn{1}{>{\centering\arraybackslash}X|}{\textbf{Descripción}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{P}} &
+\multicolumn{1}{C{0.8cm}|}{\textbf{I}} &
+\multicolumn{1}{C{1cm}|}{\textbf{Exp.}} &
+\multicolumn{1}{C{2.4cm}|}{\textbf{Severidad}} \\
+\hline
+— & Ninguno. & — & — & — & — \\
+\hline
+\end{tabularx}
+
+\textbf{¿Afecta algo a los objetivos o al alcance (cap.~3 de la memoria)?} \checkbox\ Sí · \checkedbox\ No
+
+\textbf{Justificación:} el retraso de tres semanas lo absorbe la holgura del plan; el alcance no cambia.
+
+\textbf{Otros eventos relevantes:} el perfil de permisos de la auditoría de coherencia se endureció (sin órdenes que permitan leer los archivos de secretos ni escribir en GitHub); gasto de noviembre en la suscripción de IA, 9~€, con el plan Pro (cap.~14).
+
+\end{document}
