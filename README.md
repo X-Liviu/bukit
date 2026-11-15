@@ -57,6 +57,11 @@ pnpm db:seed                    # datos de ejemplo (opcional)
 | `pnpm db:reset`                                       | para Postgres y **borra** el volumen de datos                                                                     |
 | `pnpm db:migrate` / `pnpm db:studio` / `pnpm db:seed` | Prisma en `apps/api`                                                                                              |
 
+## Licencia
+
+[PolyForm Strict 1.0.0](LICENSE): el código es público para consultarlo, pero solo se permite su uso
+no comercial, sin modificarlo ni redistribuirlo. Copyright 2026 Liviu Deleanu.
+
 ## Decisiones de arquitectura tomadas
 
 1. Monorepo estándar (`apps/` + `packages/` + `e2e/`), gestor **pnpm**.
