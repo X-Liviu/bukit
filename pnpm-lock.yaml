@@ -42,8 +42,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@prisma/client':
-        specifier: 6.1.0
-        version: 6.1.0(prisma@6.1.0)
+        specifier: 6.19.3
+        version: 6.19.3(prisma@6.1.0)(typescript@5.7.3)
       bcryptjs:
         specifier: 3.0.3
         version: 3.0.3
@@ -574,13 +574,16 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@prisma/client@6.1.0':
-    resolution: {integrity: sha512-AbQYc5+EJKm1Ydfq3KxwcGiy7wIbm4/QbjCKWWoNROtvy7d6a3gmAGkKjK0iUCzh+rHV8xDhD5Cge8ke/kiy5Q==}
+  '@prisma/client@6.19.3':
+    resolution: {integrity: sha512-mKq3jQFhjvko5LTJFHGilsuQs+W+T3Gm451NzuTDGQxwCzwXHYnIu2zGkRoW+Exq3Rob7yp2MfzSrdIiZVhrBg==}
     engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
+      typescript: '>=5.1.0'
     peerDependenciesMeta:
       prisma:
+        optional: true
+      typescript:
         optional: true
 
   '@prisma/debug@6.1.0':
@@ -2513,9 +2516,10 @@ snapshots:
     dependencies:
       playwright: 1.63.0
 
-  '@prisma/client@6.1.0(prisma@6.1.0)':
+  '@prisma/client@6.19.3(prisma@6.1.0)(typescript@5.7.3)':
     optionalDependencies:
       prisma: 6.1.0
+      typescript: 5.7.3
 
   '@prisma/debug@6.1.0': {}
 
